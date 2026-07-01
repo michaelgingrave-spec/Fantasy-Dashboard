@@ -216,6 +216,26 @@ def compute_boom_rates():
     return result
 
 @st.cache_data
+def build_team_schedule_matrix():
+    """Pre-build {(team, pos_key): {week: def_rank}} for instant complement scoring."""
+    sched_df = load_schedule()
+    def_rnks = build_defense_ranks()
+    matrix = {}
+    for team in FULL_TO_ABB.values():
+        team_sched = get_team_schedule(team, sched_df)
+        for pos_key in ["QB", "RB", "WR", "TE"]:
+            rank_df = def_rnks.get(pos_key)
+            if rank_df is None:
+                continue
+            rmap = dict(zip(rank_df["Team"], rank_df["Rank"]))
+            matrix[(team, pos_key)] = {
+                int(row["Week"]): rmap[row["Opponent"]]
+                for _, row in team_sched.iterrows()
+                if row["Opponent"] in rmap
+            }
+    return matrix
+
+@st.cache_data
 def compute_all_playoff_scores():
     """Pre-compute avg def rank in weeks 14-17 (32=easiest) for every ranked player."""
     sched_df = load_schedule()
@@ -1122,6 +1142,10 @@ elif tab_choice == "🎯 Draft Room":
     bye_map        = compute_bye_weeks()
     boom_rates     = compute_boom_rates()
     playoff_scores = compute_all_playoff_scores()
+    sched_matrix   = build_team_schedule_matrix()   # (team, pos_key) → {week: rank}
+
+    HARD_THR = 13   # rank ≤ 13 = tough (32=easiest system)
+    EASY_THR = 21   # rank ≥ 21 = easy
 
     # ── Draft settings ─────────────────────────────────────────────────────────
     ds1, ds2, ds3, ds4 = st.columns([1, 1, 1, 1])
@@ -1304,25 +1328,51 @@ elif tab_choice == "🎯 Draft Room":
         avail_show["Boom%"]        = avail_show["Name"].map(boom_rates)
         avail_show["Fell"]         = (current_pick - avail_show["FP_ADP"]).round(0).astype("Int64")
 
+        # ── Complement scoring against current roster ──────────────────────────
+        roster_tough_weeks = set()
+        for p in st.session_state.my_picks:
+            wk_ranks = sched_matrix.get((p["Team"], p["POS"]), {})
+            for wk, rk in wk_ranks.items():
+                if rk <= HARD_THR:
+                    roster_tough_weeks.add(wk)
+
+        n_tough = len(roster_tough_weeks)
+        if st.session_state.my_picks and n_tough > 0:
+            def _cmpl_num(row):
+                wk_ranks = sched_matrix.get((row["Team"], row["POS"]), {})
+                return sum(1 for wk in roster_tough_weeks if wk_ranks.get(wk, 0) >= EASY_THR)
+            avail_show["_cmpl"] = avail_show.apply(_cmpl_num, axis=1)
+            avail_show["Cmpl"]  = avail_show["_cmpl"].apply(lambda n: f"{n}/{n_tough}")
+        else:
+            avail_show["_cmpl"] = 0
+            avail_show["Cmpl"]  = "—"
+
         if show_top != "All":
             avail_show = avail_show.head(int(show_top))
 
         avail_out = avail_show[["Name", "POS", "Team", "FP_Rank", "FP_ADP",
-                                 "Fell", "Bye Wk", "Playoff Scr", "Boom%"]].copy()
+                                 "Fell", "Cmpl", "Bye Wk", "Playoff Scr", "Boom%"]].copy()
         avail_out.columns = ["Player", "POS", "Team", "Rank", "ADP",
-                              "Fell", "Bye", "Playoff", "Boom%"]
-        avail_out["ADP"]     = avail_out["ADP"].round(1)
-        avail_out["Fell"]    = avail_out["Fell"].where(avail_out["Fell"] > 0, other=pd.NA)
+                              "Fell", "Cmpl", "Bye", "Playoff", "Boom%"]
+        avail_out["ADP"]  = avail_out["ADP"].round(1)
+        avail_out["Fell"] = avail_out["Fell"].where(avail_out["Fell"] > 0, other=pd.NA)
 
         POS_BG = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
                   "WR": "rgba(66,165,245,0.18)",  "TE": "rgba(255,167,38,0.18)"}
 
         def color_avail(row):
             bg = POS_BG.get(row["POS"], "")
-            # Highlight strong value picks (fell ≥ 8 picks past ADP)
+            # Strong schedule complement (covers ≥60% of roster's tough weeks)
+            try:
+                parts = str(row["Cmpl"]).split("/")
+                if len(parts) == 2 and int(parts[1]) > 0 and int(parts[0]) / int(parts[1]) >= 0.6:
+                    bg = "rgba(0,230,118,0.25)"   # green = complement
+            except (ValueError, ZeroDivisionError):
+                pass
+            # Value pick overrides (fell ≥8 picks past ADP — most notable)
             try:
                 if pd.notna(row["Fell"]) and int(row["Fell"]) >= 8:
-                    bg = "rgba(255,235,59,0.22)"   # yellow = clear value
+                    bg = "rgba(255,235,59,0.25)"   # yellow = value
             except (TypeError, ValueError):
                 pass
             return [f"background-color: {bg}"] * len(row) if bg else [""] * len(row)
@@ -1335,7 +1385,38 @@ elif tab_choice == "🎯 Draft Room":
         )
 
         st.caption(
-            "🟣 QB &nbsp; 🟢 RB &nbsp; 🔵 WR &nbsp; 🟠 TE &nbsp; 🟡 **Value pick** (fell ≥8 picks past ADP) &nbsp;"
-            "**Playoff** = avg def rank wks 14–17 (32=easiest) &nbsp; **Boom%** = % of 2025 games above threshold",
+            "🟣 QB &nbsp; 🟢 RB &nbsp; 🔵 WR &nbsp; 🟠 TE &nbsp; "
+            "🟩 **Complement** (easy in ≥60% of roster's tough weeks) &nbsp; "
+            "🟡 **Value** (fell ≥8 picks past ADP) &nbsp; "
+            "**Cmpl** = easy matchups / roster tough weeks &nbsp; "
+            "**Playoff** = avg def rank wks 14–17 (32=easiest) &nbsp; "
+            "**Boom%** = % of 2025 games above threshold",
             unsafe_allow_html=True,
         )
+
+        # ── Top Complements by position ────────────────────────────────────────
+        if st.session_state.my_picks and n_tough > 0:
+            st.markdown("---")
+            st.subheader("🔄 Top Schedule Complements")
+            st.caption(
+                f"Roster has tough matchups in: **{', '.join(f'Wk {w}' for w in sorted(roster_tough_weeks))}**. "
+                "Best available players at each position with easy schedules in those weeks."
+            )
+            pos_filter_cmpl = st.multiselect(
+                "Positions", ["QB", "RB", "WR", "TE"],
+                default=["RB", "WR", "TE"], key="cmpl_pos_filter",
+            )
+            cmpl_cols = st.columns(len(pos_filter_cmpl)) if pos_filter_cmpl else []
+            for col, pos in zip(cmpl_cols, pos_filter_cmpl):
+                pos_pool = avail_show[avail_show["POS"] == pos].copy()
+                pos_pool = pos_pool.sort_values(["_cmpl", "FP_ADP"], ascending=[False, True]).head(8)
+                with col:
+                    st.markdown(f"**{pos}**")
+                    if pos_pool.empty or pos_pool["_cmpl"].max() == 0:
+                        st.caption("No complement data.")
+                    else:
+                        for _, r in pos_pool.iterrows():
+                            cmpl_n = int(r["_cmpl"])
+                            adp_s  = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
+                            icon   = "🟢" if cmpl_n / n_tough >= 0.6 else "🟡" if cmpl_n > 0 else "⬜"
+                            st.markdown(f"{icon} **{r['Name']}** ({r['Team']}) {adp_s} · {r['Cmpl']}")
