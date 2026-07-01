@@ -1177,8 +1177,6 @@ elif tab_choice == "🎯 Draft Room":
 
     # ── Draft Board ────────────────────────────────────────────────────────────
     n_picks    = num_teams * total_rounds
-    player_opts = [""] + fp_all.sort_values("FP_ADP")["Name"].tolist()
-
     # Annotate each row with round + whether it's the user's snake pick
     board = st.session_state.draft_board.head(n_picks).copy()
     board["Rnd"] = ((board["Pick"] - 1) // num_teams + 1).astype(int)
@@ -1195,8 +1193,7 @@ elif tab_choice == "🎯 Draft Room":
             "Pick":    st.column_config.NumberColumn("Pick",  disabled=True, width="small"),
             "Rnd":     st.column_config.NumberColumn("Rnd",   disabled=True, width="small"),
             "Yours":   st.column_config.CheckboxColumn("Yours?", disabled=True, width="small"),
-            "Player":  st.column_config.SelectboxColumn(
-                           "Player", options=player_opts, width="large"),
+            "Player":  st.column_config.TextColumn("Player", width="large"),
             "My Pick": st.column_config.CheckboxColumn("My Pick", width="small"),
         },
         hide_index=True,
