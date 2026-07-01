@@ -1260,21 +1260,42 @@ elif tab_choice == "🎯 Draft Room":
     avail_all["Fell"]        = avail_all["_fell"].round(0).astype("Int64").where(
                                    avail_all["_fell"] > 0, other=pd.NA)
 
-    # Complement scores — each player scored against their own position's tough weeks
-    if st.session_state.my_picks and pos_tough_weeks:
-        def _cmpl_num(row):
-            tough_wks = pos_tough_weeks.get(row["POS"], set())
-            if not tough_wks:
-                return 0
-            return sum(1 for wk in tough_wks
+    # Complement scores — pair each available player against each individual roster player
+    # at the same position. Best individual pairing wins.
+    my_pick_data = [
+        {"name": p["Name"], "pos": p["POS"],
+         "tough_wks": {wk for wk, rk in sched_matrix.get((p["Team"], p["POS"]), {}).items()
+                       if rk <= HARD_THR}}
+        for p in st.session_state.my_picks
+    ]
+
+    def _cmpl_best(row):
+        best_score, best_denom, best_name = 0, 0, ""
+        for rp in my_pick_data:
+            if rp["pos"] != row["POS"] or not rp["tough_wks"]:
+                continue
+            easy = sum(1 for wk in rp["tough_wks"]
                        if sched_matrix.get((row["Team"], row["POS"]), {}).get(wk, 0) >= EASY_THR)
-        avail_all["_cmpl"] = avail_all.apply(_cmpl_num, axis=1)
-        avail_all["Cmpl"]  = avail_all.apply(
-            lambda r: f"{r['_cmpl']}/{len(pos_tough_weeks.get(r['POS'], set()))}"
-                      if pos_tough_weeks.get(r["POS"]) else "—", axis=1)
+            if easy > best_score or (easy == best_score and len(rp["tough_wks"]) > best_denom):
+                best_score = easy
+                best_denom = len(rp["tough_wks"])
+                best_name  = rp["name"]
+        return best_score, best_denom, best_name
+
+    if st.session_state.my_picks:
+        cmpl_result = avail_all.apply(
+            lambda r: pd.Series(_cmpl_best(r), index=["_cmpl", "_cmpl_denom", "_cmpl_vs"]), axis=1)
+        avail_all[["_cmpl", "_cmpl_denom", "_cmpl_vs"]] = cmpl_result
+        avail_all["Cmpl"] = avail_all.apply(
+            lambda r: f"{int(r['_cmpl'])}/{int(r['_cmpl_denom'])}" if r["_cmpl_vs"] else "—", axis=1)
+        avail_all["Fits"] = avail_all["_cmpl_vs"].apply(
+            lambda n: n.split()[-1] if n else "")   # last name of the roster player
     else:
-        avail_all["_cmpl"] = 0
-        avail_all["Cmpl"]  = "—"
+        avail_all["_cmpl"]       = 0
+        avail_all["_cmpl_denom"] = 0
+        avail_all["_cmpl_vs"]    = ""
+        avail_all["Cmpl"]        = "—"
+        avail_all["Fits"]        = ""
 
     # Playoff opponent detection: available player faces one of my teams in wks 15-17
     def _faces_my(avail_team):
@@ -1317,19 +1338,20 @@ elif tab_choice == "🎯 Draft Room":
 
     with c_fits:
         st.markdown("**🔄 Schedule Fits**")
-        if st.session_state.my_picks and n_tough > 0:
-            st.caption(f"Easy in your {n_tough} tough week{'s' if n_tough > 1 else ''}")
-            fits = avail_all.sort_values(["_cmpl", "FP_ADP"], ascending=[False, True])
+        if st.session_state.my_picks:
+            fits = avail_all[avail_all["_cmpl"] > 0].sort_values(
+                ["_cmpl", "_cmpl_denom", "FP_ADP"], ascending=[False, False, True])
             shown = 0
             for _, r in fits.iterrows():
-                if r["_cmpl"] == 0:
-                    break
-                adp_s = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
-                icon  = "🟢" if r["_cmpl"] / n_tough >= 0.6 else "🟡"
-                st.markdown(f"{icon} **{r['Name']}** ({r['POS']}·{r['Team']}) {adp_s} · {r['Cmpl']}")
-                shown += 1
                 if shown >= 6:
                     break
+                adp_s  = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
+                pct    = r["_cmpl"] / r["_cmpl_denom"] if r["_cmpl_denom"] > 0 else 0
+                icon   = "🟢" if pct >= 0.6 else "🟡"
+                vs_s   = r["_cmpl_vs"].split()[-1] if r["_cmpl_vs"] else ""
+                st.markdown(f"{icon} **{r['Name']}** ({r['POS']}·{r['Team']}) {adp_s}")
+                st.caption(f"&nbsp;&nbsp;&nbsp;covers {r['Cmpl']} of {vs_s}'s tough wks")
+                shown += 1
             if shown == 0:
                 st.caption("No clear fits yet.")
         else:
@@ -1489,9 +1511,9 @@ elif tab_choice == "🎯 Draft Room":
             avail_show = avail_show.head(int(show_top))
 
         avail_out = avail_show[["Name", "POS", "Team", "FP_Rank", "FP_ADP",
-                                 "Fell", "Cmpl", "Faces My", "Bye Wk", "Playoff Scr", "Boom%"]].copy()
+                                 "Fell", "Cmpl", "Fits", "Faces My", "Bye Wk", "Playoff Scr", "Boom%"]].copy()
         avail_out.columns = ["Player", "POS", "Team", "Rank", "ADP",
-                              "Fell", "Cmpl", "Faces My", "Bye", "Playoff", "Boom%"]
+                              "Fell", "Cmpl", "Fits", "Faces My", "Bye", "Playoff", "Boom%"]
         avail_out["ADP"] = avail_out["ADP"].round(1)
 
         POS_BG = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
@@ -1528,31 +1550,31 @@ elif tab_choice == "🎯 Draft Room":
             unsafe_allow_html=True,
         )
 
-    # ── Top Complements by position (full width) ───────────────────────────────
-    if st.session_state.my_picks and n_tough > 0:
+    # ── Top Complements — grouped by individual roster player ─────────────────
+    roster_with_tough = [rp for rp in my_pick_data if rp["tough_wks"]]
+    if roster_with_tough:
         st.markdown("---")
-        st.subheader("🔄 Top Schedule Complements")
-        st.caption(
-            f"Your roster's tough weeks: **{', '.join(f'Wk {w}' for w in sorted(roster_tough_weeks))}**  ·  "
-            "Best available at each position with the easiest schedules in those weeks."
-        )
-        pos_filter_cmpl = st.multiselect(
-            "Positions", ["QB", "RB", "WR", "TE"],
-            default=["RB", "WR", "TE"], key="cmpl_pos_filter",
-        )
-        if pos_filter_cmpl:
-            cmpl_cols = st.columns(len(pos_filter_cmpl))
-            for col, pos in zip(cmpl_cols, pos_filter_cmpl):
-                pos_pool = (avail_all[avail_all["POS"] == pos]
-                            .sort_values(["_cmpl", "FP_ADP"], ascending=[False, True])
-                            .head(8))
-                with col:
-                    st.markdown(f"**{pos}**")
-                    if pos_pool.empty or pos_pool["_cmpl"].max() == 0:
-                        st.caption("No data.")
-                    else:
-                        for _, r in pos_pool.iterrows():
-                            cn    = int(r["_cmpl"])
-                            adp_s = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
-                            icon  = "🟢" if cn / n_tough >= 0.6 else "🟡" if cn > 0 else "⬜"
-                            st.markdown(f"{icon} **{r['Name']}** ({r['Team']}) {adp_s} · {r['Cmpl']}")
+        st.subheader("🔄 Schedule Complements by Player")
+        st.caption("Available players whose schedules best cover each of your players' tough weeks individually.")
+        n_cols    = min(len(roster_with_tough), 4)
+        cmpl_cols = st.columns(n_cols)
+        for col, rp in zip(cmpl_cols, roster_with_tough[:4]):
+            with col:
+                tough_wk_str = ", ".join(f"Wk {w}" for w in sorted(rp["tough_wks"]))
+                st.markdown(f"**{rp['name']}**")
+                st.caption(f"Tough: {tough_wk_str}")
+                best = (avail_all[
+                            (avail_all["POS"] == rp["pos"]) &
+                            (avail_all["_cmpl_vs"] == rp["name"]) &
+                            (avail_all["_cmpl"] > 0)
+                        ]
+                        .sort_values(["_cmpl", "FP_ADP"], ascending=[False, True])
+                        .head(7))
+                if best.empty:
+                    st.caption("No complements found.")
+                else:
+                    for _, r in best.iterrows():
+                        adp_s = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
+                        pct   = r["_cmpl"] / r["_cmpl_denom"] if r["_cmpl_denom"] > 0 else 0
+                        icon  = "🟢" if pct >= 0.6 else "🟡"
+                        st.markdown(f"{icon} **{r['Name']}** ({r['Team']}) {adp_s} · {r['Cmpl']}")
