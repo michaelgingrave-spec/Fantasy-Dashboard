@@ -1284,7 +1284,7 @@ elif tab_choice == "🎯 Draft Room":
     st.markdown("---")
     st.subheader("🎯 Draft Recommendations")
 
-    pos_targets = {"QB": 2, "RB": 5, "WR": 7, "TE": 2}
+    pos_targets = {"QB": 3, "RB": 6, "WR": 8, "TE": 3}
     pos_have    = {pos: sum(1 for p in st.session_state.my_picks if p["POS"] == pos)
                    for pos in pos_targets}
     remaining   = max(total_rounds - len(st.session_state.my_picks), 1)
@@ -1427,7 +1427,7 @@ elif tab_choice == "🎯 Draft Room":
     # ── RIGHT: Scarcity + Available players table ──────────────────────────────
     with right_col:
         st.subheader("Positional Scarcity")
-        scarcity = {"QB": (12, 24), "RB": (24, 48), "WR": (36, 72), "TE": (12, 24)}
+        scarcity = {"QB": (15, 30), "RB": (30, 60), "WR": (40, 80), "TE": (15, 30)}
         sc1, sc2, sc3, sc4 = st.columns(4)
         for col, pos in zip([sc1, sc2, sc3, sc4], ["QB", "RB", "WR", "TE"]):
             ap = available[available["POS"] == pos]
