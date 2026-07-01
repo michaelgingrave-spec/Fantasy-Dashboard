@@ -1289,7 +1289,7 @@ elif tab_choice == "🎯 Draft Room":
                    for pos in pos_targets}
     remaining   = max(total_rounds - len(st.session_state.my_picks), 1)
 
-    c_need, c_w15, c_w16, c_w17 = st.columns(4)
+    c_need, c_fits, c_val, c_opp = st.columns(4)
 
     with c_need:
         st.markdown("**📍 Positional Need**")
@@ -1309,31 +1309,70 @@ elif tab_choice == "🎯 Draft Room":
             if shown >= 2:
                 break
 
-    for col, wk in zip([c_w15, c_w16, c_w17], [15, 16, 17]):
-        with col:
-            st.markdown(f"**📅 Wk {wk} — My Opponents**")
-            if not st.session_state.my_picks:
-                st.caption("Add picks to see opponents.")
-                continue
-            # Which teams does my roster face this week?
-            opp_teams_wk: dict = {}   # opp_team → [my player names]
+    with c_fits:
+        st.markdown("**🔄 Schedule Fits**")
+        if st.session_state.my_picks and n_tough > 0:
+            st.caption(f"Easy in your {n_tough} tough week{'s' if n_tough > 1 else ''}")
+            fits = avail_all.sort_values(["_cmpl", "FP_ADP"], ascending=[False, True])
+            shown = 0
+            for _, r in fits.iterrows():
+                if r["_cmpl"] == 0:
+                    break
+                adp_s = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
+                icon  = "🟢" if r["_cmpl"] / n_tough >= 0.6 else "🟡"
+                st.markdown(f"{icon} **{r['Name']}** ({r['POS']}·{r['Team']}) {adp_s} · {r['Cmpl']}")
+                shown += 1
+                if shown >= 6:
+                    break
+            if shown == 0:
+                st.caption("No clear fits yet.")
+        else:
+            st.caption("Add picks to see fits.")
+
+    with c_val:
+        st.markdown("**💰 Best Value**")
+        value_pool = avail_all[avail_all["Fell"].notna()].sort_values("_fell", ascending=False)
+        shown = 0
+        for _, r in value_pool.iterrows():
+            fell = int(r["_fell"])
+            if fell <= 0:
+                break
+            adp_s = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
+            icon  = "🟡" if fell >= 8 else "⬜"
+            st.markdown(f"{icon} **{r['Name']}** ({r['POS']}·{r['Team']}) {adp_s} ↓{fell}")
+            shown += 1
+            if shown >= 6:
+                break
+        if shown == 0:
+            st.caption("No players past ADP yet.")
+
+    with c_opp:
+        st.markdown("**📅 Playoff Opponents (Wks 15–17)**")
+        if not st.session_state.my_picks:
+            st.caption("Add picks to see opponents.")
+        else:
+            # Collect all opponent teams across wks 15-17 with which week(s) they appear
+            opp_week_map: dict = {}   # opp_team → set of weeks
             for p in st.session_state.my_picks:
-                opp = opp_lookup.get(p["Team"], {}).get(wk)
-                if opp:
-                    opp_teams_wk.setdefault(opp, []).append(p["Name"])
-            if not opp_teams_wk:
-                st.caption("BYE / no data.")
-                continue
-            for opp_team, my_names in sorted(opp_teams_wk.items()):
-                my_str = ", ".join(my_names[:2]) + ("…" if len(my_names) > 2 else "")
-                st.caption(f"vs **{opp_team}** ← {my_str}")
-                opp_avail = avail_all[avail_all["Team"] == opp_team].sort_values("FP_ADP").head(5)
-                if opp_avail.empty:
-                    st.markdown("&nbsp;&nbsp;*none ranked*")
-                for _, r in opp_avail.iterrows():
-                    rank_s = f"#{int(r['FP_Rank'])}" if pd.notna(r["FP_Rank"]) else ""
-                    adp_s  = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
-                    st.markdown(f"&nbsp;&nbsp;**{r['Name']}** ({r['POS']}) {rank_s} {adp_s}")
+                for wk in [15, 16, 17]:
+                    opp = opp_lookup.get(p["Team"], {}).get(wk)
+                    if opp:
+                        opp_week_map.setdefault(opp, set()).add(wk)
+
+            if not opp_week_map:
+                st.caption("No playoff schedule data.")
+            else:
+                # All available players on those opponent teams, sorted by ADP
+                opp_team_set = set(opp_week_map.keys())
+                opp_players  = avail_all[avail_all["Team"].isin(opp_team_set)].sort_values("FP_ADP")
+                if opp_players.empty:
+                    st.caption("No ranked players on opposing teams.")
+                else:
+                    for _, r in opp_players.head(12).iterrows():
+                        wks_str = "/".join(str(w) for w in sorted(opp_week_map.get(r["Team"], [])))
+                        rank_s  = f"#{int(r['FP_Rank'])}" if pd.notna(r["FP_Rank"]) else ""
+                        adp_s   = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
+                        st.markdown(f"**{r['Name']}** ({r['POS']}·{r['Team']}) {rank_s} {adp_s} · W{wks_str}")
 
     # ── Coming up near your pick that faces your players in wks 15-17 ─────────
     if st.session_state.my_picks and my_teams:
@@ -1482,45 +1521,6 @@ elif tab_choice == "🎯 Draft Room":
             "**Playoff** = avg def rank wks 14-17 (32=easiest)",
             unsafe_allow_html=True,
         )
-
-    # ── Schedule Fits + Best Value (full width expanders) ─────────────────────
-    sf_col, bv_col = st.columns(2)
-    with sf_col:
-        with st.expander("🔄 Schedule Fits — easy schedules in your tough weeks"):
-            if st.session_state.my_picks and n_tough > 0:
-                st.caption(f"Your roster has tough matchups in: {', '.join(f'Wk {w}' for w in sorted(roster_tough_weeks))}")
-                fits = avail_all.sort_values(["_cmpl", "FP_ADP"], ascending=[False, True])
-                shown = 0
-                for _, r in fits.iterrows():
-                    if r["_cmpl"] == 0:
-                        break
-                    adp_s = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
-                    icon  = "🟢" if r["_cmpl"] / n_tough >= 0.6 else "🟡"
-                    st.markdown(f"{icon} **{r['Name']}** ({r['POS']} · {r['Team']}) {adp_s} · {r['Cmpl']}")
-                    shown += 1
-                    if shown >= 10:
-                        break
-                if shown == 0:
-                    st.caption("No clear schedule fits yet.")
-            else:
-                st.caption("Add picks to see schedule fits.")
-
-    with bv_col:
-        with st.expander("💰 Best Value — players who have fallen past their ADP"):
-            value_pool = avail_all[avail_all["Fell"].notna()].sort_values("_fell", ascending=False)
-            shown = 0
-            for _, r in value_pool.iterrows():
-                fell = int(r["_fell"])
-                if fell <= 0:
-                    break
-                adp_s = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
-                icon  = "🟡" if fell >= 8 else "⬜"
-                st.markdown(f"{icon} **{r['Name']}** ({r['POS']} · {r['Team']}) {adp_s} ↓{fell} picks")
-                shown += 1
-                if shown >= 10:
-                    break
-            if shown == 0:
-                st.caption("No players past their ADP yet.")
 
     # ── Top Complements by position (full width) ───────────────────────────────
     if st.session_state.my_picks and n_tough > 0:
