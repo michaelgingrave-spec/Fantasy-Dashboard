@@ -1151,6 +1151,7 @@ elif tab_choice == "🎯 Draft Room":
         })
     if "my_picks"    not in st.session_state: st.session_state.my_picks    = []
     if "other_picks" not in st.session_state: st.session_state.other_picks = []
+    if "pick_key"    not in st.session_state: st.session_state.pick_key    = 0
 
     # ── Load data ──────────────────────────────────────────────────────────────
     fp_all         = load_fp_rankings().rename(columns={"Name_clean": "Name"})
@@ -1172,40 +1173,71 @@ elif tab_choice == "🎯 Draft Room":
         if st.button("🗑️ Reset Draft", use_container_width=True):
             st.session_state.my_picks    = []
             st.session_state.other_picks = []
-            st.session_state.pick_key   += 1
+            st.session_state.pick_key    = st.session_state.get("pick_key", 0) + 1
+            st.session_state.draft_board = pd.DataFrame({
+                "Pick": list(range(1, 301)),
+                "Player": [""] * 300,
+                "My Pick": [False] * 300,
+            })
             st.rerun()
 
-    # ── Draft Board ────────────────────────────────────────────────────────────
-    n_picks    = num_teams * total_rounds
-    # Annotate each row with round + whether it's the user's snake pick
-    board = st.session_state.draft_board.head(n_picks).copy()
-    board["Rnd"] = ((board["Pick"] - 1) // num_teams + 1).astype(int)
+    # ── Quick pick entry ───────────────────────────────────────────────────────
+    n_picks     = num_teams * total_rounds
+    player_opts = [""] + fp_all.sort_values("FP_ADP")["Name"].tolist()
+
+    logged = st.session_state.draft_board[
+        st.session_state.draft_board["Player"].notna() &
+        (st.session_state.draft_board["Player"] != "")
+    ]
+    next_pick_num = int(logged["Pick"].max()) + 1 if not logged.empty else 1
+    next_pick_num = min(next_pick_num, n_picks)
+
     def _is_my_slot(pick_num):
         rnd  = (pick_num - 1) // num_teams + 1
         slot = (pick_num - 1) % num_teams + 1
         my_pos = my_slot if rnd % 2 == 1 else num_teams + 1 - my_slot
         return slot == my_pos
-    board["Yours"] = board["Pick"].apply(_is_my_slot)
 
-    player_opts = [""] + fp_all.sort_values("FP_ADP")["Name"].tolist()
+    is_my_turn_now = _is_my_slot(next_pick_num)
+    pick_label = f"{'⭐ ' if is_my_turn_now else ''}Log Pick #{next_pick_num}"
+
+    qc1, qc2, qc3 = st.columns([5, 1, 1])
+    with qc1:
+        new_player = st.selectbox(pick_label, options=player_opts,
+                                  key=f"quick_pick_{st.session_state.get('pick_key', 0)}")
+    with qc2:
+        new_is_mine = st.checkbox("My Pick", value=is_my_turn_now,
+                                  key=f"quick_mine_{st.session_state.get('pick_key', 0)}")
+    with qc3:
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("➕ Log", use_container_width=True) and new_player:
+            idx = next_pick_num - 1
+            st.session_state.draft_board.loc[idx, "Player"]  = new_player
+            st.session_state.draft_board.loc[idx, "My Pick"] = new_is_mine
+            st.session_state["pick_key"] = st.session_state.get("pick_key", 0) + 1
+            st.rerun()
+
+    # ── Draft Board display (editable for corrections) ─────────────────────────
+    board = st.session_state.draft_board.head(n_picks).copy()
+    board["Rnd"]   = ((board["Pick"] - 1) // num_teams + 1).astype(int)
+    board["Yours"] = board["Pick"].apply(_is_my_slot)
 
     edited = st.data_editor(
         board[["Pick", "Rnd", "Yours", "Player", "My Pick"]],
         column_config={
-            "Pick":    st.column_config.NumberColumn("Pick",  disabled=True, width="small"),
-            "Rnd":     st.column_config.NumberColumn("Rnd",   disabled=True, width="small"),
+            "Pick":    st.column_config.NumberColumn("Pick",   disabled=True, width="small"),
+            "Rnd":     st.column_config.NumberColumn("Rnd",    disabled=True, width="small"),
             "Yours":   st.column_config.CheckboxColumn("Yours?", disabled=True, width="small"),
-            "Player":  st.column_config.SelectboxColumn(
-                           "Player", options=player_opts, width="large"),
+            "Player":  st.column_config.TextColumn("Player (edit to correct)", width="large"),
             "My Pick": st.column_config.CheckboxColumn("My Pick", width="small"),
         },
         hide_index=True,
         use_container_width=True,
-        height=480,
+        height=350,
         key="draft_board_editor",
     )
 
-    # Persist edits back to session state
+    # Persist any inline corrections back to session state
     st.session_state.draft_board.loc[:n_picks - 1, "Player"]  = edited["Player"].values
     st.session_state.draft_board.loc[:n_picks - 1, "My Pick"] = edited["My Pick"].values
 
