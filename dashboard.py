@@ -21,6 +21,16 @@ st.markdown("""
     display:inline-block; padding:2px 8px; border-radius:12px;
     font-size:11px; font-weight:700; color:#fff;
   }
+  /* ── Mobile responsive ── */
+  @media (max-width: 640px) {
+    .block-container { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+    [data-testid="metric-container"] { padding: 5px !important; }
+    h1 { font-size: 1.3rem !important; }
+    h2 { font-size: 1.1rem !important; }
+    h3 { font-size: 1.0rem !important; }
+    p, li { font-size: 0.85rem !important; }
+  }
+  [data-testid="stDataFrame"] { overflow-x: auto; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -177,6 +187,55 @@ def compute_weekly_fp_allowed():
     combined = pd.concat([all_wp, slot_wp, wide_wp], ignore_index=True)
     return combined
 
+@st.cache_data
+def compute_bye_weeks():
+    """Derive each team's single bye week from the 2026 schedule."""
+    sched_df = load_schedule()
+    bye_map = {}
+    for team in FULL_TO_ABB.values():
+        team_sched = get_team_schedule(team, sched_df)
+        weeks_played = set(team_sched["Week"].astype(int).tolist())
+        byes = sorted(set(range(1, 19)) - weeks_played)
+        bye_map[team] = byes[0] if byes else None
+    return bye_map
+
+@st.cache_data
+def compute_boom_rates():
+    """Boom rate from 2025 weekly data: % of games above threshold. WR≥20, TE≥12."""
+    df = load_weekly_data()
+    thresholds = {"WR": 20.0, "TE": 12.0}
+    result = {}
+    for pos, thresh in thresholds.items():
+        sub = df[df["POS"] == pos].copy()
+        if sub.empty or "Name" not in sub.columns:
+            continue
+        sub["Name"] = sub["Name"].astype(str).str.strip()
+        stats = sub.groupby("Name").agg(games=("FP", "count"), booms=("FP", lambda x: (x >= thresh).sum())).reset_index()
+        for _, row in stats.iterrows():
+            result[row["Name"]] = int(round(row["booms"] / row["games"] * 100))
+    return result
+
+@st.cache_data
+def compute_all_playoff_scores():
+    """Pre-compute avg def rank in weeks 14-17 (32=easiest) for every ranked player."""
+    sched_df = load_schedule()
+    fp = load_fp_rankings().rename(columns={"Name_clean": "Name"})
+    def_rnks = build_defense_ranks()
+    pw_set = {14, 15, 16, 17}
+    result = {}
+    for _, p in fp.iterrows():
+        pos_key = p["POS"] if p["POS"] != "WR" else "WR"
+        rank_df = def_rnks.get(pos_key)
+        if rank_df is None or rank_df.empty:
+            result[p["Name"]] = None
+            continue
+        rmap = dict(zip(rank_df["Team"], rank_df["Rank"]))
+        team_sched = get_team_schedule(p["Team"], sched_df)
+        pw_sched = team_sched[team_sched["Week"].isin(pw_set)]
+        week_ranks = [rmap[row["Opponent"]] for _, row in pw_sched.iterrows() if row["Opponent"] in rmap]
+        result[p["Name"]] = round(float(np.mean(week_ranks)), 1) if week_ranks else None
+    return result
+
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -184,7 +243,7 @@ with st.sidebar:
     st.markdown("---")
     tab_choice = st.radio(
         "Screen",
-        ["📊 Player Projections", "🛡️ Defense Matchups", "📈 Schedule Rankings", "📅 Schedule Viewer"],
+        ["📊 Player Projections", "🛡️ Defense Matchups", "📈 Schedule Rankings", "📅 Schedule Viewer", "🎯 Draft Room"],
         label_visibility="collapsed",
     )
     st.markdown("---")
@@ -1044,3 +1103,239 @@ elif tab_choice == "📅 Schedule Viewer":
                     hide_index=True,
                     height=min(40 + len(rows_out) * 35, 420),
                 )
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  TAB 5 — DRAFT ROOM
+# ══════════════════════════════════════════════════════════════════════════════
+elif tab_choice == "🎯 Draft Room":
+    st.header("🎯 Live Draft Room")
+    st.caption("Track picks in real time — add yours and others' to see who's available and who to target next.")
+
+    # ── Session state ──────────────────────────────────────────────────────────
+    if "my_picks"    not in st.session_state: st.session_state.my_picks    = []
+    if "other_picks" not in st.session_state: st.session_state.other_picks = []
+    if "pick_key"    not in st.session_state: st.session_state.pick_key    = 0
+
+    # ── Load data ──────────────────────────────────────────────────────────────
+    fp_all         = load_fp_rankings().rename(columns={"Name_clean": "Name"})
+    bye_map        = compute_bye_weeks()
+    boom_rates     = compute_boom_rates()
+    playoff_scores = compute_all_playoff_scores()
+
+    # ── Draft settings ─────────────────────────────────────────────────────────
+    ds1, ds2, ds3, ds4 = st.columns([1, 1, 1, 1])
+    with ds1: num_teams    = st.selectbox("# Teams in Draft", [6, 8, 10, 12], index=2)
+    with ds2: my_slot      = st.number_input("Your Draft Slot", min_value=1, max_value=num_teams, value=min(6, num_teams))
+    with ds3: total_rounds = st.selectbox("Total Rounds", [15, 18, 20, 22], index=1)
+    with ds4:
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("🗑️ Reset Draft", use_container_width=True):
+            st.session_state.my_picks    = []
+            st.session_state.other_picks = []
+            st.session_state.pick_key   += 1
+            st.rerun()
+
+    # ── Available pool ─────────────────────────────────────────────────────────
+    all_drafted = {p["Name"] for p in st.session_state.my_picks} | set(st.session_state.other_picks)
+    available   = fp_all[~fp_all["Name"].isin(all_drafted)].sort_values("FP_ADP").reset_index(drop=True)
+
+    # ── Pick input ─────────────────────────────────────────────────────────────
+    pi1, pi2, pi3, pi4, pi5 = st.columns([3, 1, 1, 1, 1])
+    with pi1:
+        selected = st.selectbox(
+            "Player", [""] + available["Name"].tolist(),
+            key=f"pick_sel_{st.session_state.pick_key}",
+            label_visibility="collapsed",
+        )
+    with pi2: add_mine   = st.button("➕ My Pick",   use_container_width=True, type="primary")
+    with pi3: add_other  = st.button("➕ Others'",   use_container_width=True)
+    with pi4: undo_mine  = st.button("↩️ Undo Mine", use_container_width=True)
+    with pi5: undo_other = st.button("↩️ Undo Theirs", use_container_width=True)
+
+    if add_mine and selected:
+        row = fp_all[fp_all["Name"] == selected]
+        if not row.empty:
+            r = row.iloc[0]
+            st.session_state.my_picks.append({
+                "Name": r["Name"], "POS": r["POS"], "Team": r["Team"],
+                "FP_Rank": r["FP_Rank"], "FP_ADP": r["FP_ADP"],
+            })
+        st.session_state.pick_key += 1
+        st.rerun()
+
+    if add_other and selected:
+        st.session_state.other_picks.append(selected)
+        st.session_state.pick_key += 1
+        st.rerun()
+
+    if undo_mine and st.session_state.my_picks:
+        st.session_state.my_picks.pop()
+        st.session_state.pick_key += 1
+        st.rerun()
+
+    if undo_other and st.session_state.other_picks:
+        st.session_state.other_picks.pop()
+        st.session_state.pick_key += 1
+        st.rerun()
+
+    st.markdown("---")
+
+    # ── Pick tracker ───────────────────────────────────────────────────────────
+    total_made    = len(st.session_state.my_picks) + len(st.session_state.other_picks)
+    current_pick  = total_made + 1
+    round_num     = (current_pick - 1) // num_teams + 1
+    pick_in_round = (current_pick - 1) % num_teams + 1
+
+    my_turn_this_round = my_slot if round_num % 2 == 1 else num_teams + 1 - my_slot
+    picks_until = my_turn_this_round - pick_in_round
+    if picks_until < 0:
+        nr = round_num + 1
+        next_my_turn = my_slot if nr % 2 == 1 else num_teams + 1 - my_slot
+        picks_until  = (num_teams - pick_in_round) + (next_my_turn - 1)
+
+    tm1, tm2, tm3, tm4, tm5 = st.columns(5)
+    tm1.metric("Overall Pick",    f"#{current_pick}")
+    tm2.metric("Round",           f"{round_num} of {total_rounds}")
+    tm3.metric("Picks Until Yours", "NOW 🎯" if picks_until == 0 else picks_until)
+    tm4.metric("My Picks",        f"{len(st.session_state.my_picks)} / {total_rounds}")
+    tm5.metric("Available",       len(available))
+
+    st.markdown("---")
+
+    # ── Main layout ────────────────────────────────────────────────────────────
+    left_col, right_col = st.columns([1, 2])
+
+    # ── LEFT: Roster + Bye weeks + Stack targets ───────────────────────────────
+    with left_col:
+        st.subheader("My Roster")
+        my_picks = st.session_state.my_picks
+
+        if not my_picks:
+            st.info("No picks yet — add your first pick above.")
+        else:
+            POS_ICONS = {"QB": "🟣", "RB": "🟢", "WR": "🔵", "TE": "🟠"}
+            for pos in ["QB", "RB", "WR", "TE"]:
+                pos_players = [p for p in my_picks if p["POS"] == pos]
+                if not pos_players:
+                    continue
+                icon = POS_ICONS.get(pos, "")
+                st.markdown(f"**{icon} {pos}** ({len(pos_players)})")
+                for p in pos_players:
+                    bye    = bye_map.get(p["Team"])
+                    bye_s  = f"Bye Wk {bye}" if bye else ""
+                    rank_s = f"#{int(p['FP_Rank'])}" if pd.notna(p["FP_Rank"]) else ""
+                    st.markdown(f"&nbsp;&nbsp;&nbsp;{p['Name']} · {p['Team']} {rank_s} {bye_s}")
+
+        # Bye week distribution
+        if my_picks:
+            st.markdown("---")
+            st.subheader("Bye Weeks")
+            bye_counts: dict = {}
+            for p in my_picks:
+                bye = bye_map.get(p["Team"])
+                if bye is not None:
+                    bye_counts.setdefault(bye, []).append(p["Name"])
+
+            if bye_counts:
+                for bye_wk in sorted(bye_counts):
+                    names  = bye_counts[bye_wk]
+                    count  = len(names)
+                    icon   = "🔴" if count >= 3 else "🟡" if count >= 2 else "🟢"
+                    with st.expander(f"{icon} Week {bye_wk} — {count} player{'s' if count > 1 else ''}"):
+                        for n in names:
+                            st.markdown(f"- {n}")
+            else:
+                st.caption("Bye weeks will appear here as you add picks.")
+
+        # Stack targets
+        my_qbs = [p for p in my_picks if p["POS"] == "QB"]
+        if my_qbs:
+            st.markdown("---")
+            st.subheader("📡 Stack Targets")
+            for qb in my_qbs:
+                teammates = available[
+                    (available["Team"] == qb["Team"]) &
+                    (available["POS"].isin(["WR", "TE"]))
+                ].sort_values("FP_ADP")
+                st.markdown(f"**{qb['Name']} ({qb['Team']}) — receivers still available:**")
+                if teammates.empty:
+                    st.caption("All receivers on this team have been drafted.")
+                else:
+                    for _, t in teammates.iterrows():
+                        adp_s  = f"ADP {t['FP_ADP']:.1f}" if pd.notna(t["FP_ADP"]) else ""
+                        rank_s = f"#{int(t['FP_Rank'])}" if pd.notna(t["FP_Rank"]) else ""
+                        st.markdown(f"&nbsp;&nbsp;{t['Name']} · {t['POS']} · {rank_s} {adp_s}")
+
+    # ── RIGHT: Scarcity + Available players ────────────────────────────────────
+    with right_col:
+        st.subheader("Positional Scarcity")
+        scarcity = {"QB": (12, 24), "RB": (24, 48), "WR": (36, 72), "TE": (12, 24)}
+        sc1, sc2, sc3, sc4 = st.columns(4)
+        for col, pos in zip([sc1, sc2, sc3, sc4], ["QB", "RB", "WR", "TE"]):
+            avail_pos = available[available["POS"] == pos]
+            t1, t2    = scarcity[pos]
+            in_t1     = len(avail_pos[avail_pos["FP_Pos_Rank"] <= t1])
+            in_t2     = len(avail_pos[avail_pos["FP_Pos_Rank"] <= t2])
+            col.metric(pos, f"{len(avail_pos)} left",
+                       delta=f"{in_t1} top-{t1} | {in_t2} top-{t2}", delta_color="off")
+
+        st.markdown("---")
+        st.subheader("Available Players")
+
+        af1, af2, af3 = st.columns([2, 1, 1])
+        with af1:
+            pos_filter = st.multiselect(
+                "Position", ["QB", "RB", "WR", "TE"],
+                default=["QB", "RB", "WR", "TE"], key="draft_pos_filter",
+            )
+        with af2:
+            show_top = st.selectbox("Show", [25, 50, 100, "All"], index=1, key="draft_show")
+        with af3:
+            value_only = st.checkbox("Value only", value=False, help="Show players whose ADP has already passed")
+
+        avail_show = available[available["POS"].isin(pos_filter)].copy()
+
+        if value_only:
+            avail_show = avail_show[avail_show["FP_ADP"] < current_pick]
+
+        avail_show["Bye Wk"]       = avail_show["Team"].map(bye_map)
+        avail_show["Playoff Scr"]  = avail_show["Name"].map(playoff_scores)
+        avail_show["Boom%"]        = avail_show["Name"].map(boom_rates)
+        avail_show["Fell"]         = (current_pick - avail_show["FP_ADP"]).round(0).astype("Int64")
+
+        if show_top != "All":
+            avail_show = avail_show.head(int(show_top))
+
+        avail_out = avail_show[["Name", "POS", "Team", "FP_Rank", "FP_ADP",
+                                 "Fell", "Bye Wk", "Playoff Scr", "Boom%"]].copy()
+        avail_out.columns = ["Player", "POS", "Team", "Rank", "ADP",
+                              "Fell", "Bye", "Playoff", "Boom%"]
+        avail_out["ADP"]     = avail_out["ADP"].round(1)
+        avail_out["Fell"]    = avail_out["Fell"].where(avail_out["Fell"] > 0, other=pd.NA)
+
+        POS_BG = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
+                  "WR": "rgba(66,165,245,0.18)",  "TE": "rgba(255,167,38,0.18)"}
+
+        def color_avail(row):
+            bg = POS_BG.get(row["POS"], "")
+            # Highlight strong value picks (fell ≥ 8 picks past ADP)
+            try:
+                if pd.notna(row["Fell"]) and int(row["Fell"]) >= 8:
+                    bg = "rgba(255,235,59,0.22)"   # yellow = clear value
+            except (TypeError, ValueError):
+                pass
+            return [f"background-color: {bg}"] * len(row) if bg else [""] * len(row)
+
+        st.dataframe(
+            avail_out.style.apply(color_avail, axis=1),
+            use_container_width=True,
+            hide_index=True,
+            height=min(60 + len(avail_out) * 35, 520),
+        )
+
+        st.caption(
+            "🟣 QB &nbsp; 🟢 RB &nbsp; 🔵 WR &nbsp; 🟠 TE &nbsp; 🟡 **Value pick** (fell ≥8 picks past ADP) &nbsp;"
+            "**Playoff** = avg def rank wks 14–17 (32=easiest) &nbsp; **Boom%** = % of 2025 games above threshold",
+            unsafe_allow_html=True,
+        )
