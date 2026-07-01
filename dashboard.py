@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
 from pathlib import Path
+from streamlit_sortables import sort_items
 
 st.set_page_config(
     page_title="Fantasy Model | Best Ball Dashboard",
@@ -1174,44 +1175,81 @@ elif tab_choice == "🎯 Draft Room":
     all_drafted = {p["Name"] for p in st.session_state.my_picks} | set(st.session_state.other_picks)
     available   = fp_all[~fp_all["Name"].isin(all_drafted)].sort_values("FP_ADP").reset_index(drop=True)
 
-    # ── Pick input ─────────────────────────────────────────────────────────────
-    pi1, pi2, pi3, pi4, pi5 = st.columns([3, 1, 1, 1, 1])
-    with pi1:
-        selected = st.selectbox(
-            "Player", [""] + available["Name"].tolist(),
-            key=f"pick_sel_{st.session_state.pick_key}",
-            label_visibility="collapsed",
-        )
-    with pi2: add_mine   = st.button("➕ My Pick",   use_container_width=True, type="primary")
-    with pi3: add_other  = st.button("➕ Others'",   use_container_width=True)
-    with pi4: undo_mine  = st.button("↩️ Undo Mine", use_container_width=True)
-    with pi5: undo_other = st.button("↩️ Undo Theirs", use_container_width=True)
+    # ── Drag-and-drop pick tracker ─────────────────────────────────────────────
+    st.markdown("**Drag players into your bucket or others' — drag back to remove**")
+    df1, df2 = st.columns([2, 1])
+    with df1:
+        drag_search = st.text_input("Filter available", placeholder="Search by name…",
+                                    key="drag_search", label_visibility="collapsed")
+    with df2:
+        drag_pos = st.multiselect("Pos", ["QB", "RB", "WR", "TE"],
+                                  default=["QB", "RB", "WR", "TE"],
+                                  key="drag_pos", label_visibility="collapsed")
 
-    if add_mine and selected:
-        row = fp_all[fp_all["Name"] == selected]
-        if not row.empty:
-            r = row.iloc[0]
-            st.session_state.my_picks.append({
-                "Name": r["Name"], "POS": r["POS"], "Team": r["Team"],
-                "FP_Rank": r["FP_Rank"], "FP_ADP": r["FP_ADP"],
-            })
-        st.session_state.pick_key += 1
-        st.rerun()
+    drag_pool = available[available["POS"].isin(drag_pos)] if drag_pos else available
+    if drag_search:
+        drag_pool = drag_pool[drag_pool["Name"].str.contains(drag_search, case=False, na=False)]
+    # Format labels so position is visible inside the list
+    def _label(row):
+        adp = f"{row['FP_ADP']:.0f}" if pd.notna(row["FP_ADP"]) else "?"
+        return f"{row['Name']} ({row['POS']} · {row['Team']} · #{adp})"
+    drag_labels   = drag_pool.head(50).apply(_label, axis=1).tolist()
+    name_from_lbl = {_label(row): row["Name"] for _, row in drag_pool.head(50).iterrows()}
 
-    if add_other and selected:
-        st.session_state.other_picks.append(selected)
-        st.session_state.pick_key += 1
-        st.rerun()
+    my_labels    = [_label(fp_all[fp_all["Name"] == p["Name"]].iloc[0])
+                    if not fp_all[fp_all["Name"] == p["Name"]].empty else p["Name"]
+                    for p in st.session_state.my_picks]
+    other_labels = [_label(fp_all[fp_all["Name"] == n].iloc[0])
+                    if not fp_all[fp_all["Name"] == n].empty else n
+                    for n in st.session_state.other_picks]
 
-    if undo_mine and st.session_state.my_picks:
-        st.session_state.my_picks.pop()
-        st.session_state.pick_key += 1
-        st.rerun()
+    result = sort_items(
+        [
+            {"header": f"📋 Available ({len(drag_pool)} — showing {min(50, len(drag_pool))})", "items": drag_labels},
+            {"header": f"⭐ My Picks ({len(st.session_state.my_picks)})",  "items": my_labels},
+            {"header": f"👥 Others' Picks ({len(st.session_state.other_picks)})", "items": other_labels},
+        ],
+        multi_containers=True,
+        key="draft_sortable",
+    )
 
-    if undo_other and st.session_state.other_picks:
-        st.session_state.other_picks.pop()
-        st.session_state.pick_key += 1
-        st.rerun()
+    if result:
+        def _name(lbl):
+            # Extract name from "Name (POS · TEAM · #ADP)" or bare name
+            return name_from_lbl.get(lbl) or lbl.split(" (")[0]
+
+        res_my    = [_name(l) for l in result[1]["items"]]
+        res_other = [_name(l) for l in result[2]["items"]]
+        changed   = False
+
+        prev_my = {p["Name"] for p in st.session_state.my_picks}
+        for name in res_my:
+            if name not in prev_my:
+                row = fp_all[fp_all["Name"] == name]
+                if not row.empty:
+                    r = row.iloc[0]
+                    st.session_state.my_picks.append({
+                        "Name": r["Name"], "POS": r["POS"], "Team": r["Team"],
+                        "FP_Rank": r["FP_Rank"], "FP_ADP": r["FP_ADP"],
+                    })
+                    changed = True
+        for name in list(prev_my):
+            if name not in res_my:
+                st.session_state.my_picks = [p for p in st.session_state.my_picks if p["Name"] != name]
+                changed = True
+
+        prev_other = set(st.session_state.other_picks)
+        for name in res_other:
+            if name not in prev_other:
+                st.session_state.other_picks.append(name)
+                changed = True
+        for name in list(prev_other):
+            if name not in res_other:
+                st.session_state.other_picks = [p for p in st.session_state.other_picks if p != name]
+                changed = True
+
+        if changed:
+            st.rerun()
 
     st.markdown("---")
 
