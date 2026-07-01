@@ -1,0 +1,245 @@
+season,week,game_date,home_team,away_team,location,kickoff_et,network,home_oc,home_oc_play_caller,home_dc,away_oc,away_oc_play_caller,away_dc,notes
+2026,1,2026-09-09,Seattle Seahawks,New England Patriots,Seattle WA,8:20 PM,NBC,Brian Fleury,OC,Aden Durde,Josh McDaniels,OC,Zak Kuhr,Super Bowl LX rematch
+2026,1,2026-09-10,Los Angeles Rams,San Francisco 49ers,Melbourne Australia,8:35 PM,Netflix,Nate Scheelhaase,OC,Chris Shula,Klay Kubiak,OC,Raheem Morris,International - Melbourne; McVay calls plays
+2026,1,2026-09-13,Carolina Panthers,Chicago Bears,Charlotte NC,1:00 PM,FOX,Brad Idzik,OC,Ejiro Evero,Press Taylor,OC,Dennis Allen,
+2026,1,2026-09-13,Cincinnati Bengals,Tampa Bay Buccaneers,Cincinnati OH,1:00 PM,FOX,Dan Pitcher,OC,Al Golden,Zac Robinson,OC,TBD,
+2026,1,2026-09-13,Detroit Lions,New Orleans Saints,Detroit MI,1:00 PM,FOX,Drew Petzing,OC,Kelvin Sheppard,Doug Nussmeier,OC,Brandon Staley,
+2026,1,2026-09-13,Houston Texans,Buffalo Bills,Houston TX,1:00 PM,CBS,Nick Caley,OC,Matt Burke,Pete Carmichael Jr.,OC,Jim Leonhard,
+2026,1,2026-09-13,Indianapolis Colts,Baltimore Ravens,Indianapolis IN,1:00 PM,CBS,Jim Bob Cooter,OC,Lou Anarumo,Declan Doyle,OC,Anthony Weaver,
+2026,1,2026-09-13,Jacksonville Jaguars,Cleveland Browns,Jacksonville FL,1:00 PM,CBS,Grant Udinski,OC,Anthony Campanile,Travis Switzer,OC,Mike Rutenberg,
+2026,1,2026-09-13,Pittsburgh Steelers,Atlanta Falcons,Pittsburgh PA,1:00 PM,FOX,Brian Angelichio,OC,Patrick Graham,Tommy Rees,OC,Jeff Ulbrich,
+2026,1,2026-09-13,Tennessee Titans,New York Jets,Nashville TN,1:00 PM,CBS,Brian Daboll,OC,Gus Bradley,Frank Reich,OC,Brian Duker,
+2026,1,2026-09-13,Los Angeles Chargers,Arizona Cardinals,Inglewood CA,4:25 PM,CBS,Mike McDaniel,OC,Chris O'Leary,Nathaniel Hackett,OC,Nick Rallis,
+2026,1,2026-09-13,Las Vegas Raiders,Miami Dolphins,Las Vegas NV,4:25 PM,FOX,Andrew Janocko,OC,Rob Leonard,Bobby Slowik,OC,Sean Duggan,McDaniel calls plays
+2026,1,2026-09-13,Minnesota Vikings,Green Bay Packers,Minneapolis MN,4:25 PM,CBS,Wes Phillips,OC,Brian Flores,Adam Stenavich,OC,Jonathan Gannon,
+2026,1,2026-09-13,Philadelphia Eagles,Washington Commanders,Philadelphia PA,4:25 PM,FOX,Sean Mannion,OC,Vic Fangio,David Blough,OC,Daronte Jones,
+2026,1,2026-09-13,New York Giants,Dallas Cowboys,East Rutherford NJ,8:20 PM,NBC,Matt Nagy,OC,Dennard Wilson,Klayton Adams,OC,Christian Parker,SNF - Harbaugh debut as Giants HC
+2026,1,2026-09-14,Kansas City Chiefs,Denver Broncos,Kansas City MO,8:15 PM,ESPN/ABC,Eric Bieniemy,HC,Steve Spagnuolo,Davis Webb,OC,Vance Joseph,MNF; Reid calls plays
+2026,2,2026-09-17,Buffalo Bills,Detroit Lions,Orchard Park NY,8:15 PM,AMZ,Pete Carmichael Jr.,OC,Jim Leonhard,Drew Petzing,OC,Kelvin Sheppard,TNF
+2026,2,2026-09-20,Atlanta Falcons,Carolina Panthers,Atlanta GA,1:00 PM,FOX,Tommy Rees,OC,Jeff Ulbrich,Brad Idzik,OC,Ejiro Evero,
+2026,2,2026-09-20,Baltimore Ravens,New Orleans Saints,Baltimore MD,1:00 PM,CBS,Declan Doyle,OC,Anthony Weaver,Doug Nussmeier,OC,Brandon Staley,
+2026,2,2026-09-20,Chicago Bears,Minnesota Vikings,Chicago IL,1:00 PM,FOX,Press Taylor,OC,Dennis Allen,Wes Phillips,OC,Brian Flores,
+2026,2,2026-09-20,Houston Texans,Cincinnati Bengals,Houston TX,1:00 PM,CBS,Nick Caley,OC,Matt Burke,Dan Pitcher,OC,Al Golden,
+2026,2,2026-09-20,New England Patriots,Pittsburgh Steelers,Foxborough MA,1:00 PM,CBS,Josh McDaniels,OC,Zak Kuhr,Brian Angelichio,OC,Patrick Graham,
+2026,2,2026-09-20,New York Jets,Green Bay Packers,East Rutherford NJ,1:00 PM,FOX,Frank Reich,OC,Brian Duker,Adam Stenavich,OC,Jonathan Gannon,
+2026,2,2026-09-20,Tampa Bay Buccaneers,Cleveland Browns,Tampa FL,1:00 PM,CBS,Zac Robinson,OC,TBD,Travis Switzer,OC,Mike Rutenberg,
+2026,2,2026-09-20,Tennessee Titans,Philadelphia Eagles,Nashville TN,1:00 PM,FOX,Brian Daboll,OC,Gus Bradley,Sean Mannion,OC,Vic Fangio,
+2026,2,2026-09-20,Denver Broncos,Jacksonville Jaguars,Denver CO,4:05 PM,CBS,Davis Webb,OC,Vance Joseph,Grant Udinski,OC,Anthony Campanile,
+2026,2,2026-09-20,Los Angeles Chargers,Las Vegas Raiders,Inglewood CA,4:05 PM,CBS,Mike McDaniel,OC,Chris O'Leary,Andrew Janocko,OC,Rob Leonard,
+2026,2,2026-09-20,Arizona Cardinals,Seattle Seahawks,Glendale AZ,4:25 PM,FOX,Nathaniel Hackett,OC,Nick Rallis,Brian Fleury,OC,Aden Durde,
+2026,2,2026-09-20,Dallas Cowboys,Washington Commanders,Arlington TX,4:25 PM,FOX,Klayton Adams,OC,Christian Parker,David Blough,OC,Daronte Jones,
+2026,2,2026-09-20,San Francisco 49ers,Miami Dolphins,Santa Clara CA,4:25 PM,FOX,Klay Kubiak,OC,Raheem Morris,Bobby Slowik,OC,Sean Duggan,
+2026,2,2026-09-20,Kansas City Chiefs,Indianapolis Colts,Kansas City MO,8:20 PM,NBC,Eric Bieniemy,HC,Steve Spagnuolo,Jim Bob Cooter,OC,Lou Anarumo,SNF
+2026,2,2026-09-21,Los Angeles Rams,New York Giants,Inglewood CA,8:15 PM,ESPN/ABC,Nate Scheelhaase,OC,Chris Shula,Matt Nagy,OC,Dennard Wilson,MNF
+2026,3,2026-09-24,Green Bay Packers,Atlanta Falcons,Green Bay WI,8:15 PM,AMZ,Adam Stenavich,OC,Jonathan Gannon,Tommy Rees,OC,Jeff Ulbrich,TNF
+2026,3,2026-09-27,Buffalo Bills,Los Angeles Chargers,Orchard Park NY,1:00 PM,FOX,Pete Carmichael Jr.,OC,Jim Leonhard,Mike McDaniel,OC,Chris O'Leary,
+2026,3,2026-09-27,Cleveland Browns,Carolina Panthers,Cleveland OH,1:00 PM,FOX,Travis Switzer,OC,Mike Rutenberg,Brad Idzik,OC,Ejiro Evero,
+2026,3,2026-09-27,Detroit Lions,New York Jets,Detroit MI,1:00 PM,FOX,Drew Petzing,OC,Kelvin Sheppard,Frank Reich,OC,Brian Duker,
+2026,3,2026-09-27,Indianapolis Colts,Houston Texans,Indianapolis IN,1:00 PM,CBS,Jim Bob Cooter,OC,Lou Anarumo,Nick Caley,OC,Matt Burke,
+2026,3,2026-09-27,Jacksonville Jaguars,New England Patriots,Jacksonville FL,1:00 PM,CBS,Grant Udinski,OC,Anthony Campanile,Josh McDaniels,OC,Zak Kuhr,
+2026,3,2026-09-27,Miami Dolphins,Kansas City Chiefs,Miami FL,1:00 PM,CBS,Bobby Slowik,OC,Sean Duggan,Eric Bieniemy,HC,Steve Spagnuolo,
+2026,3,2026-09-27,New York Giants,Tennessee Titans,East Rutherford NJ,1:00 PM,CBS,Matt Nagy,OC,Dennard Wilson,Brian Daboll,OC,Gus Bradley,
+2026,3,2026-09-27,Pittsburgh Steelers,Cincinnati Bengals,Pittsburgh PA,1:00 PM,CBS,Brian Angelichio,OC,Patrick Graham,Dan Pitcher,OC,Al Golden,
+2026,3,2026-09-27,Washington Commanders,Seattle Seahawks,Landover MD,1:00 PM,FOX,David Blough,OC,Daronte Jones,Brian Fleury,OC,Aden Durde,
+2026,3,2026-09-27,San Francisco 49ers,Arizona Cardinals,Santa Clara CA,4:05 PM,FOX,Klay Kubiak,OC,Raheem Morris,Nathaniel Hackett,OC,Nick Rallis,
+2026,3,2026-09-27,Tampa Bay Buccaneers,Minnesota Vikings,Tampa FL,4:05 PM,FOX,Zac Robinson,OC,TBD,Wes Phillips,OC,Brian Flores,
+2026,3,2026-09-27,Dallas Cowboys,Baltimore Ravens,Rio de Janeiro Brazil,4:25 PM,CBS,Klayton Adams,OC,Christian Parker,Declan Doyle,OC,Anthony Weaver,International - Rio de Janeiro
+2026,3,2026-09-27,New Orleans Saints,Las Vegas Raiders,New Orleans LA,4:25 PM,CBS,Doug Nussmeier,OC,Brandon Staley,Andrew Janocko,OC,Rob Leonard,
+2026,3,2026-09-27,Denver Broncos,Los Angeles Rams,Denver CO,8:20 PM,NBC,Davis Webb,OC,Vance Joseph,Nate Scheelhaase,OC,Chris Shula,SNF
+2026,3,2026-09-28,Chicago Bears,Philadelphia Eagles,Chicago IL,8:15 PM,ESPN/ABC,Press Taylor,OC,Dennis Allen,Sean Mannion,OC,Vic Fangio,MNF
+2026,4,2026-10-01,Cleveland Browns,Pittsburgh Steelers,Cleveland OH,8:15 PM,AMZ,Travis Switzer,OC,Mike Rutenberg,Brian Angelichio,OC,Patrick Graham,TNF
+2026,4,2026-10-04,Washington Commanders,Indianapolis Colts,London UK,9:30 AM,NFLN,David Blough,OC,Daronte Jones,Jim Bob Cooter,OC,Lou Anarumo,International - Tottenham
+2026,4,2026-10-04,Baltimore Ravens,Tennessee Titans,Baltimore MD,1:00 PM,CBS,Declan Doyle,OC,Anthony Weaver,Brian Daboll,OC,Gus Bradley,
+2026,4,2026-10-04,Buffalo Bills,New England Patriots,Orchard Park NY,1:00 PM,CBS,Pete Carmichael Jr.,OC,Jim Leonhard,Josh McDaniels,OC,Zak Kuhr,
+2026,4,2026-10-04,Chicago Bears,New York Jets,Chicago IL,1:00 PM,FOX,Press Taylor,OC,Dennis Allen,Frank Reich,OC,Brian Duker,
+2026,4,2026-10-04,Cincinnati Bengals,Jacksonville Jaguars,Cincinnati OH,1:00 PM,CBS,Dan Pitcher,OC,Al Golden,Grant Udinski,OC,Anthony Campanile,
+2026,4,2026-10-04,Houston Texans,Dallas Cowboys,Houston TX,1:00 PM,FOX,Nick Caley,OC,Matt Burke,Klayton Adams,OC,Christian Parker,
+2026,4,2026-10-04,New York Giants,Arizona Cardinals,East Rutherford NJ,1:00 PM,CBS,Matt Nagy,OC,Dennard Wilson,Nathaniel Hackett,OC,Nick Rallis,
+2026,4,2026-10-04,Philadelphia Eagles,Los Angeles Rams,Philadelphia PA,1:00 PM,FOX,Sean Mannion,OC,Vic Fangio,Nate Scheelhaase,OC,Chris Shula,
+2026,4,2026-10-04,Tampa Bay Buccaneers,Green Bay Packers,Tampa FL,1:00 PM,FOX,Zac Robinson,OC,TBD,Adam Stenavich,OC,Jonathan Gannon,
+2026,4,2026-10-04,Miami Dolphins,Minnesota Vikings,Miami FL,4:05 PM,FOX,Bobby Slowik,OC,Sean Duggan,Wes Phillips,OC,Brian Flores,
+2026,4,2026-10-04,Las Vegas Raiders,Kansas City Chiefs,Las Vegas NV,4:25 PM,CBS,Andrew Janocko,OC,Rob Leonard,Eric Bieniemy,HC,Steve Spagnuolo,
+2026,4,2026-10-04,Seattle Seahawks,Los Angeles Chargers,Seattle WA,4:25 PM,CBS,Brian Fleury,OC,Aden Durde,Mike McDaniel,OC,Chris O'Leary,
+2026,4,2026-10-04,San Francisco 49ers,Denver Broncos,Santa Clara CA,4:25 PM,CBS,Klay Kubiak,OC,Raheem Morris,Davis Webb,OC,Vance Joseph,
+2026,4,2026-10-04,Carolina Panthers,Detroit Lions,Charlotte NC,8:20 PM,NBC,Brad Idzik,OC,Ejiro Evero,Drew Petzing,OC,Kelvin Sheppard,SNF
+2026,4,2026-10-05,New Orleans Saints,Atlanta Falcons,New Orleans LA,8:15 PM,ESPN,Doug Nussmeier,OC,Brandon Staley,Tommy Rees,OC,Jeff Ulbrich,MNF
+2026,5,2026-10-08,Dallas Cowboys,Tampa Bay Buccaneers,Arlington TX,8:15 PM,AMZ,Klayton Adams,OC,Christian Parker,Zac Robinson,OC,TBD,TNF
+2026,5,2026-10-11,Philadelphia Eagles,Jacksonville Jaguars,London UK,9:30 AM,NFLN,Sean Mannion,OC,Vic Fangio,Grant Udinski,OC,Anthony Campanile,International - Tottenham
+2026,5,2026-10-11,Miami Dolphins,Cincinnati Bengals,Miami FL,1:00 PM,FOX,Bobby Slowik,OC,Sean Duggan,Dan Pitcher,OC,Al Golden,
+2026,5,2026-10-11,New England Patriots,Las Vegas Raiders,Foxborough MA,1:00 PM,CBS,Josh McDaniels,OC,Zak Kuhr,Andrew Janocko,OC,Rob Leonard,
+2026,5,2026-10-11,New Orleans Saints,Minnesota Vikings,New Orleans LA,1:00 PM,FOX,Doug Nussmeier,OC,Brandon Staley,Wes Phillips,OC,Brian Flores,
+2026,5,2026-10-11,New York Jets,Cleveland Browns,East Rutherford NJ,1:00 PM,CBS,Frank Reich,OC,Brian Duker,Travis Switzer,OC,Mike Rutenberg,
+2026,5,2026-10-11,Pittsburgh Steelers,Indianapolis Colts,Pittsburgh PA,1:00 PM,CBS,Brian Angelichio,OC,Patrick Graham,Jim Bob Cooter,OC,Lou Anarumo,
+2026,5,2026-10-11,Tennessee Titans,Houston Texans,Nashville TN,1:00 PM,CBS,Brian Daboll,OC,Gus Bradley,Nick Caley,OC,Matt Burke,
+2026,5,2026-10-11,Washington Commanders,New York Giants,Landover MD,1:00 PM,FOX,David Blough,OC,Daronte Jones,Matt Nagy,OC,Dennard Wilson,
+2026,5,2026-10-11,Los Angeles Chargers,Denver Broncos,Inglewood CA,4:05 PM,CBS,Mike McDaniel,OC,Chris O'Leary,Davis Webb,OC,Vance Joseph,
+2026,5,2026-10-11,Arizona Cardinals,Detroit Lions,Glendale AZ,4:25 PM,FOX,Nathaniel Hackett,OC,Nick Rallis,Drew Petzing,OC,Kelvin Sheppard,
+2026,5,2026-10-11,Green Bay Packers,Chicago Bears,Green Bay WI,4:25 PM,FOX,Adam Stenavich,OC,Jonathan Gannon,Press Taylor,OC,Dennis Allen,
+2026,5,2026-10-11,Seattle Seahawks,San Francisco 49ers,Seattle WA,4:25 PM,FOX,Brian Fleury,OC,Aden Durde,Klay Kubiak,OC,Raheem Morris,
+2026,5,2026-10-11,Atlanta Falcons,Baltimore Ravens,Atlanta GA,8:20 PM,NBC,Tommy Rees,OC,Jeff Ulbrich,Declan Doyle,OC,Anthony Weaver,SNF
+2026,5,2026-10-12,Los Angeles Rams,Buffalo Bills,Inglewood CA,8:15 PM,ESPN/ABC,Nate Scheelhaase,OC,Chris Shula,Pete Carmichael Jr.,OC,Jim Leonhard,MNF
+2026,6,2026-10-15,Denver Broncos,Seattle Seahawks,Denver CO,8:15 PM,AMZ,Davis Webb,OC,Vance Joseph,Brian Fleury,OC,Aden Durde,TNF
+2026,6,2026-10-18,Jacksonville Jaguars,Houston Texans,London UK,9:30 AM,NFLN,Grant Udinski,OC,Anthony Campanile,Nick Caley,OC,Matt Burke,International - Wembley
+2026,6,2026-10-18,Atlanta Falcons,Chicago Bears,Atlanta GA,1:00 PM,FOX,Tommy Rees,OC,Jeff Ulbrich,Press Taylor,OC,Dennis Allen,
+2026,6,2026-10-18,Cleveland Browns,Baltimore Ravens,Cleveland OH,1:00 PM,FOX,Travis Switzer,OC,Mike Rutenberg,Declan Doyle,OC,Anthony Weaver,
+2026,6,2026-10-18,Indianapolis Colts,Tennessee Titans,Indianapolis IN,1:00 PM,FOX,Jim Bob Cooter,OC,Lou Anarumo,Brian Daboll,OC,Gus Bradley,
+2026,6,2026-10-18,New England Patriots,New York Jets,Foxborough MA,1:00 PM,CBS,Josh McDaniels,OC,Zak Kuhr,Frank Reich,OC,Brian Duker,
+2026,6,2026-10-18,New York Giants,New Orleans Saints,East Rutherford NJ,1:00 PM,FOX,Matt Nagy,OC,Dennard Wilson,Doug Nussmeier,OC,Brandon Staley,
+2026,6,2026-10-18,Philadelphia Eagles,Carolina Panthers,Philadelphia PA,1:00 PM,CBS,Sean Mannion,OC,Vic Fangio,Brad Idzik,OC,Ejiro Evero,
+2026,6,2026-10-18,Tampa Bay Buccaneers,Pittsburgh Steelers,Tampa FL,1:00 PM,CBS,Zac Robinson,OC,TBD,Brian Angelichio,OC,Patrick Graham,
+2026,6,2026-10-18,Los Angeles Rams,Arizona Cardinals,Inglewood CA,4:05 PM,FOX,Nate Scheelhaase,OC,Chris Shula,Nathaniel Hackett,OC,Nick Rallis,
+2026,6,2026-10-18,Kansas City Chiefs,Los Angeles Chargers,Kansas City MO,4:25 PM,CBS,Eric Bieniemy,HC,Steve Spagnuolo,Mike McDaniel,OC,Chris O'Leary,
+2026,6,2026-10-18,Las Vegas Raiders,Buffalo Bills,Las Vegas NV,4:25 PM,CBS,Andrew Janocko,OC,Rob Leonard,Pete Carmichael Jr.,OC,Jim Leonhard,
+2026,6,2026-10-18,Green Bay Packers,Dallas Cowboys,Green Bay WI,8:20 PM,NBC,Adam Stenavich,OC,Jonathan Gannon,Klayton Adams,OC,Christian Parker,SNF
+2026,6,2026-10-19,San Francisco 49ers,Washington Commanders,Santa Clara CA,8:15 PM,ESPN/ABC,Klay Kubiak,OC,Raheem Morris,David Blough,OC,Daronte Jones,MNF
+2026,7,2026-10-22,Chicago Bears,New England Patriots,Chicago IL,8:15 PM,AMZ,Press Taylor,OC,Dennis Allen,Josh McDaniels,OC,Zak Kuhr,TNF
+2026,7,2026-10-25,New Orleans Saints,Pittsburgh Steelers,Paris France,9:30 AM,NFLN,Doug Nussmeier,OC,Brandon Staley,Brian Angelichio,OC,Patrick Graham,International - Paris
+2026,7,2026-10-25,Atlanta Falcons,San Francisco 49ers,Atlanta GA,1:00 PM,FOX,Tommy Rees,OC,Jeff Ulbrich,Klay Kubiak,OC,Raheem Morris,
+2026,7,2026-10-25,Baltimore Ravens,Cincinnati Bengals,Baltimore MD,1:00 PM,CBS,Declan Doyle,OC,Anthony Weaver,Dan Pitcher,OC,Al Golden,
+2026,7,2026-10-25,Carolina Panthers,Tampa Bay Buccaneers,Charlotte NC,1:00 PM,FOX,Brad Idzik,OC,Ejiro Evero,Zac Robinson,OC,TBD,
+2026,7,2026-10-25,Houston Texans,New York Giants,Houston TX,1:00 PM,FOX,Nick Caley,OC,Matt Burke,Matt Nagy,OC,Dennard Wilson,
+2026,7,2026-10-25,Minnesota Vikings,Indianapolis Colts,Minneapolis MN,1:00 PM,CBS,Wes Phillips,OC,Brian Flores,Jim Bob Cooter,OC,Lou Anarumo,
+2026,7,2026-10-25,New York Jets,Miami Dolphins,East Rutherford NJ,1:00 PM,CBS,Frank Reich,OC,Brian Duker,Bobby Slowik,OC,Sean Duggan,
+2026,7,2026-10-25,Tennessee Titans,Cleveland Browns,Nashville TN,1:00 PM,CBS,Brian Daboll,OC,Gus Bradley,Travis Switzer,OC,Mike Rutenberg,
+2026,7,2026-10-25,Arizona Cardinals,Denver Broncos,Glendale AZ,4:05 PM,CBS,Nathaniel Hackett,OC,Nick Rallis,Davis Webb,OC,Vance Joseph,
+2026,7,2026-10-25,Detroit Lions,Green Bay Packers,Detroit MI,4:25 PM,FOX,Drew Petzing,OC,Kelvin Sheppard,Adam Stenavich,OC,Jonathan Gannon,
+2026,7,2026-10-25,Las Vegas Raiders,Los Angeles Rams,Las Vegas NV,4:25 PM,FOX,Andrew Janocko,OC,Rob Leonard,Nate Scheelhaase,OC,Chris Shula,
+2026,7,2026-10-25,Seattle Seahawks,Kansas City Chiefs,Seattle WA,8:20 PM,NBC,Brian Fleury,OC,Aden Durde,Eric Bieniemy,HC,Steve Spagnuolo,SNF
+2026,7,2026-10-26,Philadelphia Eagles,Dallas Cowboys,Philadelphia PA,8:15 PM,ESPN/ABC,Sean Mannion,OC,Vic Fangio,Klayton Adams,OC,Christian Parker,MNF
+2026,8,2026-10-29,Green Bay Packers,Carolina Panthers,Green Bay WI,8:15 PM,AMZ,Adam Stenavich,OC,Jonathan Gannon,Brad Idzik,OC,Ejiro Evero,TNF
+2026,8,2026-11-01,Baltimore Ravens,Buffalo Bills,Baltimore MD,1:00 PM,CBS,Declan Doyle,OC,Anthony Weaver,Pete Carmichael Jr.,OC,Jim Leonhard,
+2026,8,2026-11-01,Cincinnati Bengals,Tennessee Titans,Cincinnati OH,1:00 PM,CBS,Dan Pitcher,OC,Al Golden,Brian Daboll,OC,Gus Bradley,
+2026,8,2026-11-01,Dallas Cowboys,Arizona Cardinals,Arlington TX,1:00 PM,FOX,Klayton Adams,OC,Christian Parker,Nathaniel Hackett,OC,Nick Rallis,
+2026,8,2026-11-01,Detroit Lions,Minnesota Vikings,Detroit MI,1:00 PM,FOX,Drew Petzing,OC,Kelvin Sheppard,Wes Phillips,OC,Brian Flores,
+2026,8,2026-11-01,Jacksonville Jaguars,Indianapolis Colts,Jacksonville FL,1:00 PM,CBS,Grant Udinski,OC,Anthony Campanile,Jim Bob Cooter,OC,Lou Anarumo,
+2026,8,2026-11-01,New York Jets,Las Vegas Raiders,East Rutherford NJ,1:00 PM,FOX,Frank Reich,OC,Brian Duker,Andrew Janocko,OC,Rob Leonard,
+2026,8,2026-11-01,Pittsburgh Steelers,Cleveland Browns,Pittsburgh PA,1:00 PM,CBS,Brian Angelichio,OC,Patrick Graham,Travis Switzer,OC,Mike Rutenberg,
+2026,8,2026-11-01,Tampa Bay Buccaneers,Atlanta Falcons,Tampa FL,1:00 PM,FOX,Zac Robinson,OC,TBD,Tommy Rees,OC,Jeff Ulbrich,
+2026,8,2026-11-01,Los Angeles Rams,Los Angeles Chargers,Inglewood CA,4:05 PM,FOX,Nate Scheelhaase,OC,Chris Shula,Mike McDaniel,OC,Chris O'Leary,
+2026,8,2026-11-01,Kansas City Chiefs,Denver Broncos,Kansas City MO,4:25 PM,CBS,Eric Bieniemy,HC,Steve Spagnuolo,Davis Webb,OC,Vance Joseph,
+2026,8,2026-11-01,Miami Dolphins,New England Patriots,Miami FL,4:25 PM,CBS,Bobby Slowik,OC,Sean Duggan,Josh McDaniels,OC,Zak Kuhr,
+2026,8,2026-11-01,Washington Commanders,Philadelphia Eagles,Landover MD,8:20 PM,NBC,David Blough,OC,Daronte Jones,Sean Mannion,OC,Vic Fangio,SNF
+2026,8,2026-11-02,Seattle Seahawks,Chicago Bears,Seattle WA,8:15 PM,ESPN,Brian Fleury,OC,Aden Durde,Press Taylor,OC,Dennis Allen,MNF
+2026,9,2026-11-05,Baltimore Ravens,Jacksonville Jaguars,Baltimore MD,8:15 PM,AMZ,Declan Doyle,OC,Anthony Weaver,Grant Udinski,OC,Anthony Campanile,TNF
+2026,9,2026-11-08,Atlanta Falcons,Cincinnati Bengals,Madrid Spain,9:30 AM,NFLN,Tommy Rees,OC,Jeff Ulbrich,Dan Pitcher,OC,Al Golden,International - Madrid
+2026,9,2026-11-08,Carolina Panthers,Denver Broncos,Charlotte NC,1:00 PM,CBS,Brad Idzik,OC,Ejiro Evero,Davis Webb,OC,Vance Joseph,
+2026,9,2026-11-08,Indianapolis Colts,Dallas Cowboys,Indianapolis IN,1:00 PM,FOX,Jim Bob Cooter,OC,Lou Anarumo,Klayton Adams,OC,Christian Parker,
+2026,9,2026-11-08,Kansas City Chiefs,New York Jets,Kansas City MO,1:00 PM,CBS,Eric Bieniemy,HC,Steve Spagnuolo,Frank Reich,OC,Brian Duker,
+2026,9,2026-11-08,Miami Dolphins,Detroit Lions,Miami FL,1:00 PM,FOX,Bobby Slowik,OC,Sean Duggan,Drew Petzing,OC,Kelvin Sheppard,
+2026,9,2026-11-08,New Orleans Saints,Cleveland Browns,New Orleans LA,1:00 PM,CBS,Doug Nussmeier,OC,Brandon Staley,Travis Switzer,OC,Mike Rutenberg,
+2026,9,2026-11-08,Philadelphia Eagles,New York Giants,Philadelphia PA,1:00 PM,FOX,Sean Mannion,OC,Vic Fangio,Matt Nagy,OC,Dennard Wilson,
+2026,9,2026-11-08,Washington Commanders,Los Angeles Rams,Landover MD,1:00 PM,FOX,David Blough,OC,Daronte Jones,Nate Scheelhaase,OC,Chris Shula,
+2026,9,2026-11-08,Los Angeles Chargers,Houston Texans,Inglewood CA,4:05 PM,CBS,Mike McDaniel,OC,Chris O'Leary,Nick Caley,OC,Matt Burke,
+2026,9,2026-11-08,San Francisco 49ers,Las Vegas Raiders,Santa Clara CA,4:05 PM,CBS,Klay Kubiak,OC,Raheem Morris,Andrew Janocko,OC,Rob Leonard,
+2026,9,2026-11-08,New England Patriots,Green Bay Packers,Foxborough MA,4:25 PM,FOX,Josh McDaniels,OC,Zak Kuhr,Adam Stenavich,OC,Jonathan Gannon,
+2026,9,2026-11-08,Seattle Seahawks,Arizona Cardinals,Seattle WA,4:25 PM,FOX,Brian Fleury,OC,Aden Durde,Nathaniel Hackett,OC,Nick Rallis,
+2026,9,2026-11-08,Chicago Bears,Tampa Bay Buccaneers,Chicago IL,8:20 PM,NBC,Press Taylor,OC,Dennis Allen,Zac Robinson,OC,TBD,SNF
+2026,9,2026-11-09,Minnesota Vikings,Buffalo Bills,Minneapolis MN,8:15 PM,ESPN/ABC,Wes Phillips,OC,Brian Flores,Pete Carmichael Jr.,OC,Jim Leonhard,MNF
+2026,10,2026-11-12,New York Giants,Washington Commanders,East Rutherford NJ,8:15 PM,AMZ,Matt Nagy,OC,Dennard Wilson,David Blough,OC,Daronte Jones,TNF
+2026,10,2026-11-15,Detroit Lions,New England Patriots,Munich Germany,9:30 AM,FOX,Drew Petzing,OC,Kelvin Sheppard,Josh McDaniels,OC,Zak Kuhr,International - Munich
+2026,10,2026-11-15,Atlanta Falcons,Kansas City Chiefs,Atlanta GA,1:00 PM,CBS,Tommy Rees,OC,Jeff Ulbrich,Eric Bieniemy,HC,Steve Spagnuolo,
+2026,10,2026-11-15,Cleveland Browns,Houston Texans,Cleveland OH,1:00 PM,FOX,Travis Switzer,OC,Mike Rutenberg,Nick Caley,OC,Matt Burke,
+2026,10,2026-11-15,Green Bay Packers,Minnesota Vikings,Green Bay WI,1:00 PM,FOX,Adam Stenavich,OC,Jonathan Gannon,Wes Phillips,OC,Brian Flores,
+2026,10,2026-11-15,Indianapolis Colts,Miami Dolphins,Indianapolis IN,1:00 PM,CBS,Jim Bob Cooter,OC,Lou Anarumo,Bobby Slowik,OC,Sean Duggan,
+2026,10,2026-11-15,New Orleans Saints,Carolina Panthers,New Orleans LA,1:00 PM,FOX,Doug Nussmeier,OC,Brandon Staley,Brad Idzik,OC,Ejiro Evero,
+2026,10,2026-11-15,New York Jets,Buffalo Bills,East Rutherford NJ,1:00 PM,CBS,Frank Reich,OC,Brian Duker,Pete Carmichael Jr.,OC,Jim Leonhard,
+2026,10,2026-11-15,Tennessee Titans,Jacksonville Jaguars,Nashville TN,1:00 PM,FOX,Brian Daboll,OC,Gus Bradley,Grant Udinski,OC,Anthony Campanile,
+2026,10,2026-11-15,Los Angeles Rams,Arizona Cardinals,Inglewood CA,4:05 PM,CBS,Nate Scheelhaase,OC,Chris Shula,Nathaniel Hackett,OC,Nick Rallis,
+2026,10,2026-11-15,Las Vegas Raiders,Seattle Seahawks,Las Vegas NV,4:05 PM,CBS,Andrew Janocko,OC,Rob Leonard,Brian Fleury,OC,Aden Durde,
+2026,10,2026-11-15,Dallas Cowboys,San Francisco 49ers,Arlington TX,4:25 PM,FOX,Klayton Adams,OC,Christian Parker,Klay Kubiak,OC,Raheem Morris,
+2026,10,2026-11-15,Cincinnati Bengals,Pittsburgh Steelers,Cincinnati OH,8:20 PM,NBC,Dan Pitcher,OC,Al Golden,Brian Angelichio,OC,Patrick Graham,SNF
+2026,10,2026-11-16,Baltimore Ravens,Los Angeles Chargers,Baltimore MD,8:15 PM,ESPN,Declan Doyle,OC,Anthony Weaver,Mike McDaniel,OC,Chris O'Leary,MNF
+2026,11,2026-11-19,Houston Texans,Indianapolis Colts,Houston TX,8:15 PM,AMZ,Nick Caley,OC,Matt Burke,Jim Bob Cooter,OC,Lou Anarumo,TNF
+2026,11,2026-11-22,Buffalo Bills,Miami Dolphins,Orchard Park NY,1:00 PM,FOX,Pete Carmichael Jr.,OC,Jim Leonhard,Bobby Slowik,OC,Sean Duggan,
+2026,11,2026-11-22,Carolina Panthers,Baltimore Ravens,Charlotte NC,1:00 PM,FOX,Brad Idzik,OC,Ejiro Evero,Declan Doyle,OC,Anthony Weaver,
+2026,11,2026-11-22,Chicago Bears,New Orleans Saints,Chicago IL,1:00 PM,FOX,Press Taylor,OC,Dennis Allen,Doug Nussmeier,OC,Brandon Staley,
+2026,11,2026-11-22,Dallas Cowboys,Tennessee Titans,Arlington TX,1:00 PM,FOX,Klayton Adams,OC,Christian Parker,Brian Daboll,OC,Gus Bradley,
+2026,11,2026-11-22,Detroit Lions,Tampa Bay Buccaneers,Detroit MI,1:00 PM,CBS,Drew Petzing,OC,Kelvin Sheppard,Zac Robinson,OC,TBD,
+2026,11,2026-11-22,Kansas City Chiefs,Arizona Cardinals,Kansas City MO,1:00 PM,CBS,Eric Bieniemy,HC,Steve Spagnuolo,Nathaniel Hackett,OC,Nick Rallis,
+2026,11,2026-11-22,New York Giants,Jacksonville Jaguars,East Rutherford NJ,1:00 PM,CBS,Matt Nagy,OC,Dennard Wilson,Grant Udinski,OC,Anthony Campanile,
+2026,11,2026-11-22,Los Angeles Chargers,New York Jets,Inglewood CA,4:05 PM,FOX,Mike McDaniel,OC,Chris O'Leary,Frank Reich,OC,Brian Duker,
+2026,11,2026-11-22,Denver Broncos,Las Vegas Raiders,Denver CO,4:25 PM,CBS,Davis Webb,OC,Vance Joseph,Andrew Janocko,OC,Rob Leonard,
+2026,11,2026-11-22,Philadelphia Eagles,Pittsburgh Steelers,Philadelphia PA,4:25 PM,CBS,Sean Mannion,OC,Vic Fangio,Brian Angelichio,OC,Patrick Graham,
+2026,11,2026-11-22,San Francisco 49ers,Minnesota Vikings,Mexico City Mexico,8:20 PM,NBC,Klay Kubiak,OC,Raheem Morris,Wes Phillips,OC,Brian Flores,International - Mexico City; SNF
+2026,11,2026-11-23,Washington Commanders,Cincinnati Bengals,Landover MD,8:15 PM,ESPN,David Blough,OC,Daronte Jones,Dan Pitcher,OC,Al Golden,MNF
+2026,12,2026-11-25,Los Angeles Rams,Green Bay Packers,Inglewood CA,8:00 PM,Netflix,Nate Scheelhaase,OC,Chris Shula,Adam Stenavich,OC,Jonathan Gannon,Thanksgiving Eve
+2026,12,2026-11-26,Detroit Lions,Chicago Bears,Detroit MI,1:00 PM,CBS,Drew Petzing,OC,Kelvin Sheppard,Press Taylor,OC,Dennis Allen,Thanksgiving
+2026,12,2026-11-26,Dallas Cowboys,Philadelphia Eagles,Arlington TX,4:30 PM,FOX,Klayton Adams,OC,Christian Parker,Sean Mannion,OC,Vic Fangio,Thanksgiving
+2026,12,2026-11-26,Buffalo Bills,Kansas City Chiefs,Orchard Park NY,8:20 PM,NBC,Pete Carmichael Jr.,OC,Jim Leonhard,Eric Bieniemy,HC,Steve Spagnuolo,Thanksgiving SNF
+2026,12,2026-11-27,Pittsburgh Steelers,Denver Broncos,Pittsburgh PA,3:00 PM,AMZ,Brian Angelichio,OC,Patrick Graham,Davis Webb,OC,Vance Joseph,Black Friday
+2026,12,2026-11-29,Cincinnati Bengals,New Orleans Saints,Cincinnati OH,1:00 PM,CBS,Dan Pitcher,OC,Al Golden,Doug Nussmeier,OC,Brandon Staley,
+2026,12,2026-11-29,Cleveland Browns,Las Vegas Raiders,Cleveland OH,1:00 PM,FOX,Travis Switzer,OC,Mike Rutenberg,Andrew Janocko,OC,Rob Leonard,
+2026,12,2026-11-29,Houston Texans,Baltimore Ravens,Houston TX,1:00 PM,CBS,Nick Caley,OC,Matt Burke,Declan Doyle,OC,Anthony Weaver,
+2026,12,2026-11-29,Indianapolis Colts,New York Giants,Indianapolis IN,1:00 PM,FOX,Jim Bob Cooter,OC,Lou Anarumo,Matt Nagy,OC,Dennard Wilson,
+2026,12,2026-11-29,Miami Dolphins,New York Jets,Miami FL,1:00 PM,CBS,Bobby Slowik,OC,Sean Duggan,Frank Reich,OC,Brian Duker,
+2026,12,2026-11-29,Minnesota Vikings,Atlanta Falcons,Minneapolis MN,1:00 PM,FOX,Wes Phillips,OC,Brian Flores,Tommy Rees,OC,Jeff Ulbrich,
+2026,12,2026-11-29,Jacksonville Jaguars,Tennessee Titans,Jacksonville FL,4:05 PM,CBS,Grant Udinski,OC,Anthony Campanile,Brian Daboll,OC,Gus Bradley,
+2026,12,2026-11-29,Arizona Cardinals,Washington Commanders,Glendale AZ,4:25 PM,FOX,Nathaniel Hackett,OC,Nick Rallis,David Blough,OC,Daronte Jones,
+2026,12,2026-11-29,San Francisco 49ers,Seattle Seahawks,Santa Clara CA,4:25 PM,FOX,Klay Kubiak,OC,Raheem Morris,Brian Fleury,OC,Aden Durde,
+2026,12,2026-11-29,Los Angeles Chargers,New England Patriots,Inglewood CA,8:20 PM,NBC,Mike McDaniel,OC,Chris O'Leary,Josh McDaniels,OC,Zak Kuhr,SNF
+2026,12,2026-11-30,Tampa Bay Buccaneers,Carolina Panthers,Tampa FL,8:15 PM,ESPN,Zac Robinson,OC,TBD,Brad Idzik,OC,Ejiro Evero,MNF
+2026,13,2026-12-03,Los Angeles Rams,Kansas City Chiefs,Inglewood CA,8:15 PM,AMZ,Nate Scheelhaase,OC,Chris Shula,Eric Bieniemy,HC,Steve Spagnuolo,TNF
+2026,13,2026-12-06,Atlanta Falcons,Detroit Lions,Atlanta GA,1:00 PM,CBS,Tommy Rees,OC,Jeff Ulbrich,Drew Petzing,OC,Kelvin Sheppard,
+2026,13,2026-12-06,Chicago Bears,Jacksonville Jaguars,Chicago IL,1:00 PM,FOX,Press Taylor,OC,Dennis Allen,Grant Udinski,OC,Anthony Campanile,
+2026,13,2026-12-06,Cincinnati Bengals,Cleveland Browns,Cincinnati OH,1:00 PM,CBS,Dan Pitcher,OC,Al Golden,Travis Switzer,OC,Mike Rutenberg,
+2026,13,2026-12-06,Green Bay Packers,New Orleans Saints,Green Bay WI,1:00 PM,FOX,Adam Stenavich,OC,Jonathan Gannon,Doug Nussmeier,OC,Brandon Staley,
+2026,13,2026-12-06,New York Giants,San Francisco 49ers,East Rutherford NJ,1:00 PM,FOX,Matt Nagy,OC,Dennard Wilson,Klay Kubiak,OC,Raheem Morris,
+2026,13,2026-12-06,Tampa Bay Buccaneers,Los Angeles Chargers,Tampa FL,1:00 PM,CBS,Zac Robinson,OC,TBD,Mike McDaniel,OC,Chris O'Leary,
+2026,13,2026-12-06,Tennessee Titans,Washington Commanders,Nashville TN,1:00 PM,CBS,Brian Daboll,OC,Gus Bradley,David Blough,OC,Daronte Jones,
+2026,13,2026-12-06,Arizona Cardinals,Philadelphia Eagles,Glendale AZ,4:05 PM,FOX,Nathaniel Hackett,OC,Nick Rallis,Sean Mannion,OC,Vic Fangio,
+2026,13,2026-12-06,Denver Broncos,Miami Dolphins,Denver CO,4:05 PM,FOX,Davis Webb,OC,Vance Joseph,Bobby Slowik,OC,Sean Duggan,
+2026,13,2026-12-06,Minnesota Vikings,Carolina Panthers,Minneapolis MN,4:25 PM,CBS,Wes Phillips,OC,Brian Flores,Brad Idzik,OC,Ejiro Evero,
+2026,13,2026-12-06,New England Patriots,Buffalo Bills,Foxborough MA,4:25 PM,CBS,Josh McDaniels,OC,Zak Kuhr,Pete Carmichael Jr.,OC,Jim Leonhard,
+2026,13,2026-12-06,Pittsburgh Steelers,Houston Texans,Pittsburgh PA,8:20 PM,NBC,Brian Angelichio,OC,Patrick Graham,Nick Caley,OC,Matt Burke,SNF
+2026,13,2026-12-07,Seattle Seahawks,Dallas Cowboys,Seattle WA,8:15 PM,ESPN/ABC,Brian Fleury,OC,Aden Durde,Klayton Adams,OC,Christian Parker,MNF
+2026,14,2026-12-10,New England Patriots,Minnesota Vikings,Foxborough MA,8:15 PM,AMZ,Josh McDaniels,OC,Zak Kuhr,Wes Phillips,OC,Brian Flores,TNF
+2026,14,2026-12-13,Baltimore Ravens,Tampa Bay Buccaneers,Baltimore MD,1:00 PM,FOX,Declan Doyle,OC,Anthony Weaver,Zac Robinson,OC,TBD,
+2026,14,2026-12-13,Carolina Panthers,New Orleans Saints,Charlotte NC,1:00 PM,CBS,Brad Idzik,OC,Ejiro Evero,Doug Nussmeier,OC,Brandon Staley,
+2026,14,2026-12-13,Cleveland Browns,Atlanta Falcons,Cleveland OH,1:00 PM,CBS,Travis Switzer,OC,Mike Rutenberg,Tommy Rees,OC,Jeff Ulbrich,
+2026,14,2026-12-13,Detroit Lions,Tennessee Titans,Detroit MI,1:00 PM,FOX,Drew Petzing,OC,Kelvin Sheppard,Brian Daboll,OC,Gus Bradley,
+2026,14,2026-12-13,Miami Dolphins,Chicago Bears,Miami FL,1:00 PM,CBS,Bobby Slowik,OC,Sean Duggan,Press Taylor,OC,Dennis Allen,
+2026,14,2026-12-13,Denver Broncos,New York Jets,Denver CO,1:00 PM,CBS,Davis Webb,OC,Vance Joseph,Frank Reich,OC,Brian Duker,
+2026,14,2026-12-13,Philadelphia Eagles,Indianapolis Colts,Philadelphia PA,1:00 PM,FOX,Sean Mannion,OC,Vic Fangio,Jim Bob Cooter,OC,Lou Anarumo,
+2026,14,2026-12-13,Washington Commanders,Houston Texans,Landover MD,1:00 PM,CBS,David Blough,OC,Daronte Jones,Nick Caley,OC,Matt Burke,
+2026,14,2026-12-13,Las Vegas Raiders,Los Angeles Chargers,Las Vegas NV,4:05 PM,CBS,Andrew Janocko,OC,Rob Leonard,Mike McDaniel,OC,Chris O'Leary,
+2026,14,2026-12-13,Kansas City Chiefs,Cincinnati Bengals,Kansas City MO,4:25 PM,FOX,Eric Bieniemy,HC,Steve Spagnuolo,Dan Pitcher,OC,Al Golden,
+2026,14,2026-12-13,Seattle Seahawks,New York Giants,Seattle WA,4:25 PM,FOX,Brian Fleury,OC,Aden Durde,Matt Nagy,OC,Dennard Wilson,
+2026,14,2026-12-13,San Francisco 49ers,Los Angeles Rams,Santa Clara CA,4:25 PM,FOX,Klay Kubiak,OC,Raheem Morris,Nate Scheelhaase,OC,Chris Shula,
+2026,14,2026-12-13,Green Bay Packers,Buffalo Bills,Green Bay WI,8:20 PM,NBC,Adam Stenavich,OC,Jonathan Gannon,Pete Carmichael Jr.,OC,Jim Leonhard,SNF
+2026,14,2026-12-14,Jacksonville Jaguars,Pittsburgh Steelers,Jacksonville FL,8:15 PM,ESPN,Grant Udinski,OC,Anthony Campanile,Brian Angelichio,OC,Patrick Graham,MNF
+2026,15,2026-12-17,Los Angeles Chargers,San Francisco 49ers,Inglewood CA,8:15 PM,AMZ,Mike McDaniel,OC,Chris O'Leary,Klay Kubiak,OC,Raheem Morris,TNF
+2026,15,2026-12-19,Philadelphia Eagles,Seattle Seahawks,Philadelphia PA,5:00 PM,FOX,Sean Mannion,OC,Vic Fangio,Brian Fleury,OC,Aden Durde,Saturday
+2026,15,2026-12-19,Buffalo Bills,Chicago Bears,Orchard Park NY,8:20 PM,CBS,Pete Carmichael Jr.,OC,Jim Leonhard,Press Taylor,OC,Dennis Allen,Saturday
+2026,15,2026-12-20,Carolina Panthers,Cincinnati Bengals,Charlotte NC,1:00 PM,FOX,Brad Idzik,OC,Ejiro Evero,Dan Pitcher,OC,Al Golden,
+2026,15,2026-12-20,Green Bay Packers,Miami Dolphins,Green Bay WI,1:00 PM,FOX,Adam Stenavich,OC,Jonathan Gannon,Bobby Slowik,OC,Sean Duggan,
+2026,15,2026-12-20,Houston Texans,Jacksonville Jaguars,Houston TX,1:00 PM,CBS,Nick Caley,OC,Matt Burke,Grant Udinski,OC,Anthony Campanile,
+2026,15,2026-12-20,New York Giants,Cleveland Browns,East Rutherford NJ,1:00 PM,CBS,Matt Nagy,OC,Dennard Wilson,Travis Switzer,OC,Mike Rutenberg,
+2026,15,2026-12-20,Pittsburgh Steelers,Baltimore Ravens,Pittsburgh PA,1:00 PM,CBS,Brian Angelichio,OC,Patrick Graham,Declan Doyle,OC,Anthony Weaver,
+2026,15,2026-12-20,Tampa Bay Buccaneers,New Orleans Saints,Tampa FL,1:00 PM,FOX,Zac Robinson,OC,TBD,Doug Nussmeier,OC,Brandon Staley,
+2026,15,2026-12-20,Tennessee Titans,Indianapolis Colts,Nashville TN,1:00 PM,CBS,Brian Daboll,OC,Gus Bradley,Jim Bob Cooter,OC,Lou Anarumo,
+2026,15,2026-12-20,Atlanta Falcons,Washington Commanders,Atlanta GA,1:00 PM,FOX,Tommy Rees,OC,Jeff Ulbrich,David Blough,OC,Daronte Jones,
+2026,15,2026-12-20,Arizona Cardinals,New York Jets,Glendale AZ,4:05 PM,FOX,Nathaniel Hackett,OC,Nick Rallis,Frank Reich,OC,Brian Duker,
+2026,15,2026-12-20,Los Angeles Rams,Dallas Cowboys,Inglewood CA,4:25 PM,CBS,Nate Scheelhaase,OC,Chris Shula,Klayton Adams,OC,Christian Parker,
+2026,15,2026-12-20,Las Vegas Raiders,Minnesota Vikings,Las Vegas NV,4:25 PM,CBS,Andrew Janocko,OC,Rob Leonard,Wes Phillips,OC,Brian Flores,
+2026,15,2026-12-20,Kansas City Chiefs,Denver Broncos,Kansas City MO,8:20 PM,NBC,Eric Bieniemy,HC,Steve Spagnuolo,Davis Webb,OC,Vance Joseph,SNF
+2026,16,2026-12-24,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,Week 16 dates/times TBD after Week 14
+2026,16,2026-12-25,Chicago Bears,Green Bay Packers,Chicago IL,1:00 PM,TBD,Press Taylor,OC,Dennis Allen,Adam Stenavich,OC,Jonathan Gannon,Christmas
+2026,16,2026-12-25,Denver Broncos,Buffalo Bills,Denver CO,4:30 PM,TBD,Davis Webb,OC,Vance Joseph,Pete Carmichael Jr.,OC,Jim Leonhard,Christmas
+2026,16,2026-12-27,New Orleans Saints,Arizona Cardinals,New Orleans LA,1:00 PM,TBD,Doug Nussmeier,OC,Brandon Staley,Nathaniel Hackett,OC,Nick Rallis,
+2026,16,2026-12-27,Baltimore Ravens,Cleveland Browns,Baltimore MD,1:00 PM,TBD,Declan Doyle,OC,Anthony Weaver,Travis Switzer,OC,Mike Rutenberg,
+2026,16,2026-12-27,Los Angeles Rams,Dallas Cowboys,Inglewood CA,TBD,TBD,Nate Scheelhaase,OC,Chris Shula,Klayton Adams,OC,Christian Parker,Flex TBD
+2026,16,2026-12-27,Atlanta Falcons,Tampa Bay Buccaneers,Atlanta GA,TBD,TBD,Tommy Rees,OC,Jeff Ulbrich,Zac Robinson,OC,TBD,Flex TBD
+2026,16,2026-12-27,Carolina Panthers,Pittsburgh Steelers,Charlotte NC,TBD,TBD,Brad Idzik,OC,Ejiro Evero,Brian Angelichio,OC,Patrick Graham,Flex TBD
+2026,16,2026-12-28,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,Mon Dec 28 game TBD
+2026,17,2026-12-31,Baltimore Ravens,Cincinnati Bengals,Baltimore MD,8:15 PM,TBD,Declan Doyle,OC,Anthony Weaver,Dan Pitcher,OC,Al Golden,Thu Dec 31
+2026,17,2027-01-02,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,Sat Jan 2 games TBD after Wk 15
+2026,17,2027-01-03,Atlanta Falcons,New Orleans Saints,Atlanta GA,1:00 PM,TBD,Tommy Rees,OC,Jeff Ulbrich,Doug Nussmeier,OC,Brandon Staley,
+2026,17,2027-01-03,Chicago Bears,Detroit Lions,Chicago IL,4:25 PM,TBD,Press Taylor,OC,Dennis Allen,Drew Petzing,OC,Kelvin Sheppard,
+2026,17,2027-01-03,Miami Dolphins,Buffalo Bills,Miami FL,1:00 PM,TBD,Bobby Slowik,OC,Sean Duggan,Pete Carmichael Jr.,OC,Jim Leonhard,
+2026,17,2027-01-03,Seattle Seahawks,Carolina Panthers,Seattle WA,1:00 PM,TBD,Brian Fleury,OC,Aden Durde,Brad Idzik,OC,Ejiro Evero,
+2026,17,2027-01-03,Cleveland Browns,Indianapolis Colts,Cleveland OH,1:00 PM,TBD,Travis Switzer,OC,Mike Rutenberg,Jim Bob Cooter,OC,Lou Anarumo,
+2026,17,2027-01-03,Arizona Cardinals,Las Vegas Raiders,Glendale AZ,4:05 PM,TBD,Nathaniel Hackett,OC,Nick Rallis,Andrew Janocko,OC,Rob Leonard,
+2026,17,2027-01-03,Denver Broncos,New England Patriots,Denver CO,TBD,TBD,Davis Webb,OC,Vance Joseph,Josh McDaniels,OC,Zak Kuhr,AFC Championship rematch; flex TBD
+2026,17,2027-01-04,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,Mon Jan 4 game TBD after Wk 15
+2026,18,2027-01-09,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,Week 18 all division games; dates/times TBD after Wk 17
+2026,18,2027-01-10,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,Week 18 all division games; dates/times TBD after Wk 17

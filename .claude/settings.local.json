@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "Bash(pip install *)",
+      "Bash(python main.py)",
+      "Bash(dir /s /b \"C:\\\\Users\\\\mjgin\\\\Fantasy Model\")",
+      "Bash(python compare_to_fp.py)"
+    ]
+  }
+}
