@@ -1243,12 +1243,13 @@ elif tab_choice == "🎯 Draft Room":
     for p in st.session_state.my_picks:
         my_team_players.setdefault(p["Team"], []).append(p["Name"])
 
-    # Roster tough weeks (used for complements)
-    roster_tough_weeks = set()
+    # Roster tough weeks per position (WR complement only checks WR tough weeks, etc.)
+    pos_tough_weeks: dict = {}
     for p in st.session_state.my_picks:
         for wk, rk in sched_matrix.get((p["Team"], p["POS"]), {}).items():
             if rk <= HARD_THR:
-                roster_tough_weeks.add(wk)
+                pos_tough_weeks.setdefault(p["POS"], set()).add(wk)
+    roster_tough_weeks = set().union(*pos_tough_weeks.values()) if pos_tough_weeks else set()
     n_tough = len(roster_tough_weeks)
 
     avail_all = available.copy()
@@ -1259,13 +1260,18 @@ elif tab_choice == "🎯 Draft Room":
     avail_all["Fell"]        = avail_all["_fell"].round(0).astype("Int64").where(
                                    avail_all["_fell"] > 0, other=pd.NA)
 
-    # Complement scores
-    if st.session_state.my_picks and n_tough > 0:
+    # Complement scores — each player scored against their own position's tough weeks
+    if st.session_state.my_picks and pos_tough_weeks:
         def _cmpl_num(row):
-            return sum(1 for wk in roster_tough_weeks
+            tough_wks = pos_tough_weeks.get(row["POS"], set())
+            if not tough_wks:
+                return 0
+            return sum(1 for wk in tough_wks
                        if sched_matrix.get((row["Team"], row["POS"]), {}).get(wk, 0) >= EASY_THR)
         avail_all["_cmpl"] = avail_all.apply(_cmpl_num, axis=1)
-        avail_all["Cmpl"]  = avail_all["_cmpl"].apply(lambda n: f"{n}/{n_tough}")
+        avail_all["Cmpl"]  = avail_all.apply(
+            lambda r: f"{r['_cmpl']}/{len(pos_tough_weeks.get(r['POS'], set()))}"
+                      if pos_tough_weeks.get(r["POS"]) else "—", axis=1)
     else:
         avail_all["_cmpl"] = 0
         avail_all["Cmpl"]  = "—"
