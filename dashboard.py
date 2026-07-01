@@ -1187,13 +1187,16 @@ elif tab_choice == "🎯 Draft Room":
         return slot == my_pos
     board["Yours"] = board["Pick"].apply(_is_my_slot)
 
+    player_opts = [""] + fp_all.sort_values("FP_ADP")["Name"].tolist()
+
     edited = st.data_editor(
         board[["Pick", "Rnd", "Yours", "Player", "My Pick"]],
         column_config={
             "Pick":    st.column_config.NumberColumn("Pick",  disabled=True, width="small"),
             "Rnd":     st.column_config.NumberColumn("Rnd",   disabled=True, width="small"),
             "Yours":   st.column_config.CheckboxColumn("Yours?", disabled=True, width="small"),
-            "Player":  st.column_config.TextColumn("Player", width="large"),
+            "Player":  st.column_config.SelectboxColumn(
+                           "Player", options=player_opts, width="large"),
             "My Pick": st.column_config.CheckboxColumn("My Pick", width="small"),
         },
         hide_index=True,
