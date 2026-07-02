@@ -1255,28 +1255,26 @@ elif tab_choice == "🎯 Draft Room":
 
                 _prompt = """This is a DraftKings NFL best ball draft board screenshot.
 It is a grid — each COLUMN is a team/entry, each ROW is a draft round.
-A COMPLETED cell contains a pick label (like "1.1"), a player name, a position (QB/RB/WR/TE), and an NFL team abbreviation.
-An EMPTY or PENDING cell contains only a pick number and arrows/clock icons but NO player name.
+A COMPLETED cell has a pick label (like "1.1"), a player name, a position (QB/RB/WR/TE), and an NFL team.
+An EMPTY/PENDING cell has only arrows, clock icons, or a number — no player name.
 
-CRITICAL: Only extract cells that have an actual NFL player name drafted.
-Skip any cell that is empty, shows only a number, shows "ON THE CLOCK", or has no player name.
-This draft is in progress — many later round cells will be empty. Do NOT invent or guess player names.
+Only extract COMPLETED cells (cells with a position abbreviation QB/RB/WR/TE visible).
+Skip empty cells, pending cells, and "ON THE CLOCK" cells entirely.
 
-Return ONLY a valid JSON array, no markdown, no explanation:
-[{"pick_label": "1.1", "player": "Full Player Name", "drafted_by": "entryname"}, ...]
+Return ONLY a valid JSON array, no markdown:
+[{"pick_label": "1.1", "player": "name as shown", "pos": "WR", "drafted_by": "entryname"}, ...]
 
-Rules:
-- pick_label: the round.slot shown in the cell (e.g. "1.1" = round 1 slot 1)
-- player: the NFL player's name (expand abbreviations if possible, e.g. "J. Chase" → "Ja'Marr Chase")
-- drafted_by: the column header (entry name) for that cell
-- Sort by pick_label ascending (1.1, 1.2, ... 1.12, 2.1, 2.2 ...)
-- If you are not certain a cell has a drafted player, skip it"""
+CRITICAL for player name:
+- Copy the name EXACTLY as it appears in the cell — do NOT guess or expand abbreviations
+- If the cell shows "J. Chase" return "J. Chase" — do not write "Joe Chase" or "Jamarr Chase"
+- If the cell shows "C. Lamb" return "C. Lamb"
+- Sort by pick_label ascending (1.1, 1.2 ... 2.1, 2.2 ...)"""
 
                 with st.spinner("Reading draft board — takes about 15 seconds…"):
                     try:
                         _client = _anthropic.Anthropic(api_key=_api_key)
                         _resp = _client.messages.create(
-                            model="claude-haiku-4-5-20251001",
+                            model="claude-sonnet-4-6",
                             max_tokens=8096,
                             messages=[{"role": "user", "content": [
                                 {"type": "image",
@@ -1293,20 +1291,59 @@ Rules:
                             st.code(_raw[:400])
                         else:
                             _picks_data = json.loads(_json_match.group())
-                            _name_lookup = {n.lower(): n for n in fp_all["Name"].tolist()}
 
-                            def _canonicalize(raw_name):
+                            # Build lookup: exact name + abbreviation (first initial + last name)
+                            _exact_lu = {n.lower(): n for n in fp_all["Name"].tolist()}
+                            _suffixes = {'jr.', 'sr.', 'ii', 'iii', 'iv', 'jr', 'sr'}
+                            _abbrev_lu = {}
+                            for _n in fp_all.sort_values("FP_ADP")["Name"].tolist():
+                                _pts = _n.split()
+                                if len(_pts) < 2:
+                                    continue
+                                _init = _pts[0][0].lower()
+                                # Last non-suffix word = effective last name
+                                _last = next(
+                                    (p.lower() for p in reversed(_pts[1:])
+                                     if p.lower().rstrip('.') not in _suffixes),
+                                    _pts[-1].lower()
+                                )
+                                if (_init, _last) not in _abbrev_lu:
+                                    _abbrev_lu[(_init, _last)] = _n
+
+                            def _canonicalize(raw_name, pos=""):
                                 tl = raw_name.strip().lower()
-                                if tl in _name_lookup:
-                                    return _name_lookup[tl]
-                                # partial: any key containing all words of the raw name
-                                _words = tl.split()
-                                for k, v in _name_lookup.items():
-                                    if all(w in k for w in _words):
-                                        return v
-                                return raw_name  # keep as-is if no match
+                                # 1. Exact match
+                                if tl in _exact_lu:
+                                    return _exact_lu[tl]
+                                # 2. Abbreviated "F. Lastname" or "F. St. Lastname"
+                                _m = re.match(r'^([a-z])\.?\s+(.+)$', tl)
+                                if _m:
+                                    _init = _m.group(1)
+                                    _rest = re.sub(r"[^a-z\s'\-]", "", _m.group(2)).strip()
+                                    _words = _rest.split()
+                                    # Try each word from the end as the last name
+                                    for _w in reversed(_words):
+                                        if len(_w) < 2:
+                                            continue
+                                        _cand = _abbrev_lu.get((_init, _w))
+                                        if _cand:
+                                            return _cand
+                                    # Prefix match on last word (truncated names)
+                                    _lw = _words[-1] if _words else ""
+                                    if len(_lw) >= 3:
+                                        for (_ki, _kl), _v in _abbrev_lu.items():
+                                            if _ki == _init and _kl.startswith(_lw[:5]):
+                                                return _v
+                                # 3. Multi-word partial: all words appear in canonical name
+                                _ws = tl.split()
+                                if len(_ws) >= 2:
+                                    _hits = [v for k, v in _exact_lu.items()
+                                             if all(w in k for w in _ws if len(w) > 1)]
+                                    if len(_hits) == 1:
+                                        return _hits[0]
+                                return raw_name  # keep as-is; user can correct in board
 
-                            _ordered = [_canonicalize(p["player"])
+                            _ordered = [_canonicalize(p["player"], p.get("pos", ""))
                                         for p in _picks_data if p.get("player")]
 
                             st.success(f"Found {len(_ordered)} picks — review then confirm.")
