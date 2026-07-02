@@ -1173,6 +1173,15 @@ elif tab_choice == "🎯 Draft Room":
     _team_opts  = [6, 8, 10, 12]
     _round_opts = [15, 18, 20, 22, 24]
 
+    # Apply saved-draft settings BEFORE widgets render (avoids "cannot be modified" error)
+    if "pending_load" in st.session_state:
+        _pl = st.session_state.pop("pending_load")
+        _nt = _pl.get("num_teams", 12)
+        _tr = _pl.get("total_rounds", 20)
+        st.session_state.sb_num_teams    = _nt if _nt in _team_opts  else 12
+        st.session_state.sb_my_slot      = _pl.get("my_slot", 6)
+        st.session_state.sb_total_rounds = _tr if _tr in _round_opts else 20
+
     # Pre-set widget keys so selectboxes start at our defaults on first load
     if "sb_num_teams"    not in st.session_state: st.session_state.sb_num_teams    = 12
     if "sb_total_rounds" not in st.session_state: st.session_state.sb_total_rounds = 20
@@ -1211,13 +1220,16 @@ elif tab_choice == "🎯 Draft Room":
         if _uploaded is not None:
             try:
                 _loaded = json.loads(_uploaded.read())
-                st.session_state.draft_board     = pd.DataFrame(_loaded["board"])
-                st.session_state.sb_num_teams    = _loaded.get("num_teams", 12)
-                st.session_state.sb_my_slot      = _loaded.get("my_slot", 6)
-                st.session_state.sb_total_rounds = _loaded.get("total_rounds", 20)
-                st.session_state.pick_key           = st.session_state.get("pick_key", 0) + 1
-                st.session_state.my_picks           = []
-                st.session_state.other_picks        = []
+                st.session_state.draft_board  = pd.DataFrame(_loaded["board"])
+                # Store settings in pending_load — applied before widgets render on next rerun
+                st.session_state.pending_load = {
+                    "num_teams":    _loaded.get("num_teams", 12),
+                    "my_slot":      _loaded.get("my_slot", 6),
+                    "total_rounds": _loaded.get("total_rounds", 20),
+                }
+                st.session_state.pick_key    = st.session_state.get("pick_key", 0) + 1
+                st.session_state.my_picks    = []
+                st.session_state.other_picks = []
                 st.rerun()
             except Exception as e:
                 st.error(f"Could not load draft: {e}")
@@ -1336,8 +1348,17 @@ elif tab_choice == "🎯 Draft Room":
                     st.rerun()
 
     # ── Quick pick entry ───────────────────────────────────────────────────────
-    n_picks     = num_teams * total_rounds
-    player_opts = [""] + fp_all.sort_values("FP_ADP")["Name"].tolist()
+    n_picks = num_teams * total_rounds
+    _already_logged = set(
+        st.session_state.draft_board.loc[
+            st.session_state.draft_board["Player"].notna() &
+            (st.session_state.draft_board["Player"] != ""), "Player"
+        ]
+    )
+    player_opts = [""] + [
+        n for n in fp_all.sort_values("FP_ADP")["Name"].tolist()
+        if n not in _already_logged
+    ]
 
     logged = st.session_state.draft_board[
         st.session_state.draft_board["Player"].notna() &
