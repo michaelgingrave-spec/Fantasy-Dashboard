@@ -1253,23 +1253,20 @@ elif tab_choice == "🎯 Draft Room":
 
                 _img_b64    = _b64.b64encode(_img_file.read()).decode()
                 _media_type = _img_file.type or "image/png"
-                _prompt = f"""This is a DraftKings NFL best ball draft board image ({num_teams} teams, snake draft).
+                _prompt = f"""This is a DraftKings NFL best ball draft board with {num_teams} columns (one column per team) and multiple rows (one row per draft round).
 
-Each drafted cell contains:
-  - A pick label printed in the cell, like "1.1", "2.12", "3.5" (round.pick_within_round)
-  - A player name (may be abbreviated, e.g. "J. Chase", "T. McBride")
-  - A position (QB, RB, WR, or TE)
+Your task: list every drafted player, grouped by their column.
 
-Empty/pending cells contain only arrows, clock icons, or pick numbers with no player name — skip these entirely.
+For each drafted player return:
+  - "col": which column they are in (1 = leftmost team, {num_teams} = rightmost team)
+  - "row": which row/round they are in (1 = first round at top)
+  - "player": the name exactly as it appears in the cell (e.g. "J. Chase", "T. McBride", "C. Lamb") — do NOT expand abbreviations
 
-Your job: for every cell that has a drafted player, read and return:
-  - "pick_label": the exact label printed in that cell (e.g. "1.1", "2.12") — READ IT, do not compute it
-  - "player": the name exactly as it appears (do NOT expand abbreviations)
+A cell is drafted if it contains a player name AND a position (QB/RB/WR/TE).
+Skip any cell that is empty, shows only arrows/numbers/clock icons, or has no player name.
 
-Return ONLY a JSON array — no markdown, no explanation:
-[{{"pick_label": "1.1", "player": "J. Chase"}}, {{"pick_label": "1.2", "player": "J. Gibbs"}}, ...]
-
-Important: each pick_label should appear only ONCE. If you're unsure about a cell, skip it."""
+Return ONLY a JSON array sorted by col then row — no markdown:
+[{{"col": 1, "row": 1, "player": "J. Chase"}}, {{"col": 1, "row": 2, "player": "J. Love"}}, ...]"""
 
                 with st.spinner("Reading draft board — about 20 seconds…"):
                     try:
@@ -1325,31 +1322,29 @@ Important: each pick_label should appear only ONCE. If you're unsure about a cel
                                     if len(_hits) == 1: return _hits[0]
                                 return raw
 
-                            def _label_seq(label):
-                                # "R.S" → sequential pick number using N-team draft
-                                try:
-                                    _r, _s = label.split(".")
-                                    return (int(_r) - 1) * num_teams + int(_s)
-                                except Exception:
-                                    return 99999
+                            # Group players by column, sorted by row within each column
+                            _col_players: dict = {}
+                            _seen_global: set  = set()
+                            for _p in sorted(_picks_raw, key=lambda x: (x.get("col", 1), x.get("row", 1))):
+                                _c  = int(_p.get("col", 1))
+                                _nm = _canon(str(_p.get("player", "")).strip())
+                                if not _nm: continue
+                                _col_players.setdefault(_c, [])
+                                if _nm not in _seen_global:
+                                    _col_players[_c].append(_nm)
+                                    _seen_global.add(_nm)
 
-                            # Deduplicate by pick_label, then sort by sequential pick number
-                            _seen_labels   = {}
-                            _seen_players  = set()
-                            for _p in _picks_raw:
-                                _lbl = str(_p.get("pick_label", "")).strip()
-                                _nm  = str(_p.get("player", "")).strip()
-                                if _lbl and _nm and _lbl not in _seen_labels:
-                                    _seen_labels[_lbl] = _nm
+                            # Reconstruct snake draft order: round by round, reversing even rounds
+                            _max_rnd = max((len(v) for v in _col_players.values()), default=0)
+                            _ordered_with_col = []
+                            for _r in range(_max_rnd):
+                                _cols = sorted(_col_players.keys()) if _r % 2 == 0 \
+                                        else sorted(_col_players.keys(), reverse=True)
+                                for _c in _cols:
+                                    if _r < len(_col_players.get(_c, [])):
+                                        _ordered_with_col.append((_c, _col_players[_c][_r]))
 
-                            _ordered = []
-                            for _lbl in sorted(_seen_labels, key=_label_seq):
-                                _nm = _canon(_seen_labels[_lbl])
-                                if _nm and _nm not in _seen_players:
-                                    _seen_players.add(_nm)
-                                    _ordered.append(_nm)
-
-                            st.session_state.dk_scan_results = _ordered
+                            st.session_state.dk_scan_results = _ordered_with_col
                             st.rerun()
                     except Exception as _e:
                         st.error(f"Error: {_e}")
@@ -1357,9 +1352,14 @@ Important: each pick_label should appear only ONCE. If you're unsure about a cel
         # Preview + confirm live outside the scan-button block so it survives reruns
         if st.session_state.dk_scan_results:
             _ordered = st.session_state.dk_scan_results
-            st.success(f"Found {len(_ordered)} picks — review, then confirm or rescan.")
+            _owc = st.session_state.dk_scan_results  # list of (col, player)
+            st.success(f"Found {len(_owc)} picks — your picks are in column {my_slot}. Review then confirm.")
             st.dataframe(
-                pd.DataFrame({"#": range(1, len(_ordered) + 1), "Player": _ordered}),
+                pd.DataFrame({
+                    "#":       range(1, len(_owc) + 1),
+                    "Player":  [nm for _, nm in _owc],
+                    "My Pick": ["✓" if c == my_slot else "" for c, _ in _owc],
+                }),
                 use_container_width=True, height=220, hide_index=True,
             )
             _bc1, _bc2 = st.columns(2)
@@ -1367,14 +1367,10 @@ Important: each pick_label should appear only ONCE. If you're unsure about a cel
                 if st.button("✅ Confirm & Import", key="dk_confirm_btn"):
                     _new_board = pd.DataFrame({"Pick": list(range(1, 301)),
                                                "Player": [""] * 300, "My Pick": [False] * 300})
-                    for _i, _pl in enumerate(_ordered):
+                    for _i, (_c, _pl) in enumerate(_owc):
                         if _i >= 300: break
-                        _new_board.loc[_i, "Player"] = _pl
-                        _pn = _i + 1
-                        _rn = (_pn - 1) // num_teams + 1
-                        _sl = (_pn - 1) % num_teams + 1
-                        _my = my_slot if _rn % 2 == 1 else num_teams + 1 - my_slot
-                        _new_board.loc[_i, "My Pick"] = (_sl == _my)
+                        _new_board.loc[_i, "Player"]  = _pl
+                        _new_board.loc[_i, "My Pick"] = (_c == my_slot)
                     st.session_state.draft_board     = _new_board
                     st.session_state.dk_scan_results = None
                     st.session_state.pick_key        = st.session_state.get("pick_key", 0) + 1
