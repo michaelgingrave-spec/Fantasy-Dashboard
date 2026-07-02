@@ -1154,9 +1154,9 @@ elif tab_choice == "🎯 Draft Room":
     if "my_picks"         not in st.session_state: st.session_state.my_picks         = []
     if "other_picks"      not in st.session_state: st.session_state.other_picks      = []
     if "pick_key"         not in st.session_state: st.session_state.pick_key         = 0
-    if "draft_num_teams"  not in st.session_state: st.session_state.draft_num_teams  = 10
+    if "draft_num_teams"  not in st.session_state: st.session_state.draft_num_teams  = 12
     if "draft_my_slot"    not in st.session_state: st.session_state.draft_my_slot    = 6
-    if "draft_total_rounds" not in st.session_state: st.session_state.draft_total_rounds = 18
+    if "draft_total_rounds" not in st.session_state: st.session_state.draft_total_rounds = 20
 
     # ── Load data ──────────────────────────────────────────────────────────────
     fp_all         = load_fp_rankings().rename(columns={"Name_clean": "Name"})
@@ -1170,7 +1170,7 @@ elif tab_choice == "🎯 Draft Room":
 
     # ── Draft settings ─────────────────────────────────────────────────────────
     _team_opts  = [6, 8, 10, 12]
-    _round_opts = [15, 18, 20, 22]
+    _round_opts = [15, 18, 20, 22, 24]
     ds1, ds2, ds3 = st.columns([1, 1, 1])
     with ds1:
         num_teams = st.selectbox("# Teams in Draft", _team_opts,
@@ -1232,6 +1232,55 @@ elif tab_choice == "🎯 Draft Room":
                 "My Pick": [False] * 300,
             })
             st.rerun()
+
+    # ── DraftKings paste importer ───────────────────────────────────────────────
+    with st.expander("📋 Import from DraftKings — paste draft board"):
+        st.caption("On DraftKings, open your draft board and copy it (Ctrl+A, Ctrl+C). Paste below.")
+        _dk_team = st.text_input("Your DraftKings team/entry name (marks your picks)",
+                                  placeholder="e.g. Michael's Team", key="dk_team_name")
+        _dk_text = st.text_area("Paste draft board here", height=180, key="dk_paste_area",
+                                 placeholder="Paste the copied draft board text here…")
+        if st.button("Import Picks", key="dk_import_btn") and _dk_text.strip():
+            _name_lookup = {n.lower().strip(): n for n in fp_all["Name"].tolist()}
+            _dk_team_lower = _dk_team.strip().lower()
+
+            _new_board = pd.DataFrame({
+                "Pick": list(range(1, 301)),
+                "Player": [""] * 300,
+                "My Pick": [False] * 300,
+            })
+
+            _pick_idx = 0
+            _matched, _skipped = 0, 0
+            for _line in _dk_text.strip().splitlines():
+                _line = _line.strip()
+                if not _line:
+                    continue
+                _parts = [p.strip() for p in _line.split("\t")]
+                _found_player = None
+                _found_mine   = False
+                for _p in _parts:
+                    if _p.lower() in _name_lookup:
+                        _found_player = _name_lookup[_p.lower()]
+                    if _dk_team_lower and _dk_team_lower in _p.lower():
+                        _found_mine = True
+                if _found_player and _pick_idx < 300:
+                    _new_board.loc[_pick_idx, "Player"]  = _found_player
+                    _new_board.loc[_pick_idx, "My Pick"] = _found_mine
+                    _pick_idx += 1
+                    _matched  += 1
+                elif not _found_player and any(_p for _p in _parts if _p and not _p.isdigit()):
+                    _skipped += 1
+
+            if _matched > 0:
+                st.session_state.draft_board = _new_board
+                st.session_state.pick_key    = st.session_state.get("pick_key", 0) + 1
+                st.session_state.my_picks    = []
+                st.session_state.other_picks = []
+                st.success(f"Imported {_matched} picks. {_skipped} lines skipped (headers/unknowns).")
+                st.rerun()
+            else:
+                st.warning("No players matched. Make sure you copied the full draft board (Ctrl+A then Ctrl+C from the DK draft board page).")
 
     # ── Quick pick entry ───────────────────────────────────────────────────────
     n_picks     = num_teams * total_rounds
