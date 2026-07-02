@@ -1235,145 +1235,142 @@ elif tab_choice == "🎯 Draft Room":
             st.rerun()
 
     # ── DraftKings screenshot importer ─────────────────────────────────────────
+    if "dk_scan_results" not in st.session_state:
+        st.session_state.dk_scan_results = None
+
     with st.expander("📋 Import from DraftKings — upload screenshot"):
-        st.caption("Screenshot your DraftKings draft board and upload below. Claude Vision reads every pick automatically (~$0.01–0.03 per scan).")
+        st.caption("Screenshot your full DraftKings draft board and upload below (~$0.03/scan).")
         _img_file = st.file_uploader("Upload screenshot (PNG or JPG)",
                                       type=["png", "jpg", "jpeg"], key="dk_img_upload")
 
         if st.button("📖 Read Screenshot", key="dk_import_btn", disabled=_img_file is None):
+            st.session_state.dk_scan_results = None  # clear previous
             _api_key = str(st.secrets.get("ANTHROPIC_API_KEY", "")).strip()
-            if not _api_key:
-                st.error("Add ANTHROPIC_API_KEY to your Streamlit app secrets (app Settings → Secrets).")
-            elif not _api_key.startswith("sk-ant-"):
-                st.error(f"API key looks wrong — should start with 'sk-ant-' but starts with '{_api_key[:10]}…'. Check your Streamlit secrets.")
+            if not _api_key.startswith("sk-ant-"):
+                st.error(f"API key invalid — starts with '{_api_key[:10]}'. Check Streamlit secrets.")
             else:
                 import anthropic as _anthropic, base64 as _b64, io as _io
 
-                _img_bytes  = _img_file.read()
-                _img_b64    = _b64.b64encode(_img_bytes).decode()
+                _img_b64    = _b64.b64encode(_img_file.read()).decode()
                 _media_type = _img_file.type or "image/png"
+                _prompt = f"""This is a DraftKings NFL best ball draft board — a {num_teams}-team snake draft grid.
+Each COLUMN is a team. Each ROW is a draft round.
+A DRAFTED cell contains a player name plus a position (QB/RB/WR/TE) and NFL team abbreviation.
+An EMPTY cell has only arrows, a pick number, or a clock — no player name.
 
-                _prompt = """This is a DraftKings NFL best ball draft board screenshot.
-It is a grid — each COLUMN is a team/entry, each ROW is a draft round.
-A COMPLETED cell has a pick label (like "1.1"), a player name, a position (QB/RB/WR/TE), and an NFL team.
-An EMPTY/PENDING cell has only arrows, clock icons, or a number — no player name.
+Read the grid ROW BY ROW, LEFT TO RIGHT within each row.
+For each DRAFTED cell return its round, visual column (1=leftmost), and player name exactly as shown.
+Skip all empty/pending cells.
 
-Only extract COMPLETED cells (cells with a position abbreviation QB/RB/WR/TE visible).
-Skip empty cells, pending cells, and "ON THE CLOCK" cells entirely.
+Return ONLY a JSON array, no markdown:
+[{{"round": 1, "col": 1, "player": "J. Chase"}}, ...]
 
-Return ONLY a valid JSON array, no markdown:
-[{"pick_label": "1.1", "player": "name as shown", "pos": "WR", "drafted_by": "entryname"}, ...]
+Player name rules:
+- Copy EXACTLY as shown in the cell (e.g. "J. Chase", "T. McBride", "C. Lamb")
+- Do NOT expand or guess full names"""
 
-CRITICAL for player name:
-- Copy the name EXACTLY as it appears in the cell — do NOT guess or expand abbreviations
-- If the cell shows "J. Chase" return "J. Chase" — do not write "Joe Chase" or "Jamarr Chase"
-- If the cell shows "C. Lamb" return "C. Lamb"
-- Sort by pick_label ascending (1.1, 1.2 ... 2.1, 2.2 ...)"""
-
-                with st.spinner("Reading draft board — takes about 15 seconds…"):
+                with st.spinner("Reading draft board — about 20 seconds…"):
                     try:
                         _client = _anthropic.Anthropic(api_key=_api_key)
-                        _resp = _client.messages.create(
-                            model="claude-sonnet-4-6",
-                            max_tokens=8096,
+                        _resp   = _client.messages.create(
+                            model="claude-sonnet-4-6", max_tokens=8096,
                             messages=[{"role": "user", "content": [
-                                {"type": "image",
-                                 "source": {"type": "base64",
-                                            "media_type": _media_type,
-                                            "data": _img_b64}},
+                                {"type": "image", "source": {"type": "base64",
+                                 "media_type": _media_type, "data": _img_b64}},
                                 {"type": "text", "text": _prompt},
                             ]}],
                         )
-                        _raw = _resp.content[0].text.strip()
+                        _raw        = _resp.content[0].text.strip()
                         _json_match = re.search(r"\[.*\]", _raw, re.DOTALL)
                         if not _json_match:
-                            st.error("Couldn't parse the response — try a clearer screenshot.")
+                            st.error("Couldn't parse response — try a clearer screenshot.")
                             st.code(_raw[:400])
                         else:
-                            _picks_data = json.loads(_json_match.group())
+                            _picks_raw = json.loads(_json_match.group())
 
-                            # Build lookup: exact name + abbreviation (first initial + last name)
+                            # Name canonicalization
                             _exact_lu = {n.lower(): n for n in fp_all["Name"].tolist()}
-                            _suffixes = {'jr.', 'sr.', 'ii', 'iii', 'iv', 'jr', 'sr'}
+                            _sfx      = {'jr.', 'sr.', 'ii', 'iii', 'iv', 'jr', 'sr'}
                             _abbrev_lu = {}
                             for _n in fp_all.sort_values("FP_ADP")["Name"].tolist():
                                 _pts = _n.split()
-                                if len(_pts) < 2:
-                                    continue
-                                _init = _pts[0][0].lower()
-                                # Last non-suffix word = effective last name
-                                _last = next(
-                                    (p.lower() for p in reversed(_pts[1:])
-                                     if p.lower().rstrip('.') not in _suffixes),
-                                    _pts[-1].lower()
-                                )
-                                if (_init, _last) not in _abbrev_lu:
-                                    _abbrev_lu[(_init, _last)] = _n
+                                if len(_pts) < 2: continue
+                                _ini = _pts[0][0].lower()
+                                _lst = next((p.lower() for p in reversed(_pts[1:])
+                                             if p.lower().rstrip('.') not in _sfx), _pts[-1].lower())
+                                if (_ini, _lst) not in _abbrev_lu:
+                                    _abbrev_lu[(_ini, _lst)] = _n
 
-                            def _canonicalize(raw_name, pos=""):
-                                tl = raw_name.strip().lower()
-                                # 1. Exact match
-                                if tl in _exact_lu:
-                                    return _exact_lu[tl]
-                                # 2. Abbreviated "F. Lastname" or "F. St. Lastname"
+                            def _canon(raw):
+                                tl = raw.strip().lower()
+                                if tl in _exact_lu: return _exact_lu[tl]
                                 _m = re.match(r'^([a-z])\.?\s+(.+)$', tl)
                                 if _m:
-                                    _init = _m.group(1)
+                                    _ini  = _m.group(1)
                                     _rest = re.sub(r"[^a-z\s'\-]", "", _m.group(2)).strip()
-                                    _words = _rest.split()
-                                    # Try each word from the end as the last name
-                                    for _w in reversed(_words):
-                                        if len(_w) < 2:
-                                            continue
-                                        _cand = _abbrev_lu.get((_init, _w))
-                                        if _cand:
-                                            return _cand
-                                    # Prefix match on last word (truncated names)
-                                    _lw = _words[-1] if _words else ""
+                                    for _w in reversed(_rest.split()):
+                                        if len(_w) >= 2:
+                                            _c = _abbrev_lu.get((_ini, _w))
+                                            if _c: return _c
+                                    _lw = _rest.split()[-1] if _rest.split() else ""
                                     if len(_lw) >= 3:
                                         for (_ki, _kl), _v in _abbrev_lu.items():
-                                            if _ki == _init and _kl.startswith(_lw[:5]):
-                                                return _v
-                                # 3. Multi-word partial: all words appear in canonical name
+                                            if _ki == _ini and _kl.startswith(_lw[:5]): return _v
                                 _ws = tl.split()
                                 if len(_ws) >= 2:
                                     _hits = [v for k, v in _exact_lu.items()
                                              if all(w in k for w in _ws if len(w) > 1)]
-                                    if len(_hits) == 1:
-                                        return _hits[0]
-                                return raw_name  # keep as-is; user can correct in board
+                                    if len(_hits) == 1: return _hits[0]
+                                return raw
 
-                            _ordered = [_canonicalize(p["player"], p.get("pos", ""))
-                                        for p in _picks_data if p.get("player")]
+                            # Apply snake draft: even rounds reverse column order
+                            _round_picks: dict = {}
+                            for _p in _picks_raw:
+                                _r, _c, _nm = _p.get("round", 1), _p.get("col", 1), _p.get("player", "")
+                                if _nm:
+                                    _round_picks.setdefault(_r, []).append((_c, _canon(_nm)))
 
-                            st.success(f"Found {len(_ordered)} picks — review then confirm.")
-                            st.dataframe(
-                                pd.DataFrame({"#": range(1, len(_ordered)+1), "Player": _ordered}),
-                                use_container_width=True, height=220, hide_index=True,
-                            )
+                            _ordered = []
+                            for _r in sorted(_round_picks):
+                                _rp = sorted(_round_picks[_r], key=lambda x: x[0] if _r % 2 == 1 else -x[0])
+                                _ordered.extend(nm for _, nm in _rp)
 
-                            if st.button("✅ Confirm & Import", key="dk_confirm_btn"):
-                                _new_board = pd.DataFrame({
-                                    "Pick":    list(range(1, 301)),
-                                    "Player":  [""] * 300,
-                                    "My Pick": [False] * 300,
-                                })
-                                for _i, _player in enumerate(_ordered):
-                                    if _i >= 300:
-                                        break
-                                    _new_board.loc[_i, "Player"] = _player
-                                    _pn = _i + 1
-                                    _rn = (_pn - 1) // num_teams + 1
-                                    _sl = (_pn - 1) % num_teams + 1
-                                    _my = my_slot if _rn % 2 == 1 else num_teams + 1 - my_slot
-                                    _new_board.loc[_i, "My Pick"] = (_sl == _my)
-                                st.session_state.draft_board = _new_board
-                                st.session_state.pick_key    = st.session_state.get("pick_key", 0) + 1
-                                st.session_state.my_picks    = []
-                                st.session_state.other_picks = []
-                                st.rerun()
+                            st.session_state.dk_scan_results = _ordered
+                            st.rerun()
                     except Exception as _e:
                         st.error(f"Error: {_e}")
+
+        # Preview + confirm live outside the scan-button block so it survives reruns
+        if st.session_state.dk_scan_results:
+            _ordered = st.session_state.dk_scan_results
+            st.success(f"Found {len(_ordered)} picks — review, then confirm or rescan.")
+            st.dataframe(
+                pd.DataFrame({"#": range(1, len(_ordered) + 1), "Player": _ordered}),
+                use_container_width=True, height=220, hide_index=True,
+            )
+            _bc1, _bc2 = st.columns(2)
+            with _bc1:
+                if st.button("✅ Confirm & Import", key="dk_confirm_btn"):
+                    _new_board = pd.DataFrame({"Pick": list(range(1, 301)),
+                                               "Player": [""] * 300, "My Pick": [False] * 300})
+                    for _i, _pl in enumerate(_ordered):
+                        if _i >= 300: break
+                        _new_board.loc[_i, "Player"] = _pl
+                        _pn = _i + 1
+                        _rn = (_pn - 1) // num_teams + 1
+                        _sl = (_pn - 1) % num_teams + 1
+                        _my = my_slot if _rn % 2 == 1 else num_teams + 1 - my_slot
+                        _new_board.loc[_i, "My Pick"] = (_sl == _my)
+                    st.session_state.draft_board     = _new_board
+                    st.session_state.dk_scan_results = None
+                    st.session_state.pick_key        = st.session_state.get("pick_key", 0) + 1
+                    st.session_state.my_picks        = []
+                    st.session_state.other_picks     = []
+                    st.rerun()
+            with _bc2:
+                if st.button("🔄 Clear & Rescan", key="dk_rescan_btn"):
+                    st.session_state.dk_scan_results = None
+                    st.rerun()
 
     # ── Quick pick entry ───────────────────────────────────────────────────────
     n_picks     = num_teams * total_rounds
