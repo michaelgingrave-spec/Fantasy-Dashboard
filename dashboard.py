@@ -1152,11 +1152,12 @@ elif tab_choice == "🎯 Draft Room":
             "Player": [""] * 300,
             "My Pick": [False] * 300,
         })
-    if "my_picks"         not in st.session_state: st.session_state.my_picks         = []
-    if "other_picks"      not in st.session_state: st.session_state.other_picks      = []
-    if "pick_key"         not in st.session_state: st.session_state.pick_key         = 0
-    if "draft_num_teams"  not in st.session_state: st.session_state.draft_num_teams  = 12
-    if "draft_my_slot"    not in st.session_state: st.session_state.draft_my_slot    = 6
+    if "my_picks"          not in st.session_state: st.session_state.my_picks          = []
+    if "other_picks"       not in st.session_state: st.session_state.other_picks       = []
+    if "pick_key"          not in st.session_state: st.session_state.pick_key          = 0
+    if "board_editor_key"  not in st.session_state: st.session_state.board_editor_key  = 0
+    if "draft_num_teams"   not in st.session_state: st.session_state.draft_num_teams   = 12
+    if "draft_my_slot"     not in st.session_state: st.session_state.draft_my_slot     = 6
     if "draft_total_rounds" not in st.session_state: st.session_state.draft_total_rounds = 20
 
     # ── Load data ──────────────────────────────────────────────────────────────
@@ -1227,19 +1228,21 @@ elif tab_choice == "🎯 Draft Room":
                     "my_slot":      _loaded.get("my_slot", 6),
                     "total_rounds": _loaded.get("total_rounds", 20),
                 }
-                st.session_state.pick_key    = st.session_state.get("pick_key", 0) + 1
-                st.session_state.my_picks    = []
-                st.session_state.other_picks = []
+                st.session_state.pick_key         = st.session_state.get("pick_key", 0) + 1
+                st.session_state.board_editor_key = st.session_state.get("board_editor_key", 0) + 1
+                st.session_state.my_picks         = []
+                st.session_state.other_picks      = []
                 st.rerun()
             except Exception as e:
                 st.error(f"Could not load draft: {e}")
     with dm4:
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("🗑️ Reset", use_container_width=True):
-            st.session_state.my_picks    = []
-            st.session_state.other_picks = []
-            st.session_state.pick_key    = st.session_state.get("pick_key", 0) + 1
-            st.session_state.draft_board = pd.DataFrame({
+            st.session_state.my_picks         = []
+            st.session_state.other_picks      = []
+            st.session_state.pick_key         = st.session_state.get("pick_key", 0) + 1
+            st.session_state.board_editor_key = st.session_state.get("board_editor_key", 0) + 1
+            st.session_state.draft_board      = pd.DataFrame({
                 "Pick": list(range(1, 301)),
                 "Player": [""] * 300,
                 "My Pick": [False] * 300,
@@ -1247,43 +1250,44 @@ elif tab_choice == "🎯 Draft Room":
             st.rerun()
 
     # ── DraftKings text-paste importer ────────────────────────────────────────
-    if "dk_scan_results" not in st.session_state:
-        st.session_state.dk_scan_results = None
-    if "dk_paste_key" not in st.session_state:
-        st.session_state.dk_paste_key = 0
+    if "dk_scan_results" not in st.session_state: st.session_state.dk_scan_results = None
+    if "dk_paste_key"    not in st.session_state: st.session_state.dk_paste_key    = 0
+    if "dk_exp_open"     not in st.session_state: st.session_state.dk_exp_open     = False
 
-    with st.expander("📋 Import from DraftKings — paste draft board text"):
+    # Keep expander open while there is content to review
+    _dk_exp_default = st.session_state.dk_exp_open or bool(st.session_state.dk_scan_results)
+
+    with st.expander("📋 Import from DraftKings — paste draft board text",
+                     expanded=_dk_exp_default):
         st.caption(
             "On the DraftKings draft board page: select all (Ctrl+A), copy (Ctrl+C), "
             "then paste into the box below."
         )
-        _pka1, _pka2 = st.columns([6, 1])
-        with _pka1:
-            _dk_paste = st.text_area("Paste draft board text here", height=160,
-                                      key=f"dk_paste_input_{st.session_state.dk_paste_key}",
-                                      placeholder="Paste the copied DraftKings draft board text here…",
-                                      label_visibility="collapsed")
-        with _pka2:
-            st.markdown("<br>", unsafe_allow_html=True)
+
+        _dk_paste = st.text_area("Paste draft board text here", height=160,
+                                  key=f"dk_paste_input_{st.session_state.dk_paste_key}",
+                                  placeholder="Paste the copied DraftKings draft board text here…",
+                                  label_visibility="collapsed")
+
+        _pb1, _pb2 = st.columns([3, 1])
+        with _pb1:
+            _do_parse = st.button("Parse & Preview", key="dk_parse_btn",
+                                  disabled=not _dk_paste.strip(), use_container_width=True)
+        with _pb2:
             if st.button("🗑️ Clear", key="dk_clear_btn", use_container_width=True):
-                st.session_state.dk_paste_key    += 1
-                st.session_state.dk_scan_results  = None
+                st.session_state.dk_paste_key   += 1
+                st.session_state.dk_scan_results = None
+                st.session_state.dk_exp_open     = True   # keep expander open after rerun
                 st.rerun()
 
-        if st.button("Parse & Preview", key="dk_parse_btn", disabled=not _dk_paste.strip()):
+        if _do_parse:
             st.session_state.dk_scan_results = None
-            _text = _dk_paste.strip()
-
-            # Each team column is preceded by "User Avatar\n" — split on that
+            _text     = _dk_paste.strip()
             _sections = re.split(r'User Avatar\s*\n', _text)
             _sections = [s for s in _sections if s.strip()]
-
-            # Within each section, picks look like:
-            #   <overall_pick_number>       ← integer on its own line
-            #   <Full Player Name> icon     ← name followed by the word "icon"
             _pick_pat = re.compile(r'^(\d+)\n([^\n]+\s+icon)', re.MULTILINE)
 
-            _raw_picks = []  # list of (overall_num, col_idx, player_name)
+            _raw_picks = []
             for _col_idx, _sec in enumerate(_sections, start=1):
                 for _m in _pick_pat.finditer(_sec):
                     _overall = int(_m.group(1))
@@ -1292,43 +1296,34 @@ elif tab_choice == "🎯 Draft Room":
                         _raw_picks.append((_overall, _col_idx, _name))
 
             if not _raw_picks:
-                st.error(
-                    "No picks found — make sure you selected all and copied the full "
-                    "DraftKings draft board page, not just part of it."
-                )
+                st.error("No picks found — make sure you selected all and copied the full "
+                         "DraftKings draft board page.")
             else:
-                # overall_num IS the sequential pick order — no snake-draft math needed
                 _raw_picks.sort(key=lambda x: x[0])
-
-                # Canonicalize full names against the player database
                 _exact_lu = {n.lower(): n for n in fp_all["Name"].tolist()}
                 _sfx_set  = {'jr', 'sr', 'ii', 'iii', 'iv', 'v', 'jr.', 'sr.'}
 
                 def _canon_full(raw):
                     tl = raw.strip().lower()
-                    if tl in _exact_lu:
-                        return _exact_lu[tl]
-                    # Strip generational suffixes (Jr., III, etc.) and try exact match
+                    if tl in _exact_lu: return _exact_lu[tl]
                     _words = tl.split()
                     _core  = [w for w in _words if w.rstrip('.') not in _sfx_set]
                     _core_str = ' '.join(_core)
-                    if _core_str != tl and _core_str in _exact_lu:
-                        return _exact_lu[_core_str]
-                    # Fuzzy: all non-suffix words must appear in a known name
+                    if _core_str != tl and _core_str in _exact_lu: return _exact_lu[_core_str]
                     _ws = [w for w in _core if len(w) > 1]
                     if _ws:
                         _hits = [v for k, v in _exact_lu.items() if all(w in k for w in _ws)]
-                        if len(_hits) == 1:
-                            return _hits[0]
-                    return raw  # keep original if no match
+                        if len(_hits) == 1: return _hits[0]
+                    return raw
 
-                _ordered = [(_col, _canon_full(_nm)) for _, _col, _nm in _raw_picks]
-                st.session_state.dk_scan_results = _ordered
-                st.rerun()
+                st.session_state.dk_scan_results = [
+                    (_col, _canon_full(_nm)) for _, _col, _nm in _raw_picks
+                ]
+                st.session_state.dk_exp_open = True
+                # no st.rerun() — results block below renders in this same pass
 
-        # Preview + confirm live outside the parse block so they survive reruns
         if st.session_state.dk_scan_results:
-            _owc = st.session_state.dk_scan_results  # list of (col, player)
+            _owc = st.session_state.dk_scan_results
             st.success(f"Found {len(_owc)} picks — your picks are in column {my_slot}. Review then confirm.")
             st.dataframe(
                 pd.DataFrame({
@@ -1347,16 +1342,19 @@ elif tab_choice == "🎯 Draft Room":
                         if _i >= 300: break
                         _new_board.loc[_i, "Player"]  = _pl
                         _new_board.loc[_i, "My Pick"] = (_c == my_slot)
-                    st.session_state.draft_board     = _new_board
-                    st.session_state.dk_scan_results = None
-                    st.session_state.pick_key        = st.session_state.get("pick_key", 0) + 1
-                    st.session_state.my_picks        = []
-                    st.session_state.other_picks     = []
+                    st.session_state.draft_board      = _new_board
+                    st.session_state.dk_scan_results  = None
+                    st.session_state.dk_exp_open      = False
+                    st.session_state.board_editor_key = st.session_state.get("board_editor_key", 0) + 1
+                    st.session_state.pick_key         = st.session_state.get("pick_key", 0) + 1
+                    st.session_state.my_picks         = []
+                    st.session_state.other_picks      = []
                     st.rerun()
             with _bc2:
                 if st.button("🔄 Clear & Re-paste", key="dk_rescan_btn"):
                     st.session_state.dk_scan_results = None
-                    st.rerun()
+                    st.session_state.dk_exp_open     = True
+                    # no st.rerun() — same pass hides results, expander stays open
 
     # ── Quick pick entry ───────────────────────────────────────────────────────
     n_picks = num_teams * total_rounds
@@ -1420,12 +1418,17 @@ elif tab_choice == "🎯 Draft Room":
         hide_index=True,
         use_container_width=True,
         height=350,
-        key="draft_board_editor",
+        key=f"draft_board_editor_{st.session_state.board_editor_key}",
     )
 
-    # Persist any inline corrections back to session state
-    st.session_state.draft_board.loc[:n_picks - 1, "Player"]  = edited["Player"].values
-    st.session_state.draft_board.loc[:n_picks - 1, "My Pick"] = edited["My Pick"].values
+    # Only write back when user actually changed something in the editor
+    _cur_players = st.session_state.draft_board.loc[:n_picks - 1, "Player"].values
+    _cur_mines   = st.session_state.draft_board.loc[:n_picks - 1, "My Pick"].values
+    _ed_players  = edited["Player"].values
+    _ed_mines    = edited["My Pick"].values
+    if not ((_cur_players == _ed_players).all() and (_cur_mines == _ed_mines).all()):
+        st.session_state.draft_board.loc[:n_picks - 1, "Player"]  = _ed_players
+        st.session_state.draft_board.loc[:n_picks - 1, "My Pick"] = _ed_mines
 
     # Derive my_picks / other_picks for all analysis below
     filled      = edited[edited["Player"].notna() & (edited["Player"] != "")]
