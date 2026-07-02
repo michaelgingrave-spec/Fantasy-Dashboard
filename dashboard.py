@@ -1249,15 +1249,26 @@ elif tab_choice == "🎯 Draft Room":
     # ── DraftKings text-paste importer ────────────────────────────────────────
     if "dk_scan_results" not in st.session_state:
         st.session_state.dk_scan_results = None
+    if "dk_paste_key" not in st.session_state:
+        st.session_state.dk_paste_key = 0
 
     with st.expander("📋 Import from DraftKings — paste draft board text"):
         st.caption(
             "On the DraftKings draft board page: select all (Ctrl+A), copy (Ctrl+C), "
             "then paste into the box below."
         )
-        _dk_paste = st.text_area("Paste draft board text here", height=160,
-                                  key="dk_paste_input",
-                                  placeholder="Paste the copied DraftKings draft board text here…")
+        _pka1, _pka2 = st.columns([6, 1])
+        with _pka1:
+            _dk_paste = st.text_area("Paste draft board text here", height=160,
+                                      key=f"dk_paste_input_{st.session_state.dk_paste_key}",
+                                      placeholder="Paste the copied DraftKings draft board text here…",
+                                      label_visibility="collapsed")
+        with _pka2:
+            st.markdown("<br>", unsafe_allow_html=True)
+            if st.button("🗑️ Clear", key="dk_clear_btn", use_container_width=True):
+                st.session_state.dk_paste_key    += 1
+                st.session_state.dk_scan_results  = None
+                st.rerun()
 
         if st.button("Parse & Preview", key="dk_parse_btn", disabled=not _dk_paste.strip()):
             st.session_state.dk_scan_results = None
