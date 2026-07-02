@@ -3,6 +3,8 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
+import json
+import datetime
 from pathlib import Path
 
 st.set_page_config(
@@ -1149,9 +1151,12 @@ elif tab_choice == "🎯 Draft Room":
             "Player": [""] * 300,
             "My Pick": [False] * 300,
         })
-    if "my_picks"    not in st.session_state: st.session_state.my_picks    = []
-    if "other_picks" not in st.session_state: st.session_state.other_picks = []
-    if "pick_key"    not in st.session_state: st.session_state.pick_key    = 0
+    if "my_picks"         not in st.session_state: st.session_state.my_picks         = []
+    if "other_picks"      not in st.session_state: st.session_state.other_picks      = []
+    if "pick_key"         not in st.session_state: st.session_state.pick_key         = 0
+    if "draft_num_teams"  not in st.session_state: st.session_state.draft_num_teams  = 10
+    if "draft_my_slot"    not in st.session_state: st.session_state.draft_my_slot    = 6
+    if "draft_total_rounds" not in st.session_state: st.session_state.draft_total_rounds = 18
 
     # ── Load data ──────────────────────────────────────────────────────────────
     fp_all         = load_fp_rankings().rename(columns={"Name_clean": "Name"})
@@ -1164,13 +1169,60 @@ elif tab_choice == "🎯 Draft Room":
     EASY_THR = 21   # rank ≥ 21 = easy
 
     # ── Draft settings ─────────────────────────────────────────────────────────
-    ds1, ds2, ds3, ds4 = st.columns([1, 1, 1, 1])
-    with ds1: num_teams    = st.selectbox("# Teams in Draft", [6, 8, 10, 12], index=2)
-    with ds2: my_slot      = st.number_input("Your Draft Slot", min_value=1, max_value=num_teams, value=min(6, num_teams))
-    with ds3: total_rounds = st.selectbox("Total Rounds", [15, 18, 20, 22], index=1)
-    with ds4:
+    _team_opts  = [6, 8, 10, 12]
+    _round_opts = [15, 18, 20, 22]
+    ds1, ds2, ds3 = st.columns([1, 1, 1])
+    with ds1:
+        num_teams = st.selectbox("# Teams in Draft", _team_opts,
+                                 index=_team_opts.index(st.session_state.draft_num_teams)
+                                 if st.session_state.draft_num_teams in _team_opts else 2)
+    with ds2:
+        my_slot = st.number_input("Your Draft Slot", min_value=1, max_value=num_teams,
+                                  value=min(st.session_state.draft_my_slot, num_teams))
+    with ds3:
+        total_rounds = st.selectbox("Total Rounds", _round_opts,
+                                    index=_round_opts.index(st.session_state.draft_total_rounds)
+                                    if st.session_state.draft_total_rounds in _round_opts else 1)
+    st.session_state.draft_num_teams    = num_teams
+    st.session_state.draft_my_slot      = my_slot
+    st.session_state.draft_total_rounds = total_rounds
+
+    # ── Draft management (save / load / reset) ─────────────────────────────────
+    dm1, dm2, dm3, dm4 = st.columns([3, 1, 1, 1])
+    with dm1:
+        draft_name = st.text_input("Draft name", placeholder="e.g. DK Slow Draft 1",
+                                   label_visibility="collapsed", key="draft_name_input")
+    with dm2:
+        _save_data = {
+            "name":         draft_name or "draft",
+            "saved_at":     datetime.datetime.now().isoformat(timespec="seconds"),
+            "num_teams":    num_teams,
+            "my_slot":      my_slot,
+            "total_rounds": total_rounds,
+            "board":        st.session_state.draft_board.to_dict(orient="records"),
+        }
+        _fname = (draft_name or "draft").replace(" ", "_") + ".json"
+        st.download_button("💾 Save", json.dumps(_save_data), file_name=_fname,
+                           mime="application/json", use_container_width=True)
+    with dm3:
+        _uploaded = st.file_uploader("Load", type=["json"], label_visibility="collapsed",
+                                     key="draft_upload")
+        if _uploaded is not None:
+            try:
+                _loaded = json.loads(_uploaded.read())
+                st.session_state.draft_board = pd.DataFrame(_loaded["board"])
+                st.session_state.draft_num_teams    = _loaded.get("num_teams", 10)
+                st.session_state.draft_my_slot      = _loaded.get("my_slot", 6)
+                st.session_state.draft_total_rounds = _loaded.get("total_rounds", 18)
+                st.session_state.pick_key           = st.session_state.get("pick_key", 0) + 1
+                st.session_state.my_picks           = []
+                st.session_state.other_picks        = []
+                st.rerun()
+            except Exception as e:
+                st.error(f"Could not load draft: {e}")
+    with dm4:
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("🗑️ Reset Draft", use_container_width=True):
+        if st.button("🗑️ Reset", use_container_width=True):
             st.session_state.my_picks    = []
             st.session_state.other_picks = []
             st.session_state.pick_key    = st.session_state.get("pick_key", 0) + 1
