@@ -1255,17 +1255,22 @@ elif tab_choice == "🎯 Draft Room":
 
                 _prompt = """This is a DraftKings NFL best ball draft board screenshot.
 It is a grid — each COLUMN is a team/entry, each ROW is a draft round.
-Each cell shows a pick label (like "1.1", "2.3"), a player name, position, and NFL team abbreviation.
+A COMPLETED cell contains a pick label (like "1.1"), a player name, a position (QB/RB/WR/TE), and an NFL team abbreviation.
+An EMPTY or PENDING cell contains only a pick number and arrows/clock icons but NO player name.
 
-Extract every pick. Return ONLY a valid JSON array, no markdown, no explanation:
+CRITICAL: Only extract cells that have an actual NFL player name drafted.
+Skip any cell that is empty, shows only a number, shows "ON THE CLOCK", or has no player name.
+This draft is in progress — many later round cells will be empty. Do NOT invent or guess player names.
+
+Return ONLY a valid JSON array, no markdown, no explanation:
 [{"pick_label": "1.1", "player": "Full Player Name", "drafted_by": "entryname"}, ...]
 
 Rules:
 - pick_label: the round.slot shown in the cell (e.g. "1.1" = round 1 slot 1)
-- player: player's full name as shown (expand abbreviations where possible, e.g. "J. Chase" → "Ja'Marr Chase")
+- player: the NFL player's name (expand abbreviations if possible, e.g. "J. Chase" → "Ja'Marr Chase")
 - drafted_by: the column header (entry name) for that cell
 - Sort by pick_label ascending (1.1, 1.2, ... 1.12, 2.1, 2.2 ...)
-- Include every visible player; skip empty cells"""
+- If you are not certain a cell has a drafted player, skip it"""
 
                 with st.spinner("Reading draft board — takes about 15 seconds…"):
                     try:
