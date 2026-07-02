@@ -1241,9 +1241,11 @@ elif tab_choice == "🎯 Draft Room":
                                       type=["png", "jpg", "jpeg"], key="dk_img_upload")
 
         if st.button("📖 Read Screenshot", key="dk_import_btn", disabled=_img_file is None):
-            _api_key = st.secrets.get("ANTHROPIC_API_KEY", "")
+            _api_key = str(st.secrets.get("ANTHROPIC_API_KEY", "")).strip()
             if not _api_key:
                 st.error("Add ANTHROPIC_API_KEY to your Streamlit app secrets (app Settings → Secrets).")
+            elif not _api_key.startswith("sk-ant-"):
+                st.error(f"API key looks wrong — should start with 'sk-ant-' but starts with '{_api_key[:10]}…'. Check your Streamlit secrets.")
             else:
                 import anthropic as _anthropic, base64 as _b64, io as _io
 
