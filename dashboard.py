@@ -1253,21 +1253,23 @@ elif tab_choice == "🎯 Draft Room":
 
                 _img_b64    = _b64.b64encode(_img_file.read()).decode()
                 _media_type = _img_file.type or "image/png"
-                _prompt = f"""This is a DraftKings NFL best ball draft board — a {num_teams}-team snake draft grid.
-Each COLUMN is a team. Each ROW is a draft round.
-A DRAFTED cell contains a player name plus a position (QB/RB/WR/TE) and NFL team abbreviation.
-An EMPTY cell has only arrows, a pick number, or a clock — no player name.
+                _prompt = f"""This is a DraftKings NFL best ball draft board image ({num_teams} teams, snake draft).
 
-Read the grid ROW BY ROW, LEFT TO RIGHT within each row.
-For each DRAFTED cell return its round, visual column (1=leftmost), and player name exactly as shown.
-Skip all empty/pending cells.
+Each drafted cell contains:
+  - A pick label printed in the cell, like "1.1", "2.12", "3.5" (round.pick_within_round)
+  - A player name (may be abbreviated, e.g. "J. Chase", "T. McBride")
+  - A position (QB, RB, WR, or TE)
 
-Return ONLY a JSON array, no markdown:
-[{{"round": 1, "col": 1, "player": "J. Chase"}}, ...]
+Empty/pending cells contain only arrows, clock icons, or pick numbers with no player name — skip these entirely.
 
-Player name rules:
-- Copy EXACTLY as shown in the cell (e.g. "J. Chase", "T. McBride", "C. Lamb")
-- Do NOT expand or guess full names"""
+Your job: for every cell that has a drafted player, read and return:
+  - "pick_label": the exact label printed in that cell (e.g. "1.1", "2.12") — READ IT, do not compute it
+  - "player": the name exactly as it appears (do NOT expand abbreviations)
+
+Return ONLY a JSON array — no markdown, no explanation:
+[{{"pick_label": "1.1", "player": "J. Chase"}}, {{"pick_label": "1.2", "player": "J. Gibbs"}}, ...]
+
+Important: each pick_label should appear only ONCE. If you're unsure about a cell, skip it."""
 
                 with st.spinner("Reading draft board — about 20 seconds…"):
                     try:
@@ -1289,8 +1291,8 @@ Player name rules:
                             _picks_raw = json.loads(_json_match.group())
 
                             # Name canonicalization
-                            _exact_lu = {n.lower(): n for n in fp_all["Name"].tolist()}
-                            _sfx      = {'jr.', 'sr.', 'ii', 'iii', 'iv', 'jr', 'sr'}
+                            _exact_lu  = {n.lower(): n for n in fp_all["Name"].tolist()}
+                            _sfx       = {'jr.', 'sr.', 'ii', 'iii', 'iv', 'jr', 'sr'}
                             _abbrev_lu = {}
                             for _n in fp_all.sort_values("FP_ADP")["Name"].tolist():
                                 _pts = _n.split()
@@ -1323,17 +1325,29 @@ Player name rules:
                                     if len(_hits) == 1: return _hits[0]
                                 return raw
 
-                            # Apply snake draft: even rounds reverse column order
-                            _round_picks: dict = {}
+                            def _label_seq(label):
+                                # "R.S" → sequential pick number using N-team draft
+                                try:
+                                    _r, _s = label.split(".")
+                                    return (int(_r) - 1) * num_teams + int(_s)
+                                except Exception:
+                                    return 99999
+
+                            # Deduplicate by pick_label, then sort by sequential pick number
+                            _seen_labels   = {}
+                            _seen_players  = set()
                             for _p in _picks_raw:
-                                _r, _c, _nm = _p.get("round", 1), _p.get("col", 1), _p.get("player", "")
-                                if _nm:
-                                    _round_picks.setdefault(_r, []).append((_c, _canon(_nm)))
+                                _lbl = str(_p.get("pick_label", "")).strip()
+                                _nm  = str(_p.get("player", "")).strip()
+                                if _lbl and _nm and _lbl not in _seen_labels:
+                                    _seen_labels[_lbl] = _nm
 
                             _ordered = []
-                            for _r in sorted(_round_picks):
-                                _rp = sorted(_round_picks[_r], key=lambda x: x[0] if _r % 2 == 1 else -x[0])
-                                _ordered.extend(nm for _, nm in _rp)
+                            for _lbl in sorted(_seen_labels, key=_label_seq):
+                                _nm = _canon(_seen_labels[_lbl])
+                                if _nm and _nm not in _seen_players:
+                                    _seen_players.add(_nm)
+                                    _ordered.append(_nm)
 
                             st.session_state.dk_scan_results = _ordered
                             st.rerun()
