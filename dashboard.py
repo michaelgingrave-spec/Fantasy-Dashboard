@@ -5,6 +5,7 @@ import plotly.express as px
 import numpy as np
 import json
 import datetime
+import re
 from pathlib import Path
 
 st.set_page_config(
@@ -1235,108 +1236,142 @@ elif tab_choice == "🎯 Draft Room":
 
     # ── DraftKings screenshot importer ─────────────────────────────────────────
     with st.expander("📋 Import from DraftKings — upload screenshot"):
-        st.caption("Screenshot your DraftKings draft board, then upload it below. AI will read every pick automatically.")
-        _dk_team = st.text_input("Your DraftKings entry name (to mark your picks as 'My Pick')",
-                                  placeholder="e.g. mjeezy25", key="dk_team_name")
-        _img_file = st.file_uploader("Upload draft board screenshot (PNG or JPG)",
+        st.caption("Screenshot your full DraftKings draft board and upload below. OCR reads every pick for free.")
+        _img_file = st.file_uploader("Upload screenshot (PNG or JPG)",
                                       type=["png", "jpg", "jpeg"], key="dk_img_upload")
 
         if st.button("📖 Read Screenshot", key="dk_import_btn", disabled=_img_file is None):
-            _api_key = st.secrets.get("ANTHROPIC_API_KEY", "")
-            if not _api_key:
-                st.error("Add your Anthropic API key to Streamlit secrets as ANTHROPIC_API_KEY.")
-            else:
-                import anthropic as _anthropic
-                import base64 as _b64
-                import re as _re
+            try:
+                import pytesseract
+                from PIL import Image, ImageEnhance
 
-                _img_bytes  = _img_file.read()
-                _img_b64    = _b64.b64encode(_img_bytes).decode()
-                _media_type = _img_file.type or "image/png"
+                with st.spinner("Running OCR — takes 20–40 seconds…"):
+                    # --- Preprocess ---
+                    import io as _io
+                    _img = Image.open(_io.BytesIO(_img_file.read()))
+                    if _img.mode != "RGB":
+                        _img = _img.convert("RGB")
+                    _w, _h = _img.size
+                    _scale = max(2.0, 1800 / _w)
+                    _img_up = _img.resize((int(_w * _scale), int(_h * _scale)), Image.LANCZOS)
+                    _gray   = _img_up.convert("L")
+                    _gray   = ImageEnhance.Contrast(_gray).enhance(2.5)
 
-                _prompt = f"""This is a DraftKings NFL draft board screenshot.
-It is a grid where each COLUMN is a team/entry and each ROW is a draft round.
-Each cell contains a pick label (like "1.1", "2.3"), a player name, position, and NFL team.
-Column headers at the top show the entry/team names.
+                    # --- OCR with word positions ---
+                    _data = pytesseract.image_to_data(
+                        _gray, output_type=pytesseract.Output.DICT,
+                        config="--oem 3 --psm 6"
+                    )
+                    _tok = pd.DataFrame({
+                        "text":  [str(t).strip() for t in _data["text"]],
+                        "conf":  _data["conf"],
+                        "left":  _data["left"],
+                        "top":   _data["top"],
+                        "width": _data["width"],
+                        "height":_data["height"],
+                    })
+                    _tok["cx"] = _tok["left"] + _tok["width"] // 2
+                    _tok["cy"] = _tok["top"]  + _tok["height"] // 2
+                    _tok = _tok[(_tok["conf"] > 20) & (_tok["text"].str.len() > 0)].reset_index(drop=True)
 
-Extract every pick in sequential order.
-Return ONLY a JSON array — no markdown, no explanation:
-[{{"pick_label": "1.1", "player": "Full Name", "drafted_by": "entryname"}}, ...]
+                    # --- Name lookups ---
+                    _exact = {n.lower(): n for n in fp_all["Name"].tolist()}
+                    _abbrev = {}
+                    for _n in fp_all.sort_values("FP_ADP")["Name"].tolist():
+                        _p = _n.split()
+                        if len(_p) >= 2:
+                            _k = (_p[0][0].lower(), _p[-1].lower())
+                            if _k not in _abbrev:
+                                _abbrev[_k] = _n
 
-Rules:
-- pick_label is the round.slot shown in the cell (e.g. "1.1" = round 1 slot 1)
-- player is the player's full name exactly as shown
-- drafted_by is the column header for that cell
-- Sort by pick_label numerically (1.1, 1.2, ... 2.1, 2.2 ...)
-- Include every player visible; skip empty cells
-- The user's entry name is: {_dk_team or "unknown"}"""
+                    def _match_player(txt):
+                        tl = txt.strip().lower()
+                        if tl in _exact:
+                            return _exact[tl]
+                        m = re.match(r"^([a-z])\.?\s+(.+)$", tl)
+                        if m:
+                            init = m.group(1)
+                            rest = re.sub(r"[^a-z '\-]", "", m.group(2)).strip()
+                            cand = _abbrev.get((init, rest))
+                            if cand:
+                                return cand
+                            last_w = rest.split()[-1] if rest.split() else ""
+                            cand = _abbrev.get((init, last_w))
+                            if cand:
+                                return cand
+                            if len(rest) >= 3:
+                                for (ki, kl), v in _abbrev.items():
+                                    if ki == init and kl.startswith(rest[:4]):
+                                        return v
+                        return None
 
-                with st.spinner("Reading draft board — this takes about 15 seconds…"):
-                    try:
-                        _client = _anthropic.Anthropic(api_key=_api_key)
-                        _resp   = _client.messages.create(
-                            model="claude-haiku-4-5-20251001",
-                            max_tokens=8096,
-                            messages=[{
-                                "role": "user",
-                                "content": [
-                                    {"type": "image",
-                                     "source": {"type": "base64",
-                                                "media_type": _media_type,
-                                                "data": _img_b64}},
-                                    {"type": "text", "text": _prompt},
-                                ],
-                            }],
-                        )
-                        _raw = _resp.content[0].text.strip()
-                        _json_match = _re.search(r"\[.*\]", _raw, _re.DOTALL)
-                        if not _json_match:
-                            st.error("Couldn't parse response. Try a clearer screenshot.")
-                            st.code(_raw[:500])
-                        else:
-                            _picks_data = json.loads(_json_match.group())
-                            _name_lookup = {n.lower().strip(): n for n in fp_all["Name"].tolist()}
-                            _dk_team_lower = _dk_team.strip().lower()
+                    # --- Anchor on pick labels (e.g. "1.3", "12.4") ---
+                    _pick_toks = _tok[_tok["text"].str.match(r"^\d{1,2}\.\d{1,2}$")].copy()
+                    _cell_w = int(_gray.width / max(num_teams, 1))
+                    _cell_h = int(_gray.height / max(total_rounds + 2, 1))
 
-                            _new_board = pd.DataFrame({
-                                "Pick": list(range(1, 301)),
-                                "Player": [""] * 300,
-                                "My Pick": [False] * 300,
-                            })
+                    _results = []
+                    _seen    = set()
+                    for _, _pr in _pick_toks.iterrows():
+                        px, py = int(_pr["cx"]), int(_pr["cy"])
+                        _near = _tok[
+                            (_tok["cx"].between(px - _cell_w // 2, px + _cell_w // 2)) &
+                            (_tok["cy"].between(py, py + _cell_h))
+                        ]["text"].tolist()
 
-                            _matched, _skipped = 0, 0
-                            for _i, _p in enumerate(_picks_data):
-                                if _i >= 300:
+                        _found = None
+                        for _i in range(len(_near)):
+                            for _j in range(_i + 1, min(_i + 5, len(_near) + 1)):
+                                _found = _match_player(" ".join(_near[_i:_j]))
+                                if _found:
                                     break
-                                _pname  = str(_p.get("player", "")).strip()
-                                _pname_lower = _pname.lower()
-                                _canonical = _name_lookup.get(_pname_lower)
-                                if not _canonical:
-                                    # partial match: first + last name
-                                    _parts = _pname_lower.split()
-                                    if len(_parts) >= 2:
-                                        _canonical = next(
-                                            (v for k, v in _name_lookup.items()
-                                             if _parts[0] in k and _parts[-1] in k), None)
-                                _is_mine = _dk_team_lower and _dk_team_lower in str(_p.get("drafted_by", "")).lower()
-                                if _canonical:
-                                    _new_board.loc[_i, "Player"]  = _canonical
-                                    _new_board.loc[_i, "My Pick"] = bool(_is_mine)
-                                    _matched += 1
-                                else:
-                                    _new_board.loc[_i, "Player"]  = _pname
-                                    _new_board.loc[_i, "My Pick"] = bool(_is_mine)
-                                    _matched += 1
-                                    _skipped += 1
+                            if _found:
+                                break
 
-                            st.session_state.draft_board = _new_board
-                            st.session_state.pick_key    = st.session_state.get("pick_key", 0) + 1
-                            st.session_state.my_picks    = []
-                            st.session_state.other_picks = []
-                            st.success(f"Imported {_matched} picks ({_skipped} names not in database — still filled in).")
-                            st.rerun()
-                    except Exception as _e:
-                        st.error(f"Error reading screenshot: {_e}")
+                        if _found and _found not in _seen:
+                            try:
+                                _rnd, _slot = [int(x) for x in _pr["text"].split(".")]
+                                _results.append((_rnd, _slot, _found))
+                                _seen.add(_found)
+                            except Exception:
+                                pass
+
+                    _results.sort(key=lambda x: (x[0], x[1]))
+                    _ordered = [r[2] for r in _results]
+
+                if _ordered:
+                    st.success(f"Found {len(_ordered)} picks — review then confirm.")
+                    st.dataframe(
+                        pd.DataFrame({"#": range(1, len(_ordered)+1), "Player": _ordered}),
+                        use_container_width=True, height=220, hide_index=True,
+                    )
+                    if st.button("✅ Confirm & Import", key="dk_confirm_btn"):
+                        _new_board = pd.DataFrame({
+                            "Pick":    list(range(1, 301)),
+                            "Player":  [""] * 300,
+                            "My Pick": [False] * 300,
+                        })
+                        for _i, _player in enumerate(_ordered):
+                            if _i >= 300:
+                                break
+                            _new_board.loc[_i, "Player"] = _player
+                            _pn = _i + 1
+                            _rn = (_pn - 1) // num_teams + 1
+                            _sl = (_pn - 1) % num_teams + 1
+                            _my = my_slot if _rn % 2 == 1 else num_teams + 1 - my_slot
+                            _new_board.loc[_i, "My Pick"] = (_sl == _my)
+                        st.session_state.draft_board = _new_board
+                        st.session_state.pick_key    = st.session_state.get("pick_key", 0) + 1
+                        st.session_state.my_picks    = []
+                        st.session_state.other_picks = []
+                        st.rerun()
+                else:
+                    st.warning("No picks found. Make sure the full board is visible and the screenshot is high-resolution.")
+
+            except ImportError:
+                st.error("pytesseract not installed. Ensure 'tesseract-ocr' is in packages.txt and 'pytesseract' is in requirements.txt.")
+            except Exception as _exc:
+                st.error(f"OCR error: {_exc}")
 
     # ── Quick pick entry ───────────────────────────────────────────────────────
     n_picks     = num_teams * total_rounds
