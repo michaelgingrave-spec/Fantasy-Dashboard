@@ -1171,21 +1171,21 @@ elif tab_choice == "🎯 Draft Room":
     # ── Draft settings ─────────────────────────────────────────────────────────
     _team_opts  = [6, 8, 10, 12]
     _round_opts = [15, 18, 20, 22, 24]
+
+    # Pre-set widget keys so selectboxes start at our defaults on first load
+    if "sb_num_teams"    not in st.session_state: st.session_state.sb_num_teams    = 12
+    if "sb_total_rounds" not in st.session_state: st.session_state.sb_total_rounds = 20
+    if "sb_my_slot"      not in st.session_state: st.session_state.sb_my_slot      = 6
+
     ds1, ds2, ds3 = st.columns([1, 1, 1])
     with ds1:
-        num_teams = st.selectbox("# Teams in Draft", _team_opts,
-                                 index=_team_opts.index(st.session_state.draft_num_teams)
-                                 if st.session_state.draft_num_teams in _team_opts else 2)
+        num_teams = st.selectbox("# Teams in Draft", _team_opts, key="sb_num_teams")
     with ds2:
         my_slot = st.number_input("Your Draft Slot", min_value=1, max_value=num_teams,
-                                  value=min(st.session_state.draft_my_slot, num_teams))
+                                  value=min(st.session_state.sb_my_slot, num_teams),
+                                  key="sb_my_slot")
     with ds3:
-        total_rounds = st.selectbox("Total Rounds", _round_opts,
-                                    index=_round_opts.index(st.session_state.draft_total_rounds)
-                                    if st.session_state.draft_total_rounds in _round_opts else 1)
-    st.session_state.draft_num_teams    = num_teams
-    st.session_state.draft_my_slot      = my_slot
-    st.session_state.draft_total_rounds = total_rounds
+        total_rounds = st.selectbox("Total Rounds", _round_opts, key="sb_total_rounds")
 
     # ── Draft management (save / load / reset) ─────────────────────────────────
     dm1, dm2, dm3, dm4 = st.columns([3, 1, 1, 1])
@@ -1210,10 +1210,10 @@ elif tab_choice == "🎯 Draft Room":
         if _uploaded is not None:
             try:
                 _loaded = json.loads(_uploaded.read())
-                st.session_state.draft_board = pd.DataFrame(_loaded["board"])
-                st.session_state.draft_num_teams    = _loaded.get("num_teams", 10)
-                st.session_state.draft_my_slot      = _loaded.get("my_slot", 6)
-                st.session_state.draft_total_rounds = _loaded.get("total_rounds", 18)
+                st.session_state.draft_board     = pd.DataFrame(_loaded["board"])
+                st.session_state.sb_num_teams    = _loaded.get("num_teams", 12)
+                st.session_state.sb_my_slot      = _loaded.get("my_slot", 6)
+                st.session_state.sb_total_rounds = _loaded.get("total_rounds", 20)
                 st.session_state.pick_key           = st.session_state.get("pick_key", 0) + 1
                 st.session_state.my_picks           = []
                 st.session_state.other_picks        = []
