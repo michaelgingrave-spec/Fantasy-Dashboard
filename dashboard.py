@@ -1279,13 +1279,20 @@ elif tab_choice == "🎯 Draft Room":
 
                 # Canonicalize full names against the player database
                 _exact_lu = {n.lower(): n for n in fp_all["Name"].tolist()}
+                _sfx_set  = {'jr', 'sr', 'ii', 'iii', 'iv', 'v', 'jr.', 'sr.'}
 
                 def _canon_full(raw):
                     tl = raw.strip().lower()
                     if tl in _exact_lu:
                         return _exact_lu[tl]
-                    # All meaningful words in raw must appear in the known name
-                    _ws = [w for w in tl.split() if len(w) > 1]
+                    # Strip generational suffixes (Jr., III, etc.) and try exact match
+                    _words = tl.split()
+                    _core  = [w for w in _words if w.rstrip('.') not in _sfx_set]
+                    _core_str = ' '.join(_core)
+                    if _core_str != tl and _core_str in _exact_lu:
+                        return _exact_lu[_core_str]
+                    # Fuzzy: all non-suffix words must appear in a known name
+                    _ws = [w for w in _core if len(w) > 1]
                     if _ws:
                         _hits = [v for k, v in _exact_lu.items() if all(w in k for w in _ws)]
                         if len(_hits) == 1:
