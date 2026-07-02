@@ -1233,54 +1233,110 @@ elif tab_choice == "🎯 Draft Room":
             })
             st.rerun()
 
-    # ── DraftKings paste importer ───────────────────────────────────────────────
-    with st.expander("📋 Import from DraftKings — paste draft board"):
-        st.caption("On DraftKings, open your draft board and copy it (Ctrl+A, Ctrl+C). Paste below.")
-        _dk_team = st.text_input("Your DraftKings team/entry name (marks your picks)",
-                                  placeholder="e.g. Michael's Team", key="dk_team_name")
-        _dk_text = st.text_area("Paste draft board here", height=180, key="dk_paste_area",
-                                 placeholder="Paste the copied draft board text here…")
-        if st.button("Import Picks", key="dk_import_btn") and _dk_text.strip():
-            _name_lookup = {n.lower().strip(): n for n in fp_all["Name"].tolist()}
-            _dk_team_lower = _dk_team.strip().lower()
+    # ── DraftKings screenshot importer ─────────────────────────────────────────
+    with st.expander("📋 Import from DraftKings — upload screenshot"):
+        st.caption("Screenshot your DraftKings draft board, then upload it below. AI will read every pick automatically.")
+        _dk_team = st.text_input("Your DraftKings entry name (to mark your picks as 'My Pick')",
+                                  placeholder="e.g. mjeezy25", key="dk_team_name")
+        _img_file = st.file_uploader("Upload draft board screenshot (PNG or JPG)",
+                                      type=["png", "jpg", "jpeg"], key="dk_img_upload")
 
-            _new_board = pd.DataFrame({
-                "Pick": list(range(1, 301)),
-                "Player": [""] * 300,
-                "My Pick": [False] * 300,
-            })
-
-            _pick_idx = 0
-            _matched, _skipped = 0, 0
-            for _line in _dk_text.strip().splitlines():
-                _line = _line.strip()
-                if not _line:
-                    continue
-                _parts = [p.strip() for p in _line.split("\t")]
-                _found_player = None
-                _found_mine   = False
-                for _p in _parts:
-                    if _p.lower() in _name_lookup:
-                        _found_player = _name_lookup[_p.lower()]
-                    if _dk_team_lower and _dk_team_lower in _p.lower():
-                        _found_mine = True
-                if _found_player and _pick_idx < 300:
-                    _new_board.loc[_pick_idx, "Player"]  = _found_player
-                    _new_board.loc[_pick_idx, "My Pick"] = _found_mine
-                    _pick_idx += 1
-                    _matched  += 1
-                elif not _found_player and any(_p for _p in _parts if _p and not _p.isdigit()):
-                    _skipped += 1
-
-            if _matched > 0:
-                st.session_state.draft_board = _new_board
-                st.session_state.pick_key    = st.session_state.get("pick_key", 0) + 1
-                st.session_state.my_picks    = []
-                st.session_state.other_picks = []
-                st.success(f"Imported {_matched} picks. {_skipped} lines skipped (headers/unknowns).")
-                st.rerun()
+        if st.button("📖 Read Screenshot", key="dk_import_btn", disabled=_img_file is None):
+            _api_key = st.secrets.get("ANTHROPIC_API_KEY", "")
+            if not _api_key:
+                st.error("Add your Anthropic API key to Streamlit secrets as ANTHROPIC_API_KEY.")
             else:
-                st.warning("No players matched. Make sure you copied the full draft board (Ctrl+A then Ctrl+C from the DK draft board page).")
+                import anthropic as _anthropic
+                import base64 as _b64
+                import re as _re
+
+                _img_bytes  = _img_file.read()
+                _img_b64    = _b64.b64encode(_img_bytes).decode()
+                _media_type = _img_file.type or "image/png"
+
+                _prompt = f"""This is a DraftKings NFL draft board screenshot.
+It is a grid where each COLUMN is a team/entry and each ROW is a draft round.
+Each cell contains a pick label (like "1.1", "2.3"), a player name, position, and NFL team.
+Column headers at the top show the entry/team names.
+
+Extract every pick in sequential order.
+Return ONLY a JSON array — no markdown, no explanation:
+[{{"pick_label": "1.1", "player": "Full Name", "drafted_by": "entryname"}}, ...]
+
+Rules:
+- pick_label is the round.slot shown in the cell (e.g. "1.1" = round 1 slot 1)
+- player is the player's full name exactly as shown
+- drafted_by is the column header for that cell
+- Sort by pick_label numerically (1.1, 1.2, ... 2.1, 2.2 ...)
+- Include every player visible; skip empty cells
+- The user's entry name is: {_dk_team or "unknown"}"""
+
+                with st.spinner("Reading draft board — this takes about 15 seconds…"):
+                    try:
+                        _client = _anthropic.Anthropic(api_key=_api_key)
+                        _resp   = _client.messages.create(
+                            model="claude-haiku-4-5-20251001",
+                            max_tokens=8096,
+                            messages=[{
+                                "role": "user",
+                                "content": [
+                                    {"type": "image",
+                                     "source": {"type": "base64",
+                                                "media_type": _media_type,
+                                                "data": _img_b64}},
+                                    {"type": "text", "text": _prompt},
+                                ],
+                            }],
+                        )
+                        _raw = _resp.content[0].text.strip()
+                        _json_match = _re.search(r"\[.*\]", _raw, _re.DOTALL)
+                        if not _json_match:
+                            st.error("Couldn't parse response. Try a clearer screenshot.")
+                            st.code(_raw[:500])
+                        else:
+                            _picks_data = json.loads(_json_match.group())
+                            _name_lookup = {n.lower().strip(): n for n in fp_all["Name"].tolist()}
+                            _dk_team_lower = _dk_team.strip().lower()
+
+                            _new_board = pd.DataFrame({
+                                "Pick": list(range(1, 301)),
+                                "Player": [""] * 300,
+                                "My Pick": [False] * 300,
+                            })
+
+                            _matched, _skipped = 0, 0
+                            for _i, _p in enumerate(_picks_data):
+                                if _i >= 300:
+                                    break
+                                _pname  = str(_p.get("player", "")).strip()
+                                _pname_lower = _pname.lower()
+                                _canonical = _name_lookup.get(_pname_lower)
+                                if not _canonical:
+                                    # partial match: first + last name
+                                    _parts = _pname_lower.split()
+                                    if len(_parts) >= 2:
+                                        _canonical = next(
+                                            (v for k, v in _name_lookup.items()
+                                             if _parts[0] in k and _parts[-1] in k), None)
+                                _is_mine = _dk_team_lower and _dk_team_lower in str(_p.get("drafted_by", "")).lower()
+                                if _canonical:
+                                    _new_board.loc[_i, "Player"]  = _canonical
+                                    _new_board.loc[_i, "My Pick"] = bool(_is_mine)
+                                    _matched += 1
+                                else:
+                                    _new_board.loc[_i, "Player"]  = _pname
+                                    _new_board.loc[_i, "My Pick"] = bool(_is_mine)
+                                    _matched += 1
+                                    _skipped += 1
+
+                            st.session_state.draft_board = _new_board
+                            st.session_state.pick_key    = st.session_state.get("pick_key", 0) + 1
+                            st.session_state.my_picks    = []
+                            st.session_state.other_picks = []
+                            st.success(f"Imported {_matched} picks ({_skipped} names not in database — still filled in).")
+                            st.rerun()
+                    except Exception as _e:
+                        st.error(f"Error reading screenshot: {_e}")
 
     # ── Quick pick entry ───────────────────────────────────────────────────────
     n_picks     = num_teams * total_rounds
