@@ -1991,7 +1991,49 @@ elif tab_choice == "🎯 Draft Room":
         if not my_names:
             st.caption("Add your picks to see marginal value recommendations.")
         elif not _marginal:
-            st.caption("No projection data found for available players.")
+            # Team is fully optimized — no remaining player improves the score.
+            # Fall back to ranking available players by raw 14-week projected total.
+            st.caption("Your roster is fully optimized — no available player increases your projected score. "
+                       "Showing best available by raw projection instead.")
+            _fallback_rows = []
+            for _, _ar in available.iterrows():
+                _nm = _ar["Name"]
+                if _nm not in _proj_lu:
+                    continue
+                _p = _proj_lu[_nm]
+                _bye = _p.get("bye", 0)
+                _wppw = _p.get("weekly_ppw")
+                if _wppw:
+                    _proj14 = round(sum(_wppw.get(wk, _p["proj_ppw"])
+                                        for wk in range(1, 15) if wk != _bye), 1)
+                else:
+                    _active = sum(1 for wk in range(1, 15) if wk != _bye)
+                    _proj14 = round(_p["proj_ppw"] * _active, 1)
+                _fallback_rows.append({
+                    "Player": _nm,
+                    "POS":    _p["pos"],
+                    "Team":   _p["team"],
+                    "Proj/G": round(_p["proj_pg"], 1),
+                    "Proj 1-14": _proj14,
+                    "Bye":    _bye or "—",
+                    "ADP":    round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
+                })
+            if _fallback_rows:
+                _fb_df = (pd.DataFrame(_fallback_rows)
+                          .sort_values("Proj 1-14", ascending=False)
+                          .reset_index(drop=True))
+                _fb_df.index = range(1, len(_fb_df) + 1)
+
+                def _color_fb(row):
+                    pos_bg = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
+                              "WR": "rgba(66,165,245,0.18)",  "TE": "rgba(255,167,38,0.18)"}
+                    return [f"background-color: {pos_bg.get(row['POS'],'')}"] * len(row)
+
+                st.dataframe(
+                    _fb_df.head(25).style.apply(_color_fb, axis=1),
+                    width="stretch", hide_index=False,
+                    height=min(60 + 25 * 35, 460),
+                )
         else:
             _marg_df = (pd.DataFrame(_marginal)
                           .sort_values("+Pts", ascending=False)
