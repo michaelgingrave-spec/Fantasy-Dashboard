@@ -1395,7 +1395,7 @@ elif tab_choice == "🎯 Draft Room":
     is_my_turn_now = _is_my_slot(next_pick_num)
     pick_label = f"{'⭐ ' if is_my_turn_now else ''}Log Pick #{next_pick_num}"
 
-    qc1, qc2, qc3 = st.columns([5, 1, 1])
+    qc1, qc2, qc3, qc4 = st.columns([5, 1, 1, 1])
     with qc1:
         new_player = st.selectbox(pick_label, options=player_opts,
                                   key=f"quick_pick_{st.session_state.get('pick_key', 0)}")
@@ -1408,6 +1408,14 @@ elif tab_choice == "🎯 Draft Room":
             idx = next_pick_num - 1
             st.session_state.draft_board.loc[idx, "Player"]  = new_player
             st.session_state.draft_board.loc[idx, "My Pick"] = new_is_mine
+            st.session_state["pick_key"] = st.session_state.get("pick_key", 0) + 1
+            st.rerun()
+    with qc4:
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("↩️ Undo", use_container_width=True) and not logged.empty:
+            last_idx = int(logged["Pick"].max()) - 1
+            st.session_state.draft_board.loc[last_idx, "Player"]  = ""
+            st.session_state.draft_board.loc[last_idx, "My Pick"] = False
             st.session_state["pick_key"] = st.session_state.get("pick_key", 0) + 1
             st.rerun()
 
@@ -1573,9 +1581,17 @@ elif tab_choice == "🎯 Draft Room":
             pct  = pos_have[pos] / pos_targets[pos]
             icon = "🔴" if pct < 0.25 else "🟡" if pct < 0.6 else "🟢"
             st.caption(f"{icon} **{pos}**: {pos_have[pos]}/{pos_targets[pos]} — need {need}")
-            for _, r in avail_all[avail_all["POS"] == pos].head(3).iterrows():
+            # Show players with ADP near your next pick (±15 picks); fall back to best overall
+            _near = avail_all[
+                (avail_all["POS"] == pos) &
+                (avail_all["FP_ADP"] >= current_pick - 5) &
+                (avail_all["FP_ADP"] <= current_pick + 18)
+            ].sort_values("FP_ADP")
+            _pool = _near if not _near.empty else avail_all[avail_all["POS"] == pos]
+            for _, r in _pool.head(3).iterrows():
                 adp_s = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
-                st.markdown(f"&nbsp;&nbsp;**{r['Name']}** ({r['Team']}) {adp_s}")
+                fell_s = f" ↓{int(r['_fell'])}" if pd.notna(r.get("_fell")) and r["_fell"] > 0 else ""
+                st.markdown(f"&nbsp;&nbsp;**{r['Name']}** ({r['Team']}) {adp_s}{fell_s}")
             shown += 1
             if shown >= 2:
                 break
@@ -1623,28 +1639,29 @@ elif tab_choice == "🎯 Draft Room":
         if not st.session_state.my_picks:
             st.caption("Add picks to see opponents.")
         else:
-            # Collect all opponent teams across wks 15-17 with which week(s) they appear
-            opp_week_map: dict = {}   # opp_team → set of weeks
+            # opp_details: opp_team → list of (my_player_name, my_team, wk)
+            opp_details: dict = {}
             for p in st.session_state.my_picks:
                 for wk in [15, 16, 17]:
                     opp = opp_lookup.get(p["Team"], {}).get(wk)
                     if opp:
-                        opp_week_map.setdefault(opp, set()).add(wk)
+                        opp_details.setdefault(opp, []).append((p["Name"], p["Team"], wk))
 
-            if not opp_week_map:
+            if not opp_details:
                 st.caption("No playoff schedule data.")
             else:
-                # All available players on those opponent teams, sorted by ADP
-                opp_team_set = set(opp_week_map.keys())
+                opp_team_set = set(opp_details.keys())
                 opp_players  = avail_all[avail_all["Team"].isin(opp_team_set)].sort_values("FP_ADP")
                 if opp_players.empty:
                     st.caption("No ranked players on opposing teams.")
                 else:
-                    for _, r in opp_players.head(12).iterrows():
-                        wks_str = "/".join(str(w) for w in sorted(opp_week_map.get(r["Team"], [])))
-                        rank_s  = f"#{int(r['FP_Rank'])}" if pd.notna(r["FP_Rank"]) else ""
-                        adp_s   = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
-                        st.markdown(f"**{r['Name']}** ({r['POS']}·{r['Team']}) {rank_s} {adp_s} · W{wks_str}")
+                    for _, r in opp_players.head(10).iterrows():
+                        matchups = opp_details.get(r["Team"], [])
+                        adp_s = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
+                        vs_parts = [f"W{wk} vs your {nm.split()[-1]} ({tm})"
+                                    for nm, tm, wk in sorted(matchups, key=lambda x: x[2])]
+                        st.markdown(f"**{r['Name']}** ({r['POS']}·{r['Team']}) {adp_s}")
+                        st.caption(f"&nbsp;&nbsp;{' · '.join(vs_parts)}")
 
     # ── Coming up near your pick that faces your players in wks 15-17 ─────────
     if st.session_state.my_picks and my_teams:
@@ -1668,8 +1685,27 @@ elif tab_choice == "🎯 Draft Room":
     # ── Main layout ────────────────────────────────────────────────────────────
     left_col, right_col = st.columns([1, 2])
 
-    # ── LEFT: Roster + Bye weeks + Stack targets ───────────────────────────────
+    # ── LEFT: Stack targets + Roster + Bye weeks ──────────────────────────────
     with left_col:
+        # Stack targets first so they're easy to spot during the draft
+        my_qbs = [p for p in st.session_state.my_picks if p["POS"] == "QB"]
+        if my_qbs:
+            st.subheader("📡 Stack Targets")
+            for qb in my_qbs:
+                teammates = available[
+                    (available["Team"] == qb["Team"]) &
+                    (available["POS"].isin(["WR", "TE"]))
+                ].sort_values("FP_ADP")
+                st.markdown(f"**{qb['Name']} ({qb['Team']}):**")
+                if teammates.empty:
+                    st.caption("All receivers drafted.")
+                else:
+                    for _, t in teammates.iterrows():
+                        adp_s  = f"ADP {t['FP_ADP']:.1f}" if pd.notna(t["FP_ADP"]) else ""
+                        rank_s = f"#{int(t['FP_Rank'])}" if pd.notna(t["FP_Rank"]) else ""
+                        st.markdown(f"&nbsp;&nbsp;{t['Name']} · {t['POS']} · {rank_s} {adp_s}")
+            st.markdown("---")
+
         st.subheader("My Roster")
         my_picks = st.session_state.my_picks
 
@@ -1689,40 +1725,18 @@ elif tab_choice == "🎯 Draft Room":
 
         if my_picks:
             st.markdown("---")
-            st.subheader("Bye Weeks")
+            # Compact bye week summary — one line per week
             bye_counts: dict = {}
             for p in my_picks:
                 bye = bye_map.get(p["Team"])
                 if bye is not None:
-                    bye_counts.setdefault(bye, []).append(p["Name"])
+                    bye_counts.setdefault(bye, []).append(p["Name"].split()[-1])
             if bye_counts:
+                st.markdown("**Bye Weeks**")
                 for bye_wk in sorted(bye_counts):
                     names = bye_counts[bye_wk]
-                    count = len(names)
-                    icon  = "🔴" if count >= 3 else "🟡" if count >= 2 else "🟢"
-                    with st.expander(f"{icon} Week {bye_wk} — {count} player{'s' if count > 1 else ''}"):
-                        for n in names:
-                            st.markdown(f"- {n}")
-            else:
-                st.caption("Bye weeks will appear as you add picks.")
-
-        my_qbs = [p for p in st.session_state.my_picks if p["POS"] == "QB"]
-        if my_qbs:
-            st.markdown("---")
-            st.subheader("📡 Stack Targets")
-            for qb in my_qbs:
-                teammates = available[
-                    (available["Team"] == qb["Team"]) &
-                    (available["POS"].isin(["WR", "TE"]))
-                ].sort_values("FP_ADP")
-                st.markdown(f"**{qb['Name']} ({qb['Team']}) — receivers available:**")
-                if teammates.empty:
-                    st.caption("All receivers drafted.")
-                else:
-                    for _, t in teammates.iterrows():
-                        adp_s  = f"ADP {t['FP_ADP']:.1f}" if pd.notna(t["FP_ADP"]) else ""
-                        rank_s = f"#{int(t['FP_Rank'])}" if pd.notna(t["FP_Rank"]) else ""
-                        st.markdown(f"&nbsp;&nbsp;{t['Name']} · {t['POS']} · {rank_s} {adp_s}")
+                    icon  = "🔴" if len(names) >= 3 else "🟡" if len(names) >= 2 else "🟢"
+                    st.caption(f"{icon} Wk {bye_wk}: {', '.join(names)}")
 
     # ── RIGHT: Scarcity + Available players table ──────────────────────────────
     with right_col:
@@ -1822,3 +1836,101 @@ elif tab_choice == "🎯 Draft Room":
                         pct   = r["_cmpl"] / r["_cmpl_denom"] if r["_cmpl_denom"] > 0 else 0
                         icon  = "🟢" if pct >= 0.6 else "🟡"
                         st.markdown(f"{icon} **{r['Name']}** ({r['Team']}) {adp_s} · {r['Cmpl']}")
+
+    # ── Roster Rating ──────────────────────────────────────────────────────────
+    st.markdown("---")
+    st.subheader("🏆 Roster Rating")
+
+    if not st.session_state.my_picks:
+        st.info("Add picks to generate a roster rating.")
+    else:
+        my_picks_r = st.session_state.my_picks
+        n_my = len(my_picks_r)
+
+        # ── 1. ADP Value: avg (pick# - ADP) across your picks (positive = good)
+        adp_diffs = []
+        for i, p in enumerate(my_picks_r, start=1):
+            # find which overall pick number this was (pick_key ordering)
+            row = st.session_state.draft_board[st.session_state.draft_board["Player"] == p["Name"]]
+            pick_num = int(row["Pick"].iloc[0]) if not row.empty else (i * num_teams)
+            adp = p.get("FP_ADP") or pick_num
+            adp_diffs.append(pick_num - adp)
+        avg_value = sum(adp_diffs) / len(adp_diffs) if adp_diffs else 0
+        value_score = min(100, max(0, 50 + avg_value * 4))   # ±12.5 picks → ±50 pts
+
+        # ── 2. Position balance vs targets
+        pos_targets_r = {"QB": 3, "RB": 6, "WR": 8, "TE": 3}
+        pos_have_r    = {pos: sum(1 for p in my_picks_r if p["POS"] == pos) for pos in pos_targets_r}
+        if n_my < total_rounds:
+            # Scale targets to picks made so far
+            frac = n_my / total_rounds
+            scaled = {pos: pos_targets_r[pos] * frac for pos in pos_targets_r}
+            bal_score = 100 - min(100, sum(
+                max(0, scaled[pos] - pos_have_r[pos]) * 12 for pos in pos_targets_r))
+        else:
+            deficit = sum(max(0, pos_targets_r[pos] - pos_have_r[pos]) for pos in pos_targets_r)
+            bal_score = max(0, 100 - deficit * 15)
+
+        # ── 3. Playoff schedule quality: avg playoff score of my picks
+        my_playoff_scores = [playoff_scores.get(p["Name"]) for p in my_picks_r
+                             if playoff_scores.get(p["Name"]) is not None]
+        if my_playoff_scores:
+            avg_playoff = sum(my_playoff_scores) / len(my_playoff_scores)
+            # playoff_scores are avg def rank 14-17 where 32=easiest; normalize to 0-100
+            playoff_score = min(100, max(0, (avg_playoff / 32) * 100))
+        else:
+            playoff_score = 50.0
+
+        # ── 4. Bye week risk: penalize for crowded bye weeks
+        bye_counts_r: dict = {}
+        for p in my_picks_r:
+            bye = bye_map.get(p["Team"])
+            if bye:
+                bye_counts_r[bye] = bye_counts_r.get(bye, 0) + 1
+        max_bye = max(bye_counts_r.values()) if bye_counts_r else 0
+        bye_score = max(0, 100 - max(0, max_bye - 2) * 25)   # 3+ on same bye → penalty
+
+        # ── 5. Stack quality: QB + at least one WR/TE from same team
+        qb_teams  = {p["Team"] for p in my_picks_r if p["POS"] == "QB"}
+        skill_teams = {p["Team"] for p in my_picks_r if p["POS"] in ("WR", "TE")}
+        stacked   = qb_teams & skill_teams
+        has_qb    = len(qb_teams) > 0
+        stack_score = 100 if stacked else (60 if has_qb else 40)
+
+        # ── Weighted overall
+        weights = {"Value": 0.30, "Balance": 0.25, "Playoff": 0.25, "Bye": 0.10, "Stack": 0.10}
+        scores  = {"Value": value_score, "Balance": bal_score,
+                   "Playoff": playoff_score, "Bye": bye_score, "Stack": stack_score}
+        overall = sum(scores[k] * weights[k] for k in weights)
+
+        def _grade(s):
+            if s >= 88: return "A", "🟢"
+            if s >= 75: return "B", "🟡"
+            if s >= 60: return "C", "🟠"
+            if s >= 45: return "D", "🔴"
+            return "F", "⛔"
+
+        grade, grade_icon = _grade(overall)
+
+        rr1, rr2, rr3, rr4, rr5, rr6 = st.columns(6)
+        rr1.metric("Overall", f"{grade_icon} {grade}", f"{overall:.0f}/100")
+        rr2.metric("ADP Value",    f"{value_score:.0f}",   f"avg {avg_value:+.1f} vs ADP")
+        rr3.metric("Pos Balance",  f"{bal_score:.0f}",
+                   f"QB{pos_have_r['QB']} RB{pos_have_r['RB']} WR{pos_have_r['WR']} TE{pos_have_r['TE']}")
+        rr4.metric("Playoff Sch",  f"{playoff_score:.0f}",
+                   f"avg {avg_playoff:.1f}/32 ease" if my_playoff_scores else "—")
+        rr5.metric("Bye Risk",     f"{bye_score:.0f}",
+                   f"max {max_bye} on same wk" if bye_counts_r else "—")
+        rr6.metric("Stack",        f"{stack_score:.0f}",
+                   f"{'✓ ' + ', '.join(stacked) if stacked else 'no QB stack yet'}")
+
+        # Short coaching note
+        notes = []
+        if avg_value < -3:  notes.append("You're drafting players before their ADP — consider waiting.")
+        if bal_score < 60:
+            short = [pos for pos in pos_targets_r if pos_have_r[pos] < pos_targets_r[pos] * 0.4]
+            if short: notes.append(f"Thin at {', '.join(short)} — prioritize soon.")
+        if max_bye >= 3:    notes.append(f"Wk {max(bye_counts_r, key=bye_counts_r.get)} bye is crowded ({max_bye} players).")
+        if not stacked and has_qb: notes.append("Consider stacking a WR or TE with your QB.")
+        if notes:
+            st.caption(" · ".join(notes))
