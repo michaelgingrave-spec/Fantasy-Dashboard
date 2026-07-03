@@ -466,7 +466,7 @@ with st.sidebar:
     st.markdown("---")
     tab_choice = st.radio(
         "Screen",
-        ["📊 Player Projections", "🛡️ Defense Matchups", "📈 Schedule Rankings", "📅 Schedule Viewer", "🎯 Draft Room"],
+        ["📊 Player Projections", "🛡️ Defense Matchups", "📈 Schedule Rankings", "📅 Schedule Viewer", "📉 Weekly Projections", "🎯 Draft Room"],
         label_visibility="collapsed",
     )
     st.markdown("---")
@@ -1329,7 +1329,123 @@ elif tab_choice == "📅 Schedule Viewer":
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  TAB 5 — DRAFT ROOM
+#  TAB 5 — WEEKLY PROJECTIONS COMPARISON
+# ══════════════════════════════════════════════════════════════════════════════
+elif tab_choice == "📉 Weekly Projections":
+    st.header("📉 Weekly Projection Comparison")
+    st.caption("Compare week-by-week projected scores for any players. Projections use FPTS ÷ 17 as base rate, adjusted for opponent defense strength each week.")
+
+    _all_proj    = load_all_projections()
+    _bye_map     = compute_bye_weeks()
+    _matchup_adj = load_defense_matchup_adj()
+    _proj_lu_wp  = _build_proj_lu(_all_proj, _bye_map, matchup_adj=_matchup_adj)
+
+    # Build sorted player list for the multiselect
+    _all_names = sorted(_proj_lu_wp.keys())
+
+    # Defaults: top RBs + WRs to start
+    _default_players = [n for n in [
+        "Jahmyr Gibbs", "Bijan Robinson", "Puka Nacua", "Jaxon Smith-Njigba", "Ja'Marr Chase"
+    ] if n in _proj_lu_wp]
+
+    wpc1, wpc2 = st.columns([3, 1])
+    with wpc1:
+        _selected = st.multiselect(
+            "Select players to compare (type to search)",
+            options=_all_names,
+            default=_default_players,
+            key="wp_players",
+        )
+    with wpc2:
+        _show_bye = st.checkbox("Show bye week gaps", value=True, key="wp_bye_gaps")
+
+    if not _selected:
+        st.info("Select at least one player above.")
+    else:
+        # Build per-player weekly data
+        _POS_COLORS = {"QB": "#CE93D8", "RB": "#66BB6A", "WR": "#42A5F5", "TE": "#FFA726"}
+
+        import plotly.graph_objects as go
+
+        fig = go.Figure()
+
+        _table_rows = []
+        for nm in _selected:
+            p = _proj_lu_wp[nm]
+            pos      = p["pos"]
+            bye      = p.get("bye", 0)
+            proj_ppw = p["proj_ppw"]
+            wppw     = p.get("weekly_ppw") or {}
+            color    = _POS_COLORS.get(pos, "#90A4AE")
+
+            weeks = list(range(1, 15))
+            pts   = []
+            for wk in weeks:
+                if wk == bye and _show_bye:
+                    pts.append(None)   # gap in line
+                else:
+                    pts.append(wppw.get(wk, proj_ppw))
+
+            fig.add_trace(go.Scatter(
+                x=weeks,
+                y=pts,
+                mode="lines+markers",
+                name=f"{nm} ({pos})",
+                line=dict(color=color, width=2),
+                marker=dict(size=6),
+                connectgaps=not _show_bye,
+                hovertemplate=f"<b>{nm}</b><br>Week %{{x}}: %{{y:.1f}} pts<extra></extra>",
+            ))
+
+            # Build table row
+            row = {"Player": nm, "POS": pos, "Team": p["team"],
+                   "Bye": bye or "—",
+                   "Base/wk": round(proj_ppw, 1)}
+            for wk in weeks:
+                if wk == bye:
+                    row[f"W{wk}"] = "BYE"
+                else:
+                    row[f"W{wk}"] = round(wppw.get(wk, proj_ppw), 1)
+            _table_rows.append(row)
+
+        fig.update_layout(
+            xaxis=dict(title="Week", tickmode="linear", tick0=1, dtick=1,
+                       tickvals=list(range(1, 15))),
+            yaxis=dict(title="Projected Points"),
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
+            hovermode="x unified",
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(color="#e0e0e0"),
+            height=440,
+            margin=dict(l=40, r=20, t=60, b=40),
+        )
+        fig.update_xaxes(gridcolor="rgba(255,255,255,0.08)")
+        fig.update_yaxes(gridcolor="rgba(255,255,255,0.08)", zeroline=False)
+
+        st.plotly_chart(fig, use_container_width=True)
+
+        # Week-by-week table
+        with st.expander("📋 Week-by-week numbers", expanded=False):
+            if _table_rows:
+                _tdf = pd.DataFrame(_table_rows)
+                week_cols = [c for c in _tdf.columns if c.startswith("W")]
+
+                def _color_wp(val):
+                    if val == "BYE":
+                        return "color: #888"
+                    return ""
+
+                st.dataframe(
+                    _tdf.style.map(_color_wp, subset=week_cols),
+                    width="stretch",
+                    hide_index=True,
+                    height=min(60 + len(_table_rows) * 38, 400),
+                )
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  TAB 6 — DRAFT ROOM
 # ══════════════════════════════════════════════════════════════════════════════
 elif tab_choice == "🎯 Draft Room":
     st.header("🎯 Live Draft Room")
