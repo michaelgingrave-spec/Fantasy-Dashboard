@@ -2082,20 +2082,39 @@ elif tab_choice == "🎯 Draft Room":
             )
 
             # ── My team's weekly score breakdown
+            _base_weekly: list = []
+            _weak_weeks:  set  = set()
             if _my_row is not None and _my_row["weekly"]:
+                _base_weekly = list(_my_row["weekly"])
+                _avg_weekly  = sum(_base_weekly) / len(_base_weekly)
+                _my_bye_wks  = {_proj_lu.get(n, {}).get("bye") for n in _my_row["names"]}
+                _weak_thresh = _avg_weekly * 0.88          # < 88 % of avg = weak
+                _weak_weeks  = {wk for wk, sc in enumerate(_base_weekly, 1)
+                                if sc < _weak_thresh and wk not in _my_bye_wks}
+
                 st.markdown("**Your Projected Weekly Scores**")
                 _wk_df = pd.DataFrame({
-                    "Week":  list(range(1, len(_my_row["weekly"]) + 1)),
-                    "Score": _my_row["weekly"],
+                    "Week":  list(range(1, len(_base_weekly) + 1)),
+                    "Score": _base_weekly,
                 })
-                # Colour low weeks
-                _my_bye_wks = {_proj_lu.get(n, {}).get("bye") for n in _my_row["names"]}
-                _wk_df["note"] = _wk_df.apply(
-                    lambda r: "bye" if r["Week"] in _my_bye_wks else "", axis=1)
+                _wk_df["Status"] = _wk_df.apply(
+                    lambda r: "🔴 Weak" if r["Week"] in _weak_weeks
+                              else ("💤 Bye" if r["Week"] in _my_bye_wks else ""), axis=1)
+
+                def _wk_color(val):
+                    if val < _weak_thresh: return "color: #ff6b6b; font-weight: bold"
+                    if val >= _avg_weekly * 1.1: return "color: #69db7c"
+                    return ""
+
                 st.dataframe(
-                    _wk_df[["Week","Score","note"]].rename(columns={"note":"Note"})
-                          .style.background_gradient(subset=["Score"], cmap="RdYlGn"),
-                    hide_index=True, width="stretch", height=200,
+                    _wk_df.style.map(_wk_color, subset=["Score"]),
+                    hide_index=True, width="stretch", height=240,
+                )
+                _ww_label = (f"⚠️ {len(_weak_weeks)} weak week(s) to address"
+                             if _weak_weeks else "✅ No weak weeks")
+                st.caption(
+                    f"Avg {_avg_weekly:.1f} pts/wk · "
+                    f"🔴 Weak = below {_weak_thresh:.0f} pts · {_ww_label}"
                 )
 
             # ── Marginal value — which available players add the most points
@@ -2106,19 +2125,23 @@ elif tab_choice == "🎯 Draft Room":
                     "Simulates adding each available player to your current roster and measures "
                     "how many more points your lineup would score across 17 weeks."
                 )
-                _my_names   = _my_row["names"]
-                _base_total, _ = _project_bb_score(_my_names, _proj_lu)
+                _my_names    = _my_row["names"]
+                _base_total  = float(_my_row["proj_pts"])  # already computed
 
                 _marginal = []
                 for _, _ar in available.iterrows():
                     _nm = _ar["Name"]
                     if _nm not in _proj_lu:
                         continue
-                    _new_total, _ = _project_bb_score(_my_names + [_nm], _proj_lu)
+                    _new_total, _new_weekly = _project_bb_score(_my_names + [_nm], _proj_lu)
                     _delta = round(_new_total - _base_total, 1)
                     if _delta > 0:
                         _p    = _proj_lu[_nm]
                         _std  = _p.get("std_fpg", 0.0)
+                        # Points gained specifically in your weak weeks
+                        _ww_gain = (round(sum(_new_weekly[wk - 1] - _base_weekly[wk - 1]
+                                             for wk in _weak_weeks), 1)
+                                    if _weak_weeks and _base_weekly else 0.0)
                         _marginal.append({
                             "Player":    _nm,
                             "POS":       _p["pos"],
@@ -2128,6 +2151,7 @@ elif tab_choice == "🎯 Draft Room":
                             "Bye":       _p["bye"] or "—",
                             "ADP":       round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else None,
                             "+Pts":      _delta,
+                            "WW+Pts":    _ww_gain if _ww_gain > 0 else None,
                         })
 
                 if not _marginal:
@@ -2168,6 +2192,34 @@ elif tab_choice == "🎯 Draft Room":
                         height=min(60 + _show_m * 35, 520),
                     )
                     st.caption(
-                        "+Pts = additional projected season points your lineup gains by drafting this player. "
-                        "Accounts for bye weeks and lineup competition at their position."
+                        "+Pts = additional projected season points · "
+                        "WW+Pts = pts gained specifically in YOUR weak weeks · "
+                        "Std/G = weekly variance (higher = more boom upside)."
                     )
+
+                    # ── Weak week targets — players who fix your lowest weeks ──
+                    if _weak_weeks and _marginal:
+                        st.markdown("---")
+                        st.markdown(f"**🔴 Weak Week Targets — Strengthen Your {len(_weak_weeks)} Low-Scoring Week(s)**")
+                        st.caption(
+                            "Sorted by points added specifically in your weak weeks. "
+                            "Drafting these players directly raises your floor and "
+                            "improves your odds of finishing first."
+                        )
+                        _ww_df = (pd.DataFrame(_marginal)
+                                  .dropna(subset=["WW+Pts"])
+                                  .sort_values("WW+Pts", ascending=False)
+                                  .reset_index(drop=True))
+                        _ww_df.index = range(1, len(_ww_df) + 1)
+
+                        def _color_ww(row):
+                            pos_bg = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
+                                      "WR": "rgba(66,165,245,0.18)",  "TE": "rgba(255,167,38,0.18)"}
+                            return [f"background-color: {pos_bg.get(row['POS'],'')}"] * len(row)
+
+                        st.dataframe(
+                            _ww_df[["Player","POS","Team","ADP","WW+Pts","+Pts","Proj/G","Bye"]]
+                                  .head(12).style.apply(_color_ww, axis=1),
+                            width="stretch", hide_index=False,
+                            height=min(60 + 12 * 35, 480),
+                        )
