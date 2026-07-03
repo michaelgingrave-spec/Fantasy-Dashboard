@@ -319,7 +319,7 @@ def _build_proj_lu(all_proj_df, bye_map, var_lu=None):
     return lu
 
 
-def _project_bb_score(roster_names, proj_lu, num_weeks=17):
+def _project_bb_score(roster_names, proj_lu, num_weeks=14):
     """
     Estimate DraftKings Best Ball total for a 20-player roster.
     Lineup each week: QB + 2 RB + 3 WR + TE + FLEX (best remaining RB/WR/TE).
