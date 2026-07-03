@@ -2084,25 +2084,32 @@ elif tab_choice == "🎯 Draft Room":
             # ── My team's weekly score breakdown
             _base_weekly: list = []
             _weak_weeks:  set  = set()
+            _avg_weekly:  float = 0.0
             if _my_row is not None and _my_row["weekly"]:
                 _base_weekly = list(_my_row["weekly"])
-                _avg_weekly  = sum(_base_weekly) / len(_base_weekly)
                 _my_bye_wks  = {_proj_lu.get(n, {}).get("bye") for n in _my_row["names"]}
-                _weak_thresh = _avg_weekly * 0.88          # < 88 % of avg = weak
-                _weak_weeks  = {wk for wk, sc in enumerate(_base_weekly, 1)
-                                if sc < _weak_thresh and wk not in _my_bye_wks}
+                _non_bye     = [(wk, sc) for wk, sc in enumerate(_base_weekly, 1)
+                                if wk not in _my_bye_wks and sc > 0]
+                _avg_weekly  = (sum(sc for _, sc in _non_bye) / len(_non_bye)
+                                if _non_bye else 0.0)
+                # Always flag the bottom 5 non-bye weeks as "weak" (or all if < 5)
+                _sorted_non_bye = sorted(_non_bye, key=lambda x: x[1])
+                _n_weak      = min(5, len(_sorted_non_bye))
+                _weak_weeks  = {wk for wk, _ in _sorted_non_bye[:_n_weak]}
+                _weak_thresh = (_sorted_non_bye[_n_weak - 1][1]
+                                if _sorted_non_bye else 0.0)
 
                 st.markdown("**Your Projected Weekly Scores**")
                 _wk_df = pd.DataFrame({
                     "Week":  list(range(1, len(_base_weekly) + 1)),
-                    "Score": _base_weekly,
+                    "Score": [round(s, 1) for s in _base_weekly],
                 })
                 _wk_df["Status"] = _wk_df.apply(
                     lambda r: "🔴 Weak" if r["Week"] in _weak_weeks
                               else ("💤 Bye" if r["Week"] in _my_bye_wks else ""), axis=1)
 
                 def _wk_color(val):
-                    if val < _weak_thresh: return "color: #ff6b6b; font-weight: bold"
+                    if val <= _weak_thresh: return "color: #ff6b6b; font-weight: bold"
                     if val >= _avg_weekly * 1.1: return "color: #69db7c"
                     return ""
 
@@ -2110,11 +2117,9 @@ elif tab_choice == "🎯 Draft Room":
                     _wk_df.style.map(_wk_color, subset=["Score"]),
                     hide_index=True, width="stretch", height=240,
                 )
-                _ww_label = (f"⚠️ {len(_weak_weeks)} weak week(s) to address"
-                             if _weak_weeks else "✅ No weak weeks")
                 st.caption(
-                    f"Avg {_avg_weekly:.1f} pts/wk · "
-                    f"🔴 Weak = below {_weak_thresh:.0f} pts · {_ww_label}"
+                    f"Avg {_avg_weekly:.1f} pts/wk (non-bye) · "
+                    f"🔴 = your 5 lowest weeks — WW+Pts below shows who fixes them"
                 )
 
             # ── Marginal value — which available players add the most points
@@ -2138,7 +2143,7 @@ elif tab_choice == "🎯 Draft Room":
                     if _delta > 0:
                         _p    = _proj_lu[_nm]
                         _std  = _p.get("std_fpg", 0.0)
-                        # Points gained specifically in your weak weeks
+                        # Points gained specifically in your 5 weakest weeks
                         _ww_gain = (round(sum(_new_weekly[wk - 1] - _base_weekly[wk - 1]
                                              for wk in _weak_weeks), 1)
                                     if _weak_weeks and _base_weekly else 0.0)
@@ -2147,11 +2152,11 @@ elif tab_choice == "🎯 Draft Room":
                             "POS":       _p["pos"],
                             "Team":      _p["team"],
                             "Proj/G":    round(_p["proj_pg"], 1),
-                            "Std/G":     round(_std, 1) if _std > 0 else None,
+                            "Std/G":     round(_std, 1) if _std > 0 else pd.NA,
                             "Bye":       _p["bye"] or "—",
-                            "ADP":       round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else None,
+                            "ADP":       round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
                             "+Pts":      _delta,
-                            "WW+Pts":    _ww_gain if _ww_gain > 0 else None,
+                            "WW+Pts":    _ww_gain if _ww_gain > 0 else pd.NA,
                         })
 
                 if not _marginal:
