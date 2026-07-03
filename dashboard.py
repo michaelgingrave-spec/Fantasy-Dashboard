@@ -79,6 +79,14 @@ def load_weekly_data():
     df["RTE"] = pd.to_numeric(df["RTE"], errors="coerce")
     return df.dropna(subset=["WEEK", "FP", "Opponent"])
 
+# Nickname / legal-name aliases — maps any alternate spelling → the name used in the CSV.
+# Add entries here whenever DraftKings and the rankings file disagree on a player's name.
+_NAME_ALIASES = {
+    "Kenneth Gainwell": "Kenny Gainwell",
+}
+# Build a lowercase lookup so matching is case-insensitive
+_NAME_ALIASES_LC = {k.lower(): v for k, v in _NAME_ALIASES.items()}
+
 @st.cache_data
 def load_fp_rankings():
     fp = pd.read_csv(DATA / "BestBallRankingsDraftKings (2).csv")
@@ -1305,6 +1313,8 @@ elif tab_choice == "🎯 Draft Room":
 
                 def _canon_full(raw):
                     tl = raw.strip().lower()
+                    # Check alias map first (e.g. "kenneth gainwell" → "Kenny Gainwell")
+                    if tl in _NAME_ALIASES_LC: return _canon_full(_NAME_ALIASES_LC[tl])
                     if tl in _exact_lu: return _exact_lu[tl]
                     _words = tl.split()
                     _core  = [w for w in _words if w.rstrip('.') not in _sfx_set]
