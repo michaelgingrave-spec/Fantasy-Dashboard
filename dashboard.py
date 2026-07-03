@@ -144,31 +144,33 @@ def compute_historical_variance():
 
 
 @st.cache_data
-def load_schedule_weekly_adj():
-    """Build {player_name: {week: adj_factor}} from the schedule model (weeks 1-14).
-    adj_factor is normalized so the mean across non-bye weeks = 1.0, meaning the
-    engine still hits the player's total season projection while distributing points
-    unevenly based on opponent WR/TE defense strength.
-    Only populated for WR/TE where the schedule model has real coverage variation.
-    RBs and QBs stay flat (no coverage-based matchup adjustment available).
+def load_defense_matchup_adj():
+    """Build {team: {pos: {week: adj_factor}}} for weeks 1-14.
+    adj_factor = opp_FP_per_game_allowed / league_avg_FP_per_game_allowed.
+    >1.0 = easier matchup (defense allows more), <1.0 = tougher matchup.
+    Covers QB, RB, WR, TE using existing fantasy points allowed data.
     """
-    try:
-        sched = pd.read_csv(Path(__file__).parent / "outputs" / "weekly_schedule_2026.csv")
-    except Exception:
-        return {}
+    def_ranks = build_defense_ranks()
+    sched_df  = load_schedule()
+
     result = {}
-    for name, grp in sched[sched["Week"] <= 14].groupby("Name"):
-        rows = grp.sort_values("Week").dropna(subset=["week_proj_FP"])
-        if len(rows) < 3:
-            continue
-        vals = rows["week_proj_FP"].values.astype(float)
-        if vals.std() < 0.01:
-            continue  # flat schedule (RB) — no adjustment to apply
-        mean_val = vals.mean()
-        if mean_val <= 0:
-            continue
-        result[str(name)] = {int(r["Week"]): float(r["week_proj_FP"]) / mean_val
-                             for _, r in rows.iterrows()}
+    for team in FULL_TO_ABB.values():
+        team_sched = get_team_schedule(team, sched_df)
+        team_sched = team_sched[team_sched["Week"] <= 14]
+        result[team] = {}
+        for pos_key in ("QB", "RB", "WR", "TE"):
+            rdf = def_ranks.get(pos_key)
+            if rdf is None:
+                continue
+            league_avg = rdf["FP_per_game"].mean()
+            if league_avg <= 0:
+                continue
+            opp_adj = {r["Team"]: r["FP_per_game"] / league_avg
+                       for _, r in rdf.iterrows()}
+            result[team][pos_key] = {
+                int(r["Week"]): opp_adj.get(r["Opponent"], 1.0)
+                for _, r in team_sched.iterrows()
+            }
     return result
 
 
@@ -316,31 +318,37 @@ def compute_bye_weeks():
     return bye_map
 
 
-_NON_BYE_WEEKS = 13  # 14-week season minus 1 bye week
+_SEASON_WEEKS = 17  # full NFL regular season; FPTS / 17 = true per-week base rate
 
-def _build_proj_lu(all_proj_df, bye_map, var_lu=None, sched_adj=None):
-    """Build {player_name: {pos, proj_pg, proj_ppw, weekly_ppw, bye, ...}} lookup."""
+def _build_proj_lu(all_proj_df, bye_map, var_lu=None, matchup_adj=None):
+    """Build {player_name: {pos, proj_pg, proj_ppw, weekly_ppw, bye, ...}} lookup.
+    proj_ppw  = FPTS / 17  (per-week base across the full NFL season).
+    weekly_ppw = {week: pts} adjusted by opponent defense FP/G allowed vs league avg.
+    """
     lu = {}
     for _, row in all_proj_df.iterrows():
         bye = int(row["Bye"]) if pd.notna(row.get("Bye")) else (bye_map.get(row["Team"]) or 0)
         ppg = float(row["Proj_PG"]) if pd.notna(row.get("Proj_PG")) else 0.0
         if ppg > 0:
-            name  = row["Name"]
-            proj_fp  = float(row["Proj_FP"]) if pd.notna(row.get("Proj_FP")) else ppg * _NON_BYE_WEEKS
-            proj_ppw = proj_fp / _NON_BYE_WEEKS
-            entry = {"pos": row["POS"], "proj_pg": ppg, "proj_ppw": proj_ppw,
-                     "bye": bye, "team": row["Team"], "std_fpg": 0.0, "n_games": 0,
+            name    = row["Name"]
+            team    = row["Team"]
+            pos     = row["POS"]
+            proj_fp = float(row["Proj_FP"]) if pd.notna(row.get("Proj_FP")) else ppg * _SEASON_WEEKS
+            proj_ppw = proj_fp / _SEASON_WEEKS  # base per-week rate over full 17-wk season
+            entry = {"pos": pos, "proj_pg": ppg, "proj_ppw": proj_ppw,
+                     "bye": bye, "team": team, "std_fpg": 0.0, "n_games": 0,
                      "weekly_ppw": None}
             if var_lu:
                 v = var_lu.get(name) or var_lu.get(_NAME_ALIASES.get(name, ""))
                 if v:
                     entry["std_fpg"] = v["std_fpg"]
                     entry["n_games"] = v["n_games"]
-            if sched_adj:
-                adj = sched_adj.get(name) or sched_adj.get(_NAME_ALIASES.get(name, ""))
-                if adj:
-                    # Scale normalized factors by proj_ppw so each week is in actual pts
-                    entry["weekly_ppw"] = {wk: round(proj_ppw * f, 2) for wk, f in adj.items()}
+            if matchup_adj:
+                team_adj = matchup_adj.get(team, {})
+                pos_adj  = team_adj.get(pos, {})  # {week: adj_factor}
+                if pos_adj:
+                    entry["weekly_ppw"] = {wk: round(proj_ppw * f, 2)
+                                           for wk, f in pos_adj.items()}
             lu[name] = entry
     return lu
 
@@ -1349,8 +1357,8 @@ elif tab_choice == "🎯 Draft Room":
     playoff_scores = compute_all_playoff_scores()
     _all_proj      = load_all_projections()
     _hist_var      = compute_historical_variance()
-    _sched_adj     = load_schedule_weekly_adj()
-    _proj_lu       = _build_proj_lu(_all_proj, bye_map, var_lu=_hist_var, sched_adj=_sched_adj)
+    _matchup_adj   = load_defense_matchup_adj()
+    _proj_lu       = _build_proj_lu(_all_proj, bye_map, var_lu=_hist_var, matchup_adj=_matchup_adj)
     sched_matrix   = build_team_schedule_matrix()   # (team, pos_key) → {week: rank}
 
     HARD_THR = 13   # rank ≤ 13 = tough (32=easiest system)
