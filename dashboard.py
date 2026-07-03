@@ -1614,6 +1614,55 @@ elif tab_choice == "🎯 Draft Room":
     all_drafted = set(my_names) | set(other_names)
     available   = fp_all[~fp_all["Name"].isin(all_drafted)].sort_values("FP_ADP").reset_index(drop=True)
 
+    # ── Pre-compute marginal values (displayed above Available Players) ─────────
+    _marginal:      list  = []
+    _base_weekly:   list  = []
+    _weak_weeks:    set   = set()
+    _avg_weekly:    float = 0.0
+    _base_total:    float = 0.0
+    _weak_thresh:   float = 0.0
+    _has_variation: bool  = False
+
+    if my_names:
+        _base_total, _base_weekly = _project_bb_score(my_names, _proj_lu)
+        _my_bye_wks_pre = {_proj_lu.get(n, {}).get("bye") for n in my_names}
+        _non_bye_pre    = [(wk, sc) for wk, sc in enumerate(_base_weekly, 1)
+                           if wk not in _my_bye_wks_pre and sc > 0]
+        if _non_bye_pre:
+            _avg_weekly = sum(sc for _, sc in _non_bye_pre) / len(_non_bye_pre)
+            _std_pre    = (sum((s - _avg_weekly) ** 2
+                               for _, s in _non_bye_pre) / len(_non_bye_pre)) ** 0.5
+            _has_variation = _std_pre >= 2.0
+            if _has_variation:
+                _sorted_nb  = sorted(_non_bye_pre, key=lambda x: x[1])
+                _n_weak     = min(5, len(_sorted_nb))
+                _weak_weeks = {wk for wk, _ in _sorted_nb[:_n_weak]}
+                _weak_thresh = _sorted_nb[_n_weak - 1][1]
+
+        for _, _ar in available.iterrows():
+            _nm = _ar["Name"]
+            if _nm not in _proj_lu:
+                continue
+            _new_total, _new_weekly = _project_bb_score(my_names + [_nm], _proj_lu)
+            _delta = round(_new_total - _base_total, 1)
+            if _delta > 0:
+                _p   = _proj_lu[_nm]
+                _std = _p.get("std_fpg", 0.0)
+                _ww_gain = (round(sum(_new_weekly[wk - 1] - _base_weekly[wk - 1]
+                                      for wk in _weak_weeks), 1)
+                            if _weak_weeks else 0.0)
+                _marginal.append({
+                    "Player":  _nm,
+                    "POS":     _p["pos"],
+                    "Team":    _p["team"],
+                    "Proj/G":  round(_p["proj_pg"], 1),
+                    "Std/G":   round(_std, 1) if _std > 0 else pd.NA,
+                    "Bye":     _p["bye"] or "—",
+                    "ADP":     round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
+                    "+Pts":    _delta,
+                    "WW+Pts":  _ww_gain if _ww_gain > 0 else pd.NA,
+                })
+
     st.markdown("---")
 
     # ── Pick tracker ───────────────────────────────────────────────────────────
@@ -1899,6 +1948,72 @@ elif tab_choice == "🎯 Draft Room":
                        delta=f"{len(ap[ap['FP_Pos_Rank'] <= t1])} top-{t1} | {len(ap[ap['FP_Pos_Rank'] <= t2])} top-{t2}",
                        delta_color="off")
 
+        # ── Best Available by Points Added ────────────────────────────────────
+        st.markdown("---")
+        st.subheader("🎯 Best Available by Points Added")
+        if not my_names:
+            st.caption("Add your picks to see marginal value recommendations.")
+        elif not _marginal:
+            st.caption("No projection data found for available players.")
+        else:
+            _marg_df = (pd.DataFrame(_marginal)
+                          .sort_values("+Pts", ascending=False)
+                          .reset_index(drop=True))
+            _marg_df.index = range(1, len(_marg_df) + 1)
+
+            mf1, mf2, mf3 = st.columns([2, 1, 1])
+            with mf1:
+                _pos_filter_m = st.multiselect("Filter position", ["QB","RB","WR","TE"],
+                                                default=["QB","RB","WR","TE"],
+                                                key="marg_pos_filter")
+            with mf2:
+                _show_m = st.selectbox("Show top", [10, 25, 50], key="marg_show")
+            with mf3:
+                _near_pick_only = st.checkbox("Near my pick (±20 ADP)",
+                                               help="Filter to players likely available at your next pick",
+                                               key="marg_near_pick")
+
+            _show_marg = _marg_df[_marg_df["POS"].isin(_pos_filter_m)].copy()
+            if _near_pick_only:
+                _show_marg = _show_marg[
+                    _show_marg["ADP"].notna() &
+                    (_show_marg["ADP"] >= current_pick - 5) &
+                    (_show_marg["ADP"] <= current_pick + 20)
+                ]
+
+            def _color_marg(row):
+                pos_bg = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
+                          "WR": "rgba(66,165,245,0.18)",  "TE": "rgba(255,167,38,0.18)"}
+                return [f"background-color: {pos_bg.get(row['POS'],'')}"] * len(row)
+
+            st.dataframe(
+                _show_marg.head(_show_m).style.apply(_color_marg, axis=1),
+                width="stretch", hide_index=False,
+                height=min(60 + _show_m * 35, 460),
+            )
+            _ww_note = (" · WW+Pts = gain in your 5 weakest weeks" if _weak_weeks else "")
+            st.caption(f"+Pts = additional season pts added to your lineup{_ww_note}.")
+
+            # Weak Week Targets (only when variation exists)
+            if _weak_weeks and _marginal:
+                _ww_df = (pd.DataFrame(_marginal)
+                          .dropna(subset=["WW+Pts"])
+                          .sort_values("WW+Pts", ascending=False)
+                          .reset_index(drop=True))
+                if not _ww_df.empty:
+                    _ww_df.index = range(1, len(_ww_df) + 1)
+                    st.markdown(f"**🔴 Weak Week Targets — Top Picks for Your {len(_weak_weeks)} Lowest Weeks**")
+                    def _color_ww(row):
+                        pos_bg = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
+                                  "WR": "rgba(66,165,245,0.18)",  "TE": "rgba(255,167,38,0.18)"}
+                        return [f"background-color: {pos_bg.get(row['POS'],'')}"] * len(row)
+                    st.dataframe(
+                        _ww_df[["Player","POS","Team","ADP","WW+Pts","+Pts","Proj/G","Bye"]]
+                              .head(10).style.apply(_color_ww, axis=1),
+                        width="stretch", hide_index=False,
+                        height=min(60 + 10 * 35, 420),
+                    )
+
         st.markdown("---")
         st.subheader("Available Players")
 
@@ -2081,150 +2196,37 @@ elif tab_choice == "🎯 Draft Room":
                 "Projections from uploaded season totals ÷ games played."
             )
 
-            # ── My team's weekly score breakdown
-            _base_weekly: list = []
-            _weak_weeks:  set  = set()
-            _avg_weekly:  float = 0.0
-            if _my_row is not None and _my_row["weekly"]:
-                _base_weekly = list(_my_row["weekly"])
+            # ── My team's weekly score breakdown (uses pre-computed _base_weekly)
+            if _my_row is not None and _base_weekly:
                 _my_bye_wks  = {_proj_lu.get(n, {}).get("bye") for n in _my_row["names"]}
-                _non_bye     = [(wk, sc) for wk, sc in enumerate(_base_weekly, 1)
-                                if wk not in _my_bye_wks and sc > 0]
-                _avg_weekly  = (sum(sc for _, sc in _non_bye) / len(_non_bye)
-                                if _non_bye else 0.0)
-                # Always flag the bottom 5 non-bye weeks as "weak" (or all if < 5)
-                _sorted_non_bye = sorted(_non_bye, key=lambda x: x[1])
-                _n_weak      = min(5, len(_sorted_non_bye))
-                _weak_weeks  = {wk for wk, _ in _sorted_non_bye[:_n_weak]}
-                _weak_thresh = (_sorted_non_bye[_n_weak - 1][1]
-                                if _sorted_non_bye else 0.0)
-
                 st.markdown("**Your Projected Weekly Scores**")
                 _wk_df = pd.DataFrame({
                     "Week":  list(range(1, len(_base_weekly) + 1)),
                     "Score": [round(s, 1) for s in _base_weekly],
                 })
-                _wk_df["Status"] = _wk_df.apply(
-                    lambda r: "🔴 Weak" if r["Week"] in _weak_weeks
-                              else ("💤 Bye" if r["Week"] in _my_bye_wks else ""), axis=1)
+                if _has_variation:
+                    _wk_df["Status"] = _wk_df.apply(
+                        lambda r: "🔴 Weak" if r["Week"] in _weak_weeks
+                                  else ("💤 Bye" if r["Week"] in _my_bye_wks else ""), axis=1)
 
-                def _wk_color(val):
-                    if val <= _weak_thresh: return "color: #ff6b6b; font-weight: bold"
-                    if val >= _avg_weekly * 1.1: return "color: #69db7c"
-                    return ""
-
-                st.dataframe(
-                    _wk_df.style.map(_wk_color, subset=["Score"]),
-                    hide_index=True, width="stretch", height=240,
-                )
-                st.caption(
-                    f"Avg {_avg_weekly:.1f} pts/wk (non-bye) · "
-                    f"🔴 = your 5 lowest weeks — WW+Pts below shows who fixes them"
-                )
-
-            # ── Marginal value — which available players add the most points
-            if _my_row is not None:
-                st.markdown("---")
-                st.subheader("🎯 Best Available by Points Added to Your Team")
-                st.caption(
-                    "Simulates adding each available player to your current roster and measures "
-                    "how many more points your lineup would score across 17 weeks."
-                )
-                _my_names    = _my_row["names"]
-                _base_total  = float(_my_row["proj_pts"])  # already computed
-
-                _marginal = []
-                for _, _ar in available.iterrows():
-                    _nm = _ar["Name"]
-                    if _nm not in _proj_lu:
-                        continue
-                    _new_total, _new_weekly = _project_bb_score(_my_names + [_nm], _proj_lu)
-                    _delta = round(_new_total - _base_total, 1)
-                    if _delta > 0:
-                        _p    = _proj_lu[_nm]
-                        _std  = _p.get("std_fpg", 0.0)
-                        # Points gained specifically in your 5 weakest weeks
-                        _ww_gain = (round(sum(_new_weekly[wk - 1] - _base_weekly[wk - 1]
-                                             for wk in _weak_weeks), 1)
-                                    if _weak_weeks and _base_weekly else 0.0)
-                        _marginal.append({
-                            "Player":    _nm,
-                            "POS":       _p["pos"],
-                            "Team":      _p["team"],
-                            "Proj/G":    round(_p["proj_pg"], 1),
-                            "Std/G":     round(_std, 1) if _std > 0 else pd.NA,
-                            "Bye":       _p["bye"] or "—",
-                            "ADP":       round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
-                            "+Pts":      _delta,
-                            "WW+Pts":    _ww_gain if _ww_gain > 0 else pd.NA,
-                        })
-
-                if not _marginal:
-                    st.caption("No projection data for available players yet.")
+                    def _wk_color(val):
+                        if val <= _weak_thresh: return "color: #ff6b6b; font-weight: bold"
+                        if val >= _avg_weekly * 1.1: return "color: #69db7c"
+                        return ""
+                    styled = _wk_df.style.map(_wk_color, subset=["Score"])
                 else:
-                    _marg_df = (pd.DataFrame(_marginal)
-                                  .sort_values("+Pts", ascending=False)
-                                  .reset_index(drop=True))
-                    _marg_df.index = range(1, len(_marg_df) + 1)
+                    _wk_df["Status"] = _wk_df["Week"].apply(
+                        lambda w: "💤 Bye" if w in _my_bye_wks else "")
+                    styled = _wk_df.style
 
-                    mf1, mf2, mf3 = st.columns([2, 1, 1])
-                    with mf1:
-                        _pos_filter_m = st.multiselect("Filter position", ["QB","RB","WR","TE"],
-                                                        default=["QB","RB","WR","TE"],
-                                                        key="marg_pos_filter")
-                    with mf2:
-                        _show_m = st.selectbox("Show top", [10, 25, 50], key="marg_show")
-                    with mf3:
-                        _near_pick_only = st.checkbox("Near my pick (±20 ADP)",
-                                                       help="Filter to players likely available at your next pick")
-
-                    _show_marg = _marg_df[_marg_df["POS"].isin(_pos_filter_m)].copy()
-                    if _near_pick_only:
-                        _show_marg = _show_marg[
-                            _show_marg["ADP"].notna() &
-                            (_show_marg["ADP"] >= current_pick - 5) &
-                            (_show_marg["ADP"] <= current_pick + 20)
-                        ]
-
-                    def _color_marg(row):
-                        pos_bg = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
-                                  "WR": "rgba(66,165,245,0.18)",  "TE": "rgba(255,167,38,0.18)"}
-                        return [f"background-color: {pos_bg.get(row['POS'],'')}"] * len(row)
-
-                    st.dataframe(
-                        _show_marg.head(_show_m).style.apply(_color_marg, axis=1),
-                        width="stretch", hide_index=False,
-                        height=min(60 + _show_m * 35, 520),
-                    )
+                st.dataframe(styled, hide_index=True, width="stretch", height=240)
+                if _has_variation and _avg_weekly > 0:
                     st.caption(
-                        "+Pts = additional projected season points · "
-                        "WW+Pts = pts gained specifically in YOUR weak weeks · "
-                        "Std/G = weekly variance (higher = more boom upside)."
+                        f"Avg {_avg_weekly:.1f} pts/wk · "
+                        f"🔴 = your 5 lowest weeks — see Weak Week Targets above"
                     )
-
-                    # ── Weak week targets — players who fix your lowest weeks ──
-                    if _weak_weeks and _marginal:
-                        st.markdown("---")
-                        st.markdown(f"**🔴 Weak Week Targets — Strengthen Your {len(_weak_weeks)} Low-Scoring Week(s)**")
-                        st.caption(
-                            "Sorted by points added specifically in your weak weeks. "
-                            "Drafting these players directly raises your floor and "
-                            "improves your odds of finishing first."
-                        )
-                        _ww_df = (pd.DataFrame(_marginal)
-                                  .dropna(subset=["WW+Pts"])
-                                  .sort_values("WW+Pts", ascending=False)
-                                  .reset_index(drop=True))
-                        _ww_df.index = range(1, len(_ww_df) + 1)
-
-                        def _color_ww(row):
-                            pos_bg = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
-                                      "WR": "rgba(66,165,245,0.18)",  "TE": "rgba(255,167,38,0.18)"}
-                            return [f"background-color: {pos_bg.get(row['POS'],'')}"] * len(row)
-
-                        st.dataframe(
-                            _ww_df[["Player","POS","Team","ADP","WW+Pts","+Pts","Proj/G","Bye"]]
-                                  .head(12).style.apply(_color_ww, axis=1),
-                            width="stretch", hide_index=False,
-                            height=min(60 + 12 * 35, 480),
-                        )
+                else:
+                    st.caption(
+                        f"Avg {_avg_weekly:.1f} pts/wk · "
+                        "Draft more picks for week-by-week variation to appear"
+                    )
