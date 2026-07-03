@@ -299,16 +299,24 @@ def compute_bye_weeks():
     return bye_map
 
 
+_NON_BYE_WEEKS = 13  # 14-week season minus 1 bye week
+
 def _build_proj_lu(all_proj_df, bye_map, var_lu=None):
-    """Build {player_name: {pos, proj_pg, bye, std_fpg, n_games}} lookup."""
+    """Build {player_name: {pos, proj_pg, proj_ppw, bye, std_fpg, n_games}} lookup."""
     lu = {}
     for _, row in all_proj_df.iterrows():
         bye = int(row["Bye"]) if pd.notna(row.get("Bye")) else (bye_map.get(row["Team"]) or 0)
         ppg = float(row["Proj_PG"]) if pd.notna(row.get("Proj_PG")) else 0.0
         if ppg > 0:
             name  = row["Name"]
-            entry = {"pos": row["POS"], "proj_pg": ppg, "bye": bye, "team": row["Team"],
-                     "std_fpg": 0.0, "n_games": 0}
+            # proj_ppw = season total FP spread over 13 non-bye weeks.
+            # This prevents players projected for few games (injury risk, rookie load)
+            # from being inflated — their per-game rate only applies to expected games,
+            # not all 13 weeks.
+            proj_fp  = float(row["Proj_FP"]) if pd.notna(row.get("Proj_FP")) else ppg * _NON_BYE_WEEKS
+            proj_ppw = proj_fp / _NON_BYE_WEEKS
+            entry = {"pos": row["POS"], "proj_pg": ppg, "proj_ppw": proj_ppw,
+                     "bye": bye, "team": row["Team"], "std_fpg": 0.0, "n_games": 0}
             if var_lu:
                 # Try canonical name, then alias fallback
                 v = var_lu.get(name) or var_lu.get(_NAME_ALIASES.get(name, ""))
@@ -329,7 +337,7 @@ def _project_bb_score(roster_names, proj_lu, num_weeks=14):
     for name in roster_names:
         if name in proj_lu:
             p = proj_lu[name]
-            players.append((p["pos"], p["proj_pg"], p["bye"]))
+            players.append((p["pos"], p.get("proj_ppw", p["proj_pg"]), p["bye"]))
 
     total = 0.0
     weekly = []
