@@ -510,7 +510,7 @@ if tab_choice == "📊 Player Projections":
                         ]
                         st.dataframe(
                             pd.DataFrame(rows_out),
-                            use_container_width=True,
+                            width="stretch",
                             hide_index=True,
                             height=min(40 + len(rows_out) * 35, 400),
                         )
@@ -655,7 +655,7 @@ elif tab_choice == "🛡️ Defense Matchups":
         font=dict(color="#fafafa"),
         bargap=0.25,
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     # ── All-team comparison bar ────────────────────────────────────────────────
     st.markdown("---")
@@ -703,7 +703,7 @@ elif tab_choice == "🛡️ Defense Matchups":
         margin=dict(t=20, b=10),
         showlegend=False,
     )
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(fig2, width="stretch")
 
     # Color legend
     st.markdown(
@@ -740,7 +740,7 @@ elif tab_choice == "🛡️ Defense Matchups":
             font=dict(color="#fafafa"),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
         )
-        st.plotly_chart(fig3, use_container_width=True)
+        st.plotly_chart(fig3, width="stretch")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -928,7 +928,7 @@ elif tab_choice == "📈 Schedule Rankings":
             margin=dict(t=40, b=30, l=50, r=20),
             bargap=0.3,
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     # ── Full schedule table (all positions side by side) ──────────────────────
     st.markdown("---")
@@ -968,7 +968,7 @@ elif tab_choice == "📈 Schedule Rankings":
     rank_cols = [c for c in table_df.columns if "Rank" in c]
     st.dataframe(
         table_df.style.map(highlight_rank, subset=rank_cols),
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
         height=650,
     )
@@ -1119,7 +1119,7 @@ elif tab_choice == "📅 Schedule Viewer":
         bargap=0.2,
         margin=dict(t=50),
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     # Schedule table
     st.subheader("Full Schedule")
@@ -1141,7 +1141,7 @@ elif tab_choice == "📅 Schedule Viewer":
 
     st.dataframe(
         sched_display.style.apply(color_row, axis=1),
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
         height=600,
     )
@@ -1246,7 +1246,7 @@ elif tab_choice == "📅 Schedule Viewer":
 
             st.dataframe(
                 show_df.style.apply(color_complement, axis=1),
-                use_container_width=True,
+                width="stretch",
                 hide_index=False,
                 height=min(60 + len(show_df) * 35, 650),
             )
@@ -1286,7 +1286,7 @@ elif tab_choice == "📅 Schedule Viewer":
                 ]
                 st.dataframe(
                     pd.DataFrame(rows_out),
-                    use_container_width=True,
+                    width="stretch",
                     hide_index=True,
                     height=min(40 + len(rows_out) * 35, 420),
                 )
@@ -1371,7 +1371,7 @@ elif tab_choice == "🎯 Draft Room":
         }
         _fname = (draft_name or "draft").replace(" ", "_") + ".json"
         st.download_button("💾 Save", json.dumps(_save_data), file_name=_fname,
-                           mime="application/json", use_container_width=True)
+                           mime="application/json", width="stretch")
     with dm3:
         _uploaded = st.file_uploader("Load", type=["json"], label_visibility="collapsed",
                                      key="draft_upload")
@@ -1394,7 +1394,7 @@ elif tab_choice == "🎯 Draft Room":
                 st.error(f"Could not load draft: {e}")
     with dm4:
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("🗑️ Reset", use_container_width=True):
+        if st.button("🗑️ Reset", width="stretch"):
             st.session_state.my_picks         = []
             st.session_state.other_picks      = []
             st.session_state.pick_key         = st.session_state.get("pick_key", 0) + 1
@@ -1429,9 +1429,9 @@ elif tab_choice == "🎯 Draft Room":
         _pb1, _pb2 = st.columns([3, 1])
         with _pb1:
             _do_parse = st.button("Parse & Preview", key="dk_parse_btn",
-                                  disabled=not _dk_paste.strip(), use_container_width=True)
+                                  disabled=not _dk_paste.strip(), width="stretch")
         with _pb2:
-            if st.button("🗑️ Clear", key="dk_clear_btn", use_container_width=True):
+            if st.button("🗑️ Clear", key="dk_clear_btn", width="stretch"):
                 st.session_state.dk_paste_key   += 1
                 st.session_state.dk_scan_results = None
                 st.session_state.dk_exp_open     = True   # keep expander open after rerun
@@ -1490,7 +1490,7 @@ elif tab_choice == "🎯 Draft Room":
                     "Player":  [nm for _, nm in _owc],
                     "My Pick": ["✓" if c == my_slot else "" for c, _ in _owc],
                 }),
-                use_container_width=True, height=220, hide_index=True,
+                width="stretch", height=220, hide_index=True,
             )
             _bc1, _bc2 = st.columns(2)
             with _bc1:
@@ -1553,7 +1553,7 @@ elif tab_choice == "🎯 Draft Room":
                                   key=f"quick_mine_{st.session_state.get('pick_key', 0)}")
     with qc3:
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("➕ Log", use_container_width=True) and new_player:
+        if st.button("➕ Log", width="stretch") and new_player:
             idx = next_pick_num - 1
             st.session_state.draft_board.loc[idx, "Player"]  = new_player
             st.session_state.draft_board.loc[idx, "My Pick"] = new_is_mine
@@ -1561,7 +1561,7 @@ elif tab_choice == "🎯 Draft Room":
             st.rerun()
     with qc4:
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("↩️ Undo", use_container_width=True) and not logged.empty:
+        if st.button("↩️ Undo", width="stretch") and not logged.empty:
             last_idx = int(logged["Pick"].max()) - 1
             st.session_state.draft_board.loc[last_idx, "Player"]  = ""
             st.session_state.draft_board.loc[last_idx, "My Pick"] = False
@@ -1583,7 +1583,7 @@ elif tab_choice == "🎯 Draft Room":
             "My Pick": st.column_config.CheckboxColumn("My Pick", width="small"),
         },
         hide_index=True,
-        use_container_width=True,
+        width="stretch",
         height=350,
         key=f"draft_board_editor_{st.session_state.board_editor_key}",
     )
@@ -1945,7 +1945,7 @@ elif tab_choice == "🎯 Draft Room":
 
         st.dataframe(
             avail_out.style.apply(color_avail, axis=1),
-            use_container_width=True, hide_index=True,
+            width="stretch", hide_index=True,
             height=min(60 + len(avail_out) * 35, 520),
         )
         st.caption(
@@ -2072,7 +2072,7 @@ elif tab_choice == "🎯 Draft Room":
 
             st.dataframe(
                 _display.style.apply(_highlight_mine, axis=1),
-                hide_index=True, use_container_width=True,
+                hide_index=True, width="stretch",
                 height=min(60 + len(_display) * 35, 480),
             )
             st.caption(
@@ -2095,7 +2095,7 @@ elif tab_choice == "🎯 Draft Room":
                 st.dataframe(
                     _wk_df[["Week","Score","note"]].rename(columns={"note":"Note"})
                           .style.background_gradient(subset=["Score"], cmap="RdYlGn"),
-                    hide_index=True, use_container_width=True, height=200,
+                    hide_index=True, width="stretch", height=200,
                 )
 
             # ── Marginal value — which available players add the most points
@@ -2164,7 +2164,7 @@ elif tab_choice == "🎯 Draft Room":
 
                     st.dataframe(
                         _show_marg.head(_show_m).style.apply(_color_marg, axis=1),
-                        use_container_width=True, hide_index=False,
+                        width="stretch", hide_index=False,
                         height=min(60 + _show_m * 35, 520),
                     )
                     st.caption(
