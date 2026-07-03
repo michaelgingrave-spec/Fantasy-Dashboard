@@ -144,6 +144,35 @@ def compute_historical_variance():
 
 
 @st.cache_data
+def load_schedule_weekly_adj():
+    """Build {player_name: {week: adj_factor}} from the schedule model (weeks 1-14).
+    adj_factor is normalized so the mean across non-bye weeks = 1.0, meaning the
+    engine still hits the player's total season projection while distributing points
+    unevenly based on opponent WR/TE defense strength.
+    Only populated for WR/TE where the schedule model has real coverage variation.
+    RBs and QBs stay flat (no coverage-based matchup adjustment available).
+    """
+    try:
+        sched = pd.read_csv(Path(__file__).parent / "outputs" / "weekly_schedule_2026.csv")
+    except Exception:
+        return {}
+    result = {}
+    for name, grp in sched[sched["Week"] <= 14].groupby("Name"):
+        rows = grp.sort_values("Week").dropna(subset=["week_proj_FP"])
+        if len(rows) < 3:
+            continue
+        vals = rows["week_proj_FP"].values.astype(float)
+        if vals.std() < 0.01:
+            continue  # flat schedule (RB) — no adjustment to apply
+        mean_val = vals.mean()
+        if mean_val <= 0:
+            continue
+        result[str(name)] = {int(r["Week"]): float(r["week_proj_FP"]) / mean_val
+                             for _, r in rows.iterrows()}
+    return result
+
+
+@st.cache_data
 def load_weekly_data():
     """Player-level weekly stats (WR + TE). Compute FP allowed by opponent+week+pos."""
     df = pd.read_csv(DATA / "2025byweek.csv", header=1)
@@ -289,28 +318,29 @@ def compute_bye_weeks():
 
 _NON_BYE_WEEKS = 13  # 14-week season minus 1 bye week
 
-def _build_proj_lu(all_proj_df, bye_map, var_lu=None):
-    """Build {player_name: {pos, proj_pg, proj_ppw, bye, std_fpg, n_games}} lookup."""
+def _build_proj_lu(all_proj_df, bye_map, var_lu=None, sched_adj=None):
+    """Build {player_name: {pos, proj_pg, proj_ppw, weekly_ppw, bye, ...}} lookup."""
     lu = {}
     for _, row in all_proj_df.iterrows():
         bye = int(row["Bye"]) if pd.notna(row.get("Bye")) else (bye_map.get(row["Team"]) or 0)
         ppg = float(row["Proj_PG"]) if pd.notna(row.get("Proj_PG")) else 0.0
         if ppg > 0:
             name  = row["Name"]
-            # proj_ppw = season total FP spread over 13 non-bye weeks.
-            # This prevents players projected for few games (injury risk, rookie load)
-            # from being inflated — their per-game rate only applies to expected games,
-            # not all 13 weeks.
             proj_fp  = float(row["Proj_FP"]) if pd.notna(row.get("Proj_FP")) else ppg * _NON_BYE_WEEKS
             proj_ppw = proj_fp / _NON_BYE_WEEKS
             entry = {"pos": row["POS"], "proj_pg": ppg, "proj_ppw": proj_ppw,
-                     "bye": bye, "team": row["Team"], "std_fpg": 0.0, "n_games": 0}
+                     "bye": bye, "team": row["Team"], "std_fpg": 0.0, "n_games": 0,
+                     "weekly_ppw": None}
             if var_lu:
-                # Try canonical name, then alias fallback
                 v = var_lu.get(name) or var_lu.get(_NAME_ALIASES.get(name, ""))
                 if v:
                     entry["std_fpg"] = v["std_fpg"]
                     entry["n_games"] = v["n_games"]
+            if sched_adj:
+                adj = sched_adj.get(name) or sched_adj.get(_NAME_ALIASES.get(name, ""))
+                if adj:
+                    # Scale normalized factors by proj_ppw so each week is in actual pts
+                    entry["weekly_ppw"] = {wk: round(proj_ppw * f, 2) for wk, f in adj.items()}
             lu[name] = entry
     return lu
 
@@ -325,15 +355,17 @@ def _project_bb_score(roster_names, proj_lu, num_weeks=14):
     for name in roster_names:
         if name in proj_lu:
             p = proj_lu[name]
-            players.append((p["pos"], p.get("proj_ppw", p["proj_pg"]), p["bye"]))
+            players.append((p["pos"], p.get("proj_ppw", p["proj_pg"]), p["bye"],
+                            p.get("weekly_ppw")))  # weekly_ppw = {wk: pts} or None
 
     total = 0.0
     weekly = []
     for wk in range(1, num_weeks + 1):
         by_pos: dict = {"QB": [], "RB": [], "WR": [], "TE": []}
-        for pos, ppg, bye in players:
+        for pos, ppw, bye, weekly_ppw in players:
             if bye != wk and pos in by_pos:
-                by_pos[pos].append(ppg)
+                pts = weekly_ppw.get(wk, ppw) if weekly_ppw else ppw
+                by_pos[pos].append(pts)
         for pos in by_pos:
             by_pos[pos].sort(reverse=True)
 
@@ -1317,7 +1349,8 @@ elif tab_choice == "🎯 Draft Room":
     playoff_scores = compute_all_playoff_scores()
     _all_proj      = load_all_projections()
     _hist_var      = compute_historical_variance()
-    _proj_lu       = _build_proj_lu(_all_proj, bye_map, var_lu=_hist_var)  # name → {pos, proj_pg, bye, std_fpg}
+    _sched_adj     = load_schedule_weekly_adj()
+    _proj_lu       = _build_proj_lu(_all_proj, bye_map, var_lu=_hist_var, sched_adj=_sched_adj)
     sched_matrix   = build_team_schedule_matrix()   # (team, pos_key) → {week: rank}
 
     HARD_THR = 13   # rank ≤ 13 = tough (32=easiest system)
