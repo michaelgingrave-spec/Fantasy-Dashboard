@@ -61,12 +61,37 @@ TIER_COLORS = {
 }
 
 # ── Data loaders ───────────────────────────────────────────────────────────────
-DATA = Path(__file__).parent / "data"
+DATA      = Path(__file__).parent / "data"
+PROJ_ROOT = Path(__file__).parent
 
 @st.cache_data
 def load_projections():
     df = pd.read_csv(DATA / "projections_2026.csv")
     return df
+
+@st.cache_data
+def load_all_projections():
+    """Unified per-game projection table for all positions.
+    QB file (uploaded to project root) supplies FPTS/G + bye week.
+    Skill file (data/projections_2026.csv) supplies WR/RB/TE Proj_FP_Adj + Games.
+    """
+    # ── QB ──
+    qb_path = PROJ_ROOT / "2026 NFL Fantasy Football Season Rankings  Projections  Fantasy Points (2).csv"
+    qb = pd.read_csv(qb_path)[["Name", "POS", "Team", "Bye", "FPTS", "G", "FPTS/G"]].copy()
+    qb = qb.rename(columns={"FPTS": "Proj_FP", "G": "Games", "FPTS/G": "Proj_PG"})
+    qb["Bye"]  = pd.to_numeric(qb["Bye"],  errors="coerce")
+    qb["Proj_PG"] = pd.to_numeric(qb["Proj_PG"], errors="coerce")
+
+    # ── Skill (WR / RB / TE) ──
+    skill = pd.read_csv(DATA / "projections_2026.csv")[
+        ["Name", "Team", "POS", "Proj_FP_Adj", "Games"]
+    ].copy()
+    skill = skill.rename(columns={"Proj_FP_Adj": "Proj_FP"})
+    skill["Games"]   = pd.to_numeric(skill["Games"],   errors="coerce").clip(lower=1)
+    skill["Proj_PG"] = skill["Proj_FP"] / skill["Games"]
+    skill["Bye"]     = pd.NA          # filled at runtime from bye_map
+
+    return pd.concat([qb, skill], ignore_index=True)
 
 @st.cache_data
 def load_weekly_data():
@@ -210,6 +235,55 @@ def compute_bye_weeks():
         byes = sorted(set(range(1, 19)) - weeks_played)
         bye_map[team] = byes[0] if byes else None
     return bye_map
+
+
+def _build_proj_lu(all_proj_df, bye_map):
+    """Build {player_name: {pos, proj_pg, bye}} lookup used by the simulator."""
+    lu = {}
+    for _, row in all_proj_df.iterrows():
+        bye = int(row["Bye"]) if pd.notna(row.get("Bye")) else (bye_map.get(row["Team"]) or 0)
+        ppg = float(row["Proj_PG"]) if pd.notna(row.get("Proj_PG")) else 0.0
+        if ppg > 0:
+            lu[row["Name"]] = {"pos": row["POS"], "proj_pg": ppg, "bye": bye, "team": row["Team"]}
+    return lu
+
+
+def _project_bb_score(roster_names, proj_lu, num_weeks=17):
+    """
+    Estimate DraftKings Best Ball total for a 20-player roster.
+    Lineup each week: QB + 2 RB + 3 WR + TE + FLEX (best remaining RB/WR/TE).
+    Returns (total_pts, weekly_scores_list).
+    """
+    players = []
+    for name in roster_names:
+        if name in proj_lu:
+            p = proj_lu[name]
+            players.append((p["pos"], p["proj_pg"], p["bye"]))
+
+    total = 0.0
+    weekly = []
+    for wk in range(1, num_weeks + 1):
+        by_pos: dict = {"QB": [], "RB": [], "WR": [], "TE": []}
+        for pos, ppg, bye in players:
+            if bye != wk and pos in by_pos:
+                by_pos[pos].append(ppg)
+        for pos in by_pos:
+            by_pos[pos].sort(reverse=True)
+
+        qb_pts   = by_pos["QB"][0] if by_pos["QB"] else 0.0
+        rb_pts   = sum(by_pos["RB"][:2]);  rb_flex = by_pos["RB"][2:]
+        wr_pts   = sum(by_pos["WR"][:3]);  wr_flex = by_pos["WR"][3:]
+        te_pts   = by_pos["TE"][0] if by_pos["TE"] else 0.0
+        te_flex  = by_pos["TE"][1:]
+
+        flex_pool = sorted(rb_flex + wr_flex + te_flex, reverse=True)
+        flex_pts  = flex_pool[0] if flex_pool else 0.0
+
+        wk_score = qb_pts + rb_pts + wr_pts + te_pts + flex_pts
+        total   += wk_score
+        weekly.append(round(wk_score, 1))
+    return round(total, 1), weekly
+
 
 @st.cache_data
 def compute_boom_rates():
@@ -1174,6 +1248,8 @@ elif tab_choice == "🎯 Draft Room":
     bye_map        = compute_bye_weeks()
     boom_rates     = compute_boom_rates()
     playoff_scores = compute_all_playoff_scores()
+    _all_proj      = load_all_projections()
+    _proj_lu       = _build_proj_lu(_all_proj, bye_map)   # name → {pos, proj_pg, bye}
     sched_matrix   = build_team_schedule_matrix()   # (team, pos_key) → {week: rank}
 
     HARD_THR = 13   # rank ≤ 13 = tough (32=easiest system)
@@ -1838,9 +1914,9 @@ elif tab_choice == "🎯 Draft Room":
                         icon  = "🟢" if pct >= 0.6 else "🟡"
                         st.markdown(f"{icon} **{r['Name']}** ({r['Team']}) {adp_s} · {r['Cmpl']}")
 
-    # ── Roster Rating — league comparison ─────────────────────────────────────
+    # ── Projected Points — league comparison ──────────────────────────────────
     st.markdown("---")
-    st.subheader("🏆 Roster Rating")
+    st.subheader("📈 Projected Points — League Comparison")
 
     _filled_board = st.session_state.draft_board[
         st.session_state.draft_board["Player"].notna() &
@@ -1848,9 +1924,9 @@ elif tab_choice == "🎯 Draft Room":
     ].copy().head(n_picks)
 
     if _filled_board.empty or not st.session_state.my_picks:
-        st.info("Add picks to generate a roster rating.")
+        st.info("Add picks — projected points update as the draft progresses.")
     else:
-        # Map every pick to its draft slot (accounts for snake order)
+        # Map every pick to its draft slot (snake order)
         def _slot(pick_num):
             rnd = (pick_num - 1) // num_teams + 1
             pos = (pick_num - 1) % num_teams + 1
@@ -1858,88 +1934,38 @@ elif tab_choice == "🎯 Draft Room":
 
         _filled_board["slot"] = _filled_board["Pick"].apply(_slot)
 
-        # Quick stat lookups
-        _fp_lu = fp_all.set_index("Name").to_dict("index")
-
-        def _team_stats(slot_df):
-            names    = slot_df["Player"].tolist()
-            ranks    = [_fp_lu[n]["FP_Rank"]   for n in names if n in _fp_lu and pd.notna(_fp_lu[n]["FP_Rank"])]
-            adp_vals = []
-            for _, row in slot_df.iterrows():
-                n = row["Player"]
-                if n in _fp_lu and pd.notna(_fp_lu[n].get("FP_ADP")):
-                    adp_vals.append(row["Pick"] - _fp_lu[n]["FP_ADP"])
-            pl_vals  = [playoff_scores[n] for n in names if n in playoff_scores and playoff_scores[n] is not None]
-            bm_vals  = [boom_rates[n]     for n in names if n in boom_rates    and boom_rates[n]     is not None]
-            bye_c: dict = {}
-            for n in names:
-                team = _fp_lu[n]["Team"] if n in _fp_lu else None
-                if team:
-                    bw = bye_map.get(team)
-                    if bw: bye_c[bw] = bye_c.get(bw, 0) + 1
-            qb_teams_s   = {_fp_lu[n]["Team"] for n in names if n in _fp_lu and _fp_lu[n]["POS"] == "QB"}
-            recv_teams_s = {_fp_lu[n]["Team"] for n in names if n in _fp_lu and _fp_lu[n]["POS"] in ("WR","TE")}
-            return {
-                "avg_rank":    sum(ranks)    / len(ranks)    if ranks    else 999,
-                "avg_adp_val": sum(adp_vals) / len(adp_vals) if adp_vals else 0,
-                "avg_playoff": sum(pl_vals)  / len(pl_vals)  if pl_vals  else 0,
-                "avg_boom":    sum(bm_vals)  / len(bm_vals)  if bm_vals  else 0,
-                "max_bye":     max(bye_c.values()) if bye_c else 0,
-                "stacked":     bool(qb_teams_s & recv_teams_s),
-            }
-
+        # Project each team's season total
         _league_rows = []
         for _sl in range(1, num_teams + 1):
-            _sdf = _filled_board[_filled_board["slot"] == _sl]
+            _sdf  = _filled_board[_filled_board["slot"] == _sl]
             if _sdf.empty:
                 continue
-            _st = _team_stats(_sdf)
-            _st["slot"]    = _sl
-            _st["is_mine"] = (_sl == my_slot)
-            _st["n"]       = len(_sdf)
-            _league_rows.append(_st)
+            _names = _sdf["Player"].tolist()
+            _total, _weekly = _project_bb_score(_names, _proj_lu)
+            _league_rows.append({
+                "slot":     _sl,
+                "is_mine":  (_sl == my_slot),
+                "n":        len(_names),
+                "proj_pts": _total,
+                "weekly":   _weekly,
+                "names":    _names,
+            })
 
         if not _league_rows:
-            st.info("Add picks to generate a roster rating.")
+            st.info("Add picks to generate projections.")
         else:
-            _ldf = pd.DataFrame(_league_rows)
+            _ldf = pd.DataFrame(_league_rows).sort_values("proj_pts", ascending=False).reset_index(drop=True)
+            _ldf["league_rank"] = range(1, len(_ldf) + 1)
 
-            # Normalise each metric to 0-100 across teams present
-            def _norm(col, higher_better=True):
-                lo, hi = _ldf[col].min(), _ldf[col].max()
-                if hi == lo: return pd.Series([50.0] * len(_ldf), index=_ldf.index)
-                pct = (_ldf[col] - lo) / (hi - lo) * 100
-                return pct if higher_better else 100 - pct
+            _my_row  = _ldf[_ldf["is_mine"]].iloc[0] if _ldf["is_mine"].any() else None
+            _n_teams = len(_ldf)
 
-            _ldf["rank_pct"]    = _norm("avg_rank",    higher_better=False)  # lower rank # = better
-            _ldf["val_pct"]     = _norm("avg_adp_val", higher_better=True)
-            _ldf["playoff_pct"] = _norm("avg_playoff", higher_better=True)
-            _ldf["boom_pct"]    = _norm("avg_boom",    higher_better=True)
-            _ldf["bye_pct"]     = _norm("max_bye",     higher_better=False)
-            _ldf["stack_pct"]   = _ldf["stacked"].map({True: 100.0, False: 0.0})
-
-            _ldf["overall"] = (
-                _ldf["rank_pct"]    * 0.30 +
-                _ldf["playoff_pct"] * 0.25 +
-                _ldf["val_pct"]     * 0.20 +
-                _ldf["boom_pct"]    * 0.15 +
-                _ldf["bye_pct"]     * 0.05 +
-                _ldf["stack_pct"]   * 0.05
-            )
-            _ldf = _ldf.sort_values("overall", ascending=False).reset_index(drop=True)
-            _ldf["Rank"] = range(1, len(_ldf) + 1)
-
-            # My row
-            _my_row = _ldf[_ldf["is_mine"]].iloc[0] if _ldf["is_mine"].any() else None
-
-            # ── Top metrics for my team vs field
+            # ── Top-line metrics for my team
             if _my_row is not None:
-                _my_rank = int(_my_row["Rank"])
-                _n_teams = len(_ldf)
-
-                def _rank_of(col, higher_better=True):
-                    s = _ldf.sort_values(col, ascending=not higher_better)
-                    return int(s[s["slot"] == my_slot].index[0]) + 1 if my_slot in s["slot"].values else "—"
+                _my_proj = _my_row["proj_pts"]
+                _my_rank = int(_my_row["league_rank"])
+                _max_pts = _ldf["proj_pts"].max()
+                _avg_pts = _ldf["proj_pts"].mean()
 
                 def _grade(r, n):
                     pct = 1 - (r - 1) / max(n - 1, 1)
@@ -1949,60 +1975,125 @@ elif tab_choice == "🎯 Draft Room":
                     if pct >= 0.20: return "D", "🔴"
                     return "F", "⛔"
 
-                _grade_lbl, _grade_icon = _grade(_my_rank, _n_teams)
+                _gl, _gi = _grade(_my_rank, _n_teams)
+                pp1, pp2, pp3, pp4 = st.columns(4)
+                pp1.metric("Your Projected Total", f"{_my_proj:.1f} pts",
+                           f"#{_my_rank} of {_n_teams} teams")
+                pp2.metric("League Leader",        f"{_max_pts:.1f} pts",
+                           f"gap: {_my_proj - _max_pts:+.1f}")
+                pp3.metric("League Average",       f"{_avg_pts:.1f} pts",
+                           f"vs avg: {_my_proj - _avg_pts:+.1f}")
+                pp4.metric("Grade",                f"{_gi} {_gl}",
+                           f"based on {_my_row['n']} picks so far")
 
-                rr1, rr2, rr3, rr4, rr5 = st.columns(5)
-                rr1.metric("League Rank", f"{_grade_icon} #{_my_rank} of {_n_teams}",
-                           f"Grade: {_grade_lbl}")
-                rr2.metric("Roster Quality",
-                           f"#{_rank_of('avg_rank', False)} of {_n_teams}",
-                           f"avg rank #{_my_row['avg_rank']:.0f}")
-                rr3.metric("Playoff Sch",
-                           f"#{_rank_of('avg_playoff')} of {_n_teams}",
-                           f"{_my_row['avg_playoff']:.1f}/32 ease")
-                rr4.metric("ADP Value",
-                           f"#{_rank_of('avg_adp_val')} of {_n_teams}",
-                           f"avg {_my_row['avg_adp_val']:+.1f} vs ADP")
-                rr5.metric("Boom Rate",
-                           f"#{_rank_of('avg_boom')} of {_n_teams}",
-                           f"{_my_row['avg_boom']:.1%}" if _my_row["avg_boom"] else "—")
-
-            # ── League comparison table
-            st.markdown("**League Standings**")
-            _display = _ldf[["Rank", "slot", "n", "avg_rank", "avg_adp_val",
-                              "avg_playoff", "avg_boom", "stacked", "overall"]].copy()
-            _display.columns = ["#", "Slot", "Picks", "Avg Rank", "ADP Val",
-                                 "Playoff", "Boom%", "Stack", "Score"]
-            _display["Avg Rank"] = _display["Avg Rank"].round(0).astype("Int64")
-            _display["ADP Val"]  = _display["ADP Val"].round(1)
-            _display["Playoff"]  = _display["Playoff"].round(1)
-            _display["Boom%"]    = (_display["Boom%"] * 100).round(1)
-            _display["Stack"]    = _display["Stack"].map({True: "✓", False: "—"})
-            _display["Score"]    = _display["Score"].round(1)
-            _display["Slot"]     = _display["Slot"].apply(
+            # ── League standings table
+            st.markdown("**League Standings — Projected Season Total**")
+            _display = _ldf[["league_rank", "slot", "n", "proj_pts"]].copy()
+            _display.columns = ["#", "Slot", "Picks", "Proj Pts"]
+            _display["Slot"] = _display["Slot"].apply(
                 lambda s: f"⭐ Slot {s} (You)" if s == my_slot else f"Slot {s}")
+            _display["Proj Pts"] = _display["Proj Pts"].round(1)
 
             def _highlight_mine(row):
-                if "(You)" in str(row["Slot"]):
-                    return ["background-color: rgba(66,165,245,0.25)"] * len(row)
-                return [""] * len(row)
+                return (["background-color: rgba(66,165,245,0.25)"] * len(row)
+                        if "(You)" in str(row["Slot"]) else [""] * len(row))
 
             st.dataframe(
                 _display.style.apply(_highlight_mine, axis=1),
                 hide_index=True, use_container_width=True,
                 height=min(60 + len(_display) * 35, 480),
             )
+            st.caption(
+                "Projected using DK Best Ball scoring: QB + 2 RB + 3 WR + TE + FLEX per week, "
+                "auto-set from each team's 20-man roster. Bye weeks count as 0. "
+                "Projections from uploaded season totals ÷ games played."
+            )
 
-            # Coaching notes based on relative position
+            # ── My team's weekly score breakdown
+            if _my_row is not None and _my_row["weekly"]:
+                st.markdown("**Your Projected Weekly Scores**")
+                _wk_df = pd.DataFrame({
+                    "Week":  list(range(1, len(_my_row["weekly"]) + 1)),
+                    "Score": _my_row["weekly"],
+                })
+                # Colour low weeks
+                _my_bye_wks = {_proj_lu.get(n, {}).get("bye") for n in _my_row["names"]}
+                _wk_df["note"] = _wk_df.apply(
+                    lambda r: "bye" if r["Week"] in _my_bye_wks else "", axis=1)
+                st.dataframe(
+                    _wk_df[["Week","Score","note"]].rename(columns={"note":"Note"})
+                          .style.background_gradient(subset=["Score"], cmap="RdYlGn"),
+                    hide_index=True, use_container_width=True, height=200,
+                )
+
+            # ── Marginal value — which available players add the most points
             if _my_row is not None:
-                _notes = []
-                if _rank_of("avg_rank", False) > _n_teams * 0.6:
-                    _notes.append("Roster quality is below mid-field — focus on best player available.")
-                if _rank_of("avg_playoff") > _n_teams * 0.6:
-                    _notes.append("Playoff schedule is tough relative to the field — target easy-schedule players.")
-                if _rank_of("avg_adp_val") > _n_teams * 0.6:
-                    _notes.append("Other teams are getting more value — be patient and let players fall.")
-                if not _my_row["stacked"]:
-                    _notes.append("No QB stack — consider a WR/TE from your QB's team.")
-                if _notes:
-                    st.caption(" · ".join(_notes))
+                st.markdown("---")
+                st.subheader("🎯 Best Available by Points Added to Your Team")
+                st.caption(
+                    "Simulates adding each available player to your current roster and measures "
+                    "how many more points your lineup would score across 17 weeks."
+                )
+                _my_names   = _my_row["names"]
+                _base_total, _ = _project_bb_score(_my_names, _proj_lu)
+
+                _marginal = []
+                for _, _ar in available.iterrows():
+                    _nm = _ar["Name"]
+                    if _nm not in _proj_lu:
+                        continue
+                    _new_total, _ = _project_bb_score(_my_names + [_nm], _proj_lu)
+                    _delta = round(_new_total - _base_total, 1)
+                    if _delta > 0:
+                        _p = _proj_lu[_nm]
+                        _marginal.append({
+                            "Player":    _nm,
+                            "POS":       _p["pos"],
+                            "Team":      _p["team"],
+                            "Proj/G":    round(_p["proj_pg"], 1),
+                            "Bye":       _p["bye"] or "—",
+                            "ADP":       round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else None,
+                            "+Pts":      _delta,
+                        })
+
+                if not _marginal:
+                    st.caption("No projection data for available players yet.")
+                else:
+                    _marg_df = (pd.DataFrame(_marginal)
+                                  .sort_values("+Pts", ascending=False)
+                                  .reset_index(drop=True))
+                    _marg_df.index = range(1, len(_marg_df) + 1)
+
+                    mf1, mf2, mf3 = st.columns([2, 1, 1])
+                    with mf1:
+                        _pos_filter_m = st.multiselect("Filter position", ["QB","RB","WR","TE"],
+                                                        default=["QB","RB","WR","TE"],
+                                                        key="marg_pos_filter")
+                    with mf2:
+                        _show_m = st.selectbox("Show top", [10, 25, 50], key="marg_show")
+                    with mf3:
+                        _near_pick_only = st.checkbox("Near my pick (±20 ADP)",
+                                                       help="Filter to players likely available at your next pick")
+
+                    _show_marg = _marg_df[_marg_df["POS"].isin(_pos_filter_m)].copy()
+                    if _near_pick_only:
+                        _show_marg = _show_marg[
+                            _show_marg["ADP"].notna() &
+                            (_show_marg["ADP"] >= current_pick - 5) &
+                            (_show_marg["ADP"] <= current_pick + 20)
+                        ]
+
+                    def _color_marg(row):
+                        pos_bg = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
+                                  "WR": "rgba(66,165,245,0.18)",  "TE": "rgba(255,167,38,0.18)"}
+                        return [f"background-color: {pos_bg.get(row['POS'],'')}"] * len(row)
+
+                    st.dataframe(
+                        _show_marg.head(_show_m).style.apply(_color_marg, axis=1),
+                        use_container_width=True, hide_index=False,
+                        height=min(60 + _show_m * 35, 520),
+                    )
+                    st.caption(
+                        "+Pts = additional projected season points your lineup gains by drafting this player. "
+                        "Accounts for bye weeks and lineup competition at their position."
+                    )
