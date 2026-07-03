@@ -83,6 +83,7 @@ def load_weekly_data():
 # Add entries here whenever DraftKings and the rankings file disagree on a player's name.
 _NAME_ALIASES = {
     "Kenneth Gainwell": "Kenny Gainwell",
+    "Tre' Harris":      "Tre Harris",       # DK uses apostrophe, CSV does not
 }
 # Build a lowercase lookup so matching is case-insensitive
 _NAME_ALIASES_LC = {k.lower(): v for k, v in _NAME_ALIASES.items()}
@@ -1837,100 +1838,171 @@ elif tab_choice == "🎯 Draft Room":
                         icon  = "🟢" if pct >= 0.6 else "🟡"
                         st.markdown(f"{icon} **{r['Name']}** ({r['Team']}) {adp_s} · {r['Cmpl']}")
 
-    # ── Roster Rating ──────────────────────────────────────────────────────────
+    # ── Roster Rating — league comparison ─────────────────────────────────────
     st.markdown("---")
     st.subheader("🏆 Roster Rating")
 
-    if not st.session_state.my_picks:
+    _filled_board = st.session_state.draft_board[
+        st.session_state.draft_board["Player"].notna() &
+        (st.session_state.draft_board["Player"] != "")
+    ].copy().head(n_picks)
+
+    if _filled_board.empty or not st.session_state.my_picks:
         st.info("Add picks to generate a roster rating.")
     else:
-        my_picks_r = st.session_state.my_picks
-        n_my = len(my_picks_r)
+        # Map every pick to its draft slot (accounts for snake order)
+        def _slot(pick_num):
+            rnd = (pick_num - 1) // num_teams + 1
+            pos = (pick_num - 1) % num_teams + 1
+            return pos if rnd % 2 == 1 else num_teams + 1 - pos
 
-        # ── 1. ADP Value: avg (pick# - ADP) across your picks (positive = good)
-        adp_diffs = []
-        for i, p in enumerate(my_picks_r, start=1):
-            # find which overall pick number this was (pick_key ordering)
-            row = st.session_state.draft_board[st.session_state.draft_board["Player"] == p["Name"]]
-            pick_num = int(row["Pick"].iloc[0]) if not row.empty else (i * num_teams)
-            adp = p.get("FP_ADP") or pick_num
-            adp_diffs.append(pick_num - adp)
-        avg_value = sum(adp_diffs) / len(adp_diffs) if adp_diffs else 0
-        value_score = min(100, max(0, 50 + avg_value * 4))   # ±12.5 picks → ±50 pts
+        _filled_board["slot"] = _filled_board["Pick"].apply(_slot)
 
-        # ── 2. Position balance vs targets
-        pos_targets_r = {"QB": 3, "RB": 6, "WR": 8, "TE": 3}
-        pos_have_r    = {pos: sum(1 for p in my_picks_r if p["POS"] == pos) for pos in pos_targets_r}
-        if n_my < total_rounds:
-            # Scale targets to picks made so far
-            frac = n_my / total_rounds
-            scaled = {pos: pos_targets_r[pos] * frac for pos in pos_targets_r}
-            bal_score = 100 - min(100, sum(
-                max(0, scaled[pos] - pos_have_r[pos]) * 12 for pos in pos_targets_r))
+        # Quick stat lookups
+        _fp_lu = fp_all.set_index("Name").to_dict("index")
+
+        def _team_stats(slot_df):
+            names    = slot_df["Player"].tolist()
+            ranks    = [_fp_lu[n]["FP_Rank"]   for n in names if n in _fp_lu and pd.notna(_fp_lu[n]["FP_Rank"])]
+            adp_vals = []
+            for _, row in slot_df.iterrows():
+                n = row["Player"]
+                if n in _fp_lu and pd.notna(_fp_lu[n].get("FP_ADP")):
+                    adp_vals.append(row["Pick"] - _fp_lu[n]["FP_ADP"])
+            pl_vals  = [playoff_scores[n] for n in names if n in playoff_scores and playoff_scores[n] is not None]
+            bm_vals  = [boom_rates[n]     for n in names if n in boom_rates    and boom_rates[n]     is not None]
+            bye_c: dict = {}
+            for n in names:
+                team = _fp_lu[n]["Team"] if n in _fp_lu else None
+                if team:
+                    bw = bye_map.get(team)
+                    if bw: bye_c[bw] = bye_c.get(bw, 0) + 1
+            qb_teams_s   = {_fp_lu[n]["Team"] for n in names if n in _fp_lu and _fp_lu[n]["POS"] == "QB"}
+            recv_teams_s = {_fp_lu[n]["Team"] for n in names if n in _fp_lu and _fp_lu[n]["POS"] in ("WR","TE")}
+            return {
+                "avg_rank":    sum(ranks)    / len(ranks)    if ranks    else 999,
+                "avg_adp_val": sum(adp_vals) / len(adp_vals) if adp_vals else 0,
+                "avg_playoff": sum(pl_vals)  / len(pl_vals)  if pl_vals  else 0,
+                "avg_boom":    sum(bm_vals)  / len(bm_vals)  if bm_vals  else 0,
+                "max_bye":     max(bye_c.values()) if bye_c else 0,
+                "stacked":     bool(qb_teams_s & recv_teams_s),
+            }
+
+        _league_rows = []
+        for _sl in range(1, num_teams + 1):
+            _sdf = _filled_board[_filled_board["slot"] == _sl]
+            if _sdf.empty:
+                continue
+            _st = _team_stats(_sdf)
+            _st["slot"]    = _sl
+            _st["is_mine"] = (_sl == my_slot)
+            _st["n"]       = len(_sdf)
+            _league_rows.append(_st)
+
+        if not _league_rows:
+            st.info("Add picks to generate a roster rating.")
         else:
-            deficit = sum(max(0, pos_targets_r[pos] - pos_have_r[pos]) for pos in pos_targets_r)
-            bal_score = max(0, 100 - deficit * 15)
+            _ldf = pd.DataFrame(_league_rows)
 
-        # ── 3. Playoff schedule quality: avg playoff score of my picks
-        my_playoff_scores = [playoff_scores.get(p["Name"]) for p in my_picks_r
-                             if playoff_scores.get(p["Name"]) is not None]
-        if my_playoff_scores:
-            avg_playoff = sum(my_playoff_scores) / len(my_playoff_scores)
-            # playoff_scores are avg def rank 14-17 where 32=easiest; normalize to 0-100
-            playoff_score = min(100, max(0, (avg_playoff / 32) * 100))
-        else:
-            playoff_score = 50.0
+            # Normalise each metric to 0-100 across teams present
+            def _norm(col, higher_better=True):
+                lo, hi = _ldf[col].min(), _ldf[col].max()
+                if hi == lo: return pd.Series([50.0] * len(_ldf), index=_ldf.index)
+                pct = (_ldf[col] - lo) / (hi - lo) * 100
+                return pct if higher_better else 100 - pct
 
-        # ── 4. Bye week risk: penalize for crowded bye weeks
-        bye_counts_r: dict = {}
-        for p in my_picks_r:
-            bye = bye_map.get(p["Team"])
-            if bye:
-                bye_counts_r[bye] = bye_counts_r.get(bye, 0) + 1
-        max_bye = max(bye_counts_r.values()) if bye_counts_r else 0
-        bye_score = max(0, 100 - max(0, max_bye - 2) * 25)   # 3+ on same bye → penalty
+            _ldf["rank_pct"]    = _norm("avg_rank",    higher_better=False)  # lower rank # = better
+            _ldf["val_pct"]     = _norm("avg_adp_val", higher_better=True)
+            _ldf["playoff_pct"] = _norm("avg_playoff", higher_better=True)
+            _ldf["boom_pct"]    = _norm("avg_boom",    higher_better=True)
+            _ldf["bye_pct"]     = _norm("max_bye",     higher_better=False)
+            _ldf["stack_pct"]   = _ldf["stacked"].map({True: 100.0, False: 0.0})
 
-        # ── 5. Stack quality: QB + at least one WR/TE from same team
-        qb_teams  = {p["Team"] for p in my_picks_r if p["POS"] == "QB"}
-        skill_teams = {p["Team"] for p in my_picks_r if p["POS"] in ("WR", "TE")}
-        stacked   = qb_teams & skill_teams
-        has_qb    = len(qb_teams) > 0
-        stack_score = 100 if stacked else (60 if has_qb else 40)
+            _ldf["overall"] = (
+                _ldf["rank_pct"]    * 0.30 +
+                _ldf["playoff_pct"] * 0.25 +
+                _ldf["val_pct"]     * 0.20 +
+                _ldf["boom_pct"]    * 0.15 +
+                _ldf["bye_pct"]     * 0.05 +
+                _ldf["stack_pct"]   * 0.05
+            )
+            _ldf = _ldf.sort_values("overall", ascending=False).reset_index(drop=True)
+            _ldf["Rank"] = range(1, len(_ldf) + 1)
 
-        # ── Weighted overall
-        weights = {"Value": 0.30, "Balance": 0.25, "Playoff": 0.25, "Bye": 0.10, "Stack": 0.10}
-        scores  = {"Value": value_score, "Balance": bal_score,
-                   "Playoff": playoff_score, "Bye": bye_score, "Stack": stack_score}
-        overall = sum(scores[k] * weights[k] for k in weights)
+            # My row
+            _my_row = _ldf[_ldf["is_mine"]].iloc[0] if _ldf["is_mine"].any() else None
 
-        def _grade(s):
-            if s >= 88: return "A", "🟢"
-            if s >= 75: return "B", "🟡"
-            if s >= 60: return "C", "🟠"
-            if s >= 45: return "D", "🔴"
-            return "F", "⛔"
+            # ── Top metrics for my team vs field
+            if _my_row is not None:
+                _my_rank = int(_my_row["Rank"])
+                _n_teams = len(_ldf)
 
-        grade, grade_icon = _grade(overall)
+                def _rank_of(col, higher_better=True):
+                    s = _ldf.sort_values(col, ascending=not higher_better)
+                    return int(s[s["slot"] == my_slot].index[0]) + 1 if my_slot in s["slot"].values else "—"
 
-        rr1, rr2, rr3, rr4, rr5, rr6 = st.columns(6)
-        rr1.metric("Overall", f"{grade_icon} {grade}", f"{overall:.0f}/100")
-        rr2.metric("ADP Value",    f"{value_score:.0f}",   f"avg {avg_value:+.1f} vs ADP")
-        rr3.metric("Pos Balance",  f"{bal_score:.0f}",
-                   f"QB{pos_have_r['QB']} RB{pos_have_r['RB']} WR{pos_have_r['WR']} TE{pos_have_r['TE']}")
-        rr4.metric("Playoff Sch",  f"{playoff_score:.0f}",
-                   f"avg {avg_playoff:.1f}/32 ease" if my_playoff_scores else "—")
-        rr5.metric("Bye Risk",     f"{bye_score:.0f}",
-                   f"max {max_bye} on same wk" if bye_counts_r else "—")
-        rr6.metric("Stack",        f"{stack_score:.0f}",
-                   f"{'✓ ' + ', '.join(stacked) if stacked else 'no QB stack yet'}")
+                def _grade(r, n):
+                    pct = 1 - (r - 1) / max(n - 1, 1)
+                    if pct >= 0.85: return "A", "🟢"
+                    if pct >= 0.65: return "B", "🟡"
+                    if pct >= 0.40: return "C", "🟠"
+                    if pct >= 0.20: return "D", "🔴"
+                    return "F", "⛔"
 
-        # Short coaching note
-        notes = []
-        if avg_value < -3:  notes.append("You're drafting players before their ADP — consider waiting.")
-        if bal_score < 60:
-            short = [pos for pos in pos_targets_r if pos_have_r[pos] < pos_targets_r[pos] * 0.4]
-            if short: notes.append(f"Thin at {', '.join(short)} — prioritize soon.")
-        if max_bye >= 3:    notes.append(f"Wk {max(bye_counts_r, key=bye_counts_r.get)} bye is crowded ({max_bye} players).")
-        if not stacked and has_qb: notes.append("Consider stacking a WR or TE with your QB.")
-        if notes:
-            st.caption(" · ".join(notes))
+                _grade_lbl, _grade_icon = _grade(_my_rank, _n_teams)
+
+                rr1, rr2, rr3, rr4, rr5 = st.columns(5)
+                rr1.metric("League Rank", f"{_grade_icon} #{_my_rank} of {_n_teams}",
+                           f"Grade: {_grade_lbl}")
+                rr2.metric("Roster Quality",
+                           f"#{_rank_of('avg_rank', False)} of {_n_teams}",
+                           f"avg rank #{_my_row['avg_rank']:.0f}")
+                rr3.metric("Playoff Sch",
+                           f"#{_rank_of('avg_playoff')} of {_n_teams}",
+                           f"{_my_row['avg_playoff']:.1f}/32 ease")
+                rr4.metric("ADP Value",
+                           f"#{_rank_of('avg_adp_val')} of {_n_teams}",
+                           f"avg {_my_row['avg_adp_val']:+.1f} vs ADP")
+                rr5.metric("Boom Rate",
+                           f"#{_rank_of('avg_boom')} of {_n_teams}",
+                           f"{_my_row['avg_boom']:.1%}" if _my_row["avg_boom"] else "—")
+
+            # ── League comparison table
+            st.markdown("**League Standings**")
+            _display = _ldf[["Rank", "slot", "n", "avg_rank", "avg_adp_val",
+                              "avg_playoff", "avg_boom", "stacked", "overall"]].copy()
+            _display.columns = ["#", "Slot", "Picks", "Avg Rank", "ADP Val",
+                                 "Playoff", "Boom%", "Stack", "Score"]
+            _display["Avg Rank"] = _display["Avg Rank"].round(0).astype("Int64")
+            _display["ADP Val"]  = _display["ADP Val"].round(1)
+            _display["Playoff"]  = _display["Playoff"].round(1)
+            _display["Boom%"]    = (_display["Boom%"] * 100).round(1)
+            _display["Stack"]    = _display["Stack"].map({True: "✓", False: "—"})
+            _display["Score"]    = _display["Score"].round(1)
+            _display["Slot"]     = _display["Slot"].apply(
+                lambda s: f"⭐ Slot {s} (You)" if s == my_slot else f"Slot {s}")
+
+            def _highlight_mine(row):
+                if "(You)" in str(row["Slot"]):
+                    return ["background-color: rgba(66,165,245,0.25)"] * len(row)
+                return [""] * len(row)
+
+            st.dataframe(
+                _display.style.apply(_highlight_mine, axis=1),
+                hide_index=True, use_container_width=True,
+                height=min(60 + len(_display) * 35, 480),
+            )
+
+            # Coaching notes based on relative position
+            if _my_row is not None:
+                _notes = []
+                if _rank_of("avg_rank", False) > _n_teams * 0.6:
+                    _notes.append("Roster quality is below mid-field — focus on best player available.")
+                if _rank_of("avg_playoff") > _n_teams * 0.6:
+                    _notes.append("Playoff schedule is tough relative to the field — target easy-schedule players.")
+                if _rank_of("avg_adp_val") > _n_teams * 0.6:
+                    _notes.append("Other teams are getting more value — be patient and let players fall.")
+                if not _my_row["stacked"]:
+                    _notes.append("No QB stack — consider a WR/TE from your QB's team.")
+                if _notes:
+                    st.caption(" · ".join(_notes))
