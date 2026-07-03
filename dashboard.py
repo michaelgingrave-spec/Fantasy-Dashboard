@@ -71,27 +71,15 @@ def load_projections():
 
 @st.cache_data
 def load_all_projections():
-    """Unified per-game projection table for all positions.
-    QB file (uploaded to project root) supplies FPTS/G + bye week.
-    Skill file (data/projections_2026.csv) supplies WR/RB/TE Proj_FP_Adj + Games.
-    """
-    # ── QB ──
-    qb_path = PROJ_ROOT / "2026 NFL Fantasy Football Season Rankings  Projections  Fantasy Points (2).csv"
-    qb = pd.read_csv(qb_path)[["Name", "POS", "Team", "Bye", "FPTS", "G", "FPTS/G"]].copy()
-    qb = qb.rename(columns={"FPTS": "Proj_FP", "G": "Games", "FPTS/G": "Proj_PG"})
-    qb["Bye"]  = pd.to_numeric(qb["Bye"],  errors="coerce")
-    qb["Proj_PG"] = pd.to_numeric(qb["Proj_PG"], errors="coerce")
-
-    # ── Skill (WR / RB / TE) ──
-    skill = pd.read_csv(DATA / "projections_2026.csv")[
-        ["Name", "Team", "POS", "Proj_FP_Adj", "Games"]
-    ].copy()
-    skill = skill.rename(columns={"Proj_FP_Adj": "Proj_FP"})
-    skill["Games"]   = pd.to_numeric(skill["Games"],   errors="coerce").clip(lower=1)
-    skill["Proj_PG"] = skill["Proj_FP"] / skill["Games"]
-    skill["Bye"]     = pd.NA          # filled at runtime from bye_map
-
-    return pd.concat([qb, skill], ignore_index=True)
+    """Unified projection table for all positions from the single projection CSV."""
+    path = PROJ_ROOT / "2026 NFL Fantasy Football Season Rankings  Projections  Fantasy Points (2).csv"
+    df = pd.read_csv(path)[["Name", "POS", "Team", "Bye", "FPTS", "G", "FPTS/G"]].copy()
+    df = df.rename(columns={"FPTS": "Proj_FP", "G": "Games", "FPTS/G": "Proj_PG"})
+    df["Bye"]     = pd.to_numeric(df["Bye"],    errors="coerce")
+    df["Proj_FP"] = pd.to_numeric(df["Proj_FP"], errors="coerce")
+    df["Games"]   = pd.to_numeric(df["Games"],  errors="coerce").clip(lower=1)
+    df["Proj_PG"] = pd.to_numeric(df["Proj_PG"], errors="coerce")
+    return df
 
 
 @st.cache_data
