@@ -93,6 +93,68 @@ def load_all_projections():
 
     return pd.concat([qb, skill], ignore_index=True)
 
+
+@st.cache_data
+def load_historical_weekly():
+    """Load all 2021-2025 weekly FP data from Rushing/Receiving/Passing Stats folders.
+    Returns unified DataFrame with Name, Team, POS, Season, WEEK, FP.
+    POS filter avoids double-counting: RB from Rushing, WR/TE from Receiving, QB from Passing.
+    """
+    BASE = Path(__file__).parent
+    file_map = []
+    for yr in range(2021, 2026):
+        pass_name = f"{yr}Passiing.csv" if yr == 2021 else f"{yr}Passing.csv"
+        file_map.extend([
+            (BASE / "Rushing Stats"   / f"{yr}Rushing.csv",  ("RB",)),
+            (BASE / "Receiving Stats" / f"{yr}Receiving.csv", ("WR", "TE")),
+            (BASE / "Passing Stats"   / pass_name,            ("QB",)),
+        ])
+
+    frames = []
+    for path, keep_pos in file_map:
+        if not path.exists():
+            continue
+        try:
+            raw  = pd.read_csv(path, header=None)
+            cols = raw.iloc[1].tolist()
+            df   = raw.iloc[2:].copy()
+            df.columns = cols
+            for c in ("Season", "WEEK", "FP"):
+                if c in df.columns:
+                    df[c] = pd.to_numeric(df[c], errors="coerce")
+            df = df.dropna(subset=["Name", "FP"])
+            df = df[df["POS"].isin(keep_pos)]
+            keep = [c for c in ("Name", "Team", "POS", "Season", "WEEK", "FP") if c in df.columns]
+            frames.append(df[keep].copy())
+        except Exception:
+            pass
+
+    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+
+
+@st.cache_data
+def compute_historical_variance():
+    """Per-player weekly FP std dev from 2022-2025 (4 seasons = sufficient sample).
+    Returns dict: {name: {mean_fpg, std_fpg, n_games}}.
+    """
+    df = load_historical_weekly()
+    if df.empty:
+        return {}
+    if "Season" in df.columns:
+        df = df[df["Season"] >= 2022]
+    result = {}
+    for name, grp in df.groupby("Name"):
+        fps = grp["FP"].dropna()
+        n   = len(fps)
+        if n >= 6:
+            result[str(name)] = {
+                "mean_fpg": round(float(fps.mean()), 2),
+                "std_fpg":  round(float(fps.std()),  2),
+                "n_games":  n,
+            }
+    return result
+
+
 @st.cache_data
 def load_weekly_data():
     """Player-level weekly stats (WR + TE). Compute FP allowed by opponent+week+pos."""
@@ -237,14 +299,23 @@ def compute_bye_weeks():
     return bye_map
 
 
-def _build_proj_lu(all_proj_df, bye_map):
-    """Build {player_name: {pos, proj_pg, bye}} lookup used by the simulator."""
+def _build_proj_lu(all_proj_df, bye_map, var_lu=None):
+    """Build {player_name: {pos, proj_pg, bye, std_fpg, n_games}} lookup."""
     lu = {}
     for _, row in all_proj_df.iterrows():
         bye = int(row["Bye"]) if pd.notna(row.get("Bye")) else (bye_map.get(row["Team"]) or 0)
         ppg = float(row["Proj_PG"]) if pd.notna(row.get("Proj_PG")) else 0.0
         if ppg > 0:
-            lu[row["Name"]] = {"pos": row["POS"], "proj_pg": ppg, "bye": bye, "team": row["Team"]}
+            name  = row["Name"]
+            entry = {"pos": row["POS"], "proj_pg": ppg, "bye": bye, "team": row["Team"],
+                     "std_fpg": 0.0, "n_games": 0}
+            if var_lu:
+                # Try canonical name, then alias fallback
+                v = var_lu.get(name) or var_lu.get(_NAME_ALIASES.get(name, ""))
+                if v:
+                    entry["std_fpg"] = v["std_fpg"]
+                    entry["n_games"] = v["n_games"]
+            lu[name] = entry
     return lu
 
 
@@ -1249,7 +1320,8 @@ elif tab_choice == "🎯 Draft Room":
     boom_rates     = compute_boom_rates()
     playoff_scores = compute_all_playoff_scores()
     _all_proj      = load_all_projections()
-    _proj_lu       = _build_proj_lu(_all_proj, bye_map)   # name → {pos, proj_pg, bye}
+    _hist_var      = compute_historical_variance()
+    _proj_lu       = _build_proj_lu(_all_proj, bye_map, var_lu=_hist_var)  # name → {pos, proj_pg, bye, std_fpg}
     sched_matrix   = build_team_schedule_matrix()   # (team, pos_key) → {week: rank}
 
     HARD_THR = 13   # rank ≤ 13 = tough (32=easiest system)
@@ -2045,12 +2117,14 @@ elif tab_choice == "🎯 Draft Room":
                     _new_total, _ = _project_bb_score(_my_names + [_nm], _proj_lu)
                     _delta = round(_new_total - _base_total, 1)
                     if _delta > 0:
-                        _p = _proj_lu[_nm]
+                        _p    = _proj_lu[_nm]
+                        _std  = _p.get("std_fpg", 0.0)
                         _marginal.append({
                             "Player":    _nm,
                             "POS":       _p["pos"],
                             "Team":      _p["team"],
                             "Proj/G":    round(_p["proj_pg"], 1),
+                            "Std/G":     round(_std, 1) if _std > 0 else None,
                             "Bye":       _p["bye"] or "—",
                             "ADP":       round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else None,
                             "+Pts":      _delta,
