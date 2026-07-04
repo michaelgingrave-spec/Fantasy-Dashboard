@@ -2106,6 +2106,26 @@ elif tab_choice == "🎯 Draft Room":
         # ── Best Available by Points Added ────────────────────────────────────
         st.markdown("---")
         st.subheader("🎯 Best Available by Points Added")
+
+        # Filters rendered unconditionally so session state persists across picks
+        if my_names:
+            _mf1, _mf2, _mf3, _mf4 = st.columns([2, 1, 1, 1])
+            with _mf1:
+                _pos_filter_m = st.multiselect("Filter position", ["QB","RB","WR","TE"],
+                                                default=["QB","RB","WR","TE"],
+                                                key="marg_pos_filter")
+            with _mf2:
+                _show_m = st.selectbox("Show top", [10, 25, 50], key="marg_show")
+            with _mf3:
+                _near_pick_only = st.checkbox("Near my pick (±20 ADP)",
+                                               help="Filter to players likely available at your next pick",
+                                               key="marg_near_pick")
+            with _mf4:
+                _max_per_pos = st.checkbox("Max 2 per position",
+                                            value=True,
+                                            help="Prevents one position from flooding the list",
+                                            key="marg_max_per_pos")
+
         if not my_names:
             st.caption("Add your picks to see marginal value recommendations.")
         elif not _marginal:
@@ -2117,6 +2137,8 @@ elif tab_choice == "🎯 Draft Room":
             for _, _ar in available.iterrows():
                 _nm = _ar["Name"]
                 if _nm not in _proj_lu:
+                    continue
+                if _nm not in [r["Player"] for r in _fallback_rows[:999]] and _ar["POS"] not in _pos_filter_m:
                     continue
                 _p = _proj_lu[_nm]
                 _bye = _p.get("bye", 0)
@@ -2143,6 +2165,17 @@ elif tab_choice == "🎯 Draft Room":
                 _fb_df = (pd.DataFrame(_fallback_rows)
                           .sort_values("Proj 1-14", ascending=False)
                           .reset_index(drop=True))
+                if _max_per_pos:
+                    _pos_counts: dict = {}
+                    _keep = []
+                    for _, _fr in _fb_df.iterrows():
+                        _pc = _pos_counts.get(_fr["POS"], 0)
+                        if _pc < 2:
+                            _keep.append(True)
+                            _pos_counts[_fr["POS"]] = _pc + 1
+                        else:
+                            _keep.append(False)
+                    _fb_df = _fb_df[_keep].reset_index(drop=True)
                 _fb_df.index = range(1, len(_fb_df) + 1)
 
                 def _color_fb(row):
@@ -2151,27 +2184,14 @@ elif tab_choice == "🎯 Draft Room":
                     return [f"background-color: {pos_bg.get(row['POS'],'')}"] * len(row)
 
                 st.dataframe(
-                    _fb_df.head(25).style.apply(_color_fb, axis=1),
+                    _fb_df.head(_show_m).style.apply(_color_fb, axis=1),
                     width="stretch", hide_index=False,
-                    height=min(60 + 25 * 35, 460),
+                    height=min(60 + _show_m * 35, 460),
                 )
         else:
             _marg_df = (pd.DataFrame(_marginal)
                           .sort_values("+Pts", ascending=False)
                           .reset_index(drop=True))
-            _marg_df.index = range(1, len(_marg_df) + 1)
-
-            mf1, mf2, mf3 = st.columns([2, 1, 1])
-            with mf1:
-                _pos_filter_m = st.multiselect("Filter position", ["QB","RB","WR","TE"],
-                                                default=["QB","RB","WR","TE"],
-                                                key="marg_pos_filter")
-            with mf2:
-                _show_m = st.selectbox("Show top", [10, 25, 50], key="marg_show")
-            with mf3:
-                _near_pick_only = st.checkbox("Near my pick (±20 ADP)",
-                                               help="Filter to players likely available at your next pick",
-                                               key="marg_near_pick")
 
             _show_marg = _marg_df[_marg_df["POS"].isin(_pos_filter_m)].copy()
             if _near_pick_only:
@@ -2180,6 +2200,18 @@ elif tab_choice == "🎯 Draft Room":
                     (_show_marg["ADP"] >= current_pick - 5) &
                     (_show_marg["ADP"] <= current_pick + 20)
                 ]
+            if _max_per_pos:
+                _pos_counts2: dict = {}
+                _keep2 = []
+                for _, _mr in _show_marg.iterrows():
+                    _pc2 = _pos_counts2.get(_mr["POS"], 0)
+                    if _pc2 < 2:
+                        _keep2.append(True)
+                        _pos_counts2[_mr["POS"]] = _pc2 + 1
+                    else:
+                        _keep2.append(False)
+                _show_marg = _show_marg[_keep2].reset_index(drop=True)
+            _show_marg.index = range(1, len(_show_marg) + 1)
 
             def _color_marg(row):
                 pos_bg = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
