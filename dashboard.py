@@ -156,7 +156,7 @@ def load_defense_matchup_adj():
     result = {}
     for team in FULL_TO_ABB.values():
         team_sched = get_team_schedule(team, sched_df)
-        team_sched = team_sched[team_sched["Week"] <= 14]
+        team_sched = team_sched[team_sched["Week"] <= 17]
         result[team] = {}
         for pos_key in ("QB", "RB", "WR", "TE"):
             rdf = def_ranks.get(pos_key)
@@ -1380,7 +1380,7 @@ elif tab_choice == "📉 Weekly Projections":
             wppw     = p.get("weekly_ppw") or {}
             color    = _PALETTE[_pi % len(_PALETTE)]
 
-            weeks = list(range(1, 15))
+            weeks = list(range(1, 18))
             pts   = []
             for wk in weeks:
                 if wk == bye and _show_bye:
@@ -1412,7 +1412,7 @@ elif tab_choice == "📉 Weekly Projections":
 
         fig.update_layout(
             xaxis=dict(title="Week", tickmode="linear", tick0=1, dtick=1,
-                       tickvals=list(range(1, 15))),
+                       tickvals=list(range(1, 18))),
             yaxis=dict(title="Projected Points"),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
             hovermode="x unified",
