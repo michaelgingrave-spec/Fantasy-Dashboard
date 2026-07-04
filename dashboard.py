@@ -2040,23 +2040,67 @@ elif tab_choice == "🎯 Draft Room":
 
     # ── LEFT: Stack targets + Roster + Bye weeks ──────────────────────────────
     with left_col:
-        # Stack targets first so they're easy to spot during the draft
-        my_qbs = [p for p in st.session_state.my_picks if p["POS"] == "QB"]
-        if my_qbs:
+        # ── Stack Targets ────────────────────────────────────────────────────
+        my_picks_list = st.session_state.my_picks
+        my_pick_teams = {}
+        for p in my_picks_list:
+            my_pick_teams.setdefault(p["Team"], []).append(p)
+
+        my_next_pick = current_pick + picks_until   # overall pick# when it's my turn next
+        _NEAR_WINDOW = 20                           # ADP within ±20 of my next pick
+
+        if my_pick_teams:
             st.subheader("📡 Stack Targets")
-            for qb in my_qbs:
-                teammates = available[
-                    (available["Team"] == qb["Team"]) &
-                    (available["POS"].isin(["WR", "TE"]))
-                ].sort_values("FP_ADP")
-                st.markdown(f"**{qb['Name']} ({qb['Team']}):**")
-                if teammates.empty:
-                    st.caption("All receivers drafted.")
+
+            # ── Near-pick opportunities first ────────────────────────────────
+            near_rows = []
+            for team, drafted in my_pick_teams.items():
+                team_avail = available[available["Team"] == team].sort_values("FP_ADP")
+                for _, t in team_avail.iterrows():
+                    if pd.notna(t["FP_ADP"]) and abs(t["FP_ADP"] - my_next_pick) <= _NEAR_WINDOW:
+                        drafted_names = ", ".join(p["Name"].split()[-1] for p in drafted)
+                        near_rows.append({
+                            "Player": t["Name"],
+                            "POS":    t["POS"],
+                            "Team":   team,
+                            "ADP":    round(t["FP_ADP"], 1),
+                            "Stacks with": drafted_names,
+                        })
+            if near_rows:
+                near_df = (pd.DataFrame(near_rows)
+                           .sort_values("ADP")
+                           .reset_index(drop=True))
+                st.markdown(f"**📍 Available near pick #{my_next_pick} (±{_NEAR_WINDOW} ADP)**")
+
+                def _color_near(row):
+                    pos_bg = {"QB": "rgba(206,147,216,0.25)", "RB": "rgba(102,187,106,0.25)",
+                              "WR": "rgba(66,165,245,0.25)",  "TE": "rgba(255,167,38,0.25)"}
+                    return [f"background-color: {pos_bg.get(row['POS'],'')}"] * len(row)
+
+                st.dataframe(
+                    near_df.style.apply(_color_near, axis=1),
+                    hide_index=True,
+                    width="stretch",
+                    height=min(60 + len(near_rows) * 35, 280),
+                )
+            else:
+                st.caption(f"No teammates available near pick #{my_next_pick}.")
+
+            # ── Full stack list by team ──────────────────────────────────────
+            st.markdown("**All available teammates by team:**")
+            for team in sorted(my_pick_teams.keys()):
+                drafted   = my_pick_teams[team]
+                team_avail = available[available["Team"] == team].sort_values("FP_ADP")
+                my_pos_str = " + ".join(p["POS"] for p in drafted)
+                st.markdown(f"**{team}** *(have: {my_pos_str})*")
+                if team_avail.empty:
+                    st.caption("&nbsp;&nbsp;All teammates drafted.")
                 else:
-                    for _, t in teammates.iterrows():
+                    for _, t in team_avail.iterrows():
                         adp_s  = f"ADP {t['FP_ADP']:.1f}" if pd.notna(t["FP_ADP"]) else ""
                         rank_s = f"#{int(t['FP_Rank'])}" if pd.notna(t["FP_Rank"]) else ""
-                        st.markdown(f"&nbsp;&nbsp;{t['Name']} · {t['POS']} · {rank_s} {adp_s}")
+                        near_s = " 📍" if pd.notna(t["FP_ADP"]) and abs(t["FP_ADP"] - my_next_pick) <= _NEAR_WINDOW else ""
+                        st.markdown(f"&nbsp;&nbsp;{t['Name']} · {t['POS']} · {rank_s} {adp_s}{near_s}")
             st.markdown("---")
 
         st.subheader("My Roster")
