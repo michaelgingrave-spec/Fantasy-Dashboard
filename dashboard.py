@@ -1348,12 +1348,14 @@ elif tab_choice == "📉 Weekly Projections":
         "Jahmyr Gibbs", "Bijan Robinson", "Puka Nacua", "Jaxon Smith-Njigba", "Ja'Marr Chase"
     ] if n in _proj_lu_wp]
 
+    _MAX_PLAYERS = 5
     wpc1, wpc2 = st.columns([3, 1])
     with wpc1:
         _selected = st.multiselect(
-            "Select players to compare (type to search)",
+            f"Select up to {_MAX_PLAYERS} players to compare (type to search)",
             options=_all_names,
-            default=_default_players,
+            default=_default_players[:_MAX_PLAYERS],
+            max_selections=_MAX_PLAYERS,
             key="wp_players",
         )
     with wpc2:
@@ -1362,21 +1364,21 @@ elif tab_choice == "📉 Weekly Projections":
     if not _selected:
         st.info("Select at least one player above.")
     else:
-        # Build per-player weekly data
-        _POS_COLORS = {"QB": "#CE93D8", "RB": "#66BB6A", "WR": "#42A5F5", "TE": "#FFA726"}
+        # Distinct color palette — one per player slot regardless of position
+        _PALETTE = ["#EF5350", "#42A5F5", "#66BB6A", "#FFA726", "#AB47BC"]
 
         import plotly.graph_objects as go
 
         fig = go.Figure()
 
         _table_rows = []
-        for nm in _selected:
+        for _pi, nm in enumerate(_selected):
             p = _proj_lu_wp[nm]
             pos      = p["pos"]
             bye      = p.get("bye", 0)
             proj_ppw = p["proj_ppw"]
             wppw     = p.get("weekly_ppw") or {}
-            color    = _POS_COLORS.get(pos, "#90A4AE")
+            color    = _PALETTE[_pi % len(_PALETTE)]
 
             weeks = list(range(1, 15))
             pts   = []
@@ -1417,7 +1419,7 @@ elif tab_choice == "📉 Weekly Projections":
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
             font=dict(color="#e0e0e0"),
-            height=440,
+            height=580,
             margin=dict(l=40, r=20, t=60, b=40),
         )
         fig.update_xaxes(gridcolor="rgba(255,255,255,0.08)")
@@ -2108,9 +2110,9 @@ elif tab_choice == "🎯 Draft Room":
             st.caption("Add your picks to see marginal value recommendations.")
         elif not _marginal:
             # Team is fully optimized — no remaining player improves the score.
-            # Fall back to ranking available players by raw 14-week projected total.
+            # Show available players ranked by raw 14-week projected total, with +Pts column.
             st.caption("Your roster is fully optimized — no available player increases your projected score. "
-                       "Showing best available by raw projection instead.")
+                       "Ranked by raw projected total (weeks 1-14).")
             _fallback_rows = []
             for _, _ar in available.iterrows():
                 _nm = _ar["Name"]
@@ -2125,14 +2127,17 @@ elif tab_choice == "🎯 Draft Room":
                 else:
                     _active = sum(1 for wk in range(1, 15) if wk != _bye)
                     _proj14 = round(_p["proj_ppw"] * _active, 1)
+                _new_total_fb, _ = _project_bb_score(my_names + [_nm], _proj_lu)
+                _delta_fb = round(_new_total_fb - _base_total, 1)
                 _fallback_rows.append({
-                    "Player": _nm,
-                    "POS":    _p["pos"],
-                    "Team":   _p["team"],
-                    "Proj/G": round(_p["proj_pg"], 1),
+                    "Player":    _nm,
+                    "POS":       _p["pos"],
+                    "Team":      _p["team"],
+                    "Proj/G":    round(_p["proj_pg"], 1),
                     "Proj 1-14": _proj14,
-                    "Bye":    _bye or "—",
-                    "ADP":    round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
+                    "+Pts":      _delta_fb,
+                    "Bye":       _bye or "—",
+                    "ADP":       round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
                 })
             if _fallback_rows:
                 _fb_df = (pd.DataFrame(_fallback_rows)
