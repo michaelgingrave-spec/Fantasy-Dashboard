@@ -2506,3 +2506,164 @@ elif tab_choice == "🎯 Draft Room":
                         f"Avg {_avg_weekly:.1f} pts/wk · "
                         "Draft more picks for week-by-week variation to appear"
                     )
+
+            # ── Pattern Analysis + CSV Export ─────────────────────────────────
+            st.markdown("---")
+            st.subheader("🔍 Pattern Analysis")
+
+            _top_n = st.slider("Top teams to analyze", min_value=2, max_value=min(6, len(_ldf)),
+                               value=min(4, len(_ldf)), key="pattern_top_n")
+            _top_rows = _ldf.head(_top_n)
+
+            # ── Shared players across top teams ───────────────────────────────
+            _player_team_count: dict = {}
+            for _, _tr in _top_rows.iterrows():
+                for _pn in _tr["names"]:
+                    if _pn:
+                        _player_team_count[_pn] = _player_team_count.get(_pn, 0) + 1
+
+            _shared = sorted(
+                [(_pn, _cnt) for _pn, _cnt in _player_team_count.items() if _cnt >= 2],
+                key=lambda x: (-x[1], x[0])
+            )
+            if _shared:
+                st.markdown(f"**Players on 2+ of the top {_top_n} projected teams:**")
+                _shared_rows = []
+                for _pn, _cnt in _shared:
+                    _pdata = _proj_lu.get(_pn, {})
+                    _shared_rows.append({
+                        "Player":    _pn,
+                        "POS":       _pdata.get("pos", "—"),
+                        "Team":      _pdata.get("team", "—"),
+                        "Proj/G":    round(_pdata.get("proj_pg", 0), 1) if _pdata else 0,
+                        "# Top Teams": _cnt,
+                    })
+                _sh_df = pd.DataFrame(_shared_rows)
+
+                def _color_shared(row):
+                    pos_bg = {"QB": "rgba(206,147,216,0.22)", "RB": "rgba(102,187,106,0.22)",
+                              "WR": "rgba(66,165,245,0.22)",  "TE": "rgba(255,167,38,0.22)"}
+                    return [f"background-color: {pos_bg.get(row['POS'],'')}"] * len(row)
+
+                st.dataframe(
+                    _sh_df.style.apply(_color_shared, axis=1),
+                    hide_index=True, width="stretch",
+                    height=min(60 + len(_sh_df) * 35, 380),
+                )
+            else:
+                st.caption("No players shared across 2+ top teams yet.")
+
+            # ── Position-by-round grid ─────────────────────────────────────────
+            st.markdown("**Position selected by round (all teams):**")
+            _pos_grid_rows = []
+            for _, _pick_row in _filled_board.iterrows():
+                _pick_num = int(_pick_row["Pick"])
+                _rnd      = (_pick_num - 1) // num_teams + 1
+                _slot_num = _slot(_pick_num)
+                _pn2      = _pick_row["Player"]
+                _ppos     = _proj_lu.get(_pn2, {}).get("pos", "?")
+                _is_top   = _slot_num in _top_rows["slot"].values
+                _pos_grid_rows.append({
+                    "Round": _rnd,
+                    "Slot":  _slot_num,
+                    "POS":   _ppos,
+                    "Player": _pn2,
+                    "Top Team": "★" if _is_top else "",
+                })
+
+            if _pos_grid_rows:
+                _grid_df = pd.DataFrame(_pos_grid_rows)
+                _pivot   = _grid_df.pivot_table(
+                    index="Round", columns="Slot", values="POS", aggfunc="first"
+                ).fillna("—")
+                # Rename columns to show which is your slot
+                _pivot.columns = [
+                    f"⭐S{int(c)}" if int(c) == my_slot else f"S{int(c)}"
+                    for c in _pivot.columns
+                ]
+                _POS_BG = {"QB": "#6a3da0", "RB": "#2e7d32", "WR": "#1565c0", "TE": "#e65100", "—": ""}
+
+                def _color_pos_cell(val):
+                    color = _POS_BG.get(val, "")
+                    return f"background-color: {color}; color: white" if color else ""
+
+                st.dataframe(
+                    _pivot.style.map(_color_pos_cell),
+                    width="stretch",
+                    height=min(60 + len(_pivot) * 35, 500),
+                )
+                st.caption("Rows = rounds · Columns = draft slots · ⭐ = your slot · colors: purple=QB green=RB blue=WR orange=TE")
+
+                # ── Position frequency by round for top teams ─────────────────
+                st.markdown(f"**Position frequency — top {_top_n} teams by round:**")
+                _top_slots = set(_top_rows["slot"].values)
+                _top_grid  = _grid_df[_grid_df["Slot"].isin(_top_slots)]
+                if not _top_grid.empty:
+                    _freq = (_top_grid.groupby(["Round", "POS"])
+                                      .size()
+                                      .unstack(fill_value=0)
+                                      .reindex(columns=["QB","RB","WR","TE"], fill_value=0))
+                    st.dataframe(_freq, width="stretch",
+                                 height=min(60 + len(_freq) * 35, 480))
+                    st.caption(f"How often top-{_top_n} teams picked each position in each round.")
+
+            # ── CSV Export ────────────────────────────────────────────────────
+            st.markdown("---")
+            st.subheader("⬇️ Export")
+
+            # Build full draft CSV
+            _export_rows = []
+            for _, _pick_row in _filled_board.iterrows():
+                _pick_num = int(_pick_row["Pick"])
+                _rnd      = (_pick_num - 1) // num_teams + 1
+                _slot_num = _slot(_pick_num)
+                _pn3      = _pick_row["Player"]
+                _pdata3   = _proj_lu.get(_pn3, {})
+                _fp_row   = fp_all[fp_all["Name"] == _pn3].head(1)
+                _adp      = round(float(_fp_row["FP_ADP"].iloc[0]), 1) if not _fp_row.empty and pd.notna(_fp_row["FP_ADP"].iloc[0]) else ""
+                _export_rows.append({
+                    "Pick":       _pick_num,
+                    "Round":      _rnd,
+                    "Slot":       _slot_num,
+                    "My Pick":    "Yes" if _slot_num == my_slot else "No",
+                    "Player":     _pn3,
+                    "POS":        _pdata3.get("pos", ""),
+                    "NFL Team":   _pdata3.get("team", ""),
+                    "ADP":        _adp,
+                    "Proj/G":     round(_pdata3.get("proj_pg", 0), 1) if _pdata3 else "",
+                    "Proj PPW":   round(_pdata3.get("proj_ppw", 0), 2) if _pdata3 else "",
+                    "Team Proj Total": "",  # filled in next pass
+                })
+
+            # Fill Team Proj Total per slot
+            _slot_totals = {
+                int(r["slot"]): round(r["proj_pts"], 1)
+                for _, r in _ldf.iterrows()
+            }
+            for _er in _export_rows:
+                _er["Team Proj Total"] = _slot_totals.get(_er["Slot"], "")
+
+            _export_df = pd.DataFrame(_export_rows)
+
+            ec1, ec2 = st.columns(2)
+            with ec1:
+                st.download_button(
+                    "⬇️ Download Full Draft CSV",
+                    data=_export_df.to_csv(index=False),
+                    file_name="draft_analysis.csv",
+                    mime="text/csv",
+                    use_container_width=True,
+                )
+            with ec2:
+                # League standings CSV
+                _standings_csv = _ldf[["league_rank","slot","n","proj_pts"]].copy()
+                _standings_csv.columns = ["Rank","Slot","Picks","Proj Pts"]
+                _standings_csv["My Team"] = _standings_csv["Slot"].apply(
+                    lambda s: "Yes" if s == my_slot else "No")
+                st.download_button(
+                    "⬇️ Download Standings CSV",
+                    data=_standings_csv.to_csv(index=False),
+                    file_name="league_standings.csv",
+                    mime="text/csv",
+                    use_container_width=True,
+                )
