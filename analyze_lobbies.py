@@ -42,6 +42,19 @@ def _suffix(name: str) -> str:
     return m.group(1) if m else "0"
 
 
+def _draft_fingerprint(da: pd.DataFrame) -> frozenset:
+    """Unique fingerprint for a draft: set of (pick#, player) tuples.
+    Two files with the same picks in the same slots are considered duplicates
+    regardless of filename."""
+    if "Pick" not in da.columns or "Player" not in da.columns:
+        return frozenset()
+    return frozenset(
+        (int(row["Pick"]), str(row["Player"]))
+        for _, row in da.iterrows()
+        if pd.notna(row.get("Player")) and str(row["Player"]).strip()
+    )
+
+
 def load_pairs(input_dir: Path) -> list[tuple[int, pd.DataFrame, pd.DataFrame]]:
     da_files = {_suffix(f.name): f for f in input_dir.glob("draft_analysis*.csv")}
     ls_files = {_suffix(f.name): f for f in input_dir.glob("league_standings*.csv")}
@@ -56,13 +69,27 @@ def load_pairs(input_dir: Path) -> list[tuple[int, pd.DataFrame, pd.DataFrame]]:
         print(f"  WARNING: league_standings files with no matching draft_analysis: {sorted(unmatched_ls)}")
 
     pairs = []
+    seen_fingerprints: dict[frozenset, str] = {}   # fingerprint -> first key that used it
+
     for key in matched:
         try:
             da = pd.read_csv(da_files[key])
             ls = pd.read_csv(ls_files[key])
-            pairs.append((int(key), da, ls))
         except Exception as e:
             print(f"  ERROR loading pair {key}: {e}")
+            continue
+
+        fp = _draft_fingerprint(da)
+        if fp in seen_fingerprints:
+            first = seen_fingerprints[fp]
+            suffix = f" ({key})" if key != "0" else ""
+            first_suffix = f" ({first})" if first != "0" else ""
+            print(f"  DUPLICATE skipped: draft_analysis{suffix}.csv "
+                  f"is identical to draft_analysis{first_suffix}.csv")
+            continue
+
+        seen_fingerprints[fp] = key
+        pairs.append((int(key), da, ls))
 
     return pairs
 
