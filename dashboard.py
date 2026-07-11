@@ -225,49 +225,225 @@ def load_season_fp_allowed():
             pass
     return frames
 
+@st.cache_data
+def load_offense_strength():
+    """Return {team_abb: off_mult} averaged across 2021-2025 FP-scored data.
+    off_mult = team_FP_per_G / league_avg.  >1.0 = better-than-avg offense."""
+    try:
+        yearly = []
+        # 2025: header=0, column FP_per_G (underscore)
+        f2025 = DATA / "fantasy_points_scored_offense_2025.csv"
+        if f2025.exists():
+            df = pd.read_csv(f2025)
+            df["Team"]     = df["Name"].map(FULL_TO_ABB)
+            df["FP_per_G"] = pd.to_numeric(df["FP_per_G"], errors="coerce")
+            yearly.append((2025, df[["Team", "FP_per_G"]].dropna()))
+        # 2021-2024: header=1, column FP/G (slash)
+        for yr in [2021, 2022, 2023, 2024]:
+            f = DATA / f"fantasy_points_scored_offense_{yr}.csv"
+            if f.exists():
+                df = pd.read_csv(f, header=1)
+                df["Team"]     = df["Name"].map(FULL_TO_ABB)
+                df["FP_per_G"] = pd.to_numeric(df["FP/G"], errors="coerce")
+                yearly.append((yr, df[["Team", "FP_per_G"]].dropna()))
+        if not yearly:
+            return {}
+        # Optimal params from cross-validated grid search: decay=0.60, lookback=4
+        # (corr 0.46 vs 0.41 single-year baseline)
+        off_decay    = 0.60
+        most_recent  = max(yr for yr, _ in yearly)
+        all_teams    = set().union(*[df["Team"] for _, df in yearly])
+        rows = []
+        for team in all_teams:
+            w_sum, fp_sum = 0.0, 0.0
+            for offset in range(1, 5):          # lookback=4
+                yr = most_recent - offset + 1
+                match = [(y, df) for y, df in yearly if y == yr]
+                if not match:
+                    continue
+                row = match[0][1][match[0][1]["Team"] == team]
+                if not row.empty:
+                    v = row["FP_per_G"].iloc[0]
+                    if not pd.isna(v):
+                        w = off_decay ** (offset - 1)
+                        fp_sum += v * w
+                        w_sum += w
+            if w_sum > 0:
+                rows.append({"Team": team, "FP_per_G": fp_sum / w_sum})
+        avg        = pd.DataFrame(rows)
+        league_avg = avg["FP_per_G"].mean()
+        if league_avg <= 0:
+            return {}
+        return {row["Team"]: round(row["FP_per_G"] / league_avg, 3)
+                for _, row in avg.iterrows()}
+    except Exception:
+        return {}
+
+
+@st.cache_data
+def load_all_weekly_data():
+    """Load 2021-2025 per-game weekly data for all skill positions.
+    WR/TE from Receiving Stats files; RB from Rushing Stats files.
+    Returns DataFrame with Name, POS, Season, WEEK, FP, tgt_pct columns.
+    """
+    _RECV_DIR = PROJ_ROOT / "Receiving Stats"
+    _RUSH_DIR = PROJ_ROOT / "Rushing Stats"
+    years = [2021, 2022, 2023, 2024, 2025]
+
+    recv_frames = []
+    for yr in years:
+        f = _RECV_DIR / f"{yr}Receiving.csv"
+        if f.exists():
+            try:
+                df = pd.read_csv(f, header=1)
+                df = df[df.get("Season Type", pd.Series([1]*len(df))) == 1]
+                df = df[df["POS"].isin(["WR", "TE"])]
+                df["FP"]      = pd.to_numeric(df["FP"],    errors="coerce")
+                df["tgt_pct"] = pd.to_numeric(df.get("TGT %", pd.Series(dtype=float)), errors="coerce")
+                df["WEEK"]    = pd.to_numeric(df["WEEK"],  errors="coerce")
+                recv_frames.append(df[["Name", "POS", "Season", "WEEK", "FP", "tgt_pct"]])
+            except Exception:
+                pass
+
+    rush_frames = []
+    for yr in years:
+        f = _RUSH_DIR / f"{yr}Rushing.csv"
+        if f.exists():
+            try:
+                df = pd.read_csv(f, header=1)
+                df = df[df.get("Season Type", pd.Series([1]*len(df))) == 1]
+                df = df[df["POS"] == "RB"]
+                df["FP"]      = pd.to_numeric(df["FP"],   errors="coerce")
+                df["tgt_pct"] = pd.NA
+                df["WEEK"]    = pd.to_numeric(df["WEEK"], errors="coerce")
+                rush_frames.append(df[["Name", "POS", "Season", "WEEK", "FP", "tgt_pct"]])
+            except Exception:
+                pass
+
+    frames = recv_frames + rush_frames
+    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+
+
+@st.cache_data
+def compute_consistency_scores():
+    """Per-player weekly FP coefficient of variation + target-share stability.
+    Uses 2021-2025 Receiving (WR/TE) and Rushing (RB) per-game files.
+    Returns {name: {cv, tgt_share_std, n_games}}.
+    cv = std/mean of weekly FP; lower = more predictable floor player.
+    """
+    try:
+        df = load_all_weekly_data()
+    except Exception:
+        return {}
+    if df.empty:
+        return {}
+    df = df[df["FP"].notna()].copy()
+    result = {}
+    for name, grp in df.groupby("Name"):
+        fps = pd.to_numeric(grp["FP"], errors="coerce").dropna()
+        n   = len(fps)
+        if n < 4:
+            continue
+        mean_fp = float(fps.mean())
+        cv      = round(float(fps.std()) / mean_fp, 2) if mean_fp > 1 else None
+        tgt_s   = pd.to_numeric(grp["tgt_pct"], errors="coerce").dropna()
+        tgt_std = round(float(tgt_s.std()), 1) if len(tgt_s) >= 4 else None
+        result[str(name)] = {"cv": cv, "tgt_share_std": tgt_std, "n_games": n}
+    return result
+
+
 def load_schedule():
     df = pd.read_csv(DATA / "nfl_2026_schedule_with_coordinators.csv")
     df["home_abb"] = df["home_team"].map(FULL_TO_ABB)
     df["away_abb"] = df["away_team"].map(FULL_TO_ABB)
     return df
 
+# Per-position optimal params found via cross-validated grid search (holdouts 2023-2025).
+# decay: weight of each additional year back = decay^(offset-1), offset 1 = most recent year.
+# lookback: how many prior years to include.
+# RB: single year wins (history adds noise).  QB/WR: 4 equal years.  TE: 3yr slight decay.
+_DEF_PARAMS = {
+    "RB":     {"decay": 1.00, "lookback": 1},
+    "QB":     {"decay": 1.00, "lookback": 4},
+    "WR All": {"decay": 1.00, "lookback": 4},
+    "TE":     {"decay": 0.90, "lookback": 3},
+}
+
+def _load_fp_allowed_multiyear(pos_slug):
+    """Weighted average FP/G per team using position-specific optimal params.
+    pos_slug matches filename suffix, e.g. 'RB', 'QB', 'WR All', 'TE'.
+    2025 uses header=0; 2021-2024 use header=1. Both have a 'FP/G' column."""
+    params   = _DEF_PARAMS.get(pos_slug, {"decay": 1.0, "lookback": 4})
+    decay    = params["decay"]
+    lookback = params["lookback"]
+    # Load all available years into {year: Series(team->fp_g)}
+    yearly = {}
+    f2025 = DATA / f"fantasyPointsAllowedExport {pos_slug}.csv"
+    if f2025.exists():
+        df = pd.read_csv(f2025)
+        df["Team"] = df["Name"].map(FULL_TO_ABB)
+        df["fp_g"] = pd.to_numeric(df["FP/G"], errors="coerce")
+        yearly[2025] = df[["Team", "fp_g"]].dropna().set_index("Team")["fp_g"]
+    for yr in [2021, 2022, 2023, 2024]:
+        f = DATA / f"fantasyPointsAllowedExport {pos_slug} {yr}.csv"
+        if f.exists():
+            df = pd.read_csv(f, header=1)
+            df["Team"] = df["Name"].map(FULL_TO_ABB)
+            df["fp_g"] = pd.to_numeric(df["FP/G"], errors="coerce")
+            yearly[yr] = df[["Team", "fp_g"]].dropna().set_index("Team")["fp_g"]
+    if not yearly:
+        return pd.DataFrame(columns=["Team", "FP_per_game", "Rank"])
+    most_recent = max(yearly)
+    teams = yearly[most_recent].index
+    rows = []
+    for team in teams:
+        w_sum, fp_sum = 0.0, 0.0
+        for offset in range(1, lookback + 1):
+            yr = most_recent - offset + 1   # offset=1 → most_recent, offset=2 → most_recent-1, …
+            if yr in yearly:
+                v = yearly[yr].get(team)
+                if v is not None and not pd.isna(v):
+                    w = decay ** (offset - 1)
+                    fp_sum += v * w
+                    w_sum += w
+        if w_sum > 0:
+            rows.append({"Team": team, "FP_per_game": fp_sum / w_sum})
+    avg = pd.DataFrame(rows).sort_values("FP_per_game", ascending=True).reset_index(drop=True)
+    avg["Rank"] = avg.index + 1
+    return avg[["Team", "FP_per_game", "Rank"]]
+
+
 @st.cache_data
 def build_defense_ranks():
     """
-    Rank all 32 defenses 1-32 by position using 2025 data.
+    Rank all 32 defenses 1-32 by position.
     Rank 1 = fewest FP allowed (hardest matchup).
     Rank 32 = most FP allowed (easiest matchup).
+    WR/TE/RB/QB use 2021-2025 averaged season files.
+    WR_Slot/WR_Wide use 2025 weekly (only year with slot/wide split).
     Returns dict: pos -> DataFrame with columns [Team, FP_per_game, Rank].
     """
     weekly = compute_weekly_fp_allowed()
     ranks = {}
 
-    # WR All, WR Slot, WR Wide, TE — from weekly data
-    for pos_key in ("WR", "WR_Slot", "WR_Wide", "TE"):
+    # WR (All) and TE — multi-year season files
+    ranks["WR"] = _load_fp_allowed_multiyear("WR All")
+    ranks["TE"] = _load_fp_allowed_multiyear("TE")
+
+    # WR Slot and WR Wide — 2025 weekly only (no prior-year slot/wide split)
+    for pos_key in ("WR_Slot", "WR_Wide"):
         sub = (weekly[weekly["POS"] == pos_key]
                .groupby("Team")["FP_Allowed"]
                .agg(total="sum", games="count")
                .reset_index())
         sub["FP_per_game"] = sub["total"] / sub["games"]
         sub = sub.sort_values("FP_per_game", ascending=True).reset_index(drop=True)
-        sub["Rank"] = sub.index + 1          # rank 32 = most FP allowed = easiest
+        sub["Rank"] = sub.index + 1
         ranks[pos_key] = sub[["Team", "FP_per_game", "Rank"]]
 
-    # RB — season-level file (includes rushing + receiving)
-    rb_df = pd.read_csv(DATA / "fantasyPointsAllowedExport RB.csv")
-    rb_df["Team"] = rb_df["Name"].map(FULL_TO_ABB)
-    rb_df = rb_df.dropna(subset=["Team"])
-    rb_df = rb_df.sort_values("FP/G", ascending=True).reset_index(drop=True)
-    rb_df["Rank"] = rb_df.index + 1
-    ranks["RB"] = rb_df[["Team", "FP/G", "Rank"]].rename(columns={"FP/G": "FP_per_game"})
-
-    # QB — season-level file
-    qb_df = pd.read_csv(DATA / "fantasyPointsAllowedExport QB.csv")
-    qb_df["Team"] = qb_df["Name"].map(FULL_TO_ABB)
-    qb_df = qb_df.dropna(subset=["Team"])
-    qb_df = qb_df.sort_values("FP/G", ascending=True).reset_index(drop=True)
-    qb_df["Rank"] = qb_df.index + 1
-    ranks["QB"] = qb_df[["Team", "FP/G", "Rank"]].rename(columns={"FP/G": "FP_per_game"})
+    # RB and QB — multi-year season files
+    ranks["RB"] = _load_fp_allowed_multiyear("RB")
+    ranks["QB"] = _load_fp_allowed_multiyear("QB")
 
     return ranks
 
@@ -320,10 +496,98 @@ def compute_bye_weeks():
 
 _SEASON_WEEKS = 17  # full NFL regular season; FPTS / 17 = true per-week base rate
 
-def _build_proj_lu(all_proj_df, bye_map, var_lu=None, matchup_adj=None):
+@st.cache_data
+def compute_player_signals():
+    """Compute per-player composite signal score from 2025 season-level stats.
+
+    Uses features shown by cross-validated analysis to predict next-year FP/G
+    INDEPENDENTLY of base FP/G history (which is already in the projections):
+      WR/TE  → ManvsZone YPRR (r=0.609) + Separation WIN_RATE (r=0.497)
+      RB     → i5% goal-line share (r=0.417)
+      QB     → PRESS SK% (r=-0.354) + TTSK time-to-sack (r=0.344)
+
+    Returns {player_name: signal_mult} where signal_mult is centered at 1.0.
+    Each position is z-scored independently; 1 std dev → ±4% adjustment.
+    Applied on top of defense-matchup and offense-strength adjustments.
+    """
+    BASE = PROJ_ROOT
+    result = {}
+
+    # ── WR / TE: ManvsZone YPRR + Separation WIN_RATE ─────────────────────────
+    try:
+        mvz = pd.read_csv(BASE / "Receiving Stats" / "2025ManvsZone.csv", header=1)
+        mvz = mvz[mvz["POS"].isin(["WR", "TE"])].copy()
+        mvz["YPRR"] = pd.to_numeric(mvz["YPRR"], errors="coerce")
+        mvz_agg = mvz.groupby("Name")["YPRR"].mean().reset_index()
+        mvz_mean, mvz_std = mvz_agg["YPRR"].mean(), mvz_agg["YPRR"].std()
+        mvz_agg["yprr_z"] = (mvz_agg["YPRR"] - mvz_mean) / (mvz_std or 1)
+    except Exception:
+        mvz_agg = pd.DataFrame(columns=["Name", "yprr_z"])
+
+    try:
+        sep = pd.read_csv(BASE / "Receiving Stats" / "2025receivingSeparationByAlignmentExport.csv", header=1)
+        sep = sep[sep["POS"].isin(["WR", "TE"])].copy()
+        sep["WIN RATE"] = pd.to_numeric(sep["WIN RATE"], errors="coerce")
+        sep_agg = sep.groupby("Name")["WIN RATE"].mean().reset_index()
+        sep_mean, sep_std = sep_agg["WIN RATE"].mean(), sep_agg["WIN RATE"].std()
+        sep_agg["win_z"] = (sep_agg["WIN RATE"] - sep_mean) / (sep_std or 1)
+    except Exception:
+        sep_agg = pd.DataFrame(columns=["Name", "win_z"])
+
+    if not mvz_agg.empty or not sep_agg.empty:
+        wr_te = mvz_agg.merge(sep_agg, on="Name", how="outer")
+        # Weights proportional to next-year predictive correlation
+        for _, r in wr_te.iterrows():
+            yprr_z = r.get("yprr_z", 0) if pd.notna(r.get("yprr_z")) else 0
+            win_z  = r.get("win_z",  0) if pd.notna(r.get("win_z"))  else 0
+            composite = (yprr_z * 0.609 + win_z * 0.497) / (0.609 + 0.497)
+            result[r["Name"]] = round(1.0 + composite * 0.04, 4)
+
+    # ── RB: i5% goal-line share ───────────────────────────────────────────────
+    try:
+        rush = pd.read_csv(BASE / "Rushing Stats" / "2025Rushing.csv", header=1)
+        rush = rush[rush["POS"] == "RB"].copy()
+        rush["i5 %"] = pd.to_numeric(rush["i5 %"], errors="coerce")
+        rush_agg = rush.groupby("Name")["i5 %"].mean().reset_index().dropna()
+        i5_mean, i5_std = rush_agg["i5 %"].mean(), rush_agg["i5 %"].std()
+        rush_agg["i5_z"] = (rush_agg["i5 %"] - i5_mean) / (i5_std or 1)
+        for _, r in rush_agg.iterrows():
+            result[r["Name"]] = round(1.0 + r["i5_z"] * 0.04, 4)
+    except Exception:
+        pass
+
+    # ── QB: PRESS SK% (negative) + TTSK (positive) ────────────────────────────
+    try:
+        pass_name = "2025Passing.csv"
+        qb = pd.read_csv(BASE / "Passing Stats" / pass_name, header=1)
+        qb = qb[qb["POS"] == "QB"].copy()
+        qb["PRESS SK %"] = pd.to_numeric(qb["PRESS SK %"], errors="coerce")
+        qb["TTSK"]       = pd.to_numeric(qb["TTSK"],       errors="coerce")
+        qb_agg = qb.groupby("Name")[["PRESS SK %", "TTSK"]].mean().reset_index().dropna()
+        for col, m_name, s_name in [("PRESS SK %", "psk_m", "psk_s"), ("TTSK", "ttsk_m", "ttsk_s")]:
+            qb_agg[f"{col}_mean"] = qb_agg[col].mean()
+            qb_agg[f"{col}_std"]  = qb_agg[col].std()
+        for _, r in qb_agg.iterrows():
+            psk_z  = (r["PRESS SK %"] - r["PRESS SK %_mean"]) / (r["PRESS SK %_std"] or 1)
+            ttsk_z = (r["TTSK"]       - r["TTSK_mean"])       / (r["TTSK_std"]       or 1)
+            # PRESS SK% is negative signal (higher = worse), TTSK is positive
+            composite = (-psk_z * 0.354 + ttsk_z * 0.344) / (0.354 + 0.344)
+            result[r["Name"]] = round(1.0 + composite * 0.04, 4)
+    except Exception:
+        pass
+
+    return result
+
+
+def _build_proj_lu(all_proj_df, bye_map, var_lu=None, matchup_adj=None, off_str=None, player_signals=None):
     """Build {player_name: {pos, proj_pg, proj_ppw, weekly_ppw, bye, ...}} lookup.
-    proj_ppw  = FPTS / 17  (per-week base across the full NFL season).
-    weekly_ppw = {week: pts} adjusted by opponent defense FP/G allowed vs league avg.
+    proj_ppw   = FPTS / 17  (per-week base across the full NFL season).
+    weekly_ppw = {week: pts} adjusted by three independent signals:
+      1. Opponent defense FP/G allowed vs league avg  (matchup_adj)
+      2. Own-team historical offense strength at 30% blend  (off_str)
+      3. Player-level 2025 skill signals vs position peers  (player_signals)
+         WR/TE: ManvsZone YPRR + Separation WIN_RATE.  RB: i5% goal-line share.
+         QB: PRESS SK% + TTSK.  Applied at ±4% per std dev (max ~±8%).
     """
     lu = {}
     for _, row in all_proj_df.iterrows():
@@ -343,12 +607,29 @@ def _build_proj_lu(all_proj_df, bye_map, var_lu=None, matchup_adj=None):
                 if v:
                     entry["std_fpg"] = v["std_fpg"]
                     entry["n_games"] = v["n_games"]
+            # Offense strength: 30% blend of historical signal for RB/WR/TE only
+            if off_str and pos in ("RB", "WR", "TE"):
+                raw_mult = off_str.get(team, 1.0)
+                off_adj  = 1.0 + (raw_mult - 1.0) * 0.30
+            else:
+                off_adj = 1.0
+            # Player signal: YPRR/WIN_RATE (WR/TE), i5% (RB), PRESS_SK%/TTSK (QB)
+            # Capped to ±10% so no single player can be swung more than that
+            sig_mult = player_signals.get(name, 1.0) if player_signals else 1.0
+            sig_mult = max(0.90, min(1.10, sig_mult))
+            combined_adj = off_adj * sig_mult
             if matchup_adj:
                 team_adj = matchup_adj.get(team, {})
-                pos_adj  = team_adj.get(pos, {})  # {week: adj_factor}
+                pos_adj  = team_adj.get(pos, {})  # {week: def_adj_factor}
                 if pos_adj:
-                    entry["weekly_ppw"] = {wk: round(proj_ppw * f, 2)
+                    entry["weekly_ppw"] = {wk: round(proj_ppw * f * combined_adj, 2)
                                            for wk, f in pos_adj.items()}
+                elif combined_adj != 1.0:
+                    entry["weekly_ppw"] = {wk: round(proj_ppw * combined_adj, 2)
+                                           for wk in range(1, _SEASON_WEEKS + 1)}
+            elif combined_adj != 1.0:
+                entry["weekly_ppw"] = {wk: round(proj_ppw * combined_adj, 2)
+                                       for wk in range(1, _SEASON_WEEKS + 1)}
             lu[name] = entry
     return lu
 
@@ -1335,10 +1616,12 @@ elif tab_choice == "📉 Weekly Projections":
     st.header("📉 Weekly Projection Comparison")
     st.caption("Compare week-by-week projected scores for any players. Projections use FPTS ÷ 17 as base rate, adjusted for opponent defense strength each week.")
 
-    _all_proj    = load_all_projections()
-    _bye_map     = compute_bye_weeks()
-    _matchup_adj = load_defense_matchup_adj()
-    _proj_lu_wp  = _build_proj_lu(_all_proj, _bye_map, matchup_adj=_matchup_adj)
+    _all_proj      = load_all_projections()
+    _bye_map       = compute_bye_weeks()
+    _matchup_adj   = load_defense_matchup_adj()
+    _off_str_wp    = load_offense_strength()
+    _player_sigs   = compute_player_signals()
+    _proj_lu_wp    = _build_proj_lu(_all_proj, _bye_map, matchup_adj=_matchup_adj, off_str=_off_str_wp, player_signals=_player_sigs)
 
     # Build sorted player list for the multiselect
     _all_names = sorted(_proj_lu_wp.keys())
@@ -1476,8 +1759,11 @@ elif tab_choice == "🎯 Draft Room":
     _all_proj      = load_all_projections()
     _hist_var      = compute_historical_variance()
     _matchup_adj   = load_defense_matchup_adj()
-    _proj_lu       = _build_proj_lu(_all_proj, bye_map, var_lu=_hist_var, matchup_adj=_matchup_adj)
+    _off_str       = load_offense_strength()
+    _player_sigs   = compute_player_signals()
+    _proj_lu       = _build_proj_lu(_all_proj, bye_map, var_lu=_hist_var, matchup_adj=_matchup_adj, off_str=_off_str, player_signals=_player_sigs)
     sched_matrix   = build_team_schedule_matrix()   # (team, pos_key) → {week: rank}
+    _con_scores    = compute_consistency_scores()
 
     HARD_THR = 13   # rank ≤ 13 = tough (32=easiest system)
     EASY_THR = 21   # rank ≥ 21 = easy
@@ -1816,6 +2102,7 @@ elif tab_choice == "🎯 Draft Room":
                     "ADP":     round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
                     "+Pts":    _delta,
                     "WW+Pts":  _ww_gain if _ww_gain > 0 else pd.NA,
+                    "CV":      _con_scores.get(_nm, {}).get("cv"),
                 })
 
     st.markdown("---")
@@ -2060,10 +2347,11 @@ elif tab_choice == "🎯 Draft Room":
                     if pd.notna(t["FP_ADP"]) and abs(t["FP_ADP"] - my_next_pick) <= _NEAR_WINDOW:
                         drafted_names = ", ".join(p["Name"].split()[-1] for p in drafted)
                         near_rows.append({
-                            "Player": t["Name"],
-                            "POS":    t["POS"],
-                            "Team":   team,
-                            "ADP":    round(t["FP_ADP"], 1),
+                            "Player":   t["Name"],
+                            "POS":      t["POS"],
+                            "Team":     team,
+                            "ADP":      round(t["FP_ADP"], 1),
+                            "Off Str":  f"{_off_str.get(team, 1.0):.2f}x",
                             "Stacks with": drafted_names,
                         })
             if near_rows:
@@ -2204,6 +2492,7 @@ elif tab_choice == "🎯 Draft Room":
                     "+Pts":      _delta_fb,
                     "Bye":       _bye or "—",
                     "ADP":       round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
+                    "CV":        _con_scores.get(_nm, {}).get("cv"),
                 })
             if _fallback_rows:
                 _fb_df = (pd.DataFrame(_fallback_rows)
