@@ -280,76 +280,58 @@ def load_offense_strength():
         return {}
 
 
-@st.cache_data
-def load_all_weekly_data():
-    """Load 2021-2025 per-game weekly data for all skill positions.
-    WR/TE from Receiving Stats files; RB from Rushing Stats files.
-    Returns DataFrame with Name, POS, Season, WEEK, FP, tgt_pct columns.
-    """
-    _RECV_DIR = PROJ_ROOT / "Receiving Stats"
-    _RUSH_DIR = PROJ_ROOT / "Rushing Stats"
-    years = [2021, 2022, 2023, 2024, 2025]
-
-    recv_frames = []
-    for yr in years:
-        f = _RECV_DIR / f"{yr}Receiving.csv"
-        if f.exists():
-            try:
-                df = pd.read_csv(f, header=1)
-                df = df[df.get("Season Type", pd.Series([1]*len(df))) == 1]
-                df = df[df["POS"].isin(["WR", "TE"])]
-                df["FP"]      = pd.to_numeric(df["FP"],    errors="coerce")
-                df["tgt_pct"] = pd.to_numeric(df.get("TGT %", pd.Series(dtype=float)), errors="coerce")
-                df["WEEK"]    = pd.to_numeric(df["WEEK"],  errors="coerce")
-                recv_frames.append(df[["Name", "POS", "Season", "WEEK", "FP", "tgt_pct"]])
-            except Exception:
-                pass
-
-    rush_frames = []
-    for yr in years:
-        f = _RUSH_DIR / f"{yr}Rushing.csv"
-        if f.exists():
-            try:
-                df = pd.read_csv(f, header=1)
-                df = df[df.get("Season Type", pd.Series([1]*len(df))) == 1]
-                df = df[df["POS"] == "RB"]
-                df["FP"]      = pd.to_numeric(df["FP"],   errors="coerce")
-                df["tgt_pct"] = pd.NA
-                df["WEEK"]    = pd.to_numeric(df["WEEK"], errors="coerce")
-                rush_frames.append(df[["Name", "POS", "Season", "WEEK", "FP", "tgt_pct"]])
-            except Exception:
-                pass
-
-    frames = recv_frames + rush_frames
-    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
-
 
 @st.cache_data
 def compute_consistency_scores():
     """Per-player weekly FP coefficient of variation + target-share stability.
-    Uses 2021-2025 Receiving (WR/TE) and Rushing (RB) per-game files.
+    Uses 2025 Receiving (WR/TE) and Rushing (RB) per-game files only.
     Returns {name: {cv, tgt_share_std, n_games}}.
     cv = std/mean of weekly FP; lower = more predictable floor player.
     """
     try:
-        df = load_all_weekly_data()
+        _RECV_DIR = PROJ_ROOT / "Receiving Stats"
+        _RUSH_DIR = PROJ_ROOT / "Rushing Stats"
+        frames = []
+        for f in [_RECV_DIR / "2025Receiving.csv"]:
+            if f.exists():
+                try:
+                    df = pd.read_csv(f, header=1)
+                    df = df[df["POS"].isin(["WR", "TE"])]
+                    df["FP"]      = pd.to_numeric(df["FP"], errors="coerce")
+                    df["tgt_pct"] = pd.to_numeric(df.get("TGT %", pd.Series(dtype=float)), errors="coerce")
+                    df["WEEK"]    = pd.to_numeric(df["WEEK"], errors="coerce")
+                    frames.append(df[["Name", "POS", "WEEK", "FP", "tgt_pct"]])
+                except Exception:
+                    pass
+        for f in [_RUSH_DIR / "2025Rushing.csv"]:
+            if f.exists():
+                try:
+                    df = pd.read_csv(f, header=1)
+                    df = df[df["POS"] == "RB"]
+                    df["FP"]   = pd.to_numeric(df["FP"], errors="coerce")
+                    df["WEEK"] = pd.to_numeric(df["WEEK"], errors="coerce")
+                    df["tgt_pct"] = float("nan")
+                    frames.append(df[["Name", "POS", "WEEK", "FP", "tgt_pct"]])
+                except Exception:
+                    pass
+        if not frames:
+            return {}
+        combined = pd.concat(frames, ignore_index=True)
+        combined = combined[combined["FP"].notna()]
+        result = {}
+        for name, grp in combined.groupby("Name"):
+            fps = grp["FP"].dropna()
+            n   = len(fps)
+            if n < 4:
+                continue
+            mean_fp = float(fps.mean())
+            cv      = round(float(fps.std()) / mean_fp, 2) if mean_fp > 1 else None
+            tgt_s   = pd.to_numeric(grp["tgt_pct"], errors="coerce").dropna()
+            tgt_std = round(float(tgt_s.std()), 1) if len(tgt_s) >= 4 else None
+            result[str(name)] = {"cv": cv, "tgt_share_std": tgt_std, "n_games": n}
+        return result
     except Exception:
         return {}
-    if df.empty:
-        return {}
-    df = df[df["FP"].notna()].copy()
-    result = {}
-    for name, grp in df.groupby("Name"):
-        fps = pd.to_numeric(grp["FP"], errors="coerce").dropna()
-        n   = len(fps)
-        if n < 4:
-            continue
-        mean_fp = float(fps.mean())
-        cv      = round(float(fps.std()) / mean_fp, 2) if mean_fp > 1 else None
-        tgt_s   = pd.to_numeric(grp["tgt_pct"], errors="coerce").dropna()
-        tgt_std = round(float(tgt_s.std()), 1) if len(tgt_s) >= 4 else None
-        result[str(name)] = {"cv": cv, "tgt_share_std": tgt_std, "n_games": n}
-    return result
 
 
 def load_schedule():
