@@ -201,6 +201,8 @@ def load_fp_rankings():
     fp = fp.rename(columns={"NAME": "Name_clean", "OVERALL": "FP_Rank", "ADP": "FP_ADP"})
     # Parse positional rank string e.g. "RB1" → 1
     fp["FP_Pos_Rank"] = fp["POSITION"].str.extract(r"(\d+)$").astype(float)
+    fp["FP_Rank"] = pd.to_numeric(fp["FP_Rank"], errors="coerce")
+    fp["FP_ADP"]  = pd.to_numeric(fp["FP_ADP"],  errors="coerce")
     fp = fp.sort_values("FP_Rank")
     return fp[["Name_clean", "POS", "TEAM", "FP_Rank", "FP_Pos_Rank", "FP_ADP"]].rename(columns={"TEAM": "Team"})
 
@@ -1672,7 +1674,7 @@ elif tab_choice == "📉 Weekly Projections":
                 if wk == bye:
                     row[f"W{wk}"] = "BYE"
                 else:
-                    row[f"W{wk}"] = round(wppw.get(wk, proj_ppw), 1)
+                    row[f"W{wk}"] = f"{round(wppw.get(wk, proj_ppw), 1):.1f}"
             _table_rows.append(row)
 
         fig.update_layout(
