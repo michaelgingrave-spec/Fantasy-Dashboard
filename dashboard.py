@@ -802,9 +802,9 @@ if tab_choice == "📊 Player Projections":
                         st.caption("No players found")
                     else:
                         rows_out = [
-                            {"Rank": int(op["FP_Rank"]) if pd.notna(op["FP_Rank"]) else "—",
+                            {"Rank": int(op["FP_Rank"]) if pd.notna(op["FP_Rank"]) else None,
                              "Player": op["Name"], "POS": op["POS"],
-                             "ADP": round(op["FP_ADP"], 1) if pd.notna(op["FP_ADP"]) else "—"}
+                             "ADP": round(op["FP_ADP"], 1) if pd.notna(op["FP_ADP"]) else None}
                             for _, op in opp_players.iterrows()
                         ]
                         st.dataframe(
@@ -1578,9 +1578,9 @@ elif tab_choice == "📅 Schedule Viewer":
                 st.caption("No players found")
             else:
                 rows_out = [
-                    {"Rank": int(op["FP_Rank"]) if pd.notna(op["FP_Rank"]) else "—",
+                    {"Rank": int(op["FP_Rank"]) if pd.notna(op["FP_Rank"]) else None,
                      "Player": op["Name"], "POS": op["POS"],
-                     "ADP": round(op["FP_ADP"], 1) if pd.notna(op["FP_ADP"]) else "—"}
+                     "ADP": round(op["FP_ADP"], 1) if pd.notna(op["FP_ADP"]) else None}
                     for _, op in opp_players.iterrows()
                 ]
                 st.dataframe(
