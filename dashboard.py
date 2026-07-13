@@ -806,7 +806,7 @@ if tab_choice == "📊 Player Projections":
                         rows_out = [
                             {"Rank": int(op["FP_Rank"]) if pd.notna(op["FP_Rank"]) else None,
                              "Player": op["Name"], "POS": op["POS"],
-                             "ADP": round(op["FP_ADP"], 1) if pd.notna(op["FP_ADP"]) else None}
+                             "ADP": float(round(op["FP_ADP"], 1)) if pd.notna(op["FP_ADP"]) else None}
                             for _, op in opp_players.iterrows()
                         ]
                         st.dataframe(
@@ -1516,10 +1516,10 @@ elif tab_choice == "📅 Schedule Viewer":
                 "Player":        pname_c,
                 "Team":          pteam_c,
                 "Pos Rank":      f"{pos}{int(p['FP_Pos_Rank'])}" if pd.notna(p["FP_Pos_Rank"]) else "—",
-                "ADP":           round(p["FP_ADP"], 1) if pd.notna(p["FP_ADP"]) else None,
-                "Avg Rank (tough wks)": round(avg_rank_in_hard, 1),
-                "Easy Overlaps": easy_overlap_count,
-                "_score":        complement_score,
+                "ADP":           float(round(p["FP_ADP"], 1)) if pd.notna(p["FP_ADP"]) else None,
+                "Avg Rank (tough wks)": float(round(avg_rank_in_hard, 1)),
+                "Easy Overlaps": int(easy_overlap_count),
+                "_score":        float(complement_score),
                 "_week_detail":  week_label,
             })
 
@@ -1582,7 +1582,7 @@ elif tab_choice == "📅 Schedule Viewer":
                 rows_out = [
                     {"Rank": int(op["FP_Rank"]) if pd.notna(op["FP_Rank"]) else None,
                      "Player": op["Name"], "POS": op["POS"],
-                     "ADP": round(op["FP_ADP"], 1) if pd.notna(op["FP_ADP"]) else None}
+                     "ADP": float(round(op["FP_ADP"], 1)) if pd.notna(op["FP_ADP"]) else None}
                     for _, op in opp_players.iterrows()
                 ]
                 st.dataframe(
@@ -2080,12 +2080,12 @@ elif tab_choice == "🎯 Draft Room":
                     "Player":  _nm,
                     "POS":     _p["pos"],
                     "Team":    _p["team"],
-                    "Proj/G":  round(_p["proj_pg"], 1),
-                    "Std/G":   round(_std, 1) if _std > 0 else pd.NA,
+                    "Proj/G":  float(round(_p["proj_pg"], 1)),
+                    "Std/G":   float(round(_std, 1)) if _std > 0 else None,
                     "Bye":     _p["bye"] if _p.get("bye") else None,
-                    "ADP":     round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
-                    "+Pts":    _delta,
-                    "WW+Pts":  _ww_gain if _ww_gain > 0 else pd.NA,
+                    "ADP":     round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else None,
+                    "+Pts":    float(_delta),
+                    "WW+Pts":  float(_ww_gain) if _ww_gain > 0 else None,
                     "CV":      _con_scores.get(_nm, {}).get("cv"),
                 })
 
@@ -2334,7 +2334,7 @@ elif tab_choice == "🎯 Draft Room":
                             "Player":   t["Name"],
                             "POS":      t["POS"],
                             "Team":     team,
-                            "ADP":      round(t["FP_ADP"], 1),
+                            "ADP":      float(round(t["FP_ADP"], 1)),
                             "Off Str":  f"{_off_str.get(team, 1.0):.2f}x",
                             "Stacks with": drafted_names,
                         })
@@ -2471,11 +2471,11 @@ elif tab_choice == "🎯 Draft Room":
                     "Player":    _nm,
                     "POS":       _p["pos"],
                     "Team":      _p["team"],
-                    "Proj/G":    round(_p["proj_pg"], 1),
-                    "Proj 1-14": _proj14,
-                    "+Pts":      _delta_fb,
+                    "Proj/G":    float(round(_p["proj_pg"], 1)),
+                    "Proj 1-14": float(_proj14),
+                    "+Pts":      float(_delta_fb),
                     "Bye":       _bye if _bye else None,
-                    "ADP":       round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
+                    "ADP":       round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else None,
                     "CV":        _con_scores.get(_nm, {}).get("cv"),
                 })
             if _fallback_rows:
