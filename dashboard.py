@@ -1666,7 +1666,7 @@ elif tab_choice == "📉 Weekly Projections":
 
             # Build table row
             row = {"Player": nm, "POS": pos, "Team": p["team"],
-                   "Bye": bye or "—",
+                   "Bye": bye if bye else None,
                    "Base/wk": round(proj_ppw, 1)}
             for wk in weeks:
                 if wk == bye:
@@ -2080,7 +2080,7 @@ elif tab_choice == "🎯 Draft Room":
                     "Team":    _p["team"],
                     "Proj/G":  round(_p["proj_pg"], 1),
                     "Std/G":   round(_std, 1) if _std > 0 else pd.NA,
-                    "Bye":     _p["bye"] or "—",
+                    "Bye":     _p["bye"] if _p.get("bye") else None,
                     "ADP":     round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
                     "+Pts":    _delta,
                     "WW+Pts":  _ww_gain if _ww_gain > 0 else pd.NA,
@@ -2472,7 +2472,7 @@ elif tab_choice == "🎯 Draft Room":
                     "Proj/G":    round(_p["proj_pg"], 1),
                     "Proj 1-14": _proj14,
                     "+Pts":      _delta_fb,
-                    "Bye":       _bye or "—",
+                    "Bye":       _bye if _bye else None,
                     "ADP":       round(float(_ar["FP_ADP"]), 1) if pd.notna(_ar.get("FP_ADP")) else pd.NA,
                     "CV":        _con_scores.get(_nm, {}).get("cv"),
                 })
