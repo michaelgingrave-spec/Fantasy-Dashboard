@@ -1774,8 +1774,9 @@ elif tab_choice == "🎯 Draft Room":
     with ds1:
         num_teams = st.selectbox("# Teams in Draft", _team_opts, key="sb_num_teams")
     with ds2:
+        if st.session_state.sb_my_slot > num_teams:
+            st.session_state.sb_my_slot = num_teams
         my_slot = st.number_input("Your Draft Slot", min_value=1, max_value=num_teams,
-                                  value=min(st.session_state.sb_my_slot, num_teams),
                                   key="sb_my_slot")
     with ds3:
         total_rounds = st.selectbox("Total Rounds", _round_opts, key="sb_total_rounds")
