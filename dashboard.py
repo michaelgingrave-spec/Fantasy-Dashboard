@@ -72,7 +72,7 @@ def load_projections():
 @st.cache_data
 def load_all_projections():
     """Unified projection table for all positions from the single projection CSV."""
-    path = PROJ_ROOT / "2026 NFL Fantasy Football Season Rankings  Projections  Fantasy Points (2).csv"
+    path = PROJ_ROOT / "2026 NFL Fantasy Football Season Rankings  Projections  Fantasy Points (5).csv"
     df = pd.read_csv(path)[["Name", "POS", "Team", "Bye", "FPTS", "G", "FPTS/G"]].copy()
     df = df.rename(columns={"FPTS": "Proj_FP", "G": "Games", "FPTS/G": "Proj_PG"})
     df["Bye"]     = pd.to_numeric(df["Bye"],    errors="coerce")
@@ -196,7 +196,7 @@ _NAME_ALIASES_LC = {k.lower(): v for k, v in _NAME_ALIASES.items()}
 
 @st.cache_data
 def load_fp_rankings():
-    fp = pd.read_csv(DATA / "BestBallRankingsDraftKings (2).csv")
+    fp = pd.read_csv(PROJ_ROOT / "BestBallRankingsDraftKings (4).csv")
     fp = fp[fp["POS"].isin(["QB", "WR", "RB", "TE"])].copy()
     fp = fp.rename(columns={"NAME": "Name_clean", "OVERALL": "FP_Rank", "ADP": "FP_ADP"})
     # Parse positional rank string e.g. "RB1" → 1
