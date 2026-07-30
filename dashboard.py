@@ -2132,7 +2132,7 @@ elif tab_choice == "🎯 Draft Room":
     avail_all["Bye Wk"]      = avail_all["Team"].map(bye_map)
     avail_all["Playoff Scr"] = avail_all["Name"].map(playoff_scores)
     avail_all["Boom%"]       = avail_all["Name"].map(boom_rates)
-    avail_all["_fell"]       = (current_pick - avail_all["FP_ADP"])
+    avail_all["_fell"]       = (current_pick - avail_all["FP_Rank"])
     avail_all["Fell"]        = avail_all["_fell"].round(0).astype("Int64").where(
                                    avail_all["_fell"] > 0, other=pd.NA)
 
@@ -2214,7 +2214,7 @@ elif tab_choice == "🎯 Draft Room":
             _pool = _near if not _near.empty else avail_all[avail_all["POS"] == pos]
             for _, r in _pool.head(3).iterrows():
                 adp_s = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
-                fell_s = f" ↓{int(r['_fell'])}" if pd.notna(r.get("_fell")) and r["_fell"] > 0 else ""
+                fell_s = f" ↓{int(r['_fell'])} past rank" if pd.notna(r.get("_fell")) and r["_fell"] > 0 else ""
                 st.markdown(f"&nbsp;&nbsp;**{r['Name']}** ({r['Team']}) {adp_s}{fell_s}")
             shown += 1
             if shown >= 2:
@@ -2249,14 +2249,14 @@ elif tab_choice == "🎯 Draft Room":
             fell = int(r["_fell"])
             if fell <= 0:
                 break
-            adp_s = f"ADP {r['FP_ADP']:.1f}" if pd.notna(r["FP_ADP"]) else ""
+            rank_s = f"Rank #{int(r['FP_Rank'])}" if pd.notna(r["FP_Rank"]) else ""
             icon  = "🟡" if fell >= 8 else "⬜"
-            st.markdown(f"{icon} **{r['Name']}** ({r['POS']}·{r['Team']}) {adp_s} ↓{fell}")
+            st.markdown(f"{icon} **{r['Name']}** ({r['POS']}·{r['Team']}) {rank_s} ↓{fell}")
             shown += 1
             if shown >= 6:
                 break
         if shown == 0:
-            st.caption("No players past ADP yet.")
+            st.caption("No players past their rank yet.")
 
     with c_opp:
         st.markdown("**📅 Playoff Opponents (Wks 15–17)**")
@@ -2573,7 +2573,7 @@ elif tab_choice == "🎯 Draft Room":
         with af2:
             show_top = st.selectbox("Show", [25, 50, 100, "All"], index=1, key="draft_show")
         with af3:
-            value_only = st.checkbox("Value only", value=False, help="Players past their ADP")
+            value_only = st.checkbox("Value only", value=False, help="Players available past their overall rank")
 
         avail_show = avail_all[avail_all["POS"].isin(pos_filter)].copy()
         if value_only:
@@ -2616,7 +2616,7 @@ elif tab_choice == "🎯 Draft Room":
             "🟣 QB · 🟢 RB · 🔵 WR · 🟠 TE &nbsp;|&nbsp; "
             "🟪 Faces your team wks 15-17 &nbsp; "
             "🟩 Schedule complement (≥60% tough-wk coverage) &nbsp; "
-            "🟡 Value (fell ≥8 past ADP) &nbsp; "
+            "🟡 Value (fell ≥8 past rank) &nbsp; "
             "**Playoff** = avg def rank wks 14-17 (32=easiest)",
             unsafe_allow_html=True,
         )
