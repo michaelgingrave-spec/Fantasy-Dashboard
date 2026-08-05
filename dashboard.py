@@ -73,12 +73,17 @@ def load_projections():
 def load_all_projections():
     """Unified projection table for all positions from the single projection CSV."""
     path = PROJ_ROOT / "projections.season.csv"
-    # CSV has a merged header row first; real column names are on row 2 (header=1).
-    # New export uses NAME/Position/BYE/GP — normalize to Name/POS/Bye/G.
+    # CSV has a merged group-label row first; real column names are on row 2 (header=1).
+    # Column map (new export): NAME=player, Position=pos abbrev (RB/WR/etc), Team, BYE,
+    #   FPTS=season total, GP=games, FPTS/G=per-game.
+    # NOTE: the CSV also has a numeric 'POS' column (position rank 1/2/3…) — skip it by
+    # selecting raw column names BEFORE any rename so we never create duplicate 'POS' cols.
     df = pd.read_csv(path, header=1)
-    df = df.rename(columns={"NAME": "Name", "Position": "POS", "BYE": "Bye", "GP": "G"})
-    df = df[["Name", "POS", "Team", "Bye", "FPTS", "G", "FPTS/G"]].copy()
-    df = df.rename(columns={"FPTS": "Proj_FP", "G": "Games", "FPTS/G": "Proj_PG"})
+    df = df[["NAME", "Position", "Team", "BYE", "FPTS", "GP", "FPTS/G"]].copy()
+    df = df.rename(columns={
+        "NAME": "Name", "Position": "POS", "BYE": "Bye",
+        "FPTS": "Proj_FP", "GP": "Games", "FPTS/G": "Proj_PG",
+    })
     df["Bye"]     = pd.to_numeric(df["Bye"],    errors="coerce")
     df["Proj_FP"] = pd.to_numeric(df["Proj_FP"], errors="coerce")
     df["Games"]   = pd.to_numeric(df["Games"],  errors="coerce").clip(lower=1)
