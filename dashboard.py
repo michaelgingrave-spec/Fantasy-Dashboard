@@ -204,7 +204,7 @@ def load_fp_rankings():
     fp["FP_Rank"] = pd.to_numeric(fp["FP_Rank"], errors="coerce")
     fp["FP_ADP"]  = pd.to_numeric(fp["FP_ADP"],  errors="coerce")
     fp = fp.sort_values("FP_Rank")
-    return fp[["Name_clean", "POS", "TEAM", "FP_Rank", "FP_Pos_Rank", "FP_ADP"]].rename(columns={"TEAM": "Team"})
+    return fp[["Name_clean", "POS", "Team", "FP_Rank", "FP_Pos_Rank", "FP_ADP"]]
 
 @st.cache_data
 def load_season_fp_allowed():
