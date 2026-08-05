@@ -73,7 +73,11 @@ def load_projections():
 def load_all_projections():
     """Unified projection table for all positions from the single projection CSV."""
     path = PROJ_ROOT / "projections.season.csv"
-    df = pd.read_csv(path)[["Name", "POS", "Team", "Bye", "FPTS", "G", "FPTS/G"]].copy()
+    # CSV has a merged header row first; real column names are on row 2 (header=1).
+    # New export uses NAME/Position/BYE/GP — normalize to Name/POS/Bye/G.
+    df = pd.read_csv(path, header=1)
+    df = df.rename(columns={"NAME": "Name", "Position": "POS", "BYE": "Bye", "GP": "G"})
+    df = df[["Name", "POS", "Team", "Bye", "FPTS", "G", "FPTS/G"]].copy()
     df = df.rename(columns={"FPTS": "Proj_FP", "G": "Games", "FPTS/G": "Proj_PG"})
     df["Bye"]     = pd.to_numeric(df["Bye"],    errors="coerce")
     df["Proj_FP"] = pd.to_numeric(df["Proj_FP"], errors="coerce")
