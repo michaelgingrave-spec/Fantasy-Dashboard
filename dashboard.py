@@ -1645,12 +1645,16 @@ elif tab_choice == "📉 Weekly Projections":
 
         import plotly.graph_objects as go
 
+        # Opponent lookup for hover labels: {team: {week: opp_abbrev}}
+        _opp_lu_wp = build_team_opponent_lookup()
+
         fig = go.Figure()
 
         _table_rows = []
         for _pi, nm in enumerate(_selected):
             p = _proj_lu_wp[nm]
             pos      = p["pos"]
+            team     = p.get("team", "")
             bye      = p.get("bye", 0)
             proj_ppw = p["proj_ppw"]
             wppw     = p.get("weekly_ppw") or {}
@@ -1658,25 +1662,32 @@ elif tab_choice == "📉 Weekly Projections":
 
             weeks = list(range(1, 18))
             pts   = []
+            opps  = []
             for wk in weeks:
                 if wk == bye and _show_bye:
-                    pts.append(None)   # gap in line
+                    pts.append(None)
+                    opps.append("BYE")
                 else:
                     pts.append(wppw.get(wk, proj_ppw))
+                    opp_team = _opp_lu_wp.get(team, {}).get(wk)
+                    opps.append(f"vs {opp_team}" if opp_team else "—")
 
-            fig.add_trace(go.Scatter(
+            fig.add_trace(go.Bar(
                 x=weeks,
                 y=pts,
-                mode="lines+markers",
                 name=f"{nm} ({pos})",
-                line=dict(color=color, width=2),
-                marker=dict(size=6),
-                connectgaps=not _show_bye,
-                hovertemplate=f"<b>{nm}</b><br>Week %{{x}}: %{{y:.1f}} pts<extra></extra>",
+                marker_color=color,
+                customdata=opps,
+                hovertemplate=(
+                    f"<b>{nm}</b> ({pos} · {team})<br>"
+                    "Week %{x} · %{customdata}<br>"
+                    "<b>%{y:.1f} pts</b>"
+                    "<extra></extra>"
+                ),
             ))
 
             # Build table row
-            row = {"Player": nm, "POS": pos, "Team": p["team"],
+            row = {"Player": nm, "POS": pos, "Team": team,
                    "Bye": bye if bye else None,
                    "Base/wk": round(proj_ppw, 1)}
             for wk in weeks:
@@ -1687,11 +1698,12 @@ elif tab_choice == "📉 Weekly Projections":
             _table_rows.append(row)
 
         fig.update_layout(
+            barmode="group",
             xaxis=dict(title="Week", tickmode="linear", tick0=1, dtick=1,
                        tickvals=list(range(1, 18))),
             yaxis=dict(title="Projected Points"),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
-            hovermode="x unified",
+            hovermode="x",
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
             font=dict(color="#e0e0e0"),
