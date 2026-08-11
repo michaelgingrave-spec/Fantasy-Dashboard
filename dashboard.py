@@ -1,12 +1,12 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-# data: rankings.best-ball.draftkings.csv + projections.season.csv (latest export)
 import plotly.express as px
 import numpy as np
 import json
 import datetime
 import re
+import hashlib
 from pathlib import Path
 
 st.set_page_config(
@@ -65,13 +65,24 @@ TIER_COLORS = {
 DATA      = Path(__file__).parent / "data"
 PROJ_ROOT = Path(__file__).parent
 
+def _csv_hash(*paths):
+    """MD5 of file contents — used as a cache-key parameter so @st.cache_data
+    automatically invalidates whenever a CSV is updated on disk (or redeployed)."""
+    h = hashlib.md5()
+    for p in paths:
+        try:
+            h.update(Path(p).read_bytes())
+        except Exception:
+            h.update(str(p).encode())
+    return h.hexdigest()
+
 @st.cache_data
 def load_projections():
     df = pd.read_csv(DATA / "projections_2026.csv")
     return df
 
 @st.cache_data
-def load_all_projections():
+def load_all_projections(file_hash=""):  # file_hash busts cache when CSV changes
     """Unified projection table for all positions from the single projection CSV."""
     path = PROJ_ROOT / "projections.season.csv"
     # CSV has a merged group-label row first; real column names are on row 2 (header=1).
@@ -208,7 +219,7 @@ _NAME_ALIASES = {
 _NAME_ALIASES_LC = {k.lower(): v for k, v in _NAME_ALIASES.items()}
 
 @st.cache_data
-def load_fp_rankings():
+def load_fp_rankings(file_hash=""):  # file_hash busts cache when CSV changes
     fp = pd.read_csv(PROJ_ROOT / "rankings.best-ball.draftkings.csv")
     fp = fp[fp["POS"].isin(["QB", "WR", "RB", "TE"])].copy()
     fp = fp.rename(columns={"NAME": "Name_clean", "OVERALL": "FP_Rank", "ADP": "FP_ADP"})
@@ -720,7 +731,7 @@ def build_team_opponent_lookup():
 def compute_all_playoff_scores():
     """Pre-compute avg def rank in weeks 14-17 (32=easiest) for every ranked player."""
     sched_df = load_schedule()
-    fp = load_fp_rankings().rename(columns={"Name_clean": "Name"})
+    fp = load_fp_rankings(file_hash=_csv_hash(PROJ_ROOT / "rankings.best-ball.draftkings.csv")).rename(columns={"Name_clean": "Name"})
     def_rnks = build_defense_ranks()
     pw_set = {14, 15, 16, 17}
     result = {}
@@ -756,7 +767,7 @@ with st.sidebar:
 # ══════════════════════════════════════════════════════════════════════════════
 if tab_choice == "📊 Player Projections":
     st.header("2026 Player Projections")
-    fp_ranks = load_fp_rankings()
+    fp_ranks = load_fp_rankings(file_hash=_csv_hash(PROJ_ROOT / "rankings.best-ball.draftkings.csv"))
     # merged is FP rankings as primary; used by opponent preview too
     merged = fp_ranks.rename(columns={"Name_clean": "Name"})
 
@@ -1302,7 +1313,7 @@ elif tab_choice == "📅 Schedule Viewer":
     st.caption("See a player's 2026 weekly opponents and defensive strength at their position")
 
     proj = load_projections()
-    fp_all = load_fp_rankings().rename(columns={"Name_clean": "Name"})
+    fp_all = load_fp_rankings(file_hash=_csv_hash(PROJ_ROOT / "rankings.best-ball.draftkings.csv")).rename(columns={"Name_clean": "Name"})
     sched = load_schedule()
     all_def_ranks = build_defense_ranks()   # covers QB, RB, WR, TE from correct sources
 
@@ -1573,7 +1584,7 @@ elif tab_choice == "📅 Schedule Viewer":
     st.subheader("📋 Weeks 15–17 Opponent Offense Preview")
     st.caption("Players on the opposing offense, ordered by FP rank. Use for best-ball stacks.")
 
-    fp_data = load_fp_rankings().rename(columns={"Name_clean": "Name"})
+    fp_data = load_fp_rankings(file_hash=_csv_hash(PROJ_ROOT / "rankings.best-ball.draftkings.csv")).rename(columns={"Name_clean": "Name"})
     preview_wks = [15, 16, 17]
     late_sched = schedule_df[schedule_df["Week"].isin(preview_wks)].set_index("Week")
 
@@ -1615,7 +1626,7 @@ elif tab_choice == "📉 Weekly Projections":
     st.header("📉 Weekly Projection Comparison")
     st.caption("Compare week-by-week projected scores for any players. Projections use FPTS ÷ 17 as base rate, adjusted for opponent defense strength each week.")
 
-    _all_proj      = load_all_projections()
+    _all_proj      = load_all_projections(file_hash=_csv_hash(PROJ_ROOT / "projections.season.csv"))
     _bye_map       = compute_bye_weeks()
     _matchup_adj   = load_defense_matchup_adj()
     _off_str_wp    = load_offense_strength()
@@ -1763,11 +1774,11 @@ elif tab_choice == "🎯 Draft Room":
     if "draft_total_rounds" not in st.session_state: st.session_state.draft_total_rounds = 20
 
     # ── Load data ──────────────────────────────────────────────────────────────
-    fp_all         = load_fp_rankings().rename(columns={"Name_clean": "Name"})
+    fp_all         = load_fp_rankings(file_hash=_csv_hash(PROJ_ROOT / "rankings.best-ball.draftkings.csv")).rename(columns={"Name_clean": "Name"})
     bye_map        = compute_bye_weeks()
     boom_rates     = compute_boom_rates()
     playoff_scores = compute_all_playoff_scores()
-    _all_proj      = load_all_projections()
+    _all_proj      = load_all_projections(file_hash=_csv_hash(PROJ_ROOT / "projections.season.csv"))
     _hist_var      = compute_historical_variance()
     _matchup_adj   = load_defense_matchup_adj()
     _off_str       = load_offense_strength()
