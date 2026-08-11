@@ -2593,7 +2593,7 @@ elif tab_choice == "🎯 Draft Room":
             pos_filter = st.multiselect("Position", ["QB", "RB", "WR", "TE"],
                                         default=["QB", "RB", "WR", "TE"], key="draft_pos_filter")
         with af2:
-            show_top = st.selectbox("Show", [25, 50, 100, "All"], index=1, key="draft_show")
+            show_top = st.selectbox("Show", [25, 50, 100, "All"], index=2, key="draft_show")
         with af3:
             value_only = st.checkbox("Value only", value=False, help="Players available past their overall rank")
 
