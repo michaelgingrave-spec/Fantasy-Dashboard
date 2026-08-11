@@ -85,6 +85,9 @@ def load_all_projections():
         "NAME": "Name", "Position": "POS", "BYE": "Bye",
         "FPTS": "Proj_FP", "GP": "Games", "FPTS/G": "Proj_PG",
     })
+    # Some exports embed newline characters inside quoted name fields (e.g. "Stefon\nDiggs").
+    # Strip them so names match across CSVs and search works correctly.
+    df["Name"] = df["Name"].str.replace('\n', ' ', regex=False).str.strip()
     df["Bye"]     = pd.to_numeric(df["Bye"],    errors="coerce")
     df["Proj_FP"] = pd.to_numeric(df["Proj_FP"], errors="coerce")
     df["Games"]   = pd.to_numeric(df["Games"],  errors="coerce").clip(lower=1)
