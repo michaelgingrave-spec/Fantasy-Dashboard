@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+# data: rankings.best-ball.draftkings.csv + projections.season.csv (latest export)
 import plotly.express as px
 import numpy as np
 import json
