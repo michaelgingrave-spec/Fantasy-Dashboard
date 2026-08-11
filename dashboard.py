@@ -772,7 +772,9 @@ if tab_choice == "📊 Player Projections":
 
     display = df[["Name", "POS", "Team", "FP_Rank", "FP_Pos_Rank", "FP_ADP"]].copy()
     display.columns = ["Player", "POS", "Team", "Rank", "Pos Rank", "ADP"]
-    display["ADP"] = display["ADP"].round(1)
+    display["Rank"]     = display["Rank"].apply(lambda x: "" if pd.isna(x) else int(x))
+    display["Pos Rank"] = display["Pos Rank"].apply(lambda x: "" if pd.isna(x) else int(x))
+    display["ADP"]      = display["ADP"].round(1)
 
     st.write(
         display.to_html(escape=False, index=True, classes="dataframe"),
@@ -2154,8 +2156,7 @@ elif tab_choice == "🎯 Draft Room":
     avail_all["Playoff Scr"] = avail_all["Name"].map(playoff_scores)
     avail_all["Boom%"]       = avail_all["Name"].map(boom_rates)
     avail_all["_fell"]       = (current_pick - avail_all["FP_Rank"])
-    avail_all["Fell"]        = avail_all["_fell"].round(0).astype("Int64").where(
-                                   avail_all["_fell"] > 0, other=pd.NA)
+    avail_all["Fell"]        = avail_all["_fell"].where(avail_all["_fell"] > 0).round(0)
 
     # Complement scores — pair each available player against each individual roster player
     # at the same position. Best individual pairing wins.
@@ -2606,7 +2607,12 @@ elif tab_choice == "🎯 Draft Room":
                                  "Fell", "Cmpl", "Fits", "Faces My", "Bye Wk", "Playoff Scr", "Boom%"]].copy()
         avail_out.columns = ["Player", "POS", "Team", "Rank", "ADP",
                               "Fell", "Cmpl", "Fits", "Faces My", "Bye", "Playoff", "Boom%"]
-        avail_out["ADP"] = avail_out["ADP"].round(1)
+        _avail_fmt = {
+            "ADP":     "{:.1f}",
+            "Fell":    "{:.0f}",   # float NaN → blank via na_rep; positive values show as int
+            "Playoff": "{:.1f}",
+            "Boom%":   "{:.0f}",
+        }
 
         POS_BG = {"QB": "rgba(206,147,216,0.18)", "RB": "rgba(102,187,106,0.18)",
                   "WR": "rgba(66,165,245,0.18)",  "TE": "rgba(255,167,38,0.18)"}
@@ -2629,7 +2635,7 @@ elif tab_choice == "🎯 Draft Room":
             return [f"background-color: {bg}"] * len(row) if bg else [""] * len(row)
 
         st.dataframe(
-            avail_out.style.apply(color_avail, axis=1),
+            avail_out.style.apply(color_avail, axis=1).format(_avail_fmt, na_rep=""),
             width="stretch", hide_index=True,
             height=min(60 + len(avail_out) * 35, 520),
         )
