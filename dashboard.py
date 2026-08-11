@@ -777,7 +777,7 @@ if tab_choice == "📊 Player Projections":
     display["ADP"]      = display["ADP"].round(1)
 
     st.write(
-        display.to_html(escape=False, index=True, classes="dataframe"),
+        display.to_html(escape=False, index=True, classes="dataframe", max_rows=None),
         unsafe_allow_html=True,
     )
 
