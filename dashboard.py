@@ -642,6 +642,62 @@ def _build_proj_lu(all_proj_df, bye_map, var_lu=None, matchup_adj=None, off_str=
     return lu
 
 
+def _optimal_lineup_week(roster_names, proj_lu, week, opp_lu=None):
+    """Pick the best starting lineup for one week from a user-entered roster.
+    Lineup: QB, 2 RB, 3 WR, TE, FLEX (best remaining RB/WR/TE) — same starting
+    requirements used elsewhere in the app (DraftKings best-ball format).
+    Returns (starters, bench):
+      starters — list of dicts {slot, name, pos, team, opp, pts}, in slot order.
+      bench    — remaining roster players (incl. byes), sorted by proj pts desc.
+    """
+    avail, bye_out = [], []
+    for name in roster_names:
+        p = proj_lu.get(name)
+        if not p:
+            continue
+        pos, team, bye = p["pos"], p.get("team", ""), p.get("bye", 0)
+        opp_team = (opp_lu or {}).get(team, {}).get(week)
+        if bye and bye == week:
+            bye_out.append({"name": name, "pos": pos, "team": team, "pts": 0.0, "opp": "BYE"})
+            continue
+        wppw = p.get("weekly_ppw") or {}
+        pts = wppw.get(week, p["proj_ppw"])
+        avail.append({"name": name, "pos": pos, "team": team, "pts": pts,
+                      "opp": f"vs {opp_team}" if opp_team else "—"})
+
+    pool = {pos: sorted([a for a in avail if a["pos"] == pos], key=lambda x: -x["pts"])
+            for pos in ("QB", "RB", "WR", "TE")}
+    used = set()
+    starters = []
+
+    def _fill(pos_key, slot_label):
+        for cand in pool.get(pos_key, []):
+            if cand["name"] not in used:
+                used.add(cand["name"])
+                starters.append({**cand, "slot": slot_label})
+                return
+        starters.append({"slot": slot_label, "name": "—", "pos": pos_key, "team": "", "pts": 0.0, "opp": ""})
+
+    _fill("QB", "QB")
+    _fill("RB", "RB1"); _fill("RB", "RB2")
+    _fill("WR", "WR1"); _fill("WR", "WR2"); _fill("WR", "WR3")
+    _fill("TE", "TE")
+
+    flex_pool = sorted(
+        [a for a in avail if a["pos"] in ("RB", "WR", "TE") and a["name"] not in used],
+        key=lambda x: -x["pts"],
+    )
+    if flex_pool:
+        best = flex_pool[0]
+        used.add(best["name"])
+        starters.append({**best, "slot": "FLEX"})
+    else:
+        starters.append({"slot": "FLEX", "name": "—", "pos": "-", "team": "", "pts": 0.0, "opp": ""})
+
+    bench = sorted([a for a in avail if a["name"] not in used] + bye_out, key=lambda x: -x["pts"])
+    return starters, bench
+
+
 def _project_bb_score(roster_names, proj_lu, num_weeks=14):
     """
     Estimate DraftKings Best Ball total for a 20-player roster.
@@ -755,7 +811,7 @@ with st.sidebar:
     st.markdown("---")
     tab_choice = st.radio(
         "Screen",
-        ["📊 Player Projections", "🛡️ Defense Matchups", "📈 Schedule Rankings", "📅 Schedule Viewer", "📉 Weekly Projections", "🎯 Draft Room"],
+        ["📊 Player Projections", "🛡️ Defense Matchups", "📈 Schedule Rankings", "📅 Schedule Viewer", "📉 Weekly Projections", "🧩 Roster Optimizer", "🎯 Draft Room"],
         label_visibility="collapsed",
     )
     st.markdown("---")
@@ -1752,7 +1808,107 @@ elif tab_choice == "📉 Weekly Projections":
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  TAB 6 — DRAFT ROOM
+#  TAB 6 — ROSTER OPTIMIZER
+# ══════════════════════════════════════════════════════════════════════════════
+elif tab_choice == "🧩 Roster Optimizer":
+    st.header("🧩 Weekly Roster Optimizer")
+    st.caption(
+        "Enter your fantasy roster and see the optimal starting lineup — QB, 2 RB, 3 WR, TE, FLEX — "
+        "projected week by week from matchup-adjusted projections."
+    )
+
+    _all_proj_ro    = load_all_projections(file_hash=_csv_hash(PROJ_ROOT / "projections.season.csv"))
+    _bye_map_ro     = compute_bye_weeks()
+    _matchup_adj_ro = load_defense_matchup_adj()
+    _off_str_ro     = load_offense_strength()
+    _player_sigs_ro = compute_player_signals()
+    _proj_lu_ro     = _build_proj_lu(
+        _all_proj_ro, _bye_map_ro,
+        matchup_adj=_matchup_adj_ro, off_str=_off_str_ro, player_signals=_player_sigs_ro,
+    )
+    _opp_lu_ro = build_team_opponent_lookup()
+    _all_names_ro = sorted(_proj_lu_ro.keys())
+
+    roster = st.multiselect(
+        "Your roster — search and add every player on your team",
+        options=_all_names_ro,
+        default=st.session_state.get("ro_roster", []),
+        key="ro_roster",
+        help="Add all the players on your fantasy roster (any number). "
+             "The optimizer picks the best possible starting lineup for each week.",
+    )
+
+    if not roster:
+        st.info("Add players to your roster above to see the week-by-week optimal lineup.")
+    else:
+        unknown = [nm for nm in roster if nm not in _proj_lu_ro]
+        comp: dict = {}
+        for nm in roster:
+            p = _proj_lu_ro.get(nm)
+            if p:
+                comp[p["pos"]] = comp.get(p["pos"], 0) + 1
+        comp_str = " · ".join(f"{v} {k}" for k, v in sorted(comp.items()))
+        st.caption(f"Roster: {len(roster)} players — {comp_str}")
+        if unknown:
+            st.warning(f"No projection found for: {', '.join(unknown)}")
+
+        weeks = list(range(1, _SEASON_WEEKS + 1))
+        week_pick = st.selectbox("Week", weeks, index=0, key="ro_week")
+
+        starters, bench = _optimal_lineup_week(roster, _proj_lu_ro, week_pick, _opp_lu_ro)
+
+        st.subheader(f"Optimal Lineup — Week {week_pick}")
+        s_df = pd.DataFrame(starters)[["slot", "name", "pos", "team", "opp", "pts"]]
+        s_df.columns = ["Slot", "Player", "POS", "Team", "Opp", "Proj Pts"]
+        s_df["Proj Pts"] = s_df["Proj Pts"].round(1)
+        st.dataframe(s_df, width="stretch", hide_index=True)
+        st.metric("Projected Starting Total", f"{s_df['Proj Pts'].sum():.1f} pts")
+
+        with st.expander("Bench", expanded=False):
+            if bench:
+                b_df = pd.DataFrame(bench)[["name", "pos", "team", "opp", "pts"]]
+                b_df.columns = ["Player", "POS", "Team", "Opp", "Proj Pts"]
+                b_df["Proj Pts"] = b_df["Proj Pts"].round(1)
+                st.dataframe(b_df, width="stretch", hide_index=True)
+            else:
+                st.caption("No bench players.")
+
+        # ── Season-long optimal totals ──────────────────────────────────────────
+        st.markdown("---")
+        st.subheader("📈 Season-Long Optimal Totals")
+
+        season_rows, all_rows = [], []
+        for wk in weeks:
+            wk_starters, _ = _optimal_lineup_week(roster, _proj_lu_ro, wk, _opp_lu_ro)
+            season_rows.append({"Week": wk, "Optimal Pts": round(sum(s["pts"] for s in wk_starters), 1)})
+            for s in wk_starters:
+                all_rows.append({"Week": wk, "Slot": s["slot"], "Player": s["name"],
+                                  "POS": s["pos"], "Opp": s["opp"], "Proj Pts": round(s["pts"], 1)})
+        season_df = pd.DataFrame(season_rows)
+
+        fig_ro = go.Figure()
+        fig_ro.add_trace(go.Bar(x=season_df["Week"], y=season_df["Optimal Pts"], marker_color="#42A5F5"))
+        fig_ro.update_layout(
+            xaxis=dict(title="Week", tickmode="linear", tick0=1, dtick=1, tickvals=weeks),
+            yaxis=dict(title="Projected Optimal Points"),
+            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(color="#e0e0e0"), height=380, margin=dict(l=40, r=20, t=30, b=40),
+        )
+        fig_ro.update_xaxes(gridcolor="rgba(255,255,255,0.08)")
+        fig_ro.update_yaxes(gridcolor="rgba(255,255,255,0.08)", zeroline=False)
+        st.plotly_chart(fig_ro, use_container_width=True)
+
+        st.caption(
+            f"Season total (optimal lineup started every week): **{season_df['Optimal Pts'].sum():.1f} pts** "
+            f"across {len(weeks)} weeks."
+        )
+
+        with st.expander("📋 Full week-by-week lineup table", expanded=False):
+            st.dataframe(pd.DataFrame(all_rows), width="stretch", hide_index=True, height=500)
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  TAB 7 — DRAFT ROOM
 # ══════════════════════════════════════════════════════════════════════════════
 elif tab_choice == "🎯 Draft Room":
     st.header("🎯 Live Draft Room")
