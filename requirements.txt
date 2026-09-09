@@ -3,3 +3,6 @@ pandas>=2.0.0,<3.0.0
 numpy>=2.0.0
 plotly>=5.18.0,<6.0.0
 pyarrow>=17.0.0
+requests>=2.31.0
+pulp>=2.8.0
+python-dotenv>=1.0.0

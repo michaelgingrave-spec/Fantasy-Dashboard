@@ -6,3 +6,9 @@ outputs/
 *.xlsx
 *.log
 .streamlit/secrets.toml
+.streamlit/espn_secrets.json
+
+# DFS runtime caches (DK API responses + odds). Projections and Data Suite CSVs
+# under data/dfs/ are intentionally tracked so the deployed app has them.
+data/dfs/dk/
+data/dfs/.cache/

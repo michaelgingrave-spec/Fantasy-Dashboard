@@ -1,0 +1,3076 @@
+{
+ "draftables": [
+  {
+   "playerDkId": 11370,
+   "displayName": "Josh Allen",
+   "position": "QB",
+   "salary": 7000,
+   "teamAbbreviation": "BUF",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175952,
+    "name": "BUF @ HOU",
+    "nameDisplay": [
+     {
+      "value": "BUF",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "HOU"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 485441,
+   "displayName": "Joe Burrow",
+   "position": "QB",
+   "salary": 6900,
+   "teamAbbreviation": "CIN",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175928,
+    "name": "TB @ CIN",
+    "nameDisplay": [
+     {
+      "value": "TB"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CIN",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 17173,
+   "displayName": "Lamar Jackson",
+   "position": "QB",
+   "salary": 6800,
+   "teamAbbreviation": "BAL",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175934,
+    "name": "BAL @ IND",
+    "nameDisplay": [
+     {
+      "value": "BAL",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "IND"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 479300,
+   "displayName": "Jalen Hurts",
+   "position": "QB",
+   "salary": 6600,
+   "teamAbbreviation": "PHI",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175988,
+    "name": "WAS @ PHI",
+    "nameDisplay": [
+     {
+      "value": "WAS"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PHI",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 779695,
+   "displayName": "Jayden Daniels",
+   "position": "QB",
+   "salary": 6500,
+   "teamAbbreviation": "WAS",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175988,
+    "name": "WAS @ PHI",
+    "nameDisplay": [
+     {
+      "value": "WAS",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PHI"
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 18078,
+   "displayName": "Dak Prescott",
+   "position": "QB",
+   "salary": 6400,
+   "teamAbbreviation": "DAL",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175514,
+    "name": "DAL @ NYG",
+    "nameDisplay": [
+     {
+      "value": "DAL",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "NYG"
+     }
+    ],
+    "startTime": "2026-09-14T00:20:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 779692,
+   "displayName": "Caleb Williams",
+   "position": "QB",
+   "salary": 6300,
+   "teamAbbreviation": "CHI",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176168,
+    "name": "CHI @ CAR",
+    "nameDisplay": [
+     {
+      "value": "CHI",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CAR"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 468527,
+   "displayName": "Justin Herbert",
+   "position": "QB",
+   "salary": 6100,
+   "teamAbbreviation": "LAC",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176048,
+    "name": "ARI @ LAC",
+    "nameDisplay": [
+     {
+      "value": "ARI"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "LAC",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 693115,
+   "displayName": "Jahmyr Gibbs",
+   "position": "RB",
+   "salary": 8000,
+   "teamAbbreviation": "DET",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176012,
+    "name": "NO @ DET",
+    "nameDisplay": [
+     {
+      "value": "NO"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "DET",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 693112,
+   "displayName": "Bijan Robinson",
+   "position": "RB",
+   "salary": 7700,
+   "teamAbbreviation": "ATL",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176144,
+    "name": "ATL @ PIT",
+    "nameDisplay": [
+     {
+      "value": "ATL",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PIT"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 468700,
+   "displayName": "Jonathan Taylor",
+   "position": "RB",
+   "salary": 7300,
+   "teamAbbreviation": "IND",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175934,
+    "name": "BAL @ IND",
+    "nameDisplay": [
+     {
+      "value": "BAL"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "IND",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 640895,
+   "displayName": "James Cook III",
+   "position": "RB",
+   "salary": 7200,
+   "teamAbbreviation": "BUF",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175952,
+    "name": "BUF @ HOU",
+    "nameDisplay": [
+     {
+      "value": "BUF",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "HOU"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 706641,
+   "displayName": "Chase Brown",
+   "position": "RB",
+   "salary": 7100,
+   "teamAbbreviation": "CIN",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175928,
+    "name": "TB @ CIN",
+    "nameDisplay": [
+     {
+      "value": "TB"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CIN",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 706555,
+   "displayName": "De'Von Achane",
+   "position": "RB",
+   "salary": 7000,
+   "teamAbbreviation": "MIA",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176090,
+    "name": "MIA @ LV",
+    "nameDisplay": [
+     {
+      "value": "MIA",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "LV"
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 18972,
+   "displayName": "Saquon Barkley",
+   "position": "RB",
+   "salary": 6900,
+   "teamAbbreviation": "PHI",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175988,
+    "name": "WAS @ PHI",
+    "nameDisplay": [
+     {
+      "value": "WAS"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PHI",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 886062,
+   "displayName": "Omarion Hampton",
+   "position": "RB",
+   "salary": 6800,
+   "teamAbbreviation": "LAC",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176048,
+    "name": "ARI @ LAC",
+    "nameDisplay": [
+     {
+      "value": "ARI"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "LAC",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 19898,
+   "displayName": "Derrick Henry",
+   "position": "RB",
+   "salary": 6700,
+   "teamAbbreviation": "BAL",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175934,
+    "name": "BAL @ IND",
+    "nameDisplay": [
+     {
+      "value": "BAL",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "IND"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 874247,
+   "displayName": "Ashton Jeanty",
+   "position": "RB",
+   "salary": 6600,
+   "teamAbbreviation": "LV",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176090,
+    "name": "MIA @ LV",
+    "nameDisplay": [
+     {
+      "value": "MIA"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "LV",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 640873,
+   "displayName": "Kenneth Walker III",
+   "position": "RB",
+   "salary": 6500,
+   "teamAbbreviation": "KC",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175651,
+    "name": "DEN @ KC",
+    "nameDisplay": [
+     {
+      "value": "DEN"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "KC",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-15T00:15:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 957946,
+   "displayName": "Jeremiyah Love",
+   "position": "RB",
+   "salary": 6400,
+   "teamAbbreviation": "ARI",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176048,
+    "name": "ARI @ LAC",
+    "nameDisplay": [
+     {
+      "value": "ARI",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "LAC"
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 12715,
+   "displayName": "Josh Jacobs",
+   "position": "RB",
+   "salary": 6300,
+   "teamAbbreviation": "GB",
+   "status": "OUT",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175964,
+    "name": "GB @ MIN",
+    "nameDisplay": [
+     {
+      "value": "GB",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "MIN"
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 560593,
+   "displayName": "Javonte Williams",
+   "position": "RB",
+   "salary": 6300,
+   "teamAbbreviation": "DAL",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175514,
+    "name": "DAL @ NYG",
+    "nameDisplay": [
+     {
+      "value": "DAL",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "NYG"
+     }
+    ],
+    "startTime": "2026-09-14T00:20:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 631855,
+   "displayName": "Breece Hall",
+   "position": "RB",
+   "salary": 6200,
+   "teamAbbreviation": "NYJ",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176114,
+    "name": "NYJ @ TEN",
+    "nameDisplay": [
+     {
+      "value": "NYJ",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "TEN"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 485479,
+   "displayName": "D'Andre Swift",
+   "position": "RB",
+   "salary": 6100,
+   "teamAbbreviation": "CHI",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176168,
+    "name": "CHI @ CAR",
+    "nameDisplay": [
+     {
+      "value": "CHI",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CAR"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 12882,
+   "displayName": "David Montgomery",
+   "position": "RB",
+   "salary": 6000,
+   "teamAbbreviation": "HOU",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175952,
+    "name": "BUF @ HOU",
+    "nameDisplay": [
+     {
+      "value": "BUF"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "HOU",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 553669,
+   "displayName": "Travis Etienne Jr.",
+   "position": "RB",
+   "salary": 5900,
+   "teamAbbreviation": "NO",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176012,
+    "name": "NO @ DET",
+    "nameDisplay": [
+     {
+      "value": "NO",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "DET"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 886072,
+   "displayName": "Bhayshul Tuten",
+   "position": "RB",
+   "salary": 5800,
+   "teamAbbreviation": "JAX",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176030,
+    "name": "CLE @ JAX",
+    "nameDisplay": [
+     {
+      "value": "CLE"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "JAX",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 875779,
+   "displayName": "Cam Skattebo",
+   "position": "RB",
+   "salary": 5800,
+   "teamAbbreviation": "NYG",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175514,
+    "name": "DAL @ NYG",
+    "nameDisplay": [
+     {
+      "value": "DAL"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "NYG",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-14T00:20:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 780214,
+   "displayName": "Bucky Irving",
+   "position": "RB",
+   "salary": 5700,
+   "teamAbbreviation": "TB",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175928,
+    "name": "TB @ CIN",
+    "nameDisplay": [
+     {
+      "value": "TB",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CIN"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 18062,
+   "displayName": "Tony Pollard",
+   "position": "RB",
+   "salary": 5600,
+   "teamAbbreviation": "TEN",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176114,
+    "name": "NYJ @ TEN",
+    "nameDisplay": [
+     {
+      "value": "NYJ"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "TEN",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 557826,
+   "displayName": "Ja'Marr Chase",
+   "position": "WR",
+   "salary": 7800,
+   "teamAbbreviation": "CIN",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175928,
+    "name": "TB @ CIN",
+    "nameDisplay": [
+     {
+      "value": "TB"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CIN",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 560800,
+   "displayName": "Amon-Ra St. Brown",
+   "position": "WR",
+   "salary": 7500,
+   "teamAbbreviation": "DET",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176012,
+    "name": "NO @ DET",
+    "nameDisplay": [
+     {
+      "value": "NO"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "DET",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 485450,
+   "displayName": "CeeDee Lamb",
+   "position": "WR",
+   "salary": 7400,
+   "teamAbbreviation": "DAL",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175514,
+    "name": "DAL @ NYG",
+    "nameDisplay": [
+     {
+      "value": "DAL",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "NYG"
+     }
+    ],
+    "startTime": "2026-09-14T00:20:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 485454,
+   "displayName": "Justin Jefferson",
+   "position": "WR",
+   "salary": 7300,
+   "teamAbbreviation": "MIN",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175964,
+    "name": "GB @ MIN",
+    "nameDisplay": [
+     {
+      "value": "GB"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "MIN",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 560761,
+   "displayName": "Nico Collins",
+   "position": "WR",
+   "salary": 7000,
+   "teamAbbreviation": "HOU",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175952,
+    "name": "BUF @ HOU",
+    "nameDisplay": [
+     {
+      "value": "BUF"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "HOU",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 779719,
+   "displayName": "Malik Nabers",
+   "position": "WR",
+   "salary": 6800,
+   "teamAbbreviation": "NYG",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175514,
+    "name": "DAL @ NYG",
+    "nameDisplay": [
+     {
+      "value": "DAL"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "NYG",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-14T00:20:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 640762,
+   "displayName": "Chris Olave",
+   "position": "WR",
+   "salary": 6700,
+   "teamAbbreviation": "NO",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176012,
+    "name": "NO @ DET",
+    "nameDisplay": [
+     {
+      "value": "NO",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "DET"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 545016,
+   "displayName": "DeVonta Smith",
+   "position": "WR",
+   "salary": 6600,
+   "teamAbbreviation": "PHI",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175988,
+    "name": "WAS @ PHI",
+    "nameDisplay": [
+     {
+      "value": "WAS"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PHI",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 630530,
+   "displayName": "Drake London",
+   "position": "WR",
+   "salary": 6500,
+   "teamAbbreviation": "ATL",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176144,
+    "name": "ATL @ PIT",
+    "nameDisplay": [
+     {
+      "value": "ATL",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PIT"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 706533,
+   "displayName": "Rashee Rice",
+   "position": "WR",
+   "salary": 6500,
+   "teamAbbreviation": "KC",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175651,
+    "name": "DEN @ KC",
+    "nameDisplay": [
+     {
+      "value": "DEN"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "KC",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-15T00:15:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 706447,
+   "displayName": "Zay Flowers",
+   "position": "WR",
+   "salary": 6400,
+   "teamAbbreviation": "BAL",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175934,
+    "name": "BAL @ IND",
+    "nameDisplay": [
+     {
+      "value": "BAL",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "IND"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 624741,
+   "displayName": "George Pickens",
+   "position": "WR",
+   "salary": 6400,
+   "teamAbbreviation": "DAL",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175514,
+    "name": "DAL @ NYG",
+    "nameDisplay": [
+     {
+      "value": "DAL",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "NYG"
+     }
+    ],
+    "startTime": "2026-09-14T00:20:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 468715,
+   "displayName": "Tee Higgins",
+   "position": "WR",
+   "salary": 6300,
+   "teamAbbreviation": "CIN",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175928,
+    "name": "TB @ CIN",
+    "nameDisplay": [
+     {
+      "value": "TB"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CIN",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 558963,
+   "displayName": "Jaylen Waddle",
+   "position": "WR",
+   "salary": 6300,
+   "teamAbbreviation": "DEN",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175651,
+    "name": "DEN @ KC",
+    "nameDisplay": [
+     {
+      "value": "DEN",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "KC"
+     }
+    ],
+    "startTime": "2026-09-15T00:15:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 886104,
+   "displayName": "Emeka Egbuka",
+   "position": "WR",
+   "salary": 6200,
+   "teamAbbreviation": "TB",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175928,
+    "name": "TB @ CIN",
+    "nameDisplay": [
+     {
+      "value": "TB",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CIN"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 886102,
+   "displayName": "Tetairoa McMillan",
+   "position": "WR",
+   "salary": 6100,
+   "teamAbbreviation": "CAR",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176168,
+    "name": "CHI @ CAR",
+    "nameDisplay": [
+     {
+      "value": "CHI"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CAR",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 624663,
+   "displayName": "Jameson Williams",
+   "position": "WR",
+   "salary": 6000,
+   "teamAbbreviation": "DET",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176012,
+    "name": "NO @ DET",
+    "nameDisplay": [
+     {
+      "value": "NO"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "DET",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 19036,
+   "displayName": "Courtland Sutton",
+   "position": "WR",
+   "salary": 6000,
+   "teamAbbreviation": "DEN",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175651,
+    "name": "DEN @ KC",
+    "nameDisplay": [
+     {
+      "value": "DEN",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "KC"
+     }
+    ],
+    "startTime": "2026-09-15T00:15:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 787795,
+   "displayName": "Ladd McConkey",
+   "position": "WR",
+   "salary": 5900,
+   "teamAbbreviation": "LAC",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176048,
+    "name": "ARI @ LAC",
+    "nameDisplay": [
+     {
+      "value": "ARI"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "LAC",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 640851,
+   "displayName": "Christian Watson",
+   "position": "WR",
+   "salary": 5900,
+   "teamAbbreviation": "GB",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175964,
+    "name": "GB @ MIN",
+    "nameDisplay": [
+     {
+      "value": "GB",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "MIN"
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 640761,
+   "displayName": "Garrett Wilson",
+   "position": "WR",
+   "salary": 5800,
+   "teamAbbreviation": "NYJ",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176114,
+    "name": "NYJ @ TEN",
+    "nameDisplay": [
+     {
+      "value": "NYJ",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "TEN"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 700228,
+   "displayName": "Jordan Addison",
+   "position": "WR",
+   "salary": 5800,
+   "teamAbbreviation": "MIN",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175964,
+    "name": "GB @ MIN",
+    "nameDisplay": [
+     {
+      "value": "GB"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "MIN",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 20277,
+   "displayName": "Terry McLaurin",
+   "position": "WR",
+   "salary": 5700,
+   "teamAbbreviation": "WAS",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175988,
+    "name": "WAS @ PHI",
+    "nameDisplay": [
+     {
+      "value": "WAS",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PHI"
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 640883,
+   "displayName": "Alec Pierce",
+   "position": "WR",
+   "salary": 5700,
+   "teamAbbreviation": "IND",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175934,
+    "name": "BAL @ IND",
+    "nameDisplay": [
+     {
+      "value": "BAL"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "IND",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 694429,
+   "displayName": "Parker Washington",
+   "position": "WR",
+   "salary": 5600,
+   "teamAbbreviation": "JAX",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176030,
+    "name": "CLE @ JAX",
+    "nameDisplay": [
+     {
+      "value": "CLE"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "JAX",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 20423,
+   "displayName": "DJ Moore",
+   "position": "WR",
+   "salary": 5600,
+   "teamAbbreviation": "BUF",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175952,
+    "name": "BUF @ HOU",
+    "nameDisplay": [
+     {
+      "value": "BUF",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "HOU"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 886103,
+   "displayName": "Luther Burden III",
+   "position": "WR",
+   "salary": 5500,
+   "teamAbbreviation": "CHI",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176168,
+    "name": "CHI @ CAR",
+    "nameDisplay": [
+     {
+      "value": "CHI",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CAR"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 787676,
+   "displayName": "Brian Thomas Jr.",
+   "position": "WR",
+   "salary": 5500,
+   "teamAbbreviation": "JAX",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176030,
+    "name": "CLE @ JAX",
+    "nameDisplay": [
+     {
+      "value": "CLE"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "JAX",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 779717,
+   "displayName": "Rome Odunze",
+   "position": "WR",
+   "salary": 5400,
+   "teamAbbreviation": "CHI",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176168,
+    "name": "CHI @ CAR",
+    "nameDisplay": [
+     {
+      "value": "CHI",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CAR"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 19923,
+   "displayName": "DK Metcalf",
+   "position": "WR",
+   "salary": 5400,
+   "teamAbbreviation": "PIT",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176144,
+    "name": "ATL @ PIT",
+    "nameDisplay": [
+     {
+      "value": "ATL"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PIT",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 781453,
+   "displayName": "Brock Bowers",
+   "position": "TE",
+   "salary": 6900,
+   "teamAbbreviation": "LV",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176090,
+    "name": "MIA @ LV",
+    "nameDisplay": [
+     {
+      "value": "MIA"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "LV",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 640885,
+   "displayName": "Trey McBride",
+   "position": "TE",
+   "salary": 6800,
+   "teamAbbreviation": "ARI",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176048,
+    "name": "ARI @ LAC",
+    "nameDisplay": [
+     {
+      "value": "ARI",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "LAC"
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 877803,
+   "displayName": "Colston Loveland",
+   "position": "TE",
+   "salary": 5300,
+   "teamAbbreviation": "CHI",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176168,
+    "name": "CHI @ CAR",
+    "nameDisplay": [
+     {
+      "value": "CHI",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "CAR"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 886165,
+   "displayName": "Tyler Warren",
+   "position": "TE",
+   "salary": 4900,
+   "teamAbbreviation": "IND",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175934,
+    "name": "BAL @ IND",
+    "nameDisplay": [
+     {
+      "value": "BAL"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "IND",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 557862,
+   "displayName": "Kyle Pitts Sr.",
+   "position": "TE",
+   "salary": 4700,
+   "teamAbbreviation": "ATL",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176144,
+    "name": "ATL @ PIT",
+    "nameDisplay": [
+     {
+      "value": "ATL",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PIT"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 699339,
+   "displayName": "Dalton Kincaid",
+   "position": "TE",
+   "salary": 4600,
+   "teamAbbreviation": "BUF",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175952,
+    "name": "BUF @ HOU",
+    "nameDisplay": [
+     {
+      "value": "BUF",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "HOU"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 706550,
+   "displayName": "Tucker Kraft",
+   "position": "TE",
+   "salary": 4500,
+   "teamAbbreviation": "GB",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175964,
+    "name": "GB @ MIN",
+    "nameDisplay": [
+     {
+      "value": "GB",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "MIN"
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 706508,
+   "displayName": "Sam LaPorta",
+   "position": "TE",
+   "salary": 4400,
+   "teamAbbreviation": "DET",
+   "status": "Q",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176012,
+    "name": "NO @ DET",
+    "nameDisplay": [
+     {
+      "value": "NO"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "DET",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 641030,
+   "displayName": "Isaiah Likely",
+   "position": "TE",
+   "salary": 4300,
+   "teamAbbreviation": "NYG",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175514,
+    "name": "DAL @ NYG",
+    "nameDisplay": [
+     {
+      "value": "DAL"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "NYG",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-14T00:20:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 886166,
+   "displayName": "Harold Fannin Jr.",
+   "position": "TE",
+   "salary": 4200,
+   "teamAbbreviation": "CLE",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176030,
+    "name": "CLE @ JAX",
+    "nameDisplay": [
+     {
+      "value": "CLE",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "JAX"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 17055,
+   "displayName": "Dallas Goedert",
+   "position": "TE",
+   "salary": 4100,
+   "teamAbbreviation": "PHI",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175988,
+    "name": "WAS @ PHI",
+    "nameDisplay": [
+     {
+      "value": "WAS"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PHI",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 641038,
+   "displayName": "Chig Okonkwo",
+   "position": "TE",
+   "salary": 4000,
+   "teamAbbreviation": "WAS",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175988,
+    "name": "WAS @ PHI",
+    "nameDisplay": [
+     {
+      "value": "WAS",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PHI"
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 11557,
+   "displayName": "Travis Kelce",
+   "position": "TE",
+   "salary": 4000,
+   "teamAbbreviation": "KC",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175651,
+    "name": "DEN @ KC",
+    "nameDisplay": [
+     {
+      "value": "DEN"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "KC",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-15T00:15:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 16963,
+   "displayName": "Mark Andrews",
+   "position": "TE",
+   "salary": 3900,
+   "teamAbbreviation": "BAL",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175934,
+    "name": "BAL @ IND",
+    "nameDisplay": [
+     {
+      "value": "BAL",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "IND"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 18461,
+   "displayName": "Chargers",
+   "position": "DST",
+   "salary": 3500,
+   "teamAbbreviation": "LAC",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176048,
+    "name": "ARI @ LAC",
+    "nameDisplay": [
+     {
+      "value": "ARI"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "LAC",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 18489,
+   "displayName": "Jaguars",
+   "position": "DST",
+   "salary": 3400,
+   "teamAbbreviation": "JAX",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176030,
+    "name": "CLE @ JAX",
+    "nameDisplay": [
+     {
+      "value": "CLE"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "JAX",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 18456,
+   "displayName": "Steelers",
+   "position": "DST",
+   "salary": 3300,
+   "teamAbbreviation": "PIT",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176144,
+    "name": "ATL @ PIT",
+    "nameDisplay": [
+     {
+      "value": "ATL"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PIT",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 18348,
+   "displayName": "Lions",
+   "position": "DST",
+   "salary": 3200,
+   "teamAbbreviation": "DET",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176012,
+    "name": "NO @ DET",
+    "nameDisplay": [
+     {
+      "value": "NO"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "DET",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 18448,
+   "displayName": "Eagles",
+   "position": "DST",
+   "salary": 3200,
+   "teamAbbreviation": "PHI",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175988,
+    "name": "WAS @ PHI",
+    "nameDisplay": [
+     {
+      "value": "WAS"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "PHI",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 18366,
+   "displayName": "Titans",
+   "position": "DST",
+   "salary": 3100,
+   "teamAbbreviation": "TEN",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6176114,
+    "name": "NYJ @ TEN",
+    "nameDisplay": [
+     {
+      "value": "NYJ"
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "TEN",
+      "isEmphasized": true
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 18302,
+   "displayName": "Bills",
+   "position": "DST",
+   "salary": 3100,
+   "teamAbbreviation": "BUF",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175952,
+    "name": "BUF @ HOU",
+    "nameDisplay": [
+     {
+      "value": "BUF",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "HOU"
+     }
+    ],
+    "startTime": "2026-09-13T17:00:00.0000000Z"
+   }
+  },
+  {
+   "playerDkId": 18357,
+   "displayName": "Packers",
+   "position": "DST",
+   "salary": 3000,
+   "teamAbbreviation": "GB",
+   "status": "None",
+   "isDisabled": false,
+   "competition": {
+    "competitionId": 6175964,
+    "name": "GB @ MIN",
+    "nameDisplay": [
+     {
+      "value": "GB",
+      "isEmphasized": true
+     },
+     {
+      "value": " @ "
+     },
+     {
+      "value": "MIN"
+     }
+    ],
+    "startTime": "2026-09-13T20:25:00.0000000Z"
+   }
+  }
+ ],
+ "competitions": [
+  {
+   "competitionId": 6175928,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 327,
+    "teamName": "Bengals",
+    "abbreviation": "CIN",
+    "city": "Cincinnati",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18320.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 362,
+    "teamName": "Buccaneers",
+    "abbreviation": "TB",
+    "city": "Tampa Bay",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18474.png",
+    "darkModeImageUrl": ""
+   },
+   "startTime": "2026-09-13T17:00:00.0000000Z",
+   "name": "TB @ CIN",
+   "venue": "Paul Brown Stadium",
+   "weather": {
+    "icon": "partly-cloudy-day",
+    "isDome": false
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "FOX"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6175934,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 338,
+    "teamName": "Colts",
+    "abbreviation": "IND",
+    "city": "Indianapolis",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18372.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 366,
+    "teamName": "Ravens",
+    "abbreviation": "BAL",
+    "city": "Baltimore",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18495.png",
+    "darkModeImageUrl": ""
+   },
+   "startTime": "2026-09-13T17:00:00.0000000Z",
+   "name": "BAL @ IND",
+   "venue": "Lucas Oil Stadium",
+   "weather": {
+    "icon": "partly-cloudy-day",
+    "isDome": true
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "CBS"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6175952,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 325,
+    "teamName": "Texans",
+    "abbreviation": "HOU",
+    "city": "Houston",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18500.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 324,
+    "teamName": "Bills",
+    "abbreviation": "BUF",
+    "city": "Buffalo",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18302.png",
+    "darkModeImageUrl": ""
+   },
+   "startTime": "2026-09-13T17:00:00.0000000Z",
+   "name": "BUF @ HOU",
+   "venue": "Reliant Stadium",
+   "weather": {
+    "icon": "rain",
+    "isDome": false
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "CBS"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6176012,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 334,
+    "teamName": "Lions",
+    "abbreviation": "DET",
+    "city": "Detroit",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18348.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 350,
+    "teamName": "Saints",
+    "abbreviation": "NO",
+    "city": "New Orleans",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18423.png",
+    "darkModeImageUrl": ""
+   },
+   "startTime": "2026-09-13T17:00:00.0000000Z",
+   "name": "NO @ DET",
+   "venue": "Ford Field",
+   "weather": {
+    "icon": "partly-cloudy-day",
+    "isDome": true
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "FOX"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6176030,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 365,
+    "teamName": "Jaguars",
+    "abbreviation": "JAX",
+    "city": "Jacksonville",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18489.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 329,
+    "teamName": "Browns",
+    "abbreviation": "CLE",
+    "city": "Cleveland",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18325.png",
+    "darkModeImageUrl": ""
+   },
+   "startTime": "2026-09-13T17:00:00.0000000Z",
+   "name": "CLE @ JAX",
+   "venue": "EverBank Field",
+   "weather": {
+    "icon": "partly-cloudy-day",
+    "isDome": false
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "CBS"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6176114,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 336,
+    "teamName": "Titans",
+    "abbreviation": "TEN",
+    "city": "Tennessee",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18366.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 352,
+    "teamName": "Jets",
+    "abbreviation": "NYJ",
+    "city": "New York",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18441.png",
+    "darkModeImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/d/18441.png"
+   },
+   "startTime": "2026-09-13T17:00:00.0000000Z",
+   "name": "NYJ @ TEN",
+   "venue": "LP Field",
+   "weather": {
+    "icon": "clear-day",
+    "isDome": false
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "CBS"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6176144,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 356,
+    "teamName": "Steelers",
+    "abbreviation": "PIT",
+    "city": "Pittsburgh",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18456.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 323,
+    "teamName": "Falcons",
+    "abbreviation": "ATL",
+    "city": "Atlanta",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18297.png",
+    "darkModeImageUrl": ""
+   },
+   "startTime": "2026-09-13T17:00:00.0000000Z",
+   "name": "ATL @ PIT",
+   "venue": "Heinz Field",
+   "weather": {
+    "icon": "partly-cloudy-day",
+    "isDome": false
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "FOX"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6176168,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 364,
+    "teamName": "Panthers",
+    "abbreviation": "CAR",
+    "city": "Carolina",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18484.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 326,
+    "teamName": "Bears",
+    "abbreviation": "CHI",
+    "city": "Chicago",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18312.png",
+    "darkModeImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/d/18312.png"
+   },
+   "startTime": "2026-09-13T17:00:00.0000000Z",
+   "name": "CHI @ CAR",
+   "venue": "Bank of America Stadium",
+   "weather": {
+    "icon": "partly-cloudy-day",
+    "isDome": false
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "FOX"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6175964,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 347,
+    "teamName": "Vikings",
+    "abbreviation": "MIN",
+    "city": "Minnesota",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18409.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 335,
+    "teamName": "Packers",
+    "abbreviation": "GB",
+    "city": "Green Bay",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18357.png",
+    "darkModeImageUrl": ""
+   },
+   "startTime": "2026-09-13T20:25:00.0000000Z",
+   "name": "GB @ MIN",
+   "venue": "U.S. Bank Stadium",
+   "weather": {
+    "icon": "rain",
+    "isDome": true
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "CBS"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6175988,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 354,
+    "teamName": "Eagles",
+    "abbreviation": "PHI",
+    "city": "Philadelphia",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18448.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 363,
+    "teamName": "Commanders",
+    "abbreviation": "WAS",
+    "city": "Washington",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18480.png",
+    "darkModeImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/d/18480.png"
+   },
+   "startTime": "2026-09-13T20:25:00.0000000Z",
+   "name": "WAS @ PHI",
+   "venue": "Lincoln Financial Field",
+   "weather": {
+    "icon": "rain",
+    "isDome": false
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "FOX"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6176048,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 357,
+    "teamName": "Chargers",
+    "abbreviation": "LAC",
+    "city": "Los Angeles",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18461.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 355,
+    "teamName": "Cardinals",
+    "abbreviation": "ARI",
+    "city": "Arizona",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18454.png",
+    "darkModeImageUrl": ""
+   },
+   "startTime": "2026-09-13T20:25:00.0000000Z",
+   "name": "ARI @ LAC",
+   "venue": "SoFi Stadium",
+   "weather": {
+    "icon": "clear-day",
+    "isDome": true
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "CBS"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6176090,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 341,
+    "teamName": "Raiders",
+    "abbreviation": "LV",
+    "city": "Las Vegas",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18388.png",
+    "darkModeImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/d/18388.png"
+   },
+   "awayTeam": {
+    "teamId": 345,
+    "teamName": "Dolphins",
+    "abbreviation": "MIA",
+    "city": "Miami",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18401.png",
+    "darkModeImageUrl": ""
+   },
+   "startTime": "2026-09-13T20:25:00.0000000Z",
+   "name": "MIA @ LV",
+   "venue": "Allegiant Stadium",
+   "weather": {
+    "icon": "clear-day",
+    "isDome": true
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "FOX"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6175514,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 351,
+    "teamName": "Giants",
+    "abbreviation": "NYG",
+    "city": "New York",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18432.png",
+    "darkModeImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/d/18432.png"
+   },
+   "awayTeam": {
+    "teamId": 331,
+    "teamName": "Cowboys",
+    "abbreviation": "DAL",
+    "city": "Dallas",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18336.png",
+    "darkModeImageUrl": ""
+   },
+   "startTime": "2026-09-14T00:20:00.0000000Z",
+   "name": "DAL @ NYG",
+   "venue": "MetLife Stadium",
+   "weather": {
+    "icon": "partly-cloudy-night",
+    "isDome": false
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "NBC"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "competitionId": 6175651,
+   "sport": "NFL",
+   "sportId": 1,
+   "homeTeam": {
+    "teamId": 339,
+    "teamName": "Chiefs",
+    "abbreviation": "KC",
+    "city": "Kansas City",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18379.png",
+    "darkModeImageUrl": ""
+   },
+   "awayTeam": {
+    "teamId": 332,
+    "teamName": "Broncos",
+    "abbreviation": "DEN",
+    "city": "Denver",
+    "teamImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/18342.png",
+    "darkModeImageUrl": "https://dkn.gs/sports/images/nfl/teams/logos/160/d/18342.png"
+   },
+   "startTime": "2026-09-15T00:15:00.0000000Z",
+   "name": "DEN @ KC",
+   "venue": "Arrowhead Stadium",
+   "weather": {
+    "icon": "rain",
+    "isDome": false
+   },
+   "startingLineupsAvailable": false,
+   "depthChartsAvailable": true,
+   "competitionState": "Upcoming",
+   "competitionStateDetail": "",
+   "competitionStartedEarly": false,
+   "competitionAttributes": [
+    {
+     "typeId": 9,
+     "value": "Pre-Game"
+    },
+    {
+     "typeId": 22,
+     "value": "1"
+    },
+    {
+     "typeId": 23,
+     "value": "2"
+    },
+    {
+     "typeId": 27,
+     "value": "False"
+    },
+    {
+     "typeId": 32,
+     "value": "ESPN"
+    },
+    {
+     "typeId": 46,
+     "value": "0"
+    },
+    {
+     "typeId": 47,
+     "value": "0"
+    },
+    {
+     "typeId": 83,
+     "value": "0"
+    }
+   ]
+  }
+ ]
+}

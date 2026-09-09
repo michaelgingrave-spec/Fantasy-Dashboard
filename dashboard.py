@@ -806,16 +806,25 @@ def compute_all_playoff_scores():
 
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
+_BEST_BALL_SCREENS = ["📊 Player Projections", "🛡️ Defense Matchups", "📈 Schedule Rankings",
+                      "📅 Schedule Viewer", "📉 Weekly Projections", "🧩 Roster Optimizer",
+                      "🎯 Draft Room"]
+_DFS_SCREENS = ["🏈 DFS Optimizer", "🎯 DFS Matchup Edge", "💡 DFS Suggestions", "🔍 DFS Data Check"]
+_DFS_SCREEN_MAP = {
+    "🏈 DFS Optimizer": "Optimizer", "🎯 DFS Matchup Edge": "Matchup Finder",
+    "💡 DFS Suggestions": "Suggestions", "🔍 DFS Data Check": "Data Check",
+}
+
 with st.sidebar:
     st.markdown("## 🏈 Best Ball Dashboard")
     st.markdown("---")
     tab_choice = st.radio(
         "Screen",
-        ["📊 Player Projections", "🛡️ Defense Matchups", "📈 Schedule Rankings", "📅 Schedule Viewer", "📉 Weekly Projections", "🧩 Roster Optimizer", "🎯 Draft Room"],
+        _BEST_BALL_SCREENS + _DFS_SCREENS,
         label_visibility="collapsed",
     )
     st.markdown("---")
-    st.caption("2025 defensive data · 2026 projections")
+    st.caption("2025 defensive data · 2026 projections · DraftKings DFS (weekly)")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -3038,3 +3047,20 @@ elif tab_choice == "🎯 Draft Room":
                     mime="text/csv",
                     use_container_width=True,
                 )
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  DFS SCREENS — DraftKings weekly optimizer (folded in from the standalone app)
+# ══════════════════════════════════════════════════════════════════════════════
+elif tab_choice in _DFS_SCREENS:
+    try:
+        from dfs import screens as _dfs_screens
+    except Exception as _e:  # missing optional dep (pulp)
+        st.header(tab_choice)
+        st.error(
+            "The DFS module needs extra packages. Install them and reload:\n\n"
+            "```\npip install pulp python-dotenv\n```\n\n"
+            f"(import error: {_e})"
+        )
+    else:
+        _dfs_screens.render(_DFS_SCREEN_MAP[tab_choice])
