@@ -95,6 +95,23 @@ def _player_labels(df: pd.DataFrame) -> dict[str, str]:
     }
 
 
+def _cur_season() -> int:
+    try:
+        from matchup_model.opp.blend import current_season
+        return current_season()
+    except Exception:  # noqa: BLE001
+        from datetime import date
+        t = date.today()
+        return t.year if t.month >= 3 else t.year - 1
+
+
+def _parse_amer(best: str | None) -> int:
+    """'bovada +150' / 'draftkings -113' -> 150 / -113; default -110."""
+    import re
+    m = re.search(r"([+-]\d{2,5})", str(best or ""))
+    return int(m.group(1)) if m else -110
+
+
 # ── entry point ────────────────────────────────────────────────────────────
 def render(screen: str) -> None:
     st.sidebar.markdown("---")
@@ -632,6 +649,14 @@ def render(screen: str) -> None:
                        + ("  ·  the *Our proj* number above blends this with the trailing "
                           "DK average" if pl.get("source") == "opp_blend" else ""))
 
+        inj = mv.team_injuries(r["team"], week=week) if hasattr(mv, "team_injuries") else pd.DataFrame()
+        if not inj.empty:
+            st.write(f"**{r['team']} injury report (wk {week})** — usage redistributes to the group:")
+            st.dataframe(inj, hide_index=True, width="stretch")
+            st.caption("`p(play)`: Out 0 · Doubtful .25 · Questionable .70. `rec ×` / `rush ×` "
+                       "= the usage-share multiplier this creates for each rotation player "
+                       "(already baked into *Our proj*).")
+
         summ = mv.usage_summary(nk)
         if summ:
             flag = summ.pop("regression_flag", None)
@@ -787,6 +812,112 @@ def render(screen: str) -> None:
         if not df["role_ratio"].notna().any():
             st.caption("⚠️ No weekly projection file for this week — couldn't run the role "
                        f"check. Drop the export at `{projection_path(week)}`.")
+
+        # log a bet straight from the table
+        from dfs import bets as _bets
+        with st.expander("🧾 Log a bet from this table"):
+            recs = show.to_dict("records")
+            opts = {f'{d["player"]} · {d["market"]} · {d["lean"]} {d["line"]} '
+                    f'({d.get("best") or "?"})': d for d in recs}
+            pick_bet = st.selectbox("Row", list(opts), key="pe_logrow")
+            br = opts[pick_bet]
+            lc1, lc2, lc3 = st.columns(3)
+            odds_in = lc1.number_input("Odds (american)", -100000, 100000,
+                                       _parse_amer(br.get("best")), step=5, key="pe_logodds")
+            stake_in = lc2.number_input("Stake (units)", 0.0, 100.0, 1.0, 0.5, key="pe_logstake")
+            book_in = lc3.text_input("Book", str(br.get("best") or "").split()[0] if br.get("best") else "",
+                                     key="pe_logbook")
+            if st.button("Log it", key="pe_logbtn"):
+                bid = _bets.add_bet(
+                    season=int(_cur_season()), week=int(week),
+                    event=cache["game"].split("  ·")[0], player=br["player"], market=br["market"],
+                    side=br["lean"], line=float(br["line"]), odds=int(odds_in), book=book_in,
+                    stake=float(stake_in), our_proj=float(br["our proj"]),
+                    ev_pct=(float(br["~EV %"]) if br.get("~EV %") is not None else None),
+                )
+                st.success(f"Logged ({bid}). Grade it on the **Bet Log** screen after the game.")
+
+    # ── Bet Log ──────────────────────────────────────────────────────────
+    elif screen == "Bet Log":
+        st.header("🧾 DFS Bet Log")
+        st.caption("Log prop bets as you place them, grade them from box scores after the "
+                   "games, and see which **edge range** actually cashes. Stored in "
+                   "`data/dfs/bets/bet_log.csv` (commit it to sync across machines).")
+        from dfs import bets as _bets
+
+        log = _bets.load()
+        top = st.columns(4)
+        ov = _bets.overall(log)
+        top[0].metric("Bets", ov["bets"])
+        top[1].metric("Record", f'{int((log["result"]=="win").sum())}-'
+                                f'{int((log["result"]=="loss").sum())}-'
+                                f'{int((log["result"]=="push").sum())}')
+        top[2].metric("Units", f'{ov["units"]:+.2f}' if ov["units"] is not None else "—")
+        top[3].metric("ROI", f'{ov["ROI%"]:+.1f}%' if ov["ROI%"] is not None else "—")
+
+        gc1, gc2 = st.columns([1, 3])
+        if gc1.button("⚖️ Grade ungraded", key="bl_grade"):
+            _, n = _bets.grade()
+            st.success(f"Graded {n} bet(s) from nflverse box scores.")
+            st.rerun()
+        gc2.caption("Grading needs the nflverse cache and only works once the game has been "
+                    "played and stats posted.")
+
+        with st.expander("➕ Add a bet manually"):
+            f = st.columns(3)
+            p_name = f[0].text_input("Player", key="bl_p")
+            p_mkt = f[1].selectbox("Market", list(_bets._STAT_COL), key="bl_m")
+            p_side = f[2].selectbox("Side", ["OVER", "UNDER"], key="bl_s")
+            g = st.columns(4)
+            p_line = g[0].number_input("Line", 0.0, 1000.0, 0.5, 0.5, key="bl_l")
+            p_odds = g[1].number_input("Odds", -100000, 100000, -110, 5, key="bl_o")
+            p_book = g[2].text_input("Book", key="bl_b")
+            p_stake = g[3].number_input("Stake (u)", 0.0, 100.0, 1.0, 0.5, key="bl_st")
+            h = st.columns(3)
+            p_wk = h[0].number_input("Week", 1, 18, int(week), key="bl_wk")
+            p_proj = h[1].number_input("Our proj (optional)", 0.0, 1000.0, 0.0, 0.1, key="bl_pr")
+            p_note = h[2].text_input("Note", key="bl_nt")
+            if st.button("Add", key="bl_add") and p_name:
+                _bets.add_bet(season=int(_cur_season()), week=int(p_wk),
+                              event="", player=p_name, market=p_mkt, side=p_side,
+                              line=float(p_line), odds=int(p_odds), book=p_book,
+                              stake=float(p_stake),
+                              our_proj=float(p_proj) or None, note=p_note)
+                st.rerun()
+
+        if log.empty:
+            st.info("No bets logged yet.")
+        else:
+            show_cols = ["logged_at", "week", "player", "market", "side", "line", "our_proj",
+                         "edge_pct_toward", "odds", "book", "stake", "result", "actual", "payout"]
+            st.dataframe(log[show_cols].sort_values("logged_at", ascending=False),
+                         hide_index=True, width="stretch")
+            dc1, dc2 = st.columns([2, 1])
+            del_id = dc1.text_input("Delete a bet by id", key="bl_del")
+            if dc2.button("Delete", key="bl_delbtn") and del_id:
+                _bets.delete_bet(del_id.strip())
+                st.rerun()
+
+            st.subheader("📊 Hit rate & ROI by the edge you had")
+            eb = _bets.by_edge_bucket(log)
+            if eb.empty:
+                st.info("Grade some bets first — then this shows which edge range wins.")
+            else:
+                st.dataframe(eb, hide_index=True, width="stretch")
+                st.caption("`edge range` = |our proj − line| / line, in the bet's direction. "
+                           "The goal is to find where **win% and ROI** actually peak — it is "
+                           "usually NOT the biggest edges (those are often model error).")
+            b1, b2 = st.columns(2)
+            with b1:
+                st.caption("By market")
+                mk = _bets.by_key(log, "market")
+                st.dataframe(mk if not mk.empty else pd.DataFrame({"note": ["—"]}),
+                             hide_index=True, width="stretch")
+            with b2:
+                st.caption("By side")
+                sd = _bets.by_key(log, "side")
+                st.dataframe(sd if not sd.empty else pd.DataFrame({"note": ["—"]}),
+                             hide_index=True, width="stretch")
 
     # ── Data Check ─────────────────────────────────────────────────────────
     elif screen == "Data Check":

@@ -16,8 +16,11 @@ from functools import lru_cache
 
 import numpy as np
 
-# opp-model weight in the blend, per position (rest is the trailing-FP average)
-BLEND_W = {"QB": 0.64, "RB": 0.70, "WR": 0.46, "TE": 0.60}
+# opp-model weight in the blend, per position (rest is the trailing-FP average).
+# Fitted on 2023-24, judged on a 2025 holdout — see matchup_model/opp_backtest_report.md.
+# Re-pin from that report's "fitted opp weight" line whenever the model changes materially.
+BLEND_W = {"QB": 0.64, "RB": 0.55, "WR": 0.90, "TE": 1.00}
+INJURY_ADJ = True         # fold the weekly injury report into projected usage share
 
 _HL, _LB = 4, 10          # trailing-FP EWMA — matches the backtest
 
@@ -87,7 +90,7 @@ def blended_line(name_key: str, pos: str, as_of_season: int | None = None,
         from matchup_model.opp import model as M
         from matchup_model.opp.data import dk_points_from_line
 
-        o = M.opp_line(name_key, pos, season, week, by="name")
+        o = M.opp_line(name_key, pos, season, week, by="name", injury_adj=INJURY_ADJ)
         opp_fp = o.get("dk_fp")
         if opp_fp is None or not np.isfinite(opp_fp) or opp_fp <= 0.5:
             return _fallback(name_key, pos, as_of_season, as_of_week)

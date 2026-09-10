@@ -98,12 +98,17 @@ def run() -> pd.DataFrame:
             naive = _ewma(h["dk_fp"].to_numpy())
             cur = _current_line(h, pos)
             o = M.opp_line(pid, pos, season, wk, by="id")
-            opp = o.get("dk_fp")
+            oi = M.opp_line(pid, pos, season, wk, by="id", injury_adj=True)
+            opp, opp_i = o.get("dk_fp"), oi.get("dk_fp")
             if not (np.isfinite(naive) and np.isfinite(cur) and opp is not None and np.isfinite(opp)):
                 continue
+            if opp_i is None or not np.isfinite(opp_i):
+                opp_i = opp
             rows.append(dict(season=season, week=wk, player=r["player_display_name"],
                              pos=pos, team=r["team"], actual=float(r["dk_fp"]),
-                             naive=float(naive), current=float(cur), opp=float(opp)))
+                             naive=float(naive), current=float(cur), opp=float(opp),
+                             opp_inj=float(opp_i),
+                             inj_applied=abs(oi.get("inj_mult", 1.0) - 1.0) > 0.02))
         print(f"  {season}: {len(rows)} rows ({time.time()-t0:.0f}s)")
     return pd.DataFrame(rows)
 
@@ -207,22 +212,52 @@ def report(df: pd.DataFrame) -> str:
         mb, hb = _weekly_topk(df, "blend", p)
         L.append(f"| {p} | {mn:.2f} | {mc:.2f} | {mo:.2f} | **{mb:.2f}** | {hn:.0%} | {ho:.0%} | **{hb:.0%}** |")
     L.append("")
+
+    # ── injury redistribution ────────────────────────────────────────────
+    df["blend_inj"] = _apply_blend(df.assign(opp=df["opp_inj"]), w)
+    hold = df[df.season == HOLDOUT_SEASON]
+    disr = df[df["inj_applied"]]
+    disr_h = hold[hold["inj_applied"]]
+    L.append("## Injury redistribution — does folding the weekly injury report into usage help?")
+    L.append(f"- rows where a teammate's Out/Doubtful/Questionable moved this player's share: "
+             f"**{len(disr)}** ({len(disr)/max(len(df),1):.1%} of all) · holdout {len(disr_h)}")
+    L.append("")
+    L.append("| slice | n | RMSE opp | RMSE opp+inj | ΔRMSE | RMSE blend | RMSE blend+inj | ΔRMSE |")
+    L.append("|---|--:|--:|--:|--:|--:|--:|--:|")
+    for label, sub in [("ALL test", df), ("  disrupted only", disr),
+                       (f"{HOLDOUT_SEASON} holdout", hold), ("  disrupted (holdout)", disr_h)]:
+        if len(sub) < 5:
+            continue
+        ro, ri = _rmse(sub.opp, sub.actual), _rmse(sub.opp_inj, sub.actual)
+        bo, bi = _rmse(sub.blend, sub.actual), _rmse(sub.blend_inj, sub.actual)
+        L.append(f"| {label} | {len(sub)} | {ro:.2f} | {ri:.2f} | **{ro-ri:+.2f}** | "
+                 f"{bo:.2f} | {bi:.2f} | **{bo-bi:+.2f}** |")
+    L.append("")
+    if len(disr_h) >= 20:
+        dd = disr_h["opp"].sub(disr_h.actual).abs().mean() - disr_h["opp_inj"].sub(disr_h.actual).abs().mean()
+        L.append(f"- on disrupted holdout rows, MAE improves by **{dd:+.2f}** DK pts with the injury layer")
+    L.append("")
+
     # verdict on the holdout
-    r = {c: _rmse(hold[c], hold.actual) for c in ("naive", "current", "opp", "blend")}
-    rho = {c: _spearman(hold[c], hold.actual) for c in ("naive", "current", "opp", "blend")}
+    r = {c: _rmse(hold[c], hold.actual) for c in ("naive", "current", "opp", "blend",
+                                                  "opp_inj", "blend_inj")}
+    rho = {c: _spearman(hold[c], hold.actual) for c in ("naive", "current", "opp", "blend",
+                                                        "blend_inj")}
     best_base = min(r["naive"], r["current"])
-    if r["blend"] < best_base - 0.03 and rho["blend"] >= rho["naive"] - 0.003:
-        v = ("**blend beats the baselines on the holdout** - wire the opportunity model in as "
-             "a per-position blend with the trailing average.")
+    best_model = min(r["blend"], r["blend_inj"])
+    which = "blend+injury" if r["blend_inj"] <= r["blend"] else "blend"
+    if best_model < best_base - 0.03 and rho["blend_inj"] >= rho["naive"] - 0.004:
+        v = (f"**{which} beats the baselines on the holdout** — it's the projection source. "
+             + ("Injury layer helps." if r["blend_inj"] < r["blend"] - 0.005 else
+                "Injury layer is ~neutral overall but should help on the disrupted subset."))
     elif r["opp"] < best_base - 0.03:
-        v = "**opp alone beats the baselines on the holdout** - worth wiring in."
+        v = "**opp alone beats the baselines** — worth wiring in; check the injury subset above."
     else:
-        v = ("**marginal** - the opportunity model helps RB/TE but only ties overall. Bigger "
-             "lever next: injuries/inactives + depth-chart redistribution (opportunity spikes).")
+        v = "**marginal** — keep iterating."
     L.append(f"## Verdict ({HOLDOUT_SEASON} holdout): {v}")
     L.append("")
-    L.append("RMSE   " + " · ".join(f"{k} {v:.2f}" for k, v in r.items()))
-    L.append("rho    " + " · ".join(f"{k} {v:.3f}" for k, v in rho.items()))
+    L.append("RMSE   " + " · ".join(f"{k} {vv:.2f}" for k, vv in r.items()))
+    L.append("rho    " + " · ".join(f"{k} {vv:.3f}" for k, vv in rho.items()))
     return "\n".join(L)
 
 

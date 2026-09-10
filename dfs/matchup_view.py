@@ -232,6 +232,19 @@ def model_projection(fp_proj: float, name_key: str, pos: str) -> dict:
     return {"proj": round(float(fp_proj) + lv, 1), "lean": lv, "reason": lean.get("reason", "")}
 
 
+def team_injuries(team: str, season=None, week=None) -> pd.DataFrame:
+    """This week's Out/Doubtful/Questionable for `team` + the usage multiplier each one
+    creates for the rest of the position group. Empty frame if nothing / data missing."""
+    try:
+        from matchup_model.opp import injuries as _inj
+        from matchup_model.opp.blend import current_season
+        s = int(season) if season else current_season()
+        w = int(week) if week else 1
+        return _inj.team_report(norm_team(team) or team, s, w)
+    except Exception:  # noqa: BLE001
+        return pd.DataFrame()
+
+
 # ── Matchup Machine: scheme-by-scheme offense vs defense ───────────────────
 def scheme_available() -> bool:
     return _OK and _sch.available()

@@ -32,7 +32,19 @@
 | WR | 15.05 | 15.02 | 15.05 | **15.12** | 57% | 58% | **58%** |
 | TE | 12.42 | 12.35 | 12.72 | **12.72** | 53% | 54% | **54%** |
 
-## Verdict (2025 holdout): **blend beats the baselines on the holdout** - wire the opportunity model in as a per-position blend with the trailing average.
+## Injury redistribution — does folding the weekly injury report into usage help?
+- rows where a teammate's Out/Doubtful/Questionable moved this player's share: **2991** (32.5% of all) · holdout 928
 
-RMSE   naive 7.65 · current 7.70 · opp 7.48 · blend 7.45
-rho    naive 0.507 · current 0.505 · opp 0.505 · blend 0.512
+| slice | n | RMSE opp | RMSE opp+inj | ΔRMSE | RMSE blend | RMSE blend+inj | ΔRMSE |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| ALL test | 9198 | 7.43 | 7.41 | **+0.02** | 7.40 | 7.38 | **+0.02** |
+|   disrupted only | 2991 | 7.54 | 7.51 | **+0.03** | 7.53 | 7.49 | **+0.04** |
+| 2025 holdout | 3061 | 7.48 | 7.44 | **+0.04** | 7.45 | 7.42 | **+0.03** |
+|   disrupted (holdout) | 928 | 7.46 | 7.40 | **+0.06** | 7.47 | 7.40 | **+0.07** |
+
+- on disrupted holdout rows, MAE improves by **-0.14** DK pts with the injury layer
+
+## Verdict (2025 holdout): **blend+injury beats the baselines on the holdout** — it's the projection source. Injury layer helps.
+
+RMSE   naive 7.65 · current 7.70 · opp 7.48 · blend 7.45 · opp_inj 7.44 · blend_inj 7.42
+rho    naive 0.507 · current 0.505 · opp 0.505 · blend 0.512 · blend_inj 0.518

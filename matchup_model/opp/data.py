@@ -80,6 +80,8 @@ def refresh(seasons: list[int] | None = None, force: bool = False) -> None:
               CACHE / f"stats_team_week_{y}.parquet") for y in seasons]
     jobs += [(f"{_REL}/snap_counts/snap_counts_{y}.parquet",
               CACHE / f"snap_counts_{y}.parquet") for y in seasons]
+    jobs += [(f"{_REL}/injuries/injuries_{y}.parquet",
+              CACHE / f"injuries_{y}.parquet") for y in seasons]
     n = 0
     for url, dest in jobs:
         if dest.exists() and not force:
@@ -192,6 +194,36 @@ def snaps() -> pd.DataFrame:
     df = pd.concat(frames, ignore_index=True)
     df["team"] = df["team"].map(canon_team)
     df["name_key"] = df["player"].map(_nk)
+    return df
+
+
+@lru_cache(maxsize=1)
+def injuries() -> pd.DataFrame:
+    """The weekly injury report — one row per (player, week), the latest update kept.
+    `report_status` in {Out, Doubtful, Questionable, ''}. Published Wed-Fri, so using
+    week W's report to project week W is not leakage."""
+    paths = _ensure("injuries_{}.parquet", SEASONS)
+    want = ["season", "week", "team", "gsis_id", "position", "full_name",
+            "report_status", "practice_status", "date_modified"]
+    frames = []
+    for p in paths:
+        d = pd.read_parquet(p)
+        d = d[[c for c in want if c in d.columns]].copy()
+        if "date_modified" not in d.columns:
+            d["date_modified"] = pd.NaT      # 2025+ files drop it
+        frames.append(d)
+    df = pd.concat(frames, ignore_index=True)
+    df = df[df["gsis_id"].notna() & (df["gsis_id"] != "")]
+    df["team"] = df["team"].map(canon_team)
+    df["report_status"] = df["report_status"].fillna("").astype(str).str.strip().str.lower()
+    df["week"] = pd.to_numeric(df["week"], errors="coerce")
+    df = df.dropna(subset=["week"])
+    df["week"] = df["week"].astype(int)
+    # keep the final update per player-week (by timestamp where present, else file order)
+    df["_mod"] = pd.to_datetime(df["date_modified"], errors="coerce", utc=True)
+    df = (df.sort_values("_mod", na_position="first", kind="stable")
+            .drop_duplicates(["season", "week", "gsis_id"], keep="last")
+            .drop(columns="_mod").reset_index(drop=True))
     return df
 
 

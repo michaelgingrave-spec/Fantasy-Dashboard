@@ -188,7 +188,8 @@ def _hist(key: str, pos: str, season: int, week: int, by: str = "name") -> pd.Da
     return h.sort_values(["season", "week"]).tail(LOOKBACK)
 
 
-def opp_line(key: str, pos: str, season: int, week: int, by: str = "name") -> dict:
+def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
+             injury_adj: bool = False) -> dict:
     pos = (pos or "").upper()
     if pos not in ("WR", "TE", "RB", "QB"):
         return {"dk_fp": None, "reason": f"pos {pos}"}
@@ -197,12 +198,19 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name") -> di
         return {"dk_fp": None, "reason": f"{len(h)} prior games"}
     pri = _priors(season)[pos]
     team = h.iloc[-1]["team"]
+    gsis = h.iloc[-1]["player_id"]
     tv = team_volume(team, season, week)
     n_g = len(h)
+    inj_rec = inj_rush = 1.0
+    if injury_adj:
+        from matchup_model.opp import injuries as _inj
+        inj_rec = _inj.multiplier(gsis, team, pos, "rec", season, week)
+        if pos == "RB":
+            inj_rush = _inj.multiplier(gsis, team, pos, "rush", season, week)
 
     if pos in ("WR", "TE"):
         ts = _shrink(_ewma(h["target_share"].to_numpy()), n_g,
-                     _pos_share_prior(pos), K_SHARE)
+                     _pos_share_prior(pos), K_SHARE) * inj_rec
         tgt = max(0.0, ts) * tv["pass_att"]
         n_t = float(h["targets"].sum())
         ypt = _shrink(_ewma((h.receiving_yards / h.targets.replace(0, np.nan)).to_numpy()),
@@ -220,7 +228,7 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name") -> di
         method = f"{ts:.1%} tgt share x {tv['pass_att']:.0f} att -> {tgt:.1f} tgt; {ypt:.1f} y/t"
 
     elif pos == "RB":
-        cs = _shrink(_ewma(h["carry_share"].to_numpy()), n_g, 0.42, K_SHARE)
+        cs = _shrink(_ewma(h["carry_share"].to_numpy()), n_g, 0.42, K_SHARE) * inj_rush
         car = max(0.0, cs) * tv["rush_att"]
         n_c = float(h["carries"].sum())
         ypc = _shrink(_ewma((h.rushing_yards / h.carries.replace(0, np.nan)).to_numpy()),
@@ -232,7 +240,7 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name") -> di
         vegas_rtd = TD_FROM_TOTAL_RUSH * tv["team_total"] * max(0.0, cs) \
             if np.isfinite(tv["team_total"]) else np.nan
         rush_td = _td_blend(car * rtd, vegas_rtd)
-        ts = _shrink(_ewma(h["target_share"].to_numpy()), n_g, 0.09, K_SHARE)
+        ts = _shrink(_ewma(h["target_share"].to_numpy()), n_g, 0.09, K_SHARE) * inj_rec
         tgt = max(0.0, ts) * tv["pass_att"]
         n_t = float(h["targets"].sum())
         rypt = _shrink(_ewma((h.receiving_yards / h.targets.replace(0, np.nan)).to_numpy()),
@@ -269,8 +277,12 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name") -> di
         method = f"{att:.0f} att x {ypa:.1f} ypa; +{rush_yds:.0f} rush yd"
 
     line = {k: float(round(v, 3)) for k, v in line.items() if np.isfinite(v)}
+    if injury_adj and (abs(inj_rec - 1) > 1e-3 or abs(inj_rush - 1) > 1e-3):
+        method += f"  ·  injury usage x{inj_rec:.2f}" + (
+            f"/{inj_rush:.2f} rush" if pos == "RB" and abs(inj_rush - 1) > 1e-3 else "")
     return {"line": line, "dk_fp": D.dk_points_from_line(line), "games": n_g,
-            "team": team, "vol": tv, "method": method}
+            "team": team, "vol": tv, "method": method,
+            "inj_mult": round(inj_rec if pos != "RB" else min(inj_rec, inj_rush), 3)}
 
 
 @lru_cache(maxsize=1)
