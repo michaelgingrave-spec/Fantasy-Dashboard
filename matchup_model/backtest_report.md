@@ -73,3 +73,29 @@ only build downstream if the blend beats "overall" there.
 `matchup_model/` — ingest for every FantasyPoints table, the (working, r=0.75 half-to-half)
 defense scheme predictor, empirical-Bayes shrinkage, and this walk-forward backtest harness.
 Swapping the driver stat is a one-line change in `player_splits.FP_STAT` / `_SPEC`.
+
+---
+
+## Regression-to-expected lean — the one thing that DID work (`project.py`)
+
+A player's recent **expected** fantasy points (xFP, from the advanced tables) predicts next
+week slightly better than their recent **actual** FP. `lean = 0.5·(trailing_xFP − trailing_FP)`,
+shrunk toward each player's own long-run FP−xFP gap (so rushing QBs aren't perpetually faded).
+Walk-forward, train 2023 / test 2024:
+
+| position | RMSE naive | RMSE +lean | Spearman naive | Spearman +lean | top−bottom decile of lean |
+|---|--:|--:|--:|--:|--:|
+| WR/TE | 5.802 | 5.785 | 0.641 | 0.642 | **+1.1 fp** |
+| RB | 6.444 | 6.427 | 0.618 | 0.617 | **+1.2 fp** |
+| QB | 7.862 | 7.792 | **0.447** | **0.460** | **+3.2 fp** |
+
+Small for WR/RB, genuinely useful for QB (ranking + ~1% RMSE). The lean magnitude is small
+(std ~0.7 fp WR, ~1.5 fp QB; clamped ±). It's a **tiebreaker**, not a projection rewrite.
+
+Wired into the app as:
+- `dfs/screens.py` **DFS Player Lookup** → a "Regression lean" metric + reason line.
+- **DFS Optimizer** → "Apply regression lean" checkbox tilts the objective by
+  `1 + clip(lean / max(proj, 6), ±0.12)`.
+
+Needs current-season weekly FantasyPoints exports in `data/dfs/matchup/` (the ingest globs
+by year, so newer files just work). Without them the lean is 0 everywhere and the UI says so.

@@ -19,6 +19,7 @@ try:
     from matchup_model import ingest as _mi
     from matchup_model import player_splits as _ps
     from matchup_model import defense_model as _dm
+    from matchup_model import project as _pj
     _OK = True
 except Exception:  # matchup_model data / deps missing
     _OK = False
@@ -126,3 +127,12 @@ def opponent_season(opp_team: str) -> int:
     t = norm_team(opp_team)
     sub = cm[cm["team"] == t]
     return int(sub["season"].max()) if not sub.empty else 0
+
+
+def regression_lean(name_key: str, pos: str) -> dict:
+    """The one backtested adjustment: nudge toward recent expected FP. Needs current-season
+    game logs in data/dfs/matchup/ — returns lean=0 with a note otherwise."""
+    if not _OK:
+        return {"lean": 0.0, "reason": "matchup_model unavailable"}
+    return _pj.projection_lean(name_key, pos)
+

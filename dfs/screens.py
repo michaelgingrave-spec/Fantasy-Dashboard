@@ -184,7 +184,9 @@ def render(screen: str) -> None:
         stack_qb = s1.checkbox("QB stack", value=True, key="dfs_stack")
         stack_min = s2.selectbox("Stack size", [1, 2], index=0, key="dfs_stackmin")
         bring_back = s3.checkbox("Bring-back", value=False, key="dfs_bring")
-        boost = s4.checkbox("Apply matchup boosts", value=False, key="dfs_boost")
+        boost = s4.checkbox("Apply regression lean", value=False, key="dfs_boost",
+                            help="Small tilt toward players whose recent expected FP > actual "
+                                 "(backtested; needs current-season game logs in data/dfs/matchup/).")
 
         build = st.button("⚙️ Build lineups", type="primary", key="dfs_build")
         if variance > 0:
@@ -199,9 +201,21 @@ def render(screen: str) -> None:
             boosts = {}
             if boost:
                 try:
-                    boosts = player_boosts(_edges(str(week) + pick, slate_df, _ds_hash()))
+                    from dfs import matchup_view as _mv
+                    from dfs.names import normalize_name as _nn
+                    import numpy as _np
+                    n_lean = 0
+                    for _, pr in slate_df.iterrows():
+                        lv = _mv.regression_lean(_nn(pr["name"]), pr["pos"])["lean"]
+                        if lv:
+                            n_lean += 1
+                        m = 1.0 + float(_np.clip(lv / max(pr["proj"], 6.0), -0.12, 0.12))
+                        boosts[pr["dk_id"]] = m
+                    if n_lean == 0:
+                        st.info("Regression lean is 0 for everyone — no current-season weekly "
+                                "FantasyPoints exports in data/dfs/matchup/ yet.")
                 except Exception as e:  # noqa: BLE001
-                    st.warning(f"Matchup boosts unavailable: {e}")
+                    st.warning(f"Regression lean unavailable: {e}")
             try:
                 st.session_state["dfs_lineups"] = optimize(slate_df, cfg, boosts)
             except OptimizerError as e:
@@ -338,11 +352,17 @@ def render(screen: str) -> None:
         nk = normalize_name(r["name"])
         opp = str(r["opp"]).lstrip("@")
 
-        m1, m2, m3, m4 = st.columns(4)
+        lean = mv.regression_lean(nk, r["pos"]) if mv.available() else {"lean": 0.0, "reason": ""}
+        m1, m2, m3, m4, m5 = st.columns(5)
         m1.metric("FantasyPoints proj", f'{r["proj"]:.1f}')
-        m2.metric("DK salary", f'\\${int(r["salary"]):,}')
-        m3.metric("Value (pt/$1k)", f'{r["proj"] / (r["salary"] / 1000):.2f}')
-        m4.metric("Opponent", opp or "—")
+        m2.metric("Regression lean", f'{lean["lean"]:+.1f}',
+                  help="Backtested nudge toward recent expected FP (needs current-season "
+                       "game logs). Small for WR/RB, ~3 fp swing for QB.")
+        m3.metric("DK salary", f'\\${int(r["salary"]):,}')
+        m4.metric("Value (pt/$1k)", f'{r["proj"] / (r["salary"] / 1000):.2f}')
+        m5.metric("Opponent", opp or "—")
+        if lean.get("reason"):
+            st.caption(f"Lean: {lean['reason']}")
 
         if not mv.available():
             st.info("Historical Data Suite tables not loaded (data/dfs/matchup/). "

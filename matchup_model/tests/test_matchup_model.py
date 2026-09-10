@@ -5,7 +5,7 @@ predictor so the harness stays usable for a future retry with better inputs.
 import numpy as np
 import pytest
 
-from matchup_model import defense_model, ingest, player_splits
+from matchup_model import defense_model, ingest, player_splits, project
 
 
 def test_ingest_loads_all_tables():
@@ -43,3 +43,12 @@ def test_scheme_table_has_lean_column():
     t = defense_model.scheme_table("BAL", 2024, 99)
     assert {"look", "predicted_%", "league_%", "lean"}.issubset(t.columns)
     assert len(t) >= 8
+
+
+def test_regression_lean_shape_and_bounds():
+    r = project.projection_lean("josh allen", "QB", as_of_season=2024, as_of_week=19)
+    assert set(["lean", "fp_trail", "xfp_trail", "n_games", "reason"]).issubset(r)
+    assert r["n_games"] >= 4 and abs(r["lean"]) < 6          # small nudge, not a rewrite
+    # unknown player -> zero lean with a note, never an error
+    z = project.projection_lean("no such person xyz", "WR", 2024, 19)
+    assert z["lean"] == 0.0 and "game logs" in z["reason"]
