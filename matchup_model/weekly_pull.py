@@ -48,6 +48,41 @@ def tables(season: int, week: int) -> list[dict]:
     return [{"name": n, "url": f"{BASE}/{n}?{q}", "dest": d} for n, q, d in t]
 
 
+# Full-season backfill (e.g. add the 2025 season). Receiving tables are capped at 1500
+# rows for a whole season, so they get week-batched into wk1-6 / wk7-12 / wk13-18 the
+# same way the committed 2022-24 files are; the rest fit in one file. Week filtering is
+# URL-driven: &splitValues=week:1,2,3,4,5,6  (no button clicking).
+_WEEK_BATCHES = {"wk1-6": "1,2,3,4,5,6", "wk7-12": "7,8,9,10,11,12", "wk13-18": "13,14,15,16,17,18"}
+
+
+def backfill_tables(season: int) -> list[dict]:
+    """Every table for a whole completed season. `dest` names match the ingest globs and
+    the existing 2022-24 files. 15 downloads: 3 receiving tables x 3 week-batches + 6 singles."""
+    rec = f"seasons={season}&positions=WR,TE&splits=week"
+    rb = f"seasons={season}&positions=RB&splits=week"
+    qb = f"seasons={season}&positions=QB&splits=week"
+    out = []
+    for page, pref in (("receiving/basic", "receiving-basic"),
+                       ("receiving/advanced", "receiving-advanced"),
+                       ("receiving/man-vs-zone", "receiving-manvszone")):
+        for tag, weeks in _WEEK_BATCHES.items():
+            out.append((page, f"{rec}&splitValues=week:{weeks}", f"{pref}_{season}{tag}_week.csv"))
+    for page, pref, q in (("rushing/basic", "rushing-basic", rb),
+                          ("rushing/advanced", "rushing-advanced", rb),
+                          ("passing/basic", "passing-basic", qb),
+                          ("passing/advanced", "passing-advanced", qb),
+                          ("passing/situation", "passing-situation", qb),
+                          ("team/coverage-matrix", "coverage-matrix",
+                           f"seasons={season}&mode=defense&splits=week")):
+        out.append((page, q, f"{pref}_{season}_week.csv"))
+    return [{"name": n, "url": f"{BASE}/{n}?{q}", "dest": d} for n, q, d in out]
+
+
+def pending(dests: list[str]) -> list[str]:
+    """Which of these dest filenames aren't in data/dfs/matchup/ yet (resume a partial run)."""
+    return [d for d in dests if not (DATA / d).exists()]
+
+
 def move_fresh(dest: str, timeout_s: int = 50) -> dict:
     """Poll ~/Downloads for the CSV that just landed and move it to data/dfs/matchup/<dest>.
     Returns {ok, rows, path} or {ok: False, reason}."""
@@ -86,6 +121,24 @@ def finalize(season: int, week: int, push: bool = True) -> str:
         subprocess.run(["git", "add", rel], cwd=ROOT, check=True)
         if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT).returncode != 0:
             subprocess.run(["git", "commit", "-m", f"FantasyPoints week {week} {season}"], cwd=ROOT, check=True)
+            subprocess.run(["git", "push"], cwd=ROOT, check=True)
+            lines.append("committed + pushed — Streamlit Cloud redeploys in ~2 min")
+        else:
+            lines.append("nothing new to commit")
+    return "\n".join(lines)
+
+
+def finalize_backfill(season: int, push: bool = True) -> str:
+    """Row-count report for a whole-season backfill + git add/commit(/push)."""
+    files = sorted(set(DATA.glob(f"*_{season}_week.csv")) | set(DATA.glob(f"*_{season}wk*_week.csv")))
+    lines = [f"{season} backfill — {len(files)} files"]
+    for f in files:
+        n = max(0, sum(1 for _ in f.open("r", encoding="utf-8", errors="ignore")) - 3)
+        lines.append(f"  {f.name:40s} {n:>6} rows" + ("  <-- near cap" if n >= 1450 else ""))
+    if push and files:
+        subprocess.run(["git", "add", "data/dfs/matchup"], cwd=ROOT, check=True)
+        if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT).returncode != 0:
+            subprocess.run(["git", "commit", "-m", f"FantasyPoints {season} season backfill"], cwd=ROOT, check=True)
             subprocess.run(["git", "push"], cwd=ROOT, check=True)
             lines.append("committed + pushed — Streamlit Cloud redeploys in ~2 min")
         else:
