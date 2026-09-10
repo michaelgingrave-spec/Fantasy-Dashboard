@@ -93,6 +93,11 @@ def render(screen: str) -> None:
 
     nonce = st.session_state.setdefault("dfs_nonce", 0)
 
+    # The slate-type / slate pickers only matter for the Optimizer (it builds one
+    # specific lineup). Every other DFS screen uses the widest slate so it sees the whole
+    # player pool regardless of what the Optimizer is set to.
+    _slate_pickers_here = (screen == "Optimizer")
+
     slate_df = unmatched = None
     slate_err = None
     pick = ""
@@ -103,25 +108,44 @@ def render(screen: str) -> None:
                          "connection, or (on the deployed site) drop a saved draftables JSON "
                          "in data/dfs/dk/.")
         else:
-            types = ["All"] + slate_types_present(all_slates)
             default_slate = pick_main_slate(all_slates)
-            default_type = default_slate.slate_type if default_slate else "All"
-            type_idx = types.index(default_type) if default_type in types else 0
-            stype = st.sidebar.selectbox(
-                "Slate type", types, index=type_idx, key="dfs_stype",
-                help="DraftKings runs several classic slates per week — the whole week "
-                     "(Thu–Mon), Sunday + Monday, Sunday 1pm only, and so on.",
-            )
-            slates = all_slates if stype == "All" else [s for s in all_slates if s.slate_type == stype]
-            labels = [s.label for s in slates]
-            d_idx = next((i for i, s in enumerate(slates)
-                          if default_slate and s.draft_group_id == default_slate.draft_group_id), 0)
-            pick = st.sidebar.selectbox("Slate", labels, index=d_idx, key="dfs_slate")
-            chosen = slates[labels.index(pick)]
-            st.sidebar.caption(
-                f"{chosen.slate_type} · {chosen.game_count} games · dg {chosen.draft_group_id}"
-            )
-            salaries = _salaries(chosen.draft_group_id, nonce)
+            widest = max(all_slates, key=lambda s: s.game_count)
+            if _slate_pickers_here:
+                types = ["All"] + slate_types_present(all_slates)
+                default_type = default_slate.slate_type if default_slate else "All"
+                type_idx = types.index(default_type) if default_type in types else 0
+                stype = st.sidebar.selectbox(
+                    "Slate type", types, index=type_idx, key="dfs_stype",
+                    help="DraftKings runs several classic slates per week — the whole week "
+                         "(Thu–Mon), Sunday + Monday, Sunday 1pm only, and so on. "
+                         "Only affects the Optimizer.",
+                )
+                slates = all_slates if stype == "All" else [s for s in all_slates if s.slate_type == stype]
+                labels = [s.label for s in slates]
+                d_idx = next((i for i, s in enumerate(slates)
+                              if default_slate and s.draft_group_id == default_slate.draft_group_id), 0)
+                pick = st.sidebar.selectbox("Slate", labels, index=d_idx, key="dfs_slate")
+                chosen = slates[labels.index(pick)]
+                st.sidebar.caption(
+                    f"{chosen.slate_type} · {chosen.game_count} games · dg {chosen.draft_group_id}"
+                )
+                salaries = _salaries(chosen.draft_group_id, nonce)
+            else:
+                # every DFS screen except the Optimizer sees the full week: union of
+                # every classic slate's player pool, deduped by DK id.
+                frames = []
+                for s in all_slates:
+                    try:
+                        frames.append(_salaries(s.draft_group_id, nonce))
+                    except Exception:
+                        continue
+                salaries = (pd.concat(frames, ignore_index=True)
+                            .sort_values("salary", ascending=False)
+                            .drop_duplicates(subset="dk_id")
+                            if frames else _salaries(widest.draft_group_id, nonce))
+                pick = "Full week (all slates)"
+                st.sidebar.caption(f"Player pool: all {len(all_slates)} classic slates merged "
+                                   "(Slate-type picker is on the Optimizer tab)")
             proj_p = projection_path(week)
             projections = _projections(week, _hash_path(proj_p))
             slate_df, unmatched = build_slate(salaries, projections)
