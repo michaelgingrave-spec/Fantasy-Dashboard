@@ -148,7 +148,7 @@ def opponent_scheme(opp_team: str, seasons: tuple[int, ...] | None = None) -> pd
     rows = []
     for c in rate_cols:
         t_rate, l_rate = sub[c].mean(), la[c].mean()
-        rank = int((per_team[c] > t_rate).sum()) + 1 if n_teams else 0   # 1 = runs it most
+        rank = int((per_team[c] < t_rate).sum()) + 1 if n_teams else 0   # N = runs it most
         rows.append({"look": c, "team_%": round(float(t_rate), 1),
                      "league_%": round(float(l_rate), 1),
                      "lean": round(float(t_rate - l_rate), 1),

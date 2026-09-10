@@ -398,13 +398,15 @@ def render(screen: str) -> None:
             _pass_block(row)
 
         if opp:
-            st.markdown(f"**{opp} defense — allowed by coverage**  ·  `rk` = league rank, 1 = softest")
+            st.markdown(f"**{opp} defense — allowed by coverage**  ·  `rk` 1–32, "
+                        "**32 = softest** (allows the most); `plays% rk` 32 = plays it most")
             dpc = mv.defense_pass_by_coverage(opp)
             if dpc.empty:
                 st.caption(f"No coverage data for {opp}.")
             else:
-                st.dataframe(mv.heat(dpc, ["yds/tgt", "catch%", "yds/rec", "rating", "TD"],
-                                     good_high=True),
+                eff = ["yds/tgt", "catch%", "yds/rec", "rating", "TD"]
+                eff_rk = [f"{m} rk" for m in eff if f"{m} rk" in dpc.columns]
+                st.dataframe(mv.heat(dpc, eff + eff_rk, good_high=True),
                              hide_index=True, width="stretch")
 
         # ── rushing ────────────────────────────────────────────────────────
@@ -508,7 +510,8 @@ def render(screen: str) -> None:
             st.subheader(f"{opp} defense — scheme tendencies{lbl}")
             st.dataframe(osch if not osch.empty else pd.DataFrame({"note": ["no scheme data for opponent in this window"]}),
                          hide_index=True, width="stretch")
-            st.caption("`team_%` vs `league_%` for the same years; `lean` = the gap.")
+            st.caption("`team_%` vs `league_%` for the same years; `lean` = the gap; "
+                       "`rank` 1–32, **32 = runs it most** in the league.")
 
         vc = mv.vs_coordinator(nk, opp)
         if vc:

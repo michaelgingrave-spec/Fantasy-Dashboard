@@ -180,10 +180,17 @@ def player_pass_by_coverage(name_key: str) -> pd.DataFrame:
     return _rec_rows_for(g, "player").round(2).reset_index(drop=True)
 
 
+def _rank_ascending(vals: dict) -> dict:
+    """{key: rank}, 1 = lowest value, N = highest. Ties share the lower rank."""
+    order = sorted(vals, key=lambda k: vals[k])
+    return {k: i for i, k in enumerate(order, 1)}
+
+
 @lru_cache(maxsize=1)
 def _defense_cov_ranks() -> dict:
-    """{team: {look: {metric: rank}}} — rank 1 = allows the most (softest) for that
-    metric+look, over all 32 defenses on the same bucket+coverage rollup."""
+    """{team: {look: {metric: rank}}}. rank runs 1..N with **N = allows the most =
+    softest** for each metric+look, over all defenses on the same bucket+coverage rollup.
+    Includes 'plays%' (N = plays that coverage most)."""
     d = _rec_cov_defense()
     if d.empty:
         return {}
@@ -197,18 +204,24 @@ def _defense_cov_ranks() -> dict:
     if not tables:
         return out
     looks = next(iter(tables.values())).index.tolist()
-    for m in _DEF_RANK_METRICS:
-        for lk in looks:
+    plays = {t: {lk: v for lk, v in defense_coverage_rates(t).set_index("coverage")["plays%"].items()}
+             for t in tables}
+    for lk in looks:
+        for m in _DEF_RANK_METRICS:
             vals = {t: tbl.loc[lk, m] for t, tbl in tables.items()
                     if lk in tbl.index and pd.notna(tbl.loc[lk, m])}
-            for i, t in enumerate(sorted(vals, key=vals.get, reverse=True), 1):
-                out[t].setdefault(lk, {})[m] = i
+            for t, r in _rank_ascending(vals).items():
+                out[t].setdefault(lk, {})[m] = r
+        pvals = {t: plays[t].get(lk) for t in tables if pd.notna(plays[t].get(lk))}
+        for t, r in _rank_ascending(pvals).items():
+            out[t].setdefault(lk, {})["plays%"] = r
     return out
 
 
 def defense_pass_allowed_by_coverage(team: str) -> pd.DataFrame:
     """What a defense allows by man/zone/1-high/2-high then Cover 0-6: plays%, targets,
-    yds/tgt, catch%, yds/rec, passer rating, TD — each with its league rank (1 = softest)."""
+    yds/tgt, catch%, yds/rec, passer rating, TD — each with its league rank. Ranks run
+    1..32 with **32 = league extreme** (softest for the allowed stats, most-used for plays%)."""
     d = _rec_cov_defense()
     if d.empty:
         return pd.DataFrame()
@@ -220,10 +233,11 @@ def defense_pass_allowed_by_coverage(team: str) -> pd.DataFrame:
     rates = defense_coverage_rates(team).rename(columns={"coverage": "look"})
     out = base.merge(rates[["look", "plays%"]], on="look", how="left")
     rk = _defense_cov_ranks().get(t, {})
-    for m in _DEF_RANK_METRICS:
+    for m in ["plays%"] + _DEF_RANK_METRICS:
         out[f"{m} rk"] = out["look"].map(lambda lk, _m=m: rk.get(lk, {}).get(_m))
-    order = ["look", "plays%", "targets", "yds/tgt", "yds/tgt rk", "catch%", "catch% rk",
-             "yds/rec", "yds/rec rk", "rating", "rating rk", "TD", "TD rk"]
+    order = ["look", "plays%", "plays% rk", "targets", "yds/tgt", "yds/tgt rk",
+             "catch%", "catch% rk", "yds/rec", "yds/rec rk", "rating", "rating rk",
+             "TD", "TD rk"]
     return out[[c for c in order if c in out.columns]].round(2).reset_index(drop=True)
 
 

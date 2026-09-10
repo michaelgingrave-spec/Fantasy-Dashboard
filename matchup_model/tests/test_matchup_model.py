@@ -80,11 +80,18 @@ def test_scheme_grids_load():
     assert list(p["look"])[:4] == scheme.BUCKET_NAMES
     assert set(p["look"][4:]).issubset(set(scheme.COVERAGES))
     assert p["yds/rt"].between(0, 12).all() and p["catch%"].between(0, 100).all()
-    # opponent defense: plays% + a league rank on every allowed-efficiency stat
+    # opponent defense: plays% + a league rank (1-32, 32 = softest) on every stat
     d = scheme.defense_pass_allowed_by_coverage("BAL")
     assert "plays%" in d.columns and list(d["look"])[:4] == scheme.BUCKET_NAMES
-    for m in ("yds/tgt", "catch%", "rating", "TD"):
+    for m in ("plays%", "yds/tgt", "catch%", "rating", "TD"):
         assert f"{m} rk" in d.columns and d[f"{m} rk"].dropna().between(1, 32).all()
+    # rank 32 goes to the team that allows the most — check the direction on a full sweep
+    ytg = {t: scheme.defense_pass_allowed_by_coverage(t).set_index("look").loc["Zone", "yds/tgt"]
+           for t in scheme._rec_cov_defense()["team"].unique()}
+    ytg_rk = {t: scheme.defense_pass_allowed_by_coverage(t).set_index("look").loc["Zone", "yds/tgt rk"]
+              for t in ytg}
+    softest = max(ytg, key=ytg.get)
+    assert ytg_rk[softest] == max(ytg_rk.values())
     # 1st-read% was the broken column — must not be in the defense table
     assert "1st-read%" not in d.columns
     # season blend weight is 0 until 2026 files exist
