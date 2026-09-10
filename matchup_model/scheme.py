@@ -698,7 +698,9 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
 
     if not rows:
         return pd.DataFrame(columns=["kind", "look", "player", "why", "mark"])
-    df = pd.DataFrame(rows).sort_values("_score", ascending=False).head(n)
+    df = pd.DataFrame(rows).sort_values("_score", ascending=False)
+    df = df.groupby("player", group_keys=False).head(2)          # <=2 rows per player
+    df = df.sort_values("_score", ascending=False).head(n)
     return df[["kind", "look", "player", "why", "mark"]].reset_index(drop=True)
 
 
@@ -709,17 +711,32 @@ def _matches_team(raw_team, team: str) -> bool:
     return any(norm_team(p.strip()) == t for p in str(raw_team).split(","))
 
 
-def team_pass_catchers(team: str, n: int = 6) -> list[str]:
-    """Top-n WR/TE names for a team by total 2025 routes (fallback when the team isn't on
-    the DK slate, so there are no projections to rank by)."""
+def team_pass_catcher_volume(team: str) -> dict:
+    """{name: total 2025 routes} for a team's WR/TE, most first — for building the player
+    picker when the team isn't on the DK slate."""
     d = _rec_cov_players()
     if d.empty:
-        return []
+        return {}
     m = d[d["Team"].map(lambda x: _matches_team(x, team)) & d["COV"].isin(COVERAGES)]
     if m.empty:
-        return []
-    tot = m.groupby("Name")["RTE"].sum().sort_values(ascending=False)
-    return list(tot.head(n).index)
+        return {}
+    return m.groupby("Name")["RTE"].sum().sort_values(ascending=False).round().astype(int).to_dict()
+
+
+def team_back_volume(team: str) -> dict:
+    """{name: total 2025 carries} for a team's RBs, most first."""
+    d = _rush_concept("player")
+    if d.empty:
+        return {}
+    m = d[d["Team"].map(lambda x: _matches_team(x, team)) & d["CONCEPT"].isin(CONCEPTS)]
+    if m.empty:
+        return {}
+    return m.groupby("Name")["ATT"].sum().sort_values(ascending=False).round().astype(int).to_dict()
+
+
+def team_pass_catchers(team: str, n: int = 6) -> list[str]:
+    """Top-n WR/TE names for a team by total 2025 routes."""
+    return list(team_pass_catcher_volume(team))[:n]
 
 
 def team_backs(team: str, n: int = 3) -> list[str]:

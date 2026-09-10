@@ -401,18 +401,44 @@ def render(screen: str) -> None:
         src = "2025" if bw == 0 else f"2026×{bw:.0%} + 2025×{1 - bw:.0%}"
         st.caption(f"Scheme data: **{src}**.")
 
-        # player list: slate projections when available, else 2025 scheme volume
+        # ── player picker ─────────────────────────────────────────────────
+        # candidates + a projection/volume for each; auto-pick the clear starters, then
+        # let the user trim or add anyone.
         tdf["pos"] = tdf["pos"].astype(str).str.upper() if not tdf.empty else tdf.get("pos")
+        proj_of, rt_of, att_of = {}, {}, {}
         if not tdf.empty:
-            def _top(p, c):
-                s = tdf[(tdf["pos"] == p) & (tdf["proj"].fillna(0) > 2)].sort_values(
-                    "proj", ascending=False).head(c)
-                return [(r["name"], float(r["proj"])) for _, r in s.iterrows()]
-            pass_players = _top("WR", 4) + _top("TE", 2)
-            rb_players = _top("RB", 3)
+            _pos = dict(zip(tdf["name"], tdf["pos"]))
+            for _, rr in tdf[tdf["proj"].fillna(0) > 0].iterrows():
+                proj_of[rr["name"]] = float(rr["proj"])
+            pass_pool = sorted((n for n in proj_of if _pos.get(n) in ("WR", "TE")),
+                               key=lambda n: -proj_of[n])
+            rb_pool = sorted((n for n in proj_of if _pos.get(n) == "RB"),
+                             key=lambda n: -proj_of[n])
+            def_pass, def_rb = pass_pool[:3], rb_pool[:2]
         else:
-            pass_players = [(n, None) for n in mv.team_pass_catchers(team, 6)]
-            rb_players = [(n, None) for n in mv.team_backs(team, 3)]
+            rt_of = mv.team_pass_catcher_volume(team)
+            att_of = mv.team_back_volume(team)
+            pass_pool, rb_pool = list(rt_of), list(att_of)
+            pcut = max(rt_of.values()) * 0.35 if rt_of else 0     # real 2025 role only
+            bcut = max(att_of.values()) * 0.35 if att_of else 0
+            def_pass = [n for n in pass_pool if rt_of[n] >= pcut][:3]
+            def_rb = [n for n in rb_pool if att_of[n] >= bcut][:2]
+
+        def _lbl(n):
+            if n in proj_of:
+                return f"{n} · {proj_of[n]:.1f} proj"
+            if n in rt_of:
+                return f"{n} · {rt_of[n]} routes '25"
+            if n in att_of:
+                return f"{n} · {att_of[n]} carries '25"
+            return n
+
+        sel = st.multiselect("Players", pass_pool + rb_pool, default=def_pass + def_rb,
+                             format_func=_lbl, key="mm_players",
+                             help="Auto-picked from last year's role — add or remove anyone.")
+        pass_set, rb_set = set(pass_pool), set(rb_pool)
+        pass_players = [(n, proj_of.get(n)) for n in sel if n in pass_set]
+        rb_players = [(n, proj_of.get(n)) for n in sel if n in rb_set]
 
         # ── highlight table: best scheme edges vs this opponent ─────────────
         st.subheader(f"⭐ Highlights — {team} vs {opp}")

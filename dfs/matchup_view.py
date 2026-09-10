@@ -268,6 +268,14 @@ def team_backs(team: str, n: int = 3) -> list[str]:
     return _sch.team_backs(team, n) if scheme_available() else []
 
 
+def team_pass_catcher_volume(team: str) -> dict:
+    return _sch.team_pass_catcher_volume(team) if scheme_available() else {}
+
+
+def team_back_volume(team: str) -> dict:
+    return _sch.team_back_volume(team) if scheme_available() else {}
+
+
 def matchup_highlights(opp: str, pass_names, rb_names, n: int = 12) -> pd.DataFrame:
     """Top scheme edges: where `opp` leans on / is weak against a coverage or run concept
     (by league rank) and one of the listed players is efficient in it."""
