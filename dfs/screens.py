@@ -414,6 +414,22 @@ def render(screen: str) -> None:
             pass_players = [(n, None) for n in mv.team_pass_catchers(team, 6)]
             rb_players = [(n, None) for n in mv.team_backs(team, 3)]
 
+        # ── highlight table: best scheme edges vs this opponent ─────────────
+        st.subheader(f"⭐ Highlights — {team} vs {opp}")
+        hl = mv.matchup_highlights(opp, [n for n, _ in pass_players],
+                                   [n for n, _ in rb_players])
+        if hl.empty:
+            st.caption("No standout scheme edges — the opponent isn't a league outlier in "
+                       "any coverage/concept these players are efficient against.")
+        else:
+            hl = hl.assign(**{"": hl["kind"].map({"pass": "🎯", "run": "🏃"})}).drop(columns=["kind"])
+            hl = hl[["", "player", "look", "why", "mark"]].rename(
+                columns={"look": "scheme", "why": "why it's an edge", "mark": "player's 2025 mark"})
+            st.dataframe(hl, hide_index=True, width="stretch")
+            st.caption("The defense **leans on** (league rank in usage) or is **weak against** "
+                       "that look, and the player is above their own baseline in it. "
+                       "Personnel-grouping edges (11 / 12 / 21) coming once that split is pulled.")
+
         def _pass_block(name, proj):
             tag = f"  ·  proj {proj:.1f}" if proj is not None else ""
             st.markdown(f"**{name}**{tag}")

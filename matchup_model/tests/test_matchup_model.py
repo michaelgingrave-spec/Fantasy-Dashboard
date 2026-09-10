@@ -102,6 +102,14 @@ def test_scheme_grids_load():
     # 32-team alignment heat grid
     ag = scheme.defense_alignment_grid()
     assert len(ag) == 32 and "Wide yds/rt" in ag.columns
+    # defense run-concept ranks (1..N, N = league extreme)
+    dr = scheme.team_run_by_concept("BAL", "defense")
+    assert "YPC rk" in dr.columns and dr["YPC rk"].dropna().between(1, 32).all()
+    # highlight table: rows tie a real player to a look the opponent is extreme in
+    hl = scheme.matchup_highlights("BAL", ["Ja'Marr Chase", "Tee Higgins"], ["Chase Brown"])
+    assert not hl.empty and set(hl.columns) == {"kind", "look", "player", "why", "mark"}
+    assert hl["kind"].isin(["pass", "run"]).all()
+    assert hl["why"].str.startswith("BAL:").all()
 
 
 def test_projected_stat_line():

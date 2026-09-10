@@ -330,7 +330,32 @@ def team_run_by_concept(team: str, side: str) -> pd.DataFrame:
                                     "SUCC %", "EXP RUN %"]]
            .rename(columns={"ATT %": "att%", "ATT": "att", "YDS": "yards",
                             "SUCC %": "success%", "EXP RUN %": "exp-run%"}))
+    if side == "defense":
+        rk = _defense_concept_ranks().get(t, {})
+        for m in ("att%", "YPC", "success%", "exp-run%"):
+            out[f"{m} rk"] = out["concept"].astype(str).map(
+                lambda c, _m=m: rk.get(c, {}).get(_m)).astype("Int64")
     return out.round(2).reset_index(drop=True)
+
+
+@lru_cache(maxsize=1)
+def _defense_concept_ranks() -> dict:
+    """{team: {concept: {metric: rank}}}, 1..N with N = the league extreme:
+    att% -> faces that concept most; YPC / success% / exp-run% -> allows the most."""
+    d = _rush_concept("defense")
+    if d.empty:
+        return {}
+    d = d[d["CONCEPT"].isin(CONCEPTS)]
+    ren = {"ATT %": "att%", "SUCC %": "success%", "EXP RUN %": "exp-run%"}
+    d = d.rename(columns=ren)
+    out: dict = {t: {} for t in d["team"].unique()}
+    for c in CONCEPTS:
+        sub = d[d["CONCEPT"] == c]
+        for m in ("att%", "YPC", "success%", "exp-run%"):
+            vals = {r["team"]: r[m] for _, r in sub.iterrows() if pd.notna(r[m])}
+            for t, rank in _rank_ascending(vals).items():
+                out[t].setdefault(c, {})[m] = rank
+    return out
 
 
 # ── defense allowed by alignment (the "Defense Vs WR heat map") ─────────────
@@ -353,6 +378,89 @@ def defense_alignment_grid() -> pd.DataFrame:
     piv = piv.reindex(columns=[c for c in ["Wide", "Slot", "Inline", "Backfield"] if c in piv.columns])
     piv.columns = [f"{c} yds/rt" for c in piv.columns]
     return piv.round(2).reset_index().rename(columns={"team": "defense"})
+
+
+def _ord(n: int) -> str:
+    return f"{n}{'th' if 11 <= n % 100 <= 13 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+
+
+def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
+                       n: int = 12) -> pd.DataFrame:
+    """The offense's best scheme edges against `opp`: for the coverages / run concepts
+    this defense leans on (league rank) or is weak against, which of the listed players
+    are the most efficient. One row per (player, look). Columns: kind, look, player, why, mark."""
+    from dfs.names import normalize_name as _nk
+    o = norm_team(opp)
+    rows = []
+    N = 32
+
+    def _softmean(r, keys):
+        v = [r[k] for k in keys if pd.notna(r.get(k))]
+        return sum(v) / len(v) if v else float("nan")
+
+    # ── pass: coverage ────────────────────────────────────────────────────
+    covrk = _defense_cov_ranks().get(o, {})
+    cov_rate = defense_coverage_rates(opp).set_index("coverage")["plays%"].to_dict()
+    for c in BUCKET_NAMES + COVERAGES:
+        r = covrk.get(c, {})
+        usage = r.get("plays%")                       # N = runs it most
+        soft = _softmean(r, ("yds/tgt", "catch%", "rating"))
+        if not ((usage and usage >= 24) or (np.isfinite(soft) and soft >= 24)):
+            continue
+        why_bits = []
+        if usage and usage >= 24:
+            why_bits.append(f"runs it {_ord(N - usage + 1)}-most ({cov_rate.get(c, 0):.0f}%)")
+        if np.isfinite(soft) and soft >= 24:
+            why_bits.append(f"{_ord(N - int(round(soft)) + 1)}-worst defending it")
+        why = f"{o}: " + " · ".join(why_bits)
+        cands = []
+        for nm in pass_names:
+            t = player_pass_by_coverage(_nk(nm))
+            if t.empty or c not in set(t["look"]):
+                continue
+            pr = t.set_index("look").loc[c]
+            eff, base = pr["yds/rt"], t["yds/rt"].mean()
+            if not (pd.notna(eff) and eff > 0 and eff >= max(base * 1.05, 1.8) and pr["routes"] >= 20):
+                continue
+            cands.append((eff, nm, pr))
+        for eff, nm, pr in sorted(cands, reverse=True, key=lambda x: x[0])[:2]:  # team's best 2
+            rows.append({"kind": "pass", "look": c, "player": nm, "why": why,
+                         "mark": f"{eff:.2f} yds/rt · {pr['catch%']:.0f}% catch ({int(pr['routes'])} rt)",
+                         "_score": (usage or 0) / N + min(eff / 4.0, 1.5)})
+
+    # ── run: concept ─────────────────────────────────────────────────────
+    conrk = _defense_concept_ranks().get(o, {})
+    for c in CONCEPTS:
+        r = conrk.get(c, {})
+        faces = r.get("att%")                         # N = faces it most
+        soft = _softmean(r, ("YPC", "success%", "exp-run%"))
+        if not ((faces and faces >= 24) or (np.isfinite(soft) and soft >= 24)):
+            continue
+        why_bits = []
+        if faces and faces >= 24:
+            why_bits.append(f"faces it {_ord(N - faces + 1)}-most")
+        if np.isfinite(soft) and soft >= 24:
+            why_bits.append(f"{_ord(N - int(round(soft)) + 1)}-worst vs it")
+        why = f"{o}: " + " · ".join(why_bits)
+        cands = []
+        for nm in rb_names:
+            t = player_run_by_concept(_nk(nm))
+            if t.empty or c not in set(t["concept"]):
+                continue
+            pr = t.set_index("concept").loc[c]
+            ypc, base = pr["YPC"], t["YPC"].mean()
+            if not (pd.notna(ypc) and ypc > 0 and ypc >= max(base * 1.05, 4.2) and pr["att"] >= 12):
+                continue
+            cands.append((ypc, nm, pr))
+        for ypc, nm, pr in sorted(cands, reverse=True, key=lambda x: x[0])[:2]:
+            rows.append({"kind": "run", "look": c, "player": nm, "why": why,
+                         "mark": f"{ypc:.2f} ypc · {pr['success%']:.0f}% success ({int(pr['att'])} att)",
+                         "_score": (faces or 0) / N + min(ypc / 5.0, 1.5)})
+
+    if not rows:
+        return pd.DataFrame(columns=["kind", "look", "player", "why", "mark"])
+    df = pd.DataFrame(rows).sort_values("_score", ascending=False).head(n)
+    return df[["kind", "look", "player", "why", "mark"]].reset_index(drop=True)
 
 
 def _matches_team(raw_team, team: str) -> bool:
