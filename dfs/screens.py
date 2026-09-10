@@ -72,6 +72,31 @@ def _prop_edges(event_id: str, markets: tuple, week: int):
     return event_prop_edges(event_id, list(markets), week)
 
 
+@st.cache_data(show_spinner="Building value board…")
+def _value_table(week: int, proj_hash: str, sal_key: str, _plist, _sal: dict):
+    """One row per projected player: FantasyPoints projection, value, chalk ownership."""
+    from dfs.names import normalize_name
+    from dfs.ownership import chalk_ownership
+
+    rows = []
+    for _, r in _plist.iterrows():
+        nk = normalize_name(r["name"])
+        fp = float(r["proj"])
+        sal = _sal.get(nk)
+        rows.append({
+            "Player": r["name"], "Pos": str(r["pos"]).upper(), "Team": r["team"],
+            "Opp": str(r.get("opp", "")).lstrip("@"),
+            "FP": round(fp, 1),
+            "Salary": int(sal) if sal else None,
+            "Val": round(fp / (sal / 1000), 2) if sal else None,
+            "_salary": sal,
+        })
+    df = pd.DataFrame(rows)
+    df = chalk_ownership(df, week, salary_col="_salary", proj_col="FP",
+                         pos_col="Pos", team_col="Team").rename(columns={"own_pct": "pOwn%"})
+    return df.drop(columns=["_salary"])
+
+
 @st.cache_data(show_spinner=True)
 def _edges(slate_key: str, _slate: pd.DataFrame, _ds_hash: str):
     return weekly_edges(_slate)
@@ -572,31 +597,56 @@ def render(screen: str) -> None:
 
     # ── Player Lookup ─────────────────────────────────────────────────────
     elif screen == "Player Lookup":
-        st.header("🔎 DFS Player Lookup")
-        st.caption("Any projected player: FantasyPoints projection vs our backtested blend "
-                   "(opportunity model + trailing average), a projected stat line, recent "
-                   "form, coverage splits, and whether they've faced the opponent's "
-                   "coordinator before. Not limited to the DK slate — salary/value shows "
-                   "only when the player is priced.")
+        st.header("🔎 DFS Player Value")
+        st.caption("Sortable board: FantasyPoints projection, value (FP / $1k) where a salary "
+                   "exists, and a heuristic projected ownership. Click a column header to "
+                   "sort; pick a player below for our model's full breakdown.")
         from dfs import matchup_view as mv
         from dfs.names import normalize_name
 
-        # player list = the whole weekly projection file (not the DK-priced subset)
         try:
             plist = _projections(week, _hash_path(projection_path(week)))
         except ProjectionError as e:
             st.error(str(e))
             st.stop()
-        # salary lookup (optional) from the slate, keyed by normalised name
         _sal = {}
         if slate_df is not None and not slate_df.empty:
-            _sal = {normalize_name(n): s for n, s in zip(slate_df["name"], slate_df["salary"])}
+            _sal = {normalize_name(n): int(s) for n, s in zip(slate_df["name"], slate_df["salary"])}
 
-        plist = plist.sort_values(["pos", "proj"], ascending=[True, False])
-        labels = {f'{r["name"]} · {r["pos"]} · {r["team"]}': r for _, r in plist.iterrows()}
-        choice = st.selectbox("Player", list(labels), key="pl_pick")
-        r = labels[choice]
-        nk = normalize_name(r["name"])
+        vt = _value_table(week, _hash_path(projection_path(week)),
+                          hashlib.md5(repr(sorted(_sal.items())).encode()).hexdigest(),
+                          plist, _sal)
+
+        fc1, fc2, fc3 = st.columns([3, 1, 1])
+        poss = fc1.multiselect("Position", ["QB", "RB", "WR", "TE", "DST"],
+                               default=["QB", "RB", "WR", "TE"], key="pv_pos")
+        priced_only = fc2.checkbox("Priced only", value=bool(_sal), key="pv_priced")
+        sort_by = fc3.selectbox("Sort by", ["Val", "FP", "pOwn%", "Salary"], key="pv_sort")
+        view = vt[vt["Pos"].isin(poss)] if poss else vt
+        if priced_only:
+            view = view[view["Salary"].notna()]
+        view = view.sort_values(sort_by, ascending=False, na_position="last").reset_index(drop=True)
+
+        cfg = {}
+        if hasattr(st, "column_config"):
+            cfg = {"Salary": st.column_config.NumberColumn(format="$%d"),
+                   "pOwn%": st.column_config.NumberColumn("pOwn%", format="%.1f"),
+                   "Val": st.column_config.NumberColumn(format="%.2f")}
+        st.dataframe(view, hide_index=True, width="stretch", column_config=cfg)
+        st.caption("`Val` = FP projection / $1k salary · `pOwn%` = heuristic chalk score "
+                   "(value, raw projection, cheap-enabler pull, game total) — it ranks how "
+                   "popular a player will be, not exact ownership. Our opportunity-model "
+                   "projection is in the per-player detail below.")
+
+        st.divider()
+        st.subheader("🔬 Player detail")
+        _names = list(view["Player"]) or list(vt["Player"])
+        _plook = plist.set_index(plist["name"])
+        choice = st.selectbox("Player", _names, key="pl_pick")
+        r = _plook.loc[choice]
+        if isinstance(r, pd.DataFrame):
+            r = r.iloc[0]
+        nk = normalize_name(str(r["name"]))
         opp = str(r.get("opp", "")).lstrip("@")
         pos = str(r["pos"]).upper()
         fp_proj = float(r["proj"])

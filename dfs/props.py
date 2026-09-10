@@ -36,6 +36,7 @@ MARKETS = {
 }
 CORE_MARKETS = ["player_reception_yds", "player_receptions", "player_rush_yds",
                 "player_pass_yds", "player_pass_tds"]
+BOOKS = "draftkings,fanduel"      # only pull these two books
 _NICE = {"rec_yds": "rec yds", "rec": "receptions", "rush_yds": "rush yds",
          "rush_att": "rush att", "pass_yds": "pass yds", "pass_td": "pass TD",
          "pass_att": "pass att"}
@@ -104,8 +105,8 @@ def _erf(x: float) -> float:
 
 
 def fetch_event_odds(event_id: str, markets: list[str]) -> tuple[dict, str | None]:
-    """Raw Odds API payload for one event. Costs 1 credit per market."""
-    return _get(f"/events/{event_id}/odds", regions="us", oddsFormat="american",
+    """Raw Odds API payload for one event, DraftKings + FanDuel only. 1 credit per market."""
+    return _get(f"/events/{event_id}/odds", bookmakers=BOOKS, oddsFormat="american",
                 markets=",".join(markets))
 
 
