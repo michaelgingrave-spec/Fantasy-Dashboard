@@ -39,24 +39,41 @@ def canon_team(t) -> str:
     return _TEAM_FIX.get(t, t)
 
 
-def _download(url: str, dest: Path, tries: int = 3) -> bool:
+def _download(url: str, dest: Path, tries: int = 2) -> bool:
     for k in range(tries):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            raw = urllib.request.urlopen(req, timeout=120).read()
+            raw = urllib.request.urlopen(req, timeout=45).read()
             dest.write_bytes(raw)
             return True
         except Exception as e:  # noqa: BLE001
             if k == tries - 1:
                 print(f"  ! failed {url}\n    {type(e).__name__}: {e}")
                 return False
-            time.sleep(1.5 * (k + 1))
+            time.sleep(0.6)
     return False
+
+
+@lru_cache(maxsize=1)
+def _reachable() -> bool:
+    """Cheap one-shot connectivity probe so a blocked host (e.g. some cloud egress)
+    fails fast instead of retrying every asset."""
+    try:
+        req = urllib.request.Request(_GAMES_URL, method="HEAD",
+                                     headers={"User-Agent": "Mozilla/5.0"})
+        urllib.request.urlopen(req, timeout=10)
+        return True
+    except Exception:  # noqa: BLE001
+        return False
 
 
 def refresh(seasons: list[int] | None = None, force: bool = False) -> None:
     """Download the player/team weekly stats, snap counts, and the games/lines file."""
     seasons = seasons or SEASONS
+    if not any((CACHE / f"stats_player_week_{y}.parquet").exists() for y in seasons) \
+            and not _reachable():
+        print("refresh: nflverse host unreachable — skipping (model will fall back)")
+        return
     jobs = [(f"{_REL}/stats_player/stats_player_week_{y}.parquet",
              CACHE / f"stats_player_week_{y}.parquet") for y in seasons]
     jobs += [(f"{_REL}/stats_team/stats_team_week_{y}.parquet",

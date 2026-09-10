@@ -32,6 +32,7 @@ def _raw():
 def test_edges_from_raw_shape(monkeypatch):
     # our projection: WR well above the line (edge, OVER), RB just under it
     import dfs.projections as pj
+    import matchup_model.opp.blend as blend
     import matchup_model.project_stats as ps
 
     def _no_file(*_a, **_k):
@@ -46,6 +47,8 @@ def test_edges_from_raw_shape(monkeypatch):
             return {"line": {"rush_yds": 78.0}, "fp": 14.0, "games": 6}
         return {"fp": None, "reason": "x"}
 
+    # edges_from_raw imports blended_line as its projector; patch both it and the fallback
+    monkeypatch.setattr(blend, "blended_line", fake_line)
     monkeypatch.setattr(ps, "projected_line", fake_line)
 
     df = props.edges_from_raw(_raw(), week=1)

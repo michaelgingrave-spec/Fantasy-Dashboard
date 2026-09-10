@@ -556,10 +556,11 @@ def render(screen: str) -> None:
     # ── Player Lookup ─────────────────────────────────────────────────────
     elif screen == "Player Lookup":
         st.header("🔎 DFS Player Lookup")
-        st.caption("Any projected player: FantasyPoints projection vs the backtested Model "
-                   "proj, a trailing-usage stat line, recent form, coverage splits, and "
-                   "whether they've faced the opponent's coordinator before. Not limited to "
-                   "the DK slate — salary/value shows only when the player is priced.")
+        st.caption("Any projected player: FantasyPoints projection vs our backtested blend "
+                   "(opportunity model + trailing average), a projected stat line, recent "
+                   "form, coverage splits, and whether they've faced the opponent's "
+                   "coordinator before. Not limited to the DK slate — salary/value shows "
+                   "only when the player is priced.")
         from dfs import matchup_view as mv
         from dfs.names import normalize_name
 
@@ -585,18 +586,31 @@ def render(screen: str) -> None:
         salary = _sal.get(nk)
 
         mp = mv.model_projection(fp_proj, nk, pos) if mv.available() else {"proj": fp_proj, "lean": 0.0, "reason": ""}
-        pl = mv.projected_line(nk, pos) if mv.available() else {"fp": None, "reason": ""}
+        pl = mv.projected_line(nk, pos, as_of_week=week) if mv.available() else {"fp": None, "reason": ""}
+        _src = pl.get("source", "")
+        _src_lbl = {"opp_blend": "opp+trailing blend", "opp": "opportunity model",
+                    "project_stats": "trailing usage×eff (fallback)"}.get(_src, "")
         m1, m2, m3, m4 = st.columns(4)
         m1.metric("FP proj", f'{fp_proj:.1f}', help="FantasyPoints' own weekly projection.")
         m2.metric("Model proj", f'{mp["proj"]:.1f}', delta=f'{mp["lean"]:+.1f} lean',
                   delta_color="off", help="FP proj + a backtested regression-to-expected lean.")
-        m3.metric("Proj line", f'{pl["fp"]:.1f}' if pl.get("fp") is not None else "—",
-                  help="DK points implied by the player's own trailing usage × efficiency.")
+        m3.metric("Our proj", f'{pl["fp"]:.1f}' if pl.get("fp") is not None else "—",
+                  help="Backtested per-position blend of an opportunity model (team pace × "
+                       "pass rate × Vegas × usage share) and the player's trailing DK "
+                       "average. Falls back to trailing usage×efficiency if nflverse data "
+                       "is unavailable. 2025 holdout RMSE 7.45 vs 7.65 trailing-average.")
         m4.metric("Salary", f'${int(salary):,}' if salary else "—")
         val = mp["proj"] / (salary / 1000) if salary else 0.0
-        st.caption(f"**{r['team']}** vs **{opp or '—'}**"
-                   + (f"  ·  value (Model proj / $1k): **{val:.2f}**" if salary else "")
-                   + (f"  ·  Lean: {mp['reason']}" if mp.get("reason") else ""))
+        _bits = []
+        if _src == "opp_blend" and pl.get("opp_fp") is not None:
+            _bits.append(f"opp {pl['opp_fp']:.1f} / trailing {pl['trailing_fp']:.1f} → blend {pl['fp']:.1f}")
+        elif _src_lbl:
+            _bits.append(f"source: {_src_lbl}")
+        if salary:
+            _bits.append(f"value (Model proj / $1k): **{val:.2f}**")
+        if mp.get("reason"):
+            _bits.append(f"Lean: {mp['reason']}")
+        st.caption(f"**{r['team']}** vs **{opp or '—'}**" + ("  ·  " + "  ·  ".join(_bits) if _bits else ""))
 
         if not mv.available():
             st.info("Historical Data Suite tables not loaded (data/dfs/matchup/).")
@@ -611,9 +625,12 @@ def render(screen: str) -> None:
                     "rush_td": "rush TD", "tgt": "targets", "rec": "rec", "rec_yds": "rec yds",
                     "rec_td": "rec TD"}
             row_line = {nice[k]: ln[k] for k in order if k in ln}
+            _line_total = pl.get("line_fp", pl["fp"])
             st.write("**Projected line** — " + " · ".join(f"{k} {v}" for k, v in row_line.items())
-                     + f"  →  **{pl['fp']:.1f}** DK pts")
-            st.caption(pl.get("method", ""))
+                     + f"  →  **{_line_total:.1f}** DK pts")
+            st.caption((pl.get("method", "") or "")
+                       + ("  ·  the *Our proj* number above blends this with the trailing "
+                          "DK average" if pl.get("source") == "opp_blend" else ""))
 
         summ = mv.usage_summary(nk)
         if summ:
@@ -668,10 +685,12 @@ def render(screen: str) -> None:
     elif screen == "Prop Edges":
         st.header("🎰 DFS Prop Edges")
         st.caption(
-            "Player-prop lines from US sportsbooks (The Odds API) next to our trailing-usage "
-            "projection. **Edge = our proj − line**; `lean` is the side that implies. "
-            "⚠️ Our projection still runs on 2025 game logs — a player whose role changed for "
-            "2026 will show a false edge. The role filter (on by default) hides those."
+            "Player-prop lines from US sportsbooks (The Odds API) next to our projection — "
+            "a backtested blend of an opportunity model (team pace × pass rate × Vegas × "
+            "usage share) and the player's trailing average. **Edge = our proj − line**; "
+            "`lean` is the side that implies. ⚠️ Early season the model leans on 2025 usage, "
+            "so a changed 2026 role can still show a false edge — the confidence filter "
+            "(on by default) hides the worst of those."
         )
         if not ODDS_API_KEY:
             st.error("No Odds API key. Add a free key from the-odds-api.com as "
@@ -733,22 +752,20 @@ def render(screen: str) -> None:
                    + (f"  ·  credits left: **{cache['rem']}**" if cache.get("rem") else ""))
         if df is None or df.empty:
             st.warning("No comparable props came back — either the book hasn't posted this "
-                       "game yet, or we have no trailing game logs for those players "
-                       "(`data/dfs/matchup/`).")
+                       "game yet, or we have no recent game logs for those players.")
             st.stop()
 
         only_conf = st.toggle(
             "Higher-confidence rows only", value=True, key="pe_stable",
-            help="Keeps rows where the player's 2026 role looks unchanged vs 2025 AND our "
-                 "number is within ~0.6–1.7× the market line. Off = every row, including "
-                 "ones where the 2025-data projection is the likelier thing to be wrong.",
+            help="Keeps rows where the player's 2026 FP projection looks consistent with our "
+                 "number AND our number is within ~0.6–1.7× the market line. Off = every "
+                 "row, including ones where our projection is the likelier thing to be wrong.",
         )
         show = confident_only(df) if only_conf else df
         hidden = len(df) - len(show)
         if show.empty:
-            st.warning("Nothing cleared the confidence filter for this game — our 2025-based "
-                       "projection is too far from the market on every player. Untoggle to "
-                       "see the raw rows.")
+            st.warning("Nothing cleared the confidence filter for this game — our projection "
+                       "is too far from the market on every player. Untoggle to see the raw rows.")
             st.stop()
 
         show = show.sort_values("~EV %", ascending=False, na_position="last")
@@ -760,9 +777,9 @@ def render(screen: str) -> None:
             table = view
         st.dataframe(table, hide_index=True, width="stretch")
         st.caption(
-            "`line` = median across books · `our proj` = the player's trailing usage × "
-            "efficiency (2025 data) · `edge` = our proj − line · `book %` = de-vigged book "
-            "probability for the leaned side · `~EV %` = rough expected value from a "
+            "`line` = median across books · `our proj` = opportunity/trailing blend "
+            "(same model as Player Lookup) · `edge` = our proj − line · `book %` = de-vigged "
+            "book probability for the leaned side · `~EV %` = rough expected value from a "
             "market-anchored version of our projection (illustrative, not a staking guide) · "
             "`best` = best price on that side across books."
             + (f"  ·  {hidden} lower-confidence row(s) hidden." if hidden else "")

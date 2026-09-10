@@ -39,9 +39,9 @@ K_YPA = 90.0             # dropbacks, for QB yds/att
 K_PASS_TD = 130.0
 K_INT = 150.0
 
-# fraction of a team's implied points that arrive as offensive TDs by this unit
-TD_FROM_TOTAL_PASS = 0.055   # passing TDs per implied point
-TD_FROM_TOTAL_RUSH = 0.030
+# team offensive TDs (by unit) per implied point -> distributed by the player's usage share
+TD_FROM_TOTAL_PASS = 0.062   # ~1.5 team passing TDs at a 24-pt implied total
+TD_FROM_TOTAL_RUSH = 0.037   # ~0.9 team rushing TDs
 TD_VEGAS_BLEND = 0.5         # weight on the Vegas-implied TD vs the trailing-rate TD
 
 
@@ -212,7 +212,8 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name") -> di
         catch = min(max(catch, 0.35), 0.95)
         td_rt = _shrink(_ewma((h.receiving_tds / h.targets.replace(0, np.nan)).to_numpy()),
                         n_t, pri["rec_td"], K_TD)
-        vegas_td = TD_FROM_TOTAL_PASS * tv["team_total"] * (ts / max(_pos_share_prior(pos), 1e-6)) \
+        # team passing TDs (from the implied total) x this player's target share
+        vegas_td = TD_FROM_TOTAL_PASS * tv["team_total"] * max(0.0, ts) \
             if np.isfinite(tv["team_total"]) else np.nan
         rec_td = _td_blend(tgt * td_rt, vegas_td)
         line = {"tgt": tgt, "rec": tgt * catch, "rec_yds": tgt * ypt, "rec_td": rec_td}
@@ -226,7 +227,9 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name") -> di
                       n_c, pri["ypc"], K_YDS)
         rtd = _shrink(_ewma((h.rushing_tds / h.carries.replace(0, np.nan)).to_numpy()),
                       n_c, pri["rush_td"], K_TD)
-        vegas_rtd = TD_FROM_TOTAL_RUSH * tv["team_total"] * min(1.5, cs / 0.42) \
+        # team rushing TDs (from the implied total) x this back's carry share (goal-line
+        # backs skew higher, but carry share is the honest walk-forward proxy)
+        vegas_rtd = TD_FROM_TOTAL_RUSH * tv["team_total"] * max(0.0, cs) \
             if np.isfinite(tv["team_total"]) else np.nan
         rush_td = _td_blend(car * rtd, vegas_rtd)
         ts = _shrink(_ewma(h["target_share"].to_numpy()), n_g, 0.09, K_SHARE)

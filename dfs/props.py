@@ -115,7 +115,12 @@ def edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
     """One row per (player, market): consensus line, our projection, edge, the side we
     lean, the book's no-vig probability for that side, and a rough EV%."""
     from dfs.projections import load_weekly_projections
-    from matchup_model.project_stats import projected_line
+    try:
+        from matchup_model.opp.blend import blended_line as projected_line, current_season
+        _season = current_season()
+    except Exception:  # noqa: BLE001
+        from matchup_model.project_stats import projected_line
+        _season = None
 
     # (player, market) -> {"points": [...], "over": [(price, book)], "under": [(price, book)]}
     acc: dict = {}
@@ -150,7 +155,7 @@ def edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
         nk = normalize_name(player)
         pos, wk_proj = info.get(nk, ("WR", None))
         if nk not in line_cache:
-            line_cache[nk] = projected_line(nk, pos)
+            line_cache[nk] = projected_line(nk, pos, as_of_season=_season, as_of_week=week)
         pl = line_cache[nk]
         our = pl.get("line", {}).get(comp) if pl.get("fp") is not None else None
         if our is None:

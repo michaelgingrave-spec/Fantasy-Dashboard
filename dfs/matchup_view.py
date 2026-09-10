@@ -208,12 +208,20 @@ def regression_lean(name_key: str, pos: str) -> dict:
     return _pj.projection_lean(name_key, pos)
 
 
-def projected_line(name_key: str, pos: str) -> dict:
-    """Reconstructed box-score line + DK points from trailing usage x efficiency.
-    Descriptive cross-check, not a market projection. {"fp": None, "reason": ...} if thin."""
+def projected_line(name_key: str, pos: str, as_of_season=None, as_of_week=None) -> dict:
+    """Projected box-score line + DK points. Prefers the backtested opportunity/trailing
+    blend (nflverse); falls back to the trailing usage x efficiency line when that data
+    can't be built. {"fp": None, "reason": ...} if thin. `source` says which model."""
     if not _OK:
         return {"fp": None, "reason": "matchup_model unavailable"}
-    return _pjs.projected_line(name_key, pos)
+    try:
+        from matchup_model.opp import blend as _blend
+        out = _blend.blended_line(name_key, pos, as_of_season, as_of_week)
+        if out.get("fp") is not None:
+            return out
+    except Exception:  # noqa: BLE001 — nflverse cache unavailable, etc.
+        pass
+    return _pjs.projected_line(name_key, pos, as_of_season, as_of_week)
 
 
 def model_projection(fp_proj: float, name_key: str, pos: str) -> dict:
