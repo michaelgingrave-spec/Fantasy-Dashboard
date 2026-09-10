@@ -431,7 +431,7 @@ def render(screen: str) -> None:
                        "above their own baseline in it.")
 
         def _pass_block(name, proj):
-            tag = f"  ·  proj {proj:.1f}" if proj is not None else ""
+            tag = f"  ·  FP proj {proj:.1f}" if proj is not None else ""
             st.markdown(f"**{name}**{tag}")
             t = mv.player_pass_by_coverage(_nn(name))
             if t.empty:
@@ -440,15 +440,25 @@ def render(screen: str) -> None:
                 st.dataframe(mv.heat(t, ["tgt/rt", "yds/rt", "yds/tgt", "catch%",
                                          "1st-read%", "TD"]),
                              hide_index=True, width="stretch")
+            pt = mv.player_pass_by_personnel(_nn(name))
+            if not pt.empty:
+                st.caption("by personnel")
+                st.dataframe(mv.heat(pt, ["tgt/rt", "yds/rt", "catch%", "TD"]),
+                             hide_index=True, width="stretch")
 
         def _run_block(name, proj):
-            tag = f"  ·  proj {proj:.1f}" if proj is not None else ""
+            tag = f"  ·  FP proj {proj:.1f}" if proj is not None else ""
             st.markdown(f"**{name}**{tag}")
             t = mv.player_run_by_concept(_nn(name))
             if t.empty:
                 st.caption("No 2025 concept-split carries for this player.")
             else:
                 st.dataframe(mv.heat(t, ["YPC", "yards", "TD", "success%", "exp-run%", "att%"]),
+                             hide_index=True, width="stretch")
+            pt = mv.player_run_by_personnel(_nn(name))
+            if not pt.empty:
+                st.caption("by personnel")
+                st.dataframe(mv.heat(pt, ["YPC", "success%", "exp-run%", "att%"]),
                              hide_index=True, width="stretch")
 
         # ── passing ────────────────────────────────────────────────────────
@@ -468,6 +478,12 @@ def render(screen: str) -> None:
                 eff = ["yds/tgt", "catch%", "yds/rec", "rating", "TD"]
                 eff_rk = [f"{m} rk" for m in eff if f"{m} rk" in dpc.columns]
                 st.dataframe(mv.heat(dpc, eff + eff_rk, good_high=True),
+                             hide_index=True, width="stretch")
+            dpp = mv.defense_pass_by_personnel(opp)
+            if not dpp.empty:
+                st.caption(f"**{opp} defense — allowed by personnel**  ·  `sees% rk` 1 = faces it most")
+                st.dataframe(mv.heat(dpp, ["yds/tgt", "yds/tgt rk", "catch%", "catch% rk",
+                                           "rating", "rating rk", "TD"], good_high=True),
                              hide_index=True, width="stretch")
 
         # ── rushing ────────────────────────────────────────────────────────
@@ -489,6 +505,12 @@ def render(screen: str) -> None:
                 st.caption(f"No concept data for {opp}.")
             else:
                 st.dataframe(mv.heat(drc, ["YPC", "success%", "exp-run%"], good_high=True),
+                             hide_index=True, width="stretch")
+            drp = mv.defense_run_by_personnel(opp)
+            if not drp.empty:
+                st.caption(f"**{opp} defense — allowed by personnel**  ·  `sees% rk` 1 = faces it most")
+                st.dataframe(mv.heat(drp, ["YPC", "YPC rk", "success%", "success% rk",
+                                           "exp-run%", "exp-run% rk"], good_high=True),
                              hide_index=True, width="stretch")
 
     # ── Player Lookup ─────────────────────────────────────────────────────

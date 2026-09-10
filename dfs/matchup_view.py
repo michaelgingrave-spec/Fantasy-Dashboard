@@ -276,6 +276,22 @@ def matchup_highlights(opp: str, pass_names, rb_names, n: int = 12) -> pd.DataFr
     return _sch.matchup_highlights(opp, list(pass_names), list(rb_names), n)
 
 
+def player_pass_by_personnel(name_key: str) -> pd.DataFrame:
+    return _sch.player_pass_by_personnel(name_key, for_display=True) if scheme_available() else pd.DataFrame()
+
+
+def player_run_by_personnel(name_key: str) -> pd.DataFrame:
+    return _sch.player_run_by_personnel(name_key, for_display=True) if scheme_available() else pd.DataFrame()
+
+
+def defense_pass_by_personnel(team: str) -> pd.DataFrame:
+    return _sch.defense_pass_allowed_by_personnel(team) if scheme_available() else pd.DataFrame()
+
+
+def defense_run_by_personnel(team: str) -> pd.DataFrame:
+    return _sch.defense_run_allowed_by_personnel(team) if scheme_available() else pd.DataFrame()
+
+
 def pass_matchup(name_key: str, opp_team: str) -> dict:
     """{player: df by coverage, defense: df by coverage} for the passing grid."""
     if not scheme_available():

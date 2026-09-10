@@ -136,6 +136,15 @@ _PLAYER_COLS = ["look", "routes", "targets", "tgt/rt", "yds/rt", "yds/tgt", "cat
 _DEF_COLS = ["look", "targets", "yds/tgt", "catch%", "yds/rec", "rating", "TD"]
 _DEF_RANK_METRICS = ["yds/tgt", "catch%", "yds/rec", "rating", "TD"]
 
+# hide granular rows (specific coverages / rarer personnel groupings) with too little
+# volume for the numbers to mean anything. The man/zone/1-high/2-high rollups are always
+# kept — they aggregate everything.
+MIN_COV_ROUTES = 15      # player, per specific coverage
+MIN_COV_TGT = 8          # defense allowed, per specific coverage
+MIN_PERS_ROUTES = 20     # player, per personnel grouping
+MIN_PERS_ATT = 15        # player runs, per personnel grouping
+MIN_PERS_DEF_TGT = 25    # defense allowed, per personnel grouping (whole-team volume)
+
 
 def _rec_rows_for(g: pd.DataFrame, key: str) -> pd.DataFrame:
     """From one entity's Cover 0-6 rows, build man/zone/single-high/two-high bucket rows
@@ -174,14 +183,25 @@ def _rec_rows_for(g: pd.DataFrame, key: str) -> pd.DataFrame:
     return pd.DataFrame(rows)[cols]
 
 
+def _keep_rows(df: pd.DataFrame, vol_col: str, min_vol: float, always) -> pd.DataFrame:
+    """Drop granular rows below `min_vol` on `vol_col`; keep every row whose 'look' is in
+    `always` (the man/zone/1-high/2-high rollups)."""
+    if df.empty or vol_col not in df.columns:
+        return df
+    keep = df["look"].isin(always) | (pd.to_numeric(df[vol_col], errors="coerce") >= min_vol)
+    return df[keep].reset_index(drop=True)
+
+
 def player_pass_by_coverage(name_key: str) -> pd.DataFrame:
-    """A pass-catcher's efficiency by man/zone/1-high/2-high, then Cover 0-6:
-    routes, targets, tgt/route, yds/route, yds/tgt, catch%, 1st-read%, TD."""
+    """A pass-catcher's efficiency by man/zone/1-high/2-high, then Cover 0-6 (specific
+    coverages with < MIN_COV_ROUTES routes are hidden): routes, targets, tgt/route,
+    yds/route, yds/tgt, catch%, 1st-read%, TD."""
     d = _rec_cov_players()
     if d.empty:
         return pd.DataFrame()
     g = _year_blend(d[d["name_key"] == name_key], keys=["COV"], count_cols=_REC_COUNTS)
-    return _rec_rows_for(g, "player").round(2).reset_index(drop=True)
+    out = _rec_rows_for(g, "player").round(2).reset_index(drop=True)
+    return _keep_rows(out, "routes", MIN_COV_ROUTES, BUCKET_NAMES)
 
 
 def _rank_ascending(vals: dict) -> dict:
@@ -247,7 +267,8 @@ def defense_pass_allowed_by_coverage(team: str) -> pd.DataFrame:
     order = ["look", "plays%", "plays% rk", "targets", "yds/tgt", "yds/tgt rk",
              "catch%", "catch% rk", "yds/rec", "yds/rec rk", "rating", "rating rk",
              "TD", "TD rk"]
-    return out[[c for c in order if c in out.columns]].round(2).reset_index(drop=True)
+    out = out[[c for c in order if c in out.columns]].round(2).reset_index(drop=True)
+    return _keep_rows(out, "targets", MIN_COV_TGT, BUCKET_NAMES)
 
 
 # ── defense coverage rates (from the weekly coverage matrix) ────────────────
@@ -394,7 +415,9 @@ def _pers_frame(kind: str) -> pd.DataFrame:
     return d
 
 
-def player_pass_by_personnel(name_key: str) -> pd.DataFrame:
+def player_pass_by_personnel(name_key: str, for_display: bool = False) -> pd.DataFrame:
+    """A pass-catcher by 11 / 12 / 21 ... personnel. `for_display` drops groupings with
+    < MIN_PERS_ROUTES routes."""
     d = _pers_frame("rec_player")
     if d.empty:
         return pd.DataFrame()
@@ -405,10 +428,13 @@ def player_pass_by_personnel(name_key: str) -> pd.DataFrame:
            .sort_values("p")[["pers", "RTE", "TPRR", "YPRR", "CR %", "TD"]]
            .rename(columns={"pers": "personnel", "RTE": "routes", "TPRR": "tgt/rt",
                             "YPRR": "yds/rt", "CR %": "catch%"}))
-    return out.round(2).reset_index(drop=True)
+    out = out.round(2).reset_index(drop=True)
+    if for_display:
+        out = out[pd.to_numeric(out["routes"], errors="coerce") >= MIN_PERS_ROUTES]
+    return out.reset_index(drop=True)
 
 
-def player_run_by_personnel(name_key: str) -> pd.DataFrame:
+def player_run_by_personnel(name_key: str, for_display: bool = False) -> pd.DataFrame:
     d = _pers_frame("rush_player")
     if d.empty:
         return pd.DataFrame()
@@ -419,7 +445,71 @@ def player_run_by_personnel(name_key: str) -> pd.DataFrame:
            .sort_values("p")[["pers", "ATT %", "ATT", "YPC", "TD", "SUCC %", "EXP RUN %"]]
            .rename(columns={"pers": "personnel", "ATT %": "att%", "ATT": "att",
                             "SUCC %": "success%", "EXP RUN %": "exp-run%"}))
-    return out.round(2).reset_index(drop=True)
+    out = out.round(2).reset_index(drop=True)
+    if for_display:
+        out = out[pd.to_numeric(out["att"], errors="coerce") >= MIN_PERS_ATT]
+    return out.reset_index(drop=True)
+
+
+def defense_pass_allowed_by_personnel(team: str) -> pd.DataFrame:
+    """What a defense allows to WR/TE by personnel: sees%, targets, yds/tgt, catch%,
+    rating, TD — with league ranks (sees% rk 1 = faces it most; allowed 32 = softest).
+    Rare groupings (< MIN_PERS_DEF_TGT targets) hidden."""
+    d = _pers_frame("rec_defense")
+    if d.empty:
+        return pd.DataFrame()
+    t = norm_team(team)
+    g = d[(d["team"] == t) & (d["pers"].isin(PERSONNEL))].copy()
+    if g.empty:
+        return pd.DataFrame()
+    rk = _defense_personnel_ranks("rec").get(t, {})
+    rows = []
+    for p in PERSONNEL:
+        s = g[g["pers"] == p]
+        if s.empty:
+            continue
+        row = s.iloc[0]
+        rr = rk.get(p, {})
+        rows.append({"personnel": p, "sees%": round(float(row.get("TGT %", np.nan)), 1),
+                     "sees% rk": rr.get("TGT %"), "targets": int(row.get("TGT", 0)),
+                     "yds/tgt": round(float(row.get("YPT", np.nan)), 2), "yds/tgt rk": rr.get("YPT"),
+                     "catch%": round(float(row.get("CR %", np.nan)), 1), "catch% rk": rr.get("CR %"),
+                     "rating": round(float(row.get("RATE", np.nan)), 1), "rating rk": rr.get("RATE"),
+                     "TD": int(row.get("TD", 0))})
+    out = pd.DataFrame(rows)
+    if out.empty:
+        return out
+    return out[pd.to_numeric(out["targets"], errors="coerce") >= MIN_PERS_DEF_TGT].reset_index(drop=True)
+
+
+def defense_run_allowed_by_personnel(team: str) -> pd.DataFrame:
+    """What a defense allows on the ground by personnel: sees%, att, YPC, success%,
+    exp-run%, TD — with league ranks. Rare groupings hidden."""
+    d = _pers_frame("rush_defense")
+    if d.empty:
+        return pd.DataFrame()
+    t = norm_team(team)
+    g = d[(d["team"] == t) & (d["pers"].isin(PERSONNEL))].copy()
+    if g.empty:
+        return pd.DataFrame()
+    rk = _defense_personnel_ranks("rush").get(t, {})
+    rows = []
+    for p in PERSONNEL:
+        s = g[g["pers"] == p]
+        if s.empty:
+            continue
+        row = s.iloc[0]
+        rr = rk.get(p, {})
+        rows.append({"personnel": p, "sees%": round(float(row.get("ATT %", np.nan)), 1),
+                     "sees% rk": rr.get("ATT %"), "att": int(row.get("ATT", 0)),
+                     "YPC": round(float(row.get("YPC", np.nan)), 2), "YPC rk": rr.get("YPC"),
+                     "success%": round(float(row.get("SUCC %", np.nan)), 1), "success% rk": rr.get("SUCC %"),
+                     "exp-run%": round(float(row.get("EXP RUN %", np.nan)), 1),
+                     "exp-run% rk": rr.get("EXP RUN %"), "TD": int(row.get("TD", 0))})
+    out = pd.DataFrame(rows)
+    if out.empty:
+        return out
+    return out[pd.to_numeric(out["att"], errors="coerce") >= MIN_PERS_ATT].reset_index(drop=True)
 
 
 @lru_cache(maxsize=2)
