@@ -809,10 +809,12 @@ def compute_all_playoff_scores():
 _BEST_BALL_SCREENS = ["📊 Player Projections", "🛡️ Defense Matchups", "📈 Schedule Rankings",
                       "📅 Schedule Viewer", "📉 Weekly Projections", "🧩 Roster Optimizer",
                       "🎯 Draft Room"]
-_DFS_SCREENS = ["🏈 DFS Optimizer", "🎯 DFS Matchup Edge", "💡 DFS Suggestions", "🔍 DFS Data Check"]
+_DFS_SCREENS = ["🏈 DFS Optimizer", "🎯 DFS Matchup Edge", "💡 DFS Suggestions",
+                "🔎 DFS Player Lookup", "🔍 DFS Data Check"]
 _DFS_SCREEN_MAP = {
     "🏈 DFS Optimizer": "Optimizer", "🎯 DFS Matchup Edge": "Matchup Finder",
-    "💡 DFS Suggestions": "Suggestions", "🔍 DFS Data Check": "Data Check",
+    "💡 DFS Suggestions": "Suggestions", "🔎 DFS Player Lookup": "Player Lookup",
+    "🔍 DFS Data Check": "Data Check",
 }
 
 with st.sidebar:

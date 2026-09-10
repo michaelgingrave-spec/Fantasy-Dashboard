@@ -12,3 +12,8 @@ outputs/
 # under data/dfs/ are intentionally tracked so the deployed app has them.
 data/dfs/dk/
 data/dfs/.cache/
+
+# matchup model outputs / artifacts
+data/dfs/matchup/_model/
+matchup_model/backtest_rows.csv
+matchup_model/__pycache__/

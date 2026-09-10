@@ -319,6 +319,64 @@ def render(screen: str) -> None:
         st.dataframe(stk if not stk.empty else pd.DataFrame({"note": ["no QB/pass-catcher pairs"]}),
                      hide_index=True, width="stretch")
 
+    # ── Player Lookup ─────────────────────────────────────────────────────
+    elif screen == "Player Lookup":
+        st.header("🔎 DFS Player Lookup")
+        st.caption("Research tool — recent usage, expected-vs-actual, historical coverage "
+                   "splits, and the opponent's defensive tendencies. **Descriptive, not a "
+                   "projection edge** (the coverage-matchup model did not beat baseline — "
+                   "see matchup_model/backtest_report.md).")
+        if _need_slate():
+            st.stop()
+        from dfs import matchup_view as mv
+        from dfs.names import normalize_name
+
+        labels = {f'{r["name"]} · {r["pos"]} · {r["team"]}': r for _, r in
+                  slate_df.sort_values(["pos", "salary"], ascending=[True, False]).iterrows()}
+        choice = st.selectbox("Player", list(labels), key="pl_pick")
+        r = labels[choice]
+        nk = normalize_name(r["name"])
+        opp = str(r["opp"]).lstrip("@")
+
+        m1, m2, m3, m4 = st.columns(4)
+        m1.metric("FantasyPoints proj", f'{r["proj"]:.1f}')
+        m2.metric("DK salary", f'\\${int(r["salary"]):,}')
+        m3.metric("Value (pt/$1k)", f'{r["proj"] / (r["salary"] / 1000):.2f}')
+        m4.metric("Opponent", opp or "—")
+
+        if not mv.available():
+            st.info("Historical Data Suite tables not loaded (data/dfs/matchup/). "
+                    "Showing slate info only.")
+            st.stop()
+
+        summ = mv.usage_summary(nk)
+        if summ:
+            flag = summ.pop("regression_flag", None)
+            st.write("**Recent form** (" + str(summ.pop("games", "?")) + " most recent games in data): "
+                     + " · ".join(f"{k} {v}" for k, v in summ.items()))
+            if flag:
+                st.caption(f"Regression: {flag}")
+        ru = mv.recent_usage(nk)
+        if not ru.empty:
+            st.dataframe(ru, hide_index=True, width="stretch")
+
+        c1, c2 = st.columns(2)
+        with c1:
+            st.subheader(f"Coverage splits — {r['pos']} (2022–24)")
+            stat = "ypa" if r["pos"] == "QB" else "tprr"
+            cs = mv.coverage_splits(nk, stat)
+            st.dataframe(cs if not cs.empty else pd.DataFrame({"note": ["no split history"]}),
+                         hide_index=True, width="stretch")
+            st.caption(f"{'yds/dropback' if stat=='ypa' else 'targets/route'} vs each look. "
+                       "`diff` vs the player's own baseline — historically small and unstable.")
+        with c2:
+            yr = mv.opponent_season(opp)
+            st.subheader(f"{opp} defense — scheme tendencies" + (f" ({yr})" if yr else ""))
+            osch = mv.opponent_scheme(opp)
+            st.dataframe(osch if not osch.empty else pd.DataFrame({"note": ["no scheme data for opponent"]}),
+                         hide_index=True, width="stretch")
+            st.caption("`lean` = points above/below league average that season.")
+
     # ── Data Check ─────────────────────────────────────────────────────────
     else:
         st.header("🔍 DFS Data Check")
