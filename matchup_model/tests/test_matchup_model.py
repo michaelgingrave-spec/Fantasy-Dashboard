@@ -5,7 +5,7 @@ predictor so the harness stays usable for a future retry with better inputs.
 import numpy as np
 import pytest
 
-from matchup_model import defense_model, ingest, player_splits, project
+from matchup_model import defense_model, ingest, player_splits, project, project_stats
 
 
 def test_ingest_loads_all_tables():
@@ -52,3 +52,16 @@ def test_regression_lean_shape_and_bounds():
     # unknown player -> zero lean with a note, never an error
     z = project.projection_lean("no such person xyz", "WR", 2024, 19)
     assert z["lean"] == 0.0 and "game logs" in z["reason"]
+
+
+def test_projected_stat_line():
+    # a high-volume WR with 2022-25 logs -> a plausible line and DK points
+    r = project_stats.projected_line("jamarr chase", "WR", as_of_season=2025, as_of_week=10)
+    assert r["fp"] is not None and 5 < r["fp"] < 45
+    assert 4 < r["line"]["tgt"] < 16 and r["line"]["rec"] <= r["line"]["tgt"]
+    # QB path exercises the rushing-fp add-on
+    q = project_stats.projected_line("josh allen", "QB", as_of_season=2025, as_of_week=10)
+    assert q["fp"] is not None and 8 < q["fp"] < 45
+    # unknown player -> no line, a reason, never an error
+    z = project_stats.projected_line("no such person xyz", "RB")
+    assert z["fp"] is None and "recent games" in z["reason"]

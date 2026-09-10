@@ -336,10 +336,10 @@ def render(screen: str) -> None:
     # ── Player Lookup ─────────────────────────────────────────────────────
     elif screen == "Player Lookup":
         st.header("🔎 DFS Player Lookup")
-        st.caption("Research tool — recent usage, expected-vs-actual, historical coverage "
-                   "splits, and the opponent's defensive tendencies. **Descriptive, not a "
-                   "projection edge** (the coverage-matchup model did not beat baseline — "
-                   "see matchup_model/backtest_report.md).")
+        st.caption("**Model proj** = FantasyPoints' projection + the one adjustment that beat "
+                   "baseline in backtesting (a regression-to-expected lean). The **projected "
+                   "line** and coverage tables below are descriptive — recent role and history, "
+                   "not a market edge (see matchup_model/backtest_report.md).")
         if _need_slate():
             st.stop()
         from dfs import matchup_view as mv
@@ -351,23 +351,41 @@ def render(screen: str) -> None:
         r = labels[choice]
         nk = normalize_name(r["name"])
         opp = str(r["opp"]).lstrip("@")
+        fp_proj = float(r["proj"])
 
-        lean = mv.regression_lean(nk, r["pos"]) if mv.available() else {"lean": 0.0, "reason": ""}
-        m1, m2, m3, m4, m5 = st.columns(5)
-        m1.metric("FantasyPoints proj", f'{r["proj"]:.1f}')
-        m2.metric("Regression lean", f'{lean["lean"]:+.1f}',
-                  help="Backtested nudge toward recent expected FP (needs current-season "
-                       "game logs). Small for WR/RB, ~3 fp swing for QB.")
-        m3.metric("DK salary", f'\\${int(r["salary"]):,}')
-        m4.metric("Value (pt/$1k)", f'{r["proj"] / (r["salary"] / 1000):.2f}')
-        m5.metric("Opponent", opp or "—")
-        if lean.get("reason"):
-            st.caption(f"Lean: {lean['reason']}")
+        mp = mv.model_projection(fp_proj, nk, r["pos"]) if mv.available() else {"proj": fp_proj, "lean": 0.0, "reason": ""}
+        pl = mv.projected_line(nk, r["pos"]) if mv.available() else {"fp": None, "reason": ""}
+        m1, m2, m3, m4 = st.columns(4)
+        m1.metric("FP proj", f'{fp_proj:.1f}', help="FantasyPoints' own weekly projection.")
+        m2.metric("Model proj", f'{mp["proj"]:.1f}', delta=f'{mp["lean"]:+.1f} lean',
+                  delta_color="off",
+                  help="FantasyPoints proj + a backtested regression-to-expected lean. "
+                       "Small for WR/RB, up to ~3 fp for QB.")
+        m3.metric("Proj line", f'{pl["fp"]:.1f}' if pl.get("fp") is not None else "—",
+                  help="DK points implied by the player's own trailing usage x efficiency "
+                       "(EWMA of the last ~10 games). A sanity check, not a market projection.")
+        m4.metric("Salary", f'${int(r["salary"]):,}')
+        val = mp["proj"] / (r["salary"] / 1000) if r["salary"] else 0.0
+        st.caption(f"vs **{opp or '—'}**  ·  value (Model proj / $1k): **{val:.2f}**"
+                   + (f"  ·  Lean: {mp['reason']}" if mp.get("reason") else ""))
 
         if not mv.available():
             st.info("Historical Data Suite tables not loaded (data/dfs/matchup/). "
                     "Showing slate info only.")
             st.stop()
+
+        if pl.get("fp") is not None:
+            ln = pl["line"]
+            order = ["pass_att", "pass_yds", "pass_td", "int", "rush_att", "rush_yds",
+                     "rush_td", "tgt", "rec", "rec_yds", "rec_td"]
+            nice = {"pass_att": "pass att", "pass_yds": "pass yds", "pass_td": "pass TD",
+                    "int": "INT", "rush_att": "carries", "rush_yds": "rush yds",
+                    "rush_td": "rush TD", "tgt": "targets", "rec": "rec", "rec_yds": "rec yds",
+                    "rec_td": "rec TD"}
+            row = {nice[k]: ln[k] for k in order if k in ln}
+            st.write("**Projected line** — " + " · ".join(f"{k} {v}" for k, v in row.items())
+                     + f"  →  **{pl['fp']:.1f}** DK pts")
+            st.caption(pl.get("method", ""))
 
         summ = mv.usage_summary(nk)
         if summ:
@@ -382,7 +400,7 @@ def render(screen: str) -> None:
 
         c1, c2 = st.columns(2)
         with c1:
-            st.subheader(f"Coverage splits — {r['pos']} (2022–24)")
+            st.subheader(f"Coverage splits — {r['pos']} (2022–25)")
             stat = "ypa" if r["pos"] == "QB" else "tprr"
             cs = mv.coverage_splits(nk, stat)
             st.dataframe(cs if not cs.empty else pd.DataFrame({"note": ["no split history"]}),

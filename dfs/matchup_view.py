@@ -5,7 +5,7 @@ projection edge did not validate (see matchup_model/backtest_report.md), so noth
 feeds the optimizer or claims to beat the FantasyPoints projection. It surfaces:
   - the player's recent usage (route %, target rate, snap share, aDOT, alignment, RZ looks)
   - expected vs actual fantasy points (regression flag)
-  - historical efficiency splits by coverage (2022-24)
+  - historical efficiency splits by coverage (2022-25)
   - the opponent defense's scheme tendencies (most recent full season in the data)
 """
 from __future__ import annotations
@@ -20,6 +20,7 @@ try:
     from matchup_model import player_splits as _ps
     from matchup_model import defense_model as _dm
     from matchup_model import project as _pj
+    from matchup_model import project_stats as _pjs
     _OK = True
 except Exception:  # matchup_model data / deps missing
     _OK = False
@@ -95,7 +96,7 @@ def usage_summary(name_key: str) -> dict:
 
 
 def coverage_splits(name_key: str, stat: str = "tprr") -> pd.DataFrame:
-    """Historical (2022-24) efficiency by coverage split. Descriptive only."""
+    """Historical (2022-25) efficiency by coverage split. Descriptive only."""
     if not _OK:
         return pd.DataFrame()
     try:
@@ -135,4 +136,20 @@ def regression_lean(name_key: str, pos: str) -> dict:
     if not _OK:
         return {"lean": 0.0, "reason": "matchup_model unavailable"}
     return _pj.projection_lean(name_key, pos)
+
+
+def projected_line(name_key: str, pos: str) -> dict:
+    """Reconstructed box-score line + DK points from trailing usage x efficiency.
+    Descriptive cross-check, not a market projection. {"fp": None, "reason": ...} if thin."""
+    if not _OK:
+        return {"fp": None, "reason": "matchup_model unavailable"}
+    return _pjs.projected_line(name_key, pos)
+
+
+def model_projection(fp_proj: float, name_key: str, pos: str) -> dict:
+    """FantasyPoints projection + the backtested regression lean = our number.
+    Returns {"proj": float, "lean": float, "reason": str}."""
+    lean = regression_lean(name_key, pos) if _OK else {"lean": 0.0, "reason": ""}
+    lv = float(lean.get("lean", 0.0) or 0.0)
+    return {"proj": round(float(fp_proj) + lv, 1), "lean": lv, "reason": lean.get("reason", "")}
 
