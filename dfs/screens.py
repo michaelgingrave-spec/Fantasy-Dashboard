@@ -459,7 +459,7 @@ def render(screen: str) -> None:
                 st.caption("Green = that defense gives up more per route to that alignment.")
 
     # ── Data Check ─────────────────────────────────────────────────────────
-    else:
+    elif screen == "Data Check":
         st.header("🔍 DFS Data Check")
 
         st.subheader("DraftKings slate")
@@ -511,3 +511,12 @@ def render(screen: str) -> None:
         st.subheader("Odds API")
         st.write("key configured ✔" if ODDS_API_KEY
                  else "no key — set ODDS_API_KEY in .env to add implied team totals")
+
+    # ── unknown key → the deployed code is behind the sidebar ─────────────
+    else:
+        st.header(f"🧬 {screen}")
+        st.warning(
+            f"This screen (`{screen}`) isn't in the running build — the deployed code is "
+            "behind the sidebar menu. On Streamlit Cloud: **Manage app → ⋮ → Reboot** to "
+            "pull the latest push. (Locally: restart `streamlit run`.)"
+        )
