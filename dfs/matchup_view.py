@@ -255,6 +255,19 @@ def scheme_blend_weight() -> float:
     return _sch.blend_weight() if scheme_available() else 0.0
 
 
+def scheme_teams() -> list[str]:
+    """All 32 NFL team codes — the Matchup Machine picks from these, not just the slate."""
+    return list(_sch.NFL_TEAMS) if _OK else []
+
+
+def team_pass_catchers(team: str, n: int = 6) -> list[str]:
+    return _sch.team_pass_catchers(team, n) if scheme_available() else []
+
+
+def team_backs(team: str, n: int = 3) -> list[str]:
+    return _sch.team_backs(team, n) if scheme_available() else []
+
+
 def pass_matchup(name_key: str, opp_team: str) -> dict:
     """{player: df by coverage, defense: df by coverage} for the passing grid."""
     if not scheme_available():

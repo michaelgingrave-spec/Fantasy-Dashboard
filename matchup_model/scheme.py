@@ -24,6 +24,10 @@ from matchup_model.config import DATA
 COVERAGES = ["Cover 0", "Cover 1", "Cover 2", "Cover 2 Man", "Cover 3", "Cover 4", "Cover 6"]
 CONCEPTS = ["Outside Zone", "Inside Zone", "Man/Duo", "Power", "Counter", "Pull Lead", "Draw"]
 
+NFL_TEAMS = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET",
+             "GB", "HOU", "IND", "JAX", "KC", "LAC", "LAR", "LV", "MIA", "MIN", "NE", "NO",
+             "NYG", "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS"]
+
 # man/zone/single-high/two-high rolled up from the Cover 0-6 rows (shown above the specifics).
 BUCKETS = {
     "Man": ["Cover 0", "Cover 1", "Cover 2 Man"],
@@ -349,6 +353,38 @@ def defense_alignment_grid() -> pd.DataFrame:
     piv = piv.reindex(columns=[c for c in ["Wide", "Slot", "Inline", "Backfield"] if c in piv.columns])
     piv.columns = [f"{c} yds/rt" for c in piv.columns]
     return piv.round(2).reset_index().rename(columns={"team": "defense"})
+
+
+def _matches_team(raw_team, team: str) -> bool:
+    """A scheme row's `Team` may be 'ATL, NYG' for a mid-season trade — match if `team`
+    (normalized) appears anywhere in it."""
+    t = norm_team(team)
+    return any(norm_team(p.strip()) == t for p in str(raw_team).split(","))
+
+
+def team_pass_catchers(team: str, n: int = 6) -> list[str]:
+    """Top-n WR/TE names for a team by total 2025 routes (fallback when the team isn't on
+    the DK slate, so there are no projections to rank by)."""
+    d = _rec_cov_players()
+    if d.empty:
+        return []
+    m = d[d["Team"].map(lambda x: _matches_team(x, team)) & d["COV"].isin(COVERAGES)]
+    if m.empty:
+        return []
+    tot = m.groupby("Name")["RTE"].sum().sort_values(ascending=False)
+    return list(tot.head(n).index)
+
+
+def team_backs(team: str, n: int = 3) -> list[str]:
+    """Top-n RB names for a team by total 2025 carries."""
+    d = _rush_concept("player")
+    if d.empty:
+        return []
+    m = d[d["Team"].map(lambda x: _matches_team(x, team)) & d["CONCEPT"].isin(CONCEPTS)]
+    if m.empty:
+        return []
+    tot = m.groupby("Name")["ATT"].sum().sort_values(ascending=False)
+    return list(tot.head(n).index)
 
 
 def available() -> bool:

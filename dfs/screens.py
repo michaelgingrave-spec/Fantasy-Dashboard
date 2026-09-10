@@ -336,41 +336,60 @@ def render(screen: str) -> None:
     # ── Matchup Machine ───────────────────────────────────────────────────
     elif screen == "Matchup Machine":
         st.header("🧬 DFS Matchup Machine")
-        st.caption("Pick a team → every fantasy-relevant offensive player's 2025 scheme "
-                   "profile: pass-catchers by coverage, backs by run concept. Heat: green = "
-                   "more productive in that look. Descriptive — see matchup_model/backtest_report.md.")
-        if _need_slate():
-            st.stop()
+        st.caption("Pick any team → its pass-catchers by coverage and backs by run concept, "
+                   "next to a defense you choose. Not limited by the DFS slate filter. "
+                   "Heat: green = more productive. Descriptive — see matchup_model/backtest_report.md.")
         from dfs import matchup_view as mv
         from dfs.names import normalize_name as _nn
-
-        teams = sorted(slate_df["team"].dropna().astype(str).unique())
-        if not teams:
-            st.info("No teams on the current slate.")
-            st.stop()
-        team = st.selectbox("Team", teams, key="mm_team")
-        tdf = slate_df[slate_df["team"].astype(str) == team].copy()
-        opp = str(tdf["opp"].iloc[0]).lstrip("@") if not tdf.empty else ""
+        from dfs.names import norm_team as _nt
 
         if not mv.scheme_available():
             st.info("Scheme-split data not loaded (data/dfs/matchup/*coverage*/*concept*). "
                     "Run the Wednesday pull, or `matchup_model/weekly_pull.py`.")
             st.stop()
 
+        all_teams = mv.scheme_teams()
+        _has_slate = slate_df is not None and not slate_df.empty
+        slate_teams = ({_nt(t) for t in slate_df["team"].dropna().astype(str)}
+                       if _has_slate else set())
+        default_i = next((i for i, t in enumerate(all_teams) if t in slate_teams), 0)
+        c_team, c_opp = st.columns(2)
+        team = c_team.selectbox("Team", all_teams, index=default_i, key="mm_team")
+
+        if _has_slate:
+            tdf = slate_df[slate_df["team"].map(lambda x: _nt(str(x))) == team].copy()
+        else:
+            tdf = pd.DataFrame(columns=["name", "pos", "proj", "opp"])
+        slate_opp = str(tdf["opp"].iloc[0]).lstrip("@") if not tdf.empty else ""
+        opp_default = next((i for i, t in enumerate(all_teams) if t == _nt(slate_opp)), 0)
+        opp = c_opp.selectbox("Opponent defense", all_teams, index=opp_default, key="mm_opp")
+        if not tdf.empty and _nt(slate_opp) != opp:
+            st.caption(f"(slate opponent is {_nt(slate_opp)} — showing {opp} by choice)")
+        elif tdf.empty:
+            st.caption(f"{team} isn't on the current slate — players ranked by 2025 volume, "
+                       "no projections.")
+
         bw = mv.scheme_blend_weight()
         src = "2025" if bw == 0 else f"2026×{bw:.0%} + 2025×{1 - bw:.0%}"
         st.caption(f"Scheme data: **{src}**.")
 
-        _CAP = {"RB": 3, "WR": 4, "TE": 2}
-        tdf["pos"] = tdf["pos"].astype(str).str.upper()
-        picks = {p: tdf[(tdf["pos"] == p) & (tdf["proj"].fillna(0) > 2)]
-                 .sort_values("proj", ascending=False).head(c)
-                 for p, c in _CAP.items()}
+        # player list: slate projections when available, else 2025 scheme volume
+        tdf["pos"] = tdf["pos"].astype(str).str.upper() if not tdf.empty else tdf.get("pos")
+        if not tdf.empty:
+            def _top(p, c):
+                s = tdf[(tdf["pos"] == p) & (tdf["proj"].fillna(0) > 2)].sort_values(
+                    "proj", ascending=False).head(c)
+                return [(r["name"], float(r["proj"])) for _, r in s.iterrows()]
+            pass_players = _top("WR", 4) + _top("TE", 2)
+            rb_players = _top("RB", 3)
+        else:
+            pass_players = [(n, None) for n in mv.team_pass_catchers(team, 6)]
+            rb_players = [(n, None) for n in mv.team_backs(team, 3)]
 
-        def _pass_block(row):
-            nk = _nn(row["name"])
-            st.markdown(f"**{row['name']}**  ·  {row['pos']}  ·  proj {float(row['proj']):.1f}")
-            t = mv.player_pass_by_coverage(nk)
+        def _pass_block(name, proj):
+            tag = f"  ·  proj {proj:.1f}" if proj is not None else ""
+            st.markdown(f"**{name}**{tag}")
+            t = mv.player_pass_by_coverage(_nn(name))
             if t.empty:
                 st.caption("No 2025 coverage-split routes for this player.")
             else:
@@ -378,10 +397,10 @@ def render(screen: str) -> None:
                                          "1st-read%", "TD"]),
                              hide_index=True, width="stretch")
 
-        def _run_block(row):
-            nk = _nn(row["name"])
-            st.markdown(f"**{row['name']}**  ·  RB  ·  proj {float(row['proj']):.1f}")
-            t = mv.player_run_by_concept(nk)
+        def _run_block(name, proj):
+            tag = f"  ·  proj {proj:.1f}" if proj is not None else ""
+            st.markdown(f"**{name}**{tag}")
+            t = mv.player_run_by_concept(_nn(name))
             if t.empty:
                 st.caption("No 2025 concept-split carries for this player.")
             else:
@@ -390,12 +409,10 @@ def render(screen: str) -> None:
 
         # ── passing ────────────────────────────────────────────────────────
         st.subheader(f"{team} pass-catchers — by coverage")
-        pc = pd.concat([picks["WR"], picks["TE"]]) if not (
-            picks["WR"].empty and picks["TE"].empty) else pd.DataFrame()
-        if pc.empty:
-            st.caption("No fantasy-relevant pass-catchers on the slate for this team.")
-        for _, row in pc.iterrows():
-            _pass_block(row)
+        if not pass_players:
+            st.caption("No pass-catchers found for this team.")
+        for nm, pj in pass_players:
+            _pass_block(nm, pj)
 
         if opp:
             st.markdown(f"**{opp} defense — allowed by coverage**  ·  `rk` 1–32, "
@@ -416,10 +433,10 @@ def render(screen: str) -> None:
             st.markdown(f"**{team} offense** — run mix")
             st.dataframe(mv.heat(tm, ["YPC", "success%", "exp-run%", "att%"]),
                          hide_index=True, width="stretch")
-        if picks["RB"].empty:
-            st.caption("No fantasy-relevant backs on the slate for this team.")
-        for _, row in picks["RB"].iterrows():
-            _run_block(row)
+        if not rb_players:
+            st.caption("No backs found for this team.")
+        for nm, pj in rb_players:
+            _run_block(nm, pj)
 
         if opp:
             st.markdown(f"**{opp} defense — allowed by concept**")
