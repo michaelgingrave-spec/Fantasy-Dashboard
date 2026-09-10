@@ -21,3 +21,4 @@ matchup_model/__pycache__/
 
 # nflverse parquet cache (opportunity model) — re-downloaded on demand
 data/dfs/nflverse/
+matchup_model/opp_edge_calibration.csv

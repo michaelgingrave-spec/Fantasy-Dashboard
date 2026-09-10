@@ -183,3 +183,85 @@ def by_key(df: pd.DataFrame | None = None, key: str = "market") -> pd.DataFrame:
 def overall(df: pd.DataFrame | None = None) -> dict:
     df = load() if df is None else df
     return _summ(df)
+
+
+# ── line history: grade EVERY pulled line (not just logged bets) vs the real book line ──
+_PRICE = -110  # assumed juice for the notional ROI on ungraded/graded pulled lines
+
+
+def _roi_at(price: int, wins: int, losses: int) -> float:
+    dec = price / 100.0 if price > 0 else 100.0 / abs(price)
+    n = wins + losses
+    return (wins * dec - losses) / n if n else np.nan
+
+
+def load_line_history() -> pd.DataFrame:
+    from dfs.props import LINE_HISTORY_PATH
+    if not LINE_HISTORY_PATH.exists():
+        return pd.DataFrame()
+    df = pd.read_csv(LINE_HISTORY_PATH)
+    df["result"] = df.get("result", "").fillna("").astype(str).replace("nan", "")
+    return df
+
+
+def grade_line_history(force: bool = False) -> tuple[pd.DataFrame, int]:
+    """Fill actual/result for pulled lines whose game has box-score data, graded vs the
+    real book line (`line` column). Returns (df, n_graded)."""
+    from dfs.props import LINE_HISTORY_PATH
+    df = load_line_history()
+    if df.empty:
+        return df, 0
+    try:
+        from matchup_model.opp import data as D
+        pw = D.player_weeks().assign(nk=lambda d: d["player_display_name"].map(normalize_name))
+    except Exception:
+        return df, 0
+    n = 0
+    for i, r in df.iterrows():
+        if not force and str(r.get("result") or "") in ("win", "loss", "push"):
+            continue
+        col = _STAT_COL.get(str(r["market"]))
+        if col is None or pd.isna(r.get("season")) or pd.isna(r.get("week")):
+            continue
+        hit = pw[(pw.nk == normalize_name(str(r["player"]))) &
+                 (pw.season == int(r["season"])) & (pw.week == int(r["week"]))]
+        if hit.empty:
+            continue
+        actual, line, side = float(hit[col].sum()), float(r["line"]), str(r["lean"]).upper()
+        df.at[i, "actual"] = round(actual, 1)
+        df.at[i, "result"] = ("push" if actual == line else
+                              "win" if ((actual > line) == (side == "OVER")) else "loss")
+        n += 1
+    if n:
+        df.to_csv(LINE_HISTORY_PATH, index=False)
+    return df, n
+
+
+def line_history_buckets(df: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Win% + notional ROI@-110 by |edge %| bucket, graded vs the real book line."""
+    df = load_line_history() if df is None else df
+    if df.empty:
+        return pd.DataFrame()
+    g = df[df["result"].isin(["win", "loss", "push"])].copy()
+    if g.empty:
+        return pd.DataFrame()
+    e = pd.to_numeric(g["edge %"], errors="coerce").abs()
+    rows = []
+    for lo, hi, lbl in EDGE_BUCKETS:
+        s = g[(e >= lo) & (e < hi)]
+        w, l = int((s.result == "win").sum()), int((s.result == "loss").sum())
+        if w + l < 5:
+            continue
+        rows.append({"edge range": lbl, "n": len(s), "win%": round(100 * w / (w + l), 1),
+                     "ROI@-110%": round(100 * _roi_at(_PRICE, w, l), 1)})
+    return pd.DataFrame(rows)
+
+
+def backtest_buckets() -> pd.DataFrame:
+    """The 2023-25 trailing-form-proxy calibration (no real lines needed).
+    Empty until `python -m matchup_model.opp.edge_calib` has been run."""
+    try:
+        from matchup_model.opp.edge_calib import bucket_table
+        return bucket_table()
+    except Exception:  # noqa: BLE001
+        return pd.DataFrame()

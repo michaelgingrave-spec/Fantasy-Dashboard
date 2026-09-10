@@ -62,3 +62,31 @@ def test_edge_bucket_analysis(tmp_log):
 def test_load_missing_is_empty(tmp_log):
     assert B.load().empty
     assert B.overall()["bets"] == 0
+
+
+def test_line_history_snapshot_and_buckets(tmp_path, monkeypatch):
+    import pandas as pd
+    from dfs import props
+
+    monkeypatch.setattr(props, "LINE_HISTORY_PATH", tmp_path / "lh.csv")
+    edf = pd.DataFrame({
+        "player": [f"P{i}" for i in range(12)],
+        "market": ["rec yds"] * 12,
+        "line": [50.0] * 12,
+        "our proj": [56.0] * 6 + [70.0] * 6,          # 12% edge x6, 40% edge x6
+        "edge": [6.0] * 6 + [20.0] * 6,
+        "edge %": [12.0] * 6 + [40.0] * 6,
+        "lean": ["OVER"] * 12,
+        "~EV %": [10.0] * 12, "best": [""] * 12, "role_ratio": [1.0] * 12,
+    })
+    assert props.snapshot_lines(edf, 2025, 3, "X @ Y") == 12
+    lh = B.load_line_history()
+    assert len(lh) == 12 and "result" in lh.columns
+    # hand-grade: the 12% group all lose, the 40% group all win
+    lh.loc[lh["edge %"] == 12.0, "result"] = "loss"
+    lh.loc[lh["edge %"] == 40.0, "result"] = "win"
+    lh.to_csv(props.LINE_HISTORY_PATH, index=False)
+    bk = B.line_history_buckets()
+    assert set(bk["edge range"]) == {"12-20%", "20%+"}
+    assert bk.set_index("edge range").loc["20%+", "win%"] == 100.0
+    assert bk.set_index("edge range").loc["12-20%", "win%"] == 0.0

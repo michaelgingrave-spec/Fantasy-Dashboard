@@ -15,8 +15,12 @@ from datetime import datetime, timedelta, timezone
 import pandas as pd
 import requests
 
-from dfs.config import ODDS_API_KEY
+from dfs.config import DATA, ODDS_API_KEY
 from dfs.names import normalize_name
+
+# every pull appends here so the edge calibration can use *real* book lines, not just
+# hand-logged bets (see dfs.bets.line_history_buckets)
+LINE_HISTORY_PATH = DATA / "props" / "line_history.csv"
 
 _BASE = "https://api.the-odds-api.com/v4/sports/americanfootball_nfl"
 
@@ -223,3 +227,26 @@ def confident_only(df: pd.DataFrame, role_lo: float = 0.65, role_hi: float = 1.5
 
 # back-compat alias
 stable_only = confident_only
+
+
+def snapshot_lines(edges: pd.DataFrame, season: int, week: int, event: str) -> int:
+    """Append every (player, market) line + our projection from a pull to
+    line_history.csv, so the calibration can later grade against the *real* book line
+    (not just hand-logged bets). Deduped on (season, week, player, market), latest kept."""
+    if edges is None or edges.empty:
+        return 0
+    keep = ["player", "market", "line", "our proj", "edge", "edge %", "lean", "~EV %", "best"]
+    snap = edges[[c for c in keep if c in edges.columns]].copy()
+    snap.insert(0, "season", int(season))
+    snap.insert(1, "week", int(week))
+    snap.insert(2, "event", event)
+    snap["pulled_at"] = datetime.now().isoformat(timespec="seconds")
+    snap["actual"] = pd.NA
+    snap["result"] = ""
+    LINE_HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
+    if LINE_HISTORY_PATH.exists():
+        prev = pd.read_csv(LINE_HISTORY_PATH)
+        snap = (pd.concat([prev, snap], ignore_index=True)
+                .drop_duplicates(["season", "week", "player", "market"], keep="last"))
+    snap.to_csv(LINE_HISTORY_PATH, index=False)
+    return int(len(edges))

@@ -762,6 +762,13 @@ def render(screen: str) -> None:
                     with st.spinner("Pulling prop lines…"):
                         _df, _rem = _prop_edges(event_id, tuple(mk_sel), week)
                     st.session_state["pe_data"] = {"df": _df, "rem": _rem, "game": ev_pick}
+                    try:
+                        from dfs.props import snapshot_lines
+                        nsnap = snapshot_lines(_df, _cur_season(), int(week),
+                                               ev_pick.split("  ·")[0])
+                        st.session_state["pe_data"]["snap"] = nsnap
+                    except Exception:  # noqa: BLE001
+                        pass
                 except PropsError as e:
                     st.error(str(e))
                 except Exception as e:  # noqa: BLE001
@@ -774,7 +781,9 @@ def render(screen: str) -> None:
 
         df = cache["df"]
         st.caption(f"Lines for **{cache['game']}**"
-                   + (f"  ·  credits left: **{cache['rem']}**" if cache.get("rem") else ""))
+                   + (f"  ·  credits left: **{cache['rem']}**" if cache.get("rem") else "")
+                   + (f"  ·  {cache['snap']} lines saved for calibration → grade them on "
+                      "**Bet Log** after the game" if cache.get("snap") else ""))
         if df is None or df.empty:
             st.warning("No comparable props came back — either the book hasn't posted this "
                        "game yet, or we have no recent game logs for those players.")
@@ -858,10 +867,41 @@ def render(screen: str) -> None:
         gc1, gc2 = st.columns([1, 3])
         if gc1.button("⚖️ Grade ungraded", key="bl_grade"):
             _, n = _bets.grade()
-            st.success(f"Graded {n} bet(s) from nflverse box scores.")
+            _, m = _bets.grade_line_history()
+            st.success(f"Graded {n} bet(s) and {m} pulled line(s) from nflverse box scores.")
             st.rerun()
         gc2.caption("Grading needs the nflverse cache and only works once the game has been "
                     "played and stats posted.")
+
+        # ── calibration: which edge range actually wins ──────────────────
+        st.subheader("📈 Which edge range wins")
+        st.caption("Every **Prop Edges** pull auto-saves its lines here — you don't have to "
+                   "log bets. After games, *Grade ungraded* fills them from box scores.")
+        lh = _bets.load_line_history()
+        graded_lh = int(lh["result"].isin(["win", "loss", "push"]).sum()) if not lh.empty else 0
+        cc1, cc2 = st.columns(2)
+        with cc1:
+            st.markdown(f"**From your pulled lines** — real book lines · {graded_lh} graded "
+                        f"of {len(lh)}")
+            lb = _bets.line_history_buckets(lh)
+            if lb.empty:
+                st.info("No graded pulled lines yet. Pull odds on **Prop Edges**, then grade "
+                        "after the games.")
+            else:
+                st.dataframe(lb, hide_index=True, width="stretch")
+        with cc2:
+            st.markdown("**From the 2023–25 backtest** — our proj vs a trailing-form "
+                        "stand-in line (no real odds needed)")
+            bb = _bets.backtest_buckets()
+            if bb.empty:
+                st.info("Run `python -m matchup_model.opp.edge_calib` once to populate this.")
+            else:
+                st.dataframe(bb[["edge range", "n", "win%", "ROI@-110", "dir hit%"]],
+                             hide_index=True, width="stretch")
+        st.caption("`edge range` = |our proj − line| / line. Break-even at -110 is **52.4%**. "
+                   "The backtest is optimistic (a real book line already prices matchup / "
+                   "pace / injuries that our trailing stand-in doesn't) — trust the **shape** "
+                   "across buckets more than the absolute win%.")
 
         with st.expander("➕ Add a bet manually"):
             f = st.columns(3)
@@ -898,15 +938,15 @@ def render(screen: str) -> None:
                 _bets.delete_bet(del_id.strip())
                 st.rerun()
 
-            st.subheader("📊 Hit rate & ROI by the edge you had")
+            st.subheader("📊 Your logged bets, by the edge you had")
             eb = _bets.by_edge_bucket(log)
             if eb.empty:
-                st.info("Grade some bets first — then this shows which edge range wins.")
+                st.info("Grade some logged bets to see your own results by edge bucket.")
             else:
                 st.dataframe(eb, hide_index=True, width="stretch")
                 st.caption("`edge range` = |our proj − line| / line, in the bet's direction. "
-                           "The goal is to find where **win% and ROI** actually peak — it is "
-                           "usually NOT the biggest edges (those are often model error).")
+                           "Compare against the calibration tables above — if your live "
+                           "results diverge from the backtest shape, that's information.")
             b1, b2 = st.columns(2)
             with b1:
                 st.caption("By market")
