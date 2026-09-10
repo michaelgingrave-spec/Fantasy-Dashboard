@@ -334,12 +334,106 @@ def render(screen: str) -> None:
                      hide_index=True, width="stretch")
 
     # ── Matchup Machine ───────────────────────────────────────────────────
-    elif screen in ("Player Lookup", "Matchup Machine"):
+    elif screen == "Matchup Machine":
         st.header("🧬 DFS Matchup Machine")
-        st.caption("Pick a player → their scheme profile (coverage for pass, run concept for "
-                   "rush) next to what the opponent defense runs and allows. Heat: green = "
-                   "better for the offense. Descriptive — the coverage-matchup edge did not "
-                   "backtest as predictive (matchup_model/backtest_report.md); this is for eyeballing.")
+        st.caption("Pick a team → every fantasy-relevant offensive player's 2025 scheme "
+                   "profile: pass-catchers by coverage, backs by run concept. Heat: green = "
+                   "more productive in that look. Descriptive — see matchup_model/backtest_report.md.")
+        if _need_slate():
+            st.stop()
+        from dfs import matchup_view as mv
+        from dfs.names import normalize_name as _nn
+
+        teams = sorted(slate_df["team"].dropna().astype(str).unique())
+        if not teams:
+            st.info("No teams on the current slate.")
+            st.stop()
+        team = st.selectbox("Team", teams, key="mm_team")
+        tdf = slate_df[slate_df["team"].astype(str) == team].copy()
+        opp = str(tdf["opp"].iloc[0]).lstrip("@") if not tdf.empty else ""
+
+        if not mv.scheme_available():
+            st.info("Scheme-split data not loaded (data/dfs/matchup/*coverage*/*concept*). "
+                    "Run the Wednesday pull, or `matchup_model/weekly_pull.py`.")
+            st.stop()
+
+        bw = mv.scheme_blend_weight()
+        src = "2025" if bw == 0 else f"2026×{bw:.0%} + 2025×{1 - bw:.0%}"
+        st.caption(f"Scheme data: **{src}**.")
+
+        _CAP = {"RB": 3, "WR": 4, "TE": 2}
+        tdf["pos"] = tdf["pos"].astype(str).str.upper()
+        picks = {p: tdf[(tdf["pos"] == p) & (tdf["proj"].fillna(0) > 2)]
+                 .sort_values("proj", ascending=False).head(c)
+                 for p, c in _CAP.items()}
+
+        def _pass_block(row):
+            nk = _nn(row["name"])
+            st.markdown(f"**{row['name']}**  ·  {row['pos']}  ·  proj {float(row['proj']):.1f}")
+            t = mv.player_pass_by_coverage(nk)
+            if t.empty:
+                st.caption("No 2025 coverage-split routes for this player.")
+            else:
+                st.dataframe(mv.heat(t, ["tgt/rt", "yds/rt", "yds/tgt", "catch%",
+                                         "1st-read%", "TD"]),
+                             hide_index=True, width="stretch")
+
+        def _run_block(row):
+            nk = _nn(row["name"])
+            st.markdown(f"**{row['name']}**  ·  RB  ·  proj {float(row['proj']):.1f}")
+            t = mv.player_run_by_concept(nk)
+            if t.empty:
+                st.caption("No 2025 concept-split carries for this player.")
+            else:
+                st.dataframe(mv.heat(t, ["YPC", "yards", "TD", "success%", "exp-run%", "att%"]),
+                             hide_index=True, width="stretch")
+
+        # ── passing ────────────────────────────────────────────────────────
+        st.subheader(f"{team} pass-catchers — by coverage")
+        pc = pd.concat([picks["WR"], picks["TE"]]) if not (
+            picks["WR"].empty and picks["TE"].empty) else pd.DataFrame()
+        if pc.empty:
+            st.caption("No fantasy-relevant pass-catchers on the slate for this team.")
+        for _, row in pc.iterrows():
+            _pass_block(row)
+
+        if opp:
+            st.markdown(f"**{opp} defense — allowed by coverage**  ·  `rk` = league rank, 1 = softest")
+            dpc = mv.defense_pass_by_coverage(opp)
+            if dpc.empty:
+                st.caption(f"No coverage data for {opp}.")
+            else:
+                st.dataframe(mv.heat(dpc, ["yds/tgt", "catch%", "yds/rec", "rating", "TD"],
+                                     good_high=True),
+                             hide_index=True, width="stretch")
+
+        # ── rushing ────────────────────────────────────────────────────────
+        st.subheader(f"{team} backs — by run concept")
+        tm = mv.team_run_by_concept(team, "offense")
+        if not tm.empty:
+            st.markdown(f"**{team} offense** — run mix")
+            st.dataframe(mv.heat(tm, ["YPC", "success%", "exp-run%", "att%"]),
+                         hide_index=True, width="stretch")
+        if picks["RB"].empty:
+            st.caption("No fantasy-relevant backs on the slate for this team.")
+        for _, row in picks["RB"].iterrows():
+            _run_block(row)
+
+        if opp:
+            st.markdown(f"**{opp} defense — allowed by concept**")
+            drc = mv.team_run_by_concept(opp, "defense")
+            if drc.empty:
+                st.caption(f"No concept data for {opp}.")
+            else:
+                st.dataframe(mv.heat(drc, ["YPC", "success%", "exp-run%"], good_high=True),
+                             hide_index=True, width="stretch")
+
+    # ── Player Lookup ─────────────────────────────────────────────────────
+    elif screen == "Player Lookup":
+        st.header("🔎 DFS Player Lookup")
+        st.caption("One player: FantasyPoints projection vs the backtested Model proj, a "
+                   "trailing-usage projected stat line, recent form, coverage splits, and "
+                   "whether they've faced the opponent's coordinator before.")
         if _need_slate():
             st.stop()
         from dfs import matchup_view as mv
@@ -350,7 +444,6 @@ def render(screen: str) -> None:
         choice = st.selectbox("Player", list(labels), key="pl_pick")
         r = labels[choice]
         nk = normalize_name(r["name"])
-        team = str(r["team"])
         opp = str(r["opp"]).lstrip("@")
         pos = str(r["pos"]).upper()
         fp_proj = float(r["proj"])
@@ -365,72 +458,58 @@ def render(screen: str) -> None:
                   help="DK points implied by the player's own trailing usage × efficiency.")
         m4.metric("Salary", f'${int(r["salary"]):,}')
         val = mp["proj"] / (r["salary"] / 1000) if r["salary"] else 0.0
-        st.caption(f"**{team}** vs **{opp or '—'}**  ·  value (Model proj / $1k): **{val:.2f}**"
+        st.caption(f"**{r['team']}** vs **{opp or '—'}**  ·  value (Model proj / $1k): **{val:.2f}**"
                    + (f"  ·  Lean: {mp['reason']}" if mp.get("reason") else ""))
-        if pl.get("fp") is not None:
-            st.caption("Proj line — " + pl.get("method", ""))
 
-        if not mv.scheme_available():
-            st.info("Scheme-split data not loaded (data/dfs/matchup/*coverage*/*concept*). "
-                    "Run the Wednesday pull, or `matchup_model/weekly_pull.py`.")
+        if not mv.available():
+            st.info("Historical Data Suite tables not loaded (data/dfs/matchup/).")
             st.stop()
 
-        # ── passing matchup (coverage) ──────────────────────────────────────
-        if pos in ("WR", "TE", "QB"):
-            st.subheader(f"Passing matchup — coverage  ·  {r['name']} vs {opp}")
-            pm = mv.pass_matchup(nk, opp)
-            c1, c2 = st.columns(2)
-            with c1:
-                st.caption(f"**{r['name']}** by coverage (2025)")
-                p = pm.get("player", pd.DataFrame())
-                if p.empty:
-                    st.caption("No coverage-split routes for this player in 2025.")
-                else:
-                    st.dataframe(mv.heat(p, ["yds/rt", "tgt/rt", "catch%", "1st-read%", "TD"]),
-                                 hide_index=True, width="stretch")
-            with c2:
-                st.caption(f"**{opp}** defense — how often it plays each coverage & what it allows")
-                d = pm.get("defense", pd.DataFrame())
-                if d.empty:
-                    st.caption("No coverage data for this defense.")
-                else:
-                    st.dataframe(mv.heat(d, ["yds/tgt allowed", "catch% allowed",
-                                             "1st-read% allowed", "TD"], good_high=True),
-                                 hide_index=True, width="stretch")
-                    st.caption("`plays%` = snap share in that coverage; green = softer for the offense.")
+        if pl.get("fp") is not None:
+            ln = pl["line"]
+            order = ["pass_att", "pass_yds", "pass_td", "int", "rush_att", "rush_yds",
+                     "rush_td", "tgt", "rec", "rec_yds", "rec_td"]
+            nice = {"pass_att": "pass att", "pass_yds": "pass yds", "pass_td": "pass TD",
+                    "int": "INT", "rush_att": "carries", "rush_yds": "rush yds",
+                    "rush_td": "rush TD", "tgt": "targets", "rec": "rec", "rec_yds": "rec yds",
+                    "rec_td": "rec TD"}
+            row_line = {nice[k]: ln[k] for k in order if k in ln}
+            st.write("**Projected line** — " + " · ".join(f"{k} {v}" for k, v in row_line.items())
+                     + f"  →  **{pl['fp']:.1f}** DK pts")
+            st.caption(pl.get("method", ""))
 
-        # ── rushing matchup (concept) ──────────────────────────────────────
-        st.subheader(f"Rushing matchup — run concept  ·  {team} vs {opp}")
-        rm = mv.run_matchup(nk, team, opp)
+        summ = mv.usage_summary(nk)
+        if summ:
+            flag = summ.pop("regression_flag", None)
+            st.write("**Recent form** (" + str(summ.pop("games", "?")) + " most recent games in data): "
+                     + " · ".join(f"{k} {v}" for k, v in summ.items()))
+            if flag:
+                st.caption(f"Regression: {flag}")
+        ru = mv.recent_usage(nk)
+        if not ru.empty:
+            st.dataframe(ru, hide_index=True, width="stretch")
+
+        win = st.radio("Timeframe (splits & scheme tables)", list(mv.WINDOWS),
+                       index=0, horizontal=True, key="pl_window")
+        yrs = mv.window_seasons(win)
         c1, c2 = st.columns(2)
         with c1:
-            if pos == "RB":
-                st.caption(f"**{r['name']}** by concept (2025)")
-                p = rm.get("player", pd.DataFrame())
-                tbl = p if not p.empty else rm.get("team_offense", pd.DataFrame())
-                lbl_note = "" if not p.empty else f"(no player rows — showing {team} offense)"
-            else:
-                st.caption(f"**{team}** offense by concept (2025)")
-                tbl = rm.get("team_offense", pd.DataFrame())
-                lbl_note = ""
-            if tbl.empty:
-                st.caption("No concept data.")
-            else:
-                st.dataframe(mv.heat(tbl, ["YPC", "success%", "exp-run%", "att%"]),
-                             hide_index=True, width="stretch")
-                if lbl_note:
-                    st.caption(lbl_note)
+            st.subheader(f"Coverage splits — {pos} ({win})")
+            stat = "ypa" if pos == "QB" else "tprr"
+            cs = mv.coverage_splits(nk, stat, seasons=yrs)
+            st.dataframe(cs if not cs.empty else pd.DataFrame({"note": ["no split history in this window"]}),
+                         hide_index=True, width="stretch")
+            st.caption(f"{'yds/dropback' if stat == 'ypa' else 'targets/route'} vs each look. "
+                       "`diff` vs the player's own baseline — historically small and unstable.")
         with c2:
-            st.caption(f"**{opp}** defense — allowed by concept")
-            d = rm.get("defense", pd.DataFrame())
-            if d.empty:
-                st.caption("No concept data for this defense.")
-            else:
-                st.dataframe(mv.heat(d, ["YPC", "success%", "exp-run%"], good_high=True),
-                             hide_index=True, width="stretch")
-                st.caption("`att%` = how often the D faces that concept; green = softer.")
+            osch = mv.opponent_scheme(opp, seasons=yrs)
+            shown = osch.attrs.get("years") if not osch.empty else None
+            lbl = f" ({'-'.join(map(str, [shown[0], shown[-1]])) if shown and len(shown) > 1 else (shown[0] if shown else win)})"
+            st.subheader(f"{opp} defense — scheme tendencies{lbl}")
+            st.dataframe(osch if not osch.empty else pd.DataFrame({"note": ["no scheme data for opponent in this window"]}),
+                         hide_index=True, width="stretch")
+            st.caption("`team_%` vs `league_%` for the same years; `lean` = the gap.")
 
-        # ── faced this coordinator before? ─────────────────────────────────
         vc = mv.vs_coordinator(nk, opp)
         if vc:
             s = vc["summary"]
@@ -446,17 +525,6 @@ def render(screen: str) -> None:
             else:
                 st.caption(f"No games vs **{vc['dc']}** ({opp}'s DC since {vc['dc_since']}) "
                            "in the 2022–25 data.")
-
-        # ── league-wide defense heat map ───────────────────────────────────
-        with st.expander("Defense vs WR — yds/route allowed by alignment (all 32)"):
-            ag = mv.defense_alignment_grid()
-            if ag.empty:
-                st.caption("No alignment data.")
-            else:
-                heat_cols = [c for c in ag.columns if c != "defense"]
-                st.dataframe(mv.heat(ag, heat_cols, good_high=True),
-                             hide_index=True, width="stretch")
-                st.caption("Green = that defense gives up more per route to that alignment.")
 
     # ── Data Check ─────────────────────────────────────────────────────────
     elif screen == "Data Check":

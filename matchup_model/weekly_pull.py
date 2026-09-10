@@ -78,6 +78,32 @@ def backfill_tables(season: int) -> list[dict]:
     return [{"name": n, "url": f"{BASE}/{n}?{q}", "dest": d} for n, q, d in out]
 
 
+def scheme_tables(season: int) -> list[dict]:
+    """Season-to-date scheme splits for the Matchup Machine (run concept / coverage /
+    alignment). Re-pull weekly and OVERWRITE the `*_<season>.csv` files — the screen reads
+    game counts from them to ramp 2026 weight over 2025. 8 downloads."""
+    rb = f"seasons={season}&positions=RB&splits=rushConcept"
+    rec = f"seasons={season}&positions=WR,TE&splits=coverageScheme"
+    t = [
+        ("rushing/advanced", rb, f"rushing-concept_player_{season}.csv"),
+        ("rushing/advanced", f"seasons={season}&splits=rushConcept&mode=offense",
+         f"rushing-concept_offense_{season}.csv"),
+        ("rushing/advanced", f"seasons={season}&splits=rushConcept&mode=defense",
+         f"rushing-concept_defense_{season}.csv"),
+        ("receiving/advanced", f"seasons={season}&positions=WR&splits=coverageScheme",
+         f"receiving-coverage_wr_{season}.csv"),
+        ("receiving/advanced", f"seasons={season}&positions=TE&splits=coverageScheme",
+         f"receiving-coverage_te_{season}.csv"),
+        ("receiving/advanced", f"{rec}&mode=defense",
+         f"receiving-coverage_defense_{season}.csv"),
+        ("passing/advanced", f"seasons={season}&positions=QB&splits=coverageScheme&mode=offense",
+         f"passing-coverage_offense_{season}.csv"),
+        ("receiving/advanced", f"seasons={season}&positions=WR,TE&splits=alignmentPosition&mode=defense",
+         f"receiving-alignment_defense_{season}.csv"),
+    ]
+    return [{"name": n, "url": f"{BASE}/{n}?{q}", "dest": d} for n, q, d in t]
+
+
 def pending(dests: list[str]) -> list[str]:
     """Which of these dest filenames aren't in data/dfs/matchup/ yet (resume a partial run)."""
     return [d for d in dests if not (DATA / d).exists()]

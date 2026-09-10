@@ -75,13 +75,20 @@ def test_player_splits_window_scopes_sample():
 
 def test_scheme_grids_load():
     assert scheme.available()
-    # a WR's coverage grid: one row per core coverage, sane per-route yards
+    # a WR's coverage grid: man/zone/1-high/2-high buckets first, then Cover 0-6
     p = scheme.player_pass_by_coverage("puka nacua")
-    assert set(p["coverage"]).issubset(set(scheme.COVERAGES)) and len(p) >= 4
-    assert p["yds/rt"].between(0, 10).all()
-    # opponent defense by coverage carries a plays% (snap share) column
+    assert list(p["look"])[:4] == scheme.BUCKET_NAMES
+    assert set(p["look"][4:]).issubset(set(scheme.COVERAGES))
+    assert p["yds/rt"].between(0, 12).all() and p["catch%"].between(0, 100).all()
+    # opponent defense: plays% + a league rank on every allowed-efficiency stat
     d = scheme.defense_pass_allowed_by_coverage("BAL")
-    assert "plays%" in d.columns and d["plays%"].sum() > 50
+    assert "plays%" in d.columns and list(d["look"])[:4] == scheme.BUCKET_NAMES
+    for m in ("yds/tgt", "catch%", "rating", "TD"):
+        assert f"{m} rk" in d.columns and d[f"{m} rk"].dropna().between(1, 32).all()
+    # 1st-read% was the broken column — must not be in the defense table
+    assert "1st-read%" not in d.columns
+    # season blend weight is 0 until 2026 files exist
+    assert scheme.blend_weight() == 0.0
     # run concept grid for a bell-cow RB
     rc = scheme.player_run_by_concept("bijan robinson")
     assert set(rc["concept"]).issubset(set(scheme.CONCEPTS)) and rc["YPC"].max() > 2

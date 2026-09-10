@@ -142,12 +142,17 @@ def opponent_scheme(opp_team: str, seasons: tuple[int, ...] | None = None) -> pd
     yrs = sorted(int(s) for s in sub["season"].unique())
     la = cm[cm["season"].isin(yrs)]
     rate_cols = [c for c in _mi.SCHEME_RATE_COLS if c in sub.columns and sub[c].notna().any()]
+    # per-team season-mean rate for each look, to rank this defense against the league
+    per_team = la.groupby("team")[rate_cols].mean()
+    n_teams = len(per_team)
     rows = []
     for c in rate_cols:
         t_rate, l_rate = sub[c].mean(), la[c].mean()
+        rank = int((per_team[c] > t_rate).sum()) + 1 if n_teams else 0   # 1 = runs it most
         rows.append({"look": c, "team_%": round(float(t_rate), 1),
                      "league_%": round(float(l_rate), 1),
-                     "lean": round(float(t_rate - l_rate), 1)})
+                     "lean": round(float(t_rate - l_rate), 1),
+                     "rank": f"{rank} / {n_teams}" if n_teams else "—"})
     out = pd.DataFrame(rows)
     out.attrs["years"] = yrs
     return out
@@ -222,6 +227,32 @@ def model_projection(fp_proj: float, name_key: str, pos: str) -> dict:
 # ── Matchup Machine: scheme-by-scheme offense vs defense ───────────────────
 def scheme_available() -> bool:
     return _OK and _sch.available()
+
+
+def player_pass_by_coverage(name_key: str) -> pd.DataFrame:
+    """A pass-catcher's 2025 efficiency by coverage (Cover 0-6)."""
+    return _sch.player_pass_by_coverage(name_key) if scheme_available() else pd.DataFrame()
+
+
+def player_run_by_concept(name_key: str) -> pd.DataFrame:
+    """A back's 2025 efficiency by run concept."""
+    return _sch.player_run_by_concept(name_key) if scheme_available() else pd.DataFrame()
+
+
+def team_run_by_concept(team: str, side: str = "offense") -> pd.DataFrame:
+    """A team's 2025 run mix (side='offense') or what it allows (side='defense')."""
+    return _sch.team_run_by_concept(team, side) if scheme_available() else pd.DataFrame()
+
+
+def defense_pass_by_coverage(team: str) -> pd.DataFrame:
+    """A defense's allowed efficiency by man/zone/1-high/2-high then Cover 0-6, with a
+    league rank on every stat (1 = softest)."""
+    return _sch.defense_pass_allowed_by_coverage(team) if scheme_available() else pd.DataFrame()
+
+
+def scheme_blend_weight() -> float:
+    """0.0 until 2026 scheme files land, then ramps toward 1.0 over ~8 weeks."""
+    return _sch.blend_weight() if scheme_available() else 0.0
 
 
 def pass_matchup(name_key: str, opp_team: str) -> dict:
