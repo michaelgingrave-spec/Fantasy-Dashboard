@@ -16,4 +16,8 @@ data/dfs/.cache/
 # matchup model outputs / artifacts
 data/dfs/matchup/_model/
 matchup_model/backtest_rows.csv
+matchup_model/opp_backtest_rows.csv
 matchup_model/__pycache__/
+
+# nflverse parquet cache (opportunity model) — re-downloaded on demand
+data/dfs/nflverse/
