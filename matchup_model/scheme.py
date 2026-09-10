@@ -185,9 +185,14 @@ def player_pass_by_coverage(name_key: str) -> pd.DataFrame:
 
 
 def _rank_ascending(vals: dict) -> dict:
-    """{key: rank}, 1 = lowest value, N = highest. Ties share the lower rank."""
-    order = sorted(vals, key=lambda k: vals[k])
-    return {k: i for i, k in enumerate(order, 1)}
+    """{key: rank}, 1 = lowest value, N = highest. For 'allowed efficiency' -> 1 = stingiest,
+    N = softest."""
+    return {k: i for i, k in enumerate(sorted(vals, key=lambda k: vals[k]), 1)}
+
+
+def _rank_descending(vals: dict) -> dict:
+    """{key: rank}, 1 = highest value. For 'usage / frequency' -> 1 = does it most."""
+    return {k: i for i, k in enumerate(sorted(vals, key=lambda k: vals[k], reverse=True), 1)}
 
 
 @lru_cache(maxsize=1)
@@ -217,15 +222,15 @@ def _defense_cov_ranks() -> dict:
             for t, r in _rank_ascending(vals).items():
                 out[t].setdefault(lk, {})[m] = r
         pvals = {t: plays[t].get(lk) for t in tables if pd.notna(plays[t].get(lk))}
-        for t, r in _rank_ascending(pvals).items():
+        for t, r in _rank_descending(pvals).items():          # 1 = runs it most
             out[t].setdefault(lk, {})["plays%"] = r
     return out
 
 
 def defense_pass_allowed_by_coverage(team: str) -> pd.DataFrame:
     """What a defense allows by man/zone/1-high/2-high then Cover 0-6: plays%, targets,
-    yds/tgt, catch%, yds/rec, passer rating, TD — each with its league rank. Ranks run
-    1..32 with **32 = league extreme** (softest for the allowed stats, most-used for plays%)."""
+    yds/tgt, catch%, yds/rec, passer rating, TD — each with its league rank.
+    `plays% rk`: **1 = runs that coverage most**. Allowed-efficiency ranks: **32 = softest**."""
     d = _rec_cov_defense()
     if d.empty:
         return pd.DataFrame()
@@ -353,8 +358,90 @@ def _defense_concept_ranks() -> dict:
         sub = d[d["CONCEPT"] == c]
         for m in ("att%", "YPC", "success%", "exp-run%"):
             vals = {r["team"]: r[m] for _, r in sub.iterrows() if pd.notna(r[m])}
-            for t, rank in _rank_ascending(vals).items():
+            ranker = _rank_descending if m == "att%" else _rank_ascending  # att% -> 1 = faces most
+            for t, rank in ranker(vals).items():
                 out[t].setdefault(c, {})[m] = rank
+    return out
+
+
+# ── personnel groupings (11 / 12 / 21 ...) ────────────────────────────────
+PERSONNEL = ["11", "12", "21", "10", "13", "22"]
+
+
+def _pers_label(x) -> str:
+    try:
+        return str(int(float(x)))
+    except (TypeError, ValueError):
+        return str(x)
+
+
+@lru_cache(maxsize=4)
+def _pers_frame(kind: str) -> pd.DataFrame:
+    """kind: 'rec_player' | 'rec_defense' | 'rush_player' | 'rush_defense'."""
+    unit, mode = kind.split("_")
+    if unit == "rec" and mode == "player":
+        frames = [_read(f"receiving-personnel_{p}_2025.csv") for p in ("wr", "te")]
+        d = pd.concat([f for f in frames if not f.empty], ignore_index=True) if any(
+            not f.empty for f in frames) else pd.DataFrame()
+    else:
+        d = _read(f"{'receiving' if unit == 'rec' else 'rushing'}-personnel_{mode}_2025.csv")
+    if d.empty:
+        return d
+    d["pers"] = d["PERS"].map(_pers_label)
+    if mode == "player":
+        d["name_key"] = d["Name"].map(normalize_name)
+    d["team"] = d["Name"].map(norm_team) if mode == "defense" else d.get("Team", d["Name"]).map(norm_team)
+    return d
+
+
+def player_pass_by_personnel(name_key: str) -> pd.DataFrame:
+    d = _pers_frame("rec_player")
+    if d.empty:
+        return pd.DataFrame()
+    g = d[(d["name_key"] == name_key) & (d["pers"].isin(PERSONNEL))]
+    if g.empty:
+        return pd.DataFrame()
+    out = (g.assign(p=lambda x: pd.Categorical(x["pers"], PERSONNEL, ordered=True))
+           .sort_values("p")[["pers", "RTE", "TPRR", "YPRR", "CR %", "TD"]]
+           .rename(columns={"pers": "personnel", "RTE": "routes", "TPRR": "tgt/rt",
+                            "YPRR": "yds/rt", "CR %": "catch%"}))
+    return out.round(2).reset_index(drop=True)
+
+
+def player_run_by_personnel(name_key: str) -> pd.DataFrame:
+    d = _pers_frame("rush_player")
+    if d.empty:
+        return pd.DataFrame()
+    g = d[(d["name_key"] == name_key) & (d["pers"].isin(PERSONNEL))]
+    if g.empty:
+        return pd.DataFrame()
+    out = (g.assign(p=lambda x: pd.Categorical(x["pers"], PERSONNEL, ordered=True))
+           .sort_values("p")[["pers", "ATT %", "ATT", "YPC", "TD", "SUCC %", "EXP RUN %"]]
+           .rename(columns={"pers": "personnel", "ATT %": "att%", "ATT": "att",
+                            "SUCC %": "success%", "EXP RUN %": "exp-run%"}))
+    return out.round(2).reset_index(drop=True)
+
+
+@lru_cache(maxsize=2)
+def _defense_personnel_ranks(unit: str) -> dict:
+    """unit: 'rec' or 'rush'. {team: {pers: {metric: rank}}}, N = league extreme
+    (softest allowed / faces it most)."""
+    d = _pers_frame(f"{unit}_defense")
+    if d.empty:
+        return {}
+    d = d[d["pers"].isin(PERSONNEL)]
+    freq, metrics = (("TGT %", ("TGT %", "YPT", "CR %", "RATE")) if unit == "rec"
+                     else ("ATT %", ("ATT %", "YPC", "SUCC %", "EXP RUN %")))
+    out: dict = {t: {} for t in d["team"].unique()}
+    for p in PERSONNEL:
+        sub = d[d["pers"] == p]
+        for m in metrics:
+            if m not in sub.columns:
+                continue
+            vals = {r["team"]: r[m] for _, r in sub.iterrows() if pd.notna(r[m])}
+            ranker = _rank_descending if m == freq else _rank_ascending  # freq -> 1 = sees it most
+            for t, rank in ranker(vals).items():
+                out[t].setdefault(p, {})[m] = rank
     return out
 
 
@@ -403,13 +490,13 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
     cov_rate = defense_coverage_rates(opp).set_index("coverage")["plays%"].to_dict()
     for c in BUCKET_NAMES + COVERAGES:
         r = covrk.get(c, {})
-        usage = r.get("plays%")                       # N = runs it most
+        usage = r.get("plays%")                       # 1 = runs it most
         soft = _softmean(r, ("yds/tgt", "catch%", "rating"))
-        if not ((usage and usage >= 24) or (np.isfinite(soft) and soft >= 24)):
+        if not ((usage and usage <= 9) or (np.isfinite(soft) and soft >= 24)):
             continue
         why_bits = []
-        if usage and usage >= 24:
-            why_bits.append(f"runs it {_ord(N - usage + 1)}-most ({cov_rate.get(c, 0):.0f}%)")
+        if usage and usage <= 9:
+            why_bits.append(f"runs it {_ord(usage)}-most ({cov_rate.get(c, 0):.0f}%)")
         if np.isfinite(soft) and soft >= 24:
             why_bits.append(f"{_ord(N - int(round(soft)) + 1)}-worst defending it")
         why = f"{o}: " + " · ".join(why_bits)
@@ -423,22 +510,23 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
             if not (pd.notna(eff) and eff > 0 and eff >= max(base * 1.05, 1.8) and pr["routes"] >= 20):
                 continue
             cands.append((eff, nm, pr))
+        freq_score = (N - usage + 1) / N if usage else 0
         for eff, nm, pr in sorted(cands, reverse=True, key=lambda x: x[0])[:2]:  # team's best 2
             rows.append({"kind": "pass", "look": c, "player": nm, "why": why,
                          "mark": f"{eff:.2f} yds/rt · {pr['catch%']:.0f}% catch ({int(pr['routes'])} rt)",
-                         "_score": (usage or 0) / N + min(eff / 4.0, 1.5)})
+                         "_score": freq_score + min(eff / 4.0, 1.5)})
 
     # ── run: concept ─────────────────────────────────────────────────────
     conrk = _defense_concept_ranks().get(o, {})
     for c in CONCEPTS:
         r = conrk.get(c, {})
-        faces = r.get("att%")                         # N = faces it most
+        faces = r.get("att%")                         # 1 = faces it most
         soft = _softmean(r, ("YPC", "success%", "exp-run%"))
-        if not ((faces and faces >= 24) or (np.isfinite(soft) and soft >= 24)):
+        if not ((faces and faces <= 9) or (np.isfinite(soft) and soft >= 24)):
             continue
         why_bits = []
-        if faces and faces >= 24:
-            why_bits.append(f"faces it {_ord(N - faces + 1)}-most")
+        if faces and faces <= 9:
+            why_bits.append(f"faces it {_ord(faces)}-most")
         if np.isfinite(soft) and soft >= 24:
             why_bits.append(f"{_ord(N - int(round(soft)) + 1)}-worst vs it")
         why = f"{o}: " + " · ".join(why_bits)
@@ -452,10 +540,71 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
             if not (pd.notna(ypc) and ypc > 0 and ypc >= max(base * 1.05, 4.2) and pr["att"] >= 12):
                 continue
             cands.append((ypc, nm, pr))
+        freq_score = (N - faces + 1) / N if faces else 0
         for ypc, nm, pr in sorted(cands, reverse=True, key=lambda x: x[0])[:2]:
             rows.append({"kind": "run", "look": c, "player": nm, "why": why,
                          "mark": f"{ypc:.2f} ypc · {pr['success%']:.0f}% success ({int(pr['att'])} att)",
-                         "_score": (faces or 0) / N + min(ypc / 5.0, 1.5)})
+                         "_score": freq_score + min(ypc / 5.0, 1.5)})
+
+    # ── personnel (11 / 12 / 21) — pass ──────────────────────────────────
+    prk_rec = _defense_personnel_ranks("rec").get(o, {})
+    for p in PERSONNEL:
+        r = prk_rec.get(p, {})
+        used = r.get("TGT %")                          # 1 = faces this personnel most
+        soft = _softmean(r, ("YPT", "CR %", "RATE"))
+        if not ((used and used <= 9) or (np.isfinite(soft) and soft >= 24)):
+            continue
+        why_bits = []
+        if used and used <= 9:
+            why_bits.append(f"sees {p} pers {_ord(used)}-most")
+        if np.isfinite(soft) and soft >= 24:
+            why_bits.append(f"{_ord(N - int(round(soft)) + 1)}-worst vs it")
+        why = f"{o}: " + " · ".join(why_bits)
+        cands = []
+        for nm in pass_names:
+            t = player_pass_by_personnel(_nk(nm))
+            if t.empty or p not in set(t["personnel"]):
+                continue
+            pr = t.set_index("personnel").loc[p]
+            eff, base = pr["yds/rt"], t["yds/rt"].mean()
+            if not (pd.notna(eff) and eff >= max(base * 1.05, 1.8) and pr["routes"] >= 20):
+                continue
+            cands.append((eff, nm, pr))
+        freq_score = (N - used + 1) / N if used else 0
+        for eff, nm, pr in sorted(cands, reverse=True, key=lambda x: x[0])[:2]:
+            rows.append({"kind": "pass", "look": f"{p} personnel", "player": nm, "why": why,
+                         "mark": f"{eff:.2f} yds/rt · {pr['catch%']:.0f}% catch ({int(pr['routes'])} rt)",
+                         "_score": freq_score + min(eff / 4.0, 1.5)})
+
+    # ── personnel — run ─────────────────────────────────────────────────
+    prk_rush = _defense_personnel_ranks("rush").get(o, {})
+    for p in PERSONNEL:
+        r = prk_rush.get(p, {})
+        faces = r.get("ATT %")
+        soft = _softmean(r, ("YPC", "SUCC %", "EXP RUN %"))
+        if not ((faces and faces <= 9) or (np.isfinite(soft) and soft >= 24)):
+            continue
+        why_bits = []
+        if faces and faces <= 9:
+            why_bits.append(f"sees {p} pers runs {_ord(faces)}-most")
+        if np.isfinite(soft) and soft >= 24:
+            why_bits.append(f"{_ord(N - int(round(soft)) + 1)}-worst vs it")
+        why = f"{o}: " + " · ".join(why_bits)
+        cands = []
+        for nm in rb_names:
+            t = player_run_by_personnel(_nk(nm))
+            if t.empty or p not in set(t["personnel"]):
+                continue
+            pr = t.set_index("personnel").loc[p]
+            ypc, base = pr["YPC"], t["YPC"].mean()
+            if not (pd.notna(ypc) and ypc >= max(base * 1.05, 4.2) and pr["att"] >= 12):
+                continue
+            cands.append((ypc, nm, pr))
+        freq_score = (N - faces + 1) / N if faces else 0
+        for ypc, nm, pr in sorted(cands, reverse=True, key=lambda x: x[0])[:2]:
+            rows.append({"kind": "run", "look": f"{p} personnel", "player": nm, "why": why,
+                         "mark": f"{ypc:.2f} ypc · {pr['success%']:.0f}% success ({int(pr['att'])} att)",
+                         "_score": freq_score + min(ypc / 5.0, 1.5)})
 
     if not rows:
         return pd.DataFrame(columns=["kind", "look", "player", "why", "mark"])

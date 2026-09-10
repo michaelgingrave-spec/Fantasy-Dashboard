@@ -110,6 +110,10 @@ def test_scheme_grids_load():
     assert not hl.empty and set(hl.columns) == {"kind", "look", "player", "why", "mark"}
     assert hl["kind"].isin(["pass", "run"]).all()
     assert hl["why"].str.startswith("BAL:").all()
+    # personnel splits load and can produce a "NN personnel" edge somewhere in the league
+    pp = scheme.player_pass_by_personnel("jamarr chase")
+    assert not pp.empty and set(pp["personnel"]).issubset(set(scheme.PERSONNEL))
+    assert scheme._defense_personnel_ranks("rush") and scheme._defense_personnel_ranks("rec")
 
 
 def test_projected_stat_line():

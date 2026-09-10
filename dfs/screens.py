@@ -427,8 +427,8 @@ def render(screen: str) -> None:
                 columns={"look": "scheme", "why": "why it's an edge", "mark": "player's 2025 mark"})
             st.dataframe(hl, hide_index=True, width="stretch")
             st.caption("The defense **leans on** (league rank in usage) or is **weak against** "
-                       "that look, and the player is above their own baseline in it. "
-                       "Personnel-grouping edges (11 / 12 / 21) coming once that split is pulled.")
+                       "that coverage / run concept / personnel grouping, and the player is "
+                       "above their own baseline in it.")
 
         def _pass_block(name, proj):
             tag = f"  ·  proj {proj:.1f}" if proj is not None else ""
@@ -460,7 +460,7 @@ def render(screen: str) -> None:
 
         if opp:
             st.markdown(f"**{opp} defense — allowed by coverage**  ·  `rk` 1–32, "
-                        "**32 = softest** (allows the most); `plays% rk` 32 = plays it most")
+                        "**32 = softest** (allows the most); `plays% rk` **1 = plays it most**")
             dpc = mv.defense_pass_by_coverage(opp)
             if dpc.empty:
                 st.caption(f"No coverage data for {opp}.")
@@ -494,22 +494,33 @@ def render(screen: str) -> None:
     # ── Player Lookup ─────────────────────────────────────────────────────
     elif screen == "Player Lookup":
         st.header("🔎 DFS Player Lookup")
-        st.caption("One player: FantasyPoints projection vs the backtested Model proj, a "
-                   "trailing-usage projected stat line, recent form, coverage splits, and "
-                   "whether they've faced the opponent's coordinator before.")
-        if _need_slate():
-            st.stop()
+        st.caption("Any projected player: FantasyPoints projection vs the backtested Model "
+                   "proj, a trailing-usage stat line, recent form, coverage splits, and "
+                   "whether they've faced the opponent's coordinator before. Not limited to "
+                   "the DK slate — salary/value shows only when the player is priced.")
         from dfs import matchup_view as mv
         from dfs.names import normalize_name
 
-        labels = {f'{r["name"]} · {r["pos"]} · {r["team"]}': r for _, r in
-                  slate_df.sort_values(["pos", "salary"], ascending=[True, False]).iterrows()}
+        # player list = the whole weekly projection file (not the DK-priced subset)
+        try:
+            plist = _projections(week, _hash_path(projection_path(week)))
+        except ProjectionError as e:
+            st.error(str(e))
+            st.stop()
+        # salary lookup (optional) from the slate, keyed by normalised name
+        _sal = {}
+        if slate_df is not None and not slate_df.empty:
+            _sal = {normalize_name(n): s for n, s in zip(slate_df["name"], slate_df["salary"])}
+
+        plist = plist.sort_values(["pos", "proj"], ascending=[True, False])
+        labels = {f'{r["name"]} · {r["pos"]} · {r["team"]}': r for _, r in plist.iterrows()}
         choice = st.selectbox("Player", list(labels), key="pl_pick")
         r = labels[choice]
         nk = normalize_name(r["name"])
-        opp = str(r["opp"]).lstrip("@")
+        opp = str(r.get("opp", "")).lstrip("@")
         pos = str(r["pos"]).upper()
         fp_proj = float(r["proj"])
+        salary = _sal.get(nk)
 
         mp = mv.model_projection(fp_proj, nk, pos) if mv.available() else {"proj": fp_proj, "lean": 0.0, "reason": ""}
         pl = mv.projected_line(nk, pos) if mv.available() else {"fp": None, "reason": ""}
@@ -519,9 +530,10 @@ def render(screen: str) -> None:
                   delta_color="off", help="FP proj + a backtested regression-to-expected lean.")
         m3.metric("Proj line", f'{pl["fp"]:.1f}' if pl.get("fp") is not None else "—",
                   help="DK points implied by the player's own trailing usage × efficiency.")
-        m4.metric("Salary", f'${int(r["salary"]):,}')
-        val = mp["proj"] / (r["salary"] / 1000) if r["salary"] else 0.0
-        st.caption(f"**{r['team']}** vs **{opp or '—'}**  ·  value (Model proj / $1k): **{val:.2f}**"
+        m4.metric("Salary", f'${int(salary):,}' if salary else "—")
+        val = mp["proj"] / (salary / 1000) if salary else 0.0
+        st.caption(f"**{r['team']}** vs **{opp or '—'}**"
+                   + (f"  ·  value (Model proj / $1k): **{val:.2f}**" if salary else "")
                    + (f"  ·  Lean: {mp['reason']}" if mp.get("reason") else ""))
 
         if not mv.available():
@@ -572,7 +584,7 @@ def render(screen: str) -> None:
             st.dataframe(osch if not osch.empty else pd.DataFrame({"note": ["no scheme data for opponent in this window"]}),
                          hide_index=True, width="stretch")
             st.caption("`team_%` vs `league_%` for the same years; `lean` = the gap; "
-                       "`rank` 1–32, **32 = runs it most** in the league.")
+                       "`rank` 1–32, **1 = runs it most** in the league.")
 
         vc = mv.vs_coordinator(nk, opp)
         if vc:
