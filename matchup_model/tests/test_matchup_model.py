@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 
 from matchup_model import (coordinators, defense_model, ingest, player_splits,
-                           project, project_stats)
+                           project, project_stats, scheme)
 
 
 def test_ingest_loads_all_tables():
@@ -71,6 +71,23 @@ def test_player_splits_window_scopes_sample():
     a = wide[(wide.name_key == "jamarr chase") & (wide.stat == "tprr")]["n"].sum()
     b = one[(one.name_key == "jamarr chase") & (one.stat == "tprr")]["n"].sum()
     assert 0 < b < a          # a single year is a strict subset of the 4-year sample
+
+
+def test_scheme_grids_load():
+    assert scheme.available()
+    # a WR's coverage grid: one row per core coverage, sane per-route yards
+    p = scheme.player_pass_by_coverage("puka nacua")
+    assert set(p["coverage"]).issubset(set(scheme.COVERAGES)) and len(p) >= 4
+    assert p["yds/rt"].between(0, 10).all()
+    # opponent defense by coverage carries a plays% (snap share) column
+    d = scheme.defense_pass_allowed_by_coverage("BAL")
+    assert "plays%" in d.columns and d["plays%"].sum() > 50
+    # run concept grid for a bell-cow RB
+    rc = scheme.player_run_by_concept("bijan robinson")
+    assert set(rc["concept"]).issubset(set(scheme.CONCEPTS)) and rc["YPC"].max() > 2
+    # 32-team alignment heat grid
+    ag = scheme.defense_alignment_grid()
+    assert len(ag) == 32 and "Wide yds/rt" in ag.columns
 
 
 def test_projected_stat_line():

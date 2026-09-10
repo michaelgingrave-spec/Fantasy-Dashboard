@@ -23,6 +23,7 @@ try:
     from matchup_model import project as _pj
     from matchup_model import project_stats as _pjs
     from matchup_model import coordinators as _co
+    from matchup_model import scheme as _sch
     _OK = True
 except Exception:  # matchup_model data / deps missing
     _OK = False
@@ -216,4 +217,58 @@ def model_projection(fp_proj: float, name_key: str, pos: str) -> dict:
     lean = regression_lean(name_key, pos) if _OK else {"lean": 0.0, "reason": ""}
     lv = float(lean.get("lean", 0.0) or 0.0)
     return {"proj": round(float(fp_proj) + lv, 1), "lean": lv, "reason": lean.get("reason", "")}
+
+
+# ── Matchup Machine: scheme-by-scheme offense vs defense ───────────────────
+def scheme_available() -> bool:
+    return _OK and _sch.available()
+
+
+def pass_matchup(name_key: str, opp_team: str) -> dict:
+    """{player: df by coverage, defense: df by coverage} for the passing grid."""
+    if not scheme_available():
+        return {}
+    return {"player": _sch.player_pass_by_coverage(name_key),
+            "defense": _sch.defense_pass_allowed_by_coverage(opp_team)}
+
+
+def run_matchup(name_key: str, team: str, opp_team: str) -> dict:
+    """{player, team_offense, defense} frames by run concept for the rushing grid."""
+    if not scheme_available():
+        return {}
+    return {"player": _sch.player_run_by_concept(name_key),
+            "team_offense": _sch.team_run_by_concept(team, "offense"),
+            "defense": _sch.team_run_by_concept(opp_team, "defense")}
+
+
+def defense_alignment_grid() -> pd.DataFrame:
+    """All 32 defenses x yds/route allowed to wide/slot/inline/backfield."""
+    return _sch.defense_alignment_grid() if scheme_available() else pd.DataFrame()
+
+
+def heat(df: pd.DataFrame, cols, good_high=True):
+    """Return a pandas Styler with `cols` shaded red→green by rank within each column
+    (green = better for the offense; flip with good_high=False). No matplotlib needed."""
+    cols = [c for c in cols if c in df.columns]
+
+    def _style(col):
+        s = pd.to_numeric(col, errors="coerce")
+        lo, hi = s.min(), s.max()
+        cells = []
+        for v in s:
+            if pd.isna(v) or hi == lo:
+                cells.append("")
+                continue
+            t = (v - lo) / (hi - lo)
+            if not good_high:
+                t = 1.0 - t
+            red = int(255 * min(1.0, 2 * (1 - t)))
+            grn = int(255 * min(1.0, 2 * t))
+            cells.append(f"background-color: rgba({red},{grn},110,0.32)")
+        return cells
+
+    sty = df.style
+    for c in cols:
+        sty = sty.apply(_style, subset=[c])
+    return sty.format(precision=2)
 
