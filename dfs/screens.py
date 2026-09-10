@@ -398,22 +398,44 @@ def render(screen: str) -> None:
         if not ru.empty:
             st.dataframe(ru, hide_index=True, width="stretch")
 
+        win = st.radio("Timeframe (splits & scheme tables)", list(mv.WINDOWS),
+                       index=0, horizontal=True, key="pl_window")
+        yrs = mv.window_seasons(win)
+
         c1, c2 = st.columns(2)
         with c1:
-            st.subheader(f"Coverage splits — {r['pos']} (2022–25)")
+            st.subheader(f"Coverage splits — {r['pos']} ({win})")
             stat = "ypa" if r["pos"] == "QB" else "tprr"
-            cs = mv.coverage_splits(nk, stat)
-            st.dataframe(cs if not cs.empty else pd.DataFrame({"note": ["no split history"]}),
+            cs = mv.coverage_splits(nk, stat, seasons=yrs)
+            st.dataframe(cs if not cs.empty else pd.DataFrame({"note": ["no split history in this window"]}),
                          hide_index=True, width="stretch")
             st.caption(f"{'yds/dropback' if stat=='ypa' else 'targets/route'} vs each look. "
                        "`diff` vs the player's own baseline — historically small and unstable.")
         with c2:
-            yr = mv.opponent_season(opp)
-            st.subheader(f"{opp} defense — scheme tendencies" + (f" ({yr})" if yr else ""))
-            osch = mv.opponent_scheme(opp)
-            st.dataframe(osch if not osch.empty else pd.DataFrame({"note": ["no scheme data for opponent"]}),
+            osch = mv.opponent_scheme(opp, seasons=yrs)
+            shown = osch.attrs.get("years") if not osch.empty else None
+            lbl = f" ({'-'.join(map(str, [shown[0], shown[-1]])) if shown and len(shown) > 1 else (shown[0] if shown else win)})"
+            st.subheader(f"{opp} defense — scheme tendencies{lbl}")
+            st.dataframe(osch if not osch.empty else pd.DataFrame({"note": ["no scheme data for opponent in this window"]}),
                          hide_index=True, width="stretch")
-            st.caption("`lean` = points above/below league average that season.")
+            st.caption("`team_%` vs `league_%` for the same years; `lean` = the gap.")
+
+        # ── faced this coordinator before? ───────────────────────────────────
+        vc = mv.vs_coordinator(nk, opp)
+        if vc:
+            s = vc["summary"]
+            if s.get("games"):
+                line = (f"**Faced {vc['dc']}** ({opp}'s DC) **{s['games']}×** before: "
+                        f"{s.get('fp_avg', '?')} DK pts/g")
+                if s.get("xfp_avg") is not None:
+                    line += f" (xFP {s['xfp_avg']})"
+                st.write(line)
+                g = vc["games"]
+                if not g.empty:
+                    st.dataframe(g.round(1), hide_index=True, width="stretch")
+            else:
+                st.caption(f"No games vs **{vc['dc']}** ({opp}'s DC since {vc['dc_since']}) "
+                           "in the 2022–25 data.")
 
     # ── Data Check ─────────────────────────────────────────────────────────
     else:

@@ -49,13 +49,19 @@ def _long() -> pd.DataFrame:
     return long
 
 
-@lru_cache(maxsize=8)
-def build_player_splits(through_season: int | None = None) -> pd.DataFrame:
+@lru_cache(maxsize=16)
+def build_player_splits(through_season: int | None = None,
+                        seasons: tuple[int, ...] | None = None) -> pd.DataFrame:
     """One row per (player, split, stat): shrunk raw efficiency `eff` + sample `n`,
-    plus `eff_overall` and `delta` (eff - eff_overall) for display."""
+    plus `eff_overall` and `delta` (eff - eff_overall) for display.
+
+    `through_season` keeps seasons <= that year (walk-forward backtests).
+    `seasons` restricts to an explicit set of years (the Player Lookup window picker)."""
     long = _long()
     if through_season is not None:
         long = long[long["season"] <= through_season]
+    if seasons is not None:
+        long = long[long["season"].isin(seasons)]
     rows = []
     for grp, spec in _SPEC.items():
         sub = long[long["grp"] == grp]
@@ -108,8 +114,9 @@ def player_eff(splits_df: pd.DataFrame, name_key: str, stat: str) -> dict:
     return dict(zip(hit["split"], hit["eff"]))
 
 
-def best_spots(name_key: str, stat: str = "tprr") -> pd.DataFrame:
-    df = build_player_splits()
+def best_spots(name_key: str, stat: str = "tprr",
+               seasons: tuple[int, ...] | None = None) -> pd.DataFrame:
+    df = build_player_splits(seasons=seasons)
     hit = df[(df.name_key == name_key) & (df.stat == stat)].copy()
     return hit.sort_values("delta", key=lambda s: s.abs(), ascending=False)[
         ["split", "eff_overall", "eff", "delta", "n"]

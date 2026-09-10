@@ -5,7 +5,8 @@ predictor so the harness stays usable for a future retry with better inputs.
 import numpy as np
 import pytest
 
-from matchup_model import defense_model, ingest, player_splits, project, project_stats
+from matchup_model import (coordinators, defense_model, ingest, player_splits,
+                           project, project_stats)
 
 
 def test_ingest_loads_all_tables():
@@ -52,6 +53,24 @@ def test_regression_lean_shape_and_bounds():
     # unknown player -> zero lean with a note, never an error
     z = project.projection_lean("no such person xyz", "WR", 2024, 19)
     assert z["lean"] == 0.0 and "game logs" in z["reason"]
+
+
+def test_coordinator_history_tracks_dc_across_teams():
+    h = coordinators.dc_history()
+    assert {2022, 2023, 2024, 2025}.issubset(set(h["season"]))
+    assert h["team"].nunique() >= 30
+    # Vic Fangio: Miami in 2023, Philadelphia 2024-25 — the cross-team case the panel needs
+    fangio = coordinators.dc_team_seasons("Vic Fangio")
+    assert (2023, "MIA") in fangio and (2024, "PHI") in fangio
+    assert coordinators.current_dc("PHI")["dc"] == "Vic Fangio"
+
+
+def test_player_splits_window_scopes_sample():
+    wide = player_splits.build_player_splits(seasons=(2022, 2023, 2024, 2025))
+    one = player_splits.build_player_splits(seasons=(2025,))
+    a = wide[(wide.name_key == "jamarr chase") & (wide.stat == "tprr")]["n"].sum()
+    b = one[(one.name_key == "jamarr chase") & (one.stat == "tprr")]["n"].sum()
+    assert 0 < b < a          # a single year is a strict subset of the 4-year sample
 
 
 def test_projected_stat_line():

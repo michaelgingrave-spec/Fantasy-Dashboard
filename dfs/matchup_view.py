@@ -5,8 +5,9 @@ projection edge did not validate (see matchup_model/backtest_report.md), so noth
 feeds the optimizer or claims to beat the FantasyPoints projection. It surfaces:
   - the player's recent usage (route %, target rate, snap share, aDOT, alignment, RZ looks)
   - expected vs actual fantasy points (regression flag)
-  - historical efficiency splits by coverage (2022-25)
-  - the opponent defense's scheme tendencies (most recent full season in the data)
+  - efficiency splits by coverage over a user-chosen season window (2022-25)
+  - the opponent defense's scheme tendencies for that same window
+  - whether the player has faced the opponent's current DC before (any team, any year)
 """
 from __future__ import annotations
 
@@ -21,6 +22,7 @@ try:
     from matchup_model import defense_model as _dm
     from matchup_model import project as _pj
     from matchup_model import project_stats as _pjs
+    from matchup_model import coordinators as _co
     _OK = True
 except Exception:  # matchup_model data / deps missing
     _OK = False
@@ -28,6 +30,16 @@ except Exception:  # matchup_model data / deps missing
 from dfs.names import normalize_name, norm_team
 
 RECENT_WEEKS = 6
+
+# Window picker options for the splits / scheme tables -> the seasons each covers.
+WINDOWS: dict[str, tuple[int, ...] | None] = {
+    "2025": (2025,), "2024": (2024,), "2023": (2023,), "2022": (2022,),
+    "2024–25": (2024, 2025), "2023–25": (2023, 2024, 2025), "All": None,
+}
+
+
+def window_seasons(label: str) -> tuple[int, ...] | None:
+    return WINDOWS.get(label, None)
 
 
 def available() -> bool:
@@ -95,12 +107,13 @@ def usage_summary(name_key: str) -> dict:
     return d
 
 
-def coverage_splits(name_key: str, stat: str = "tprr") -> pd.DataFrame:
-    """Historical (2022-25) efficiency by coverage split. Descriptive only."""
+def coverage_splits(name_key: str, stat: str = "tprr",
+                    seasons: tuple[int, ...] | None = None) -> pd.DataFrame:
+    """Efficiency by coverage split over the chosen season window. Descriptive only."""
     if not _OK:
         return pd.DataFrame()
     try:
-        df = _ps.best_spots(name_key, stat)
+        df = _ps.best_spots(name_key, stat, seasons=seasons)
     except Exception:
         return pd.DataFrame()
     if df.empty:
@@ -109,16 +122,34 @@ def coverage_splits(name_key: str, stat: str = "tprr") -> pd.DataFrame:
                               "delta": "diff", "n": "sample"}).round(3)
 
 
-def opponent_scheme(opp_team: str) -> pd.DataFrame:
-    """The opponent defense's coverage tendencies — most recent full season in the data."""
+def opponent_scheme(opp_team: str, seasons: tuple[int, ...] | None = None) -> pd.DataFrame:
+    """Opponent defense's coverage rates, averaged over `seasons` (default: latest year
+    in the data), each vs the league average for the same years."""
     if not _OK:
         return pd.DataFrame()
     team = norm_team(opp_team)
     cm = _mi.coverage_matrix()
     if cm.empty or team not in set(cm["team"]):
         return pd.DataFrame()
-    yr = int(cm[cm["team"] == team]["season"].max())
-    return _dm.scheme_table(team, yr, 99).assign(season=yr).round(1)
+    sub = cm[cm["team"] == team]
+    if seasons is not None:
+        sub = sub[sub["season"].isin(seasons)]
+    if sub.empty:
+        return pd.DataFrame()
+    if seasons is None:
+        sub = sub[sub["season"] == sub["season"].max()]
+    yrs = sorted(int(s) for s in sub["season"].unique())
+    la = cm[cm["season"].isin(yrs)]
+    rate_cols = [c for c in _mi.SCHEME_RATE_COLS if c in sub.columns and sub[c].notna().any()]
+    rows = []
+    for c in rate_cols:
+        t_rate, l_rate = sub[c].mean(), la[c].mean()
+        rows.append({"look": c, "team_%": round(float(t_rate), 1),
+                     "league_%": round(float(l_rate), 1),
+                     "lean": round(float(t_rate - l_rate), 1)})
+    out = pd.DataFrame(rows)
+    out.attrs["years"] = yrs
+    return out
 
 
 def opponent_season(opp_team: str) -> int:
@@ -128,6 +159,39 @@ def opponent_season(opp_team: str) -> int:
     t = norm_team(opp_team)
     sub = cm[cm["team"] == t]
     return int(sub["season"].max()) if not sub.empty else 0
+
+
+def vs_coordinator(name_key: str, opp_team: str) -> dict:
+    """Has this player faced the opponent's current defensive coordinator before — at any
+    team, any year in the data? Returns {dc, dc_since, games (DataFrame), summary (dict)}
+    or {} when the DC isn't on record."""
+    if not _OK:
+        return {}
+    cd = _co.current_dc(opp_team)
+    if not cd:
+        return {}
+    spots = set(_co.dc_team_seasons(cd["dc"]))
+    w = _weekly_all()
+    if w.empty:
+        return {"dc": cd["dc"], "dc_since": cd["season"], "games": pd.DataFrame(), "summary": {}}
+    g = w[w["name_key"] == name_key].copy()
+    if not g.empty:
+        mask = pd.Series([(int(s), t) in spots for s, t in zip(g["season"], g["opp"])],
+                         index=g.index)
+        g = g[mask].sort_values(["season", "week"])
+    show = [c for c in ["season", "week", "opp", "tgt", "rec", "rec_yds", "rec_td",
+                        "att", "rush_yds", "rush_td", "pass_yds", "pass_td", "fp", "xfp"]
+            if c in g.columns]
+    games = g[show].copy()
+    keep_id = {"season", "week", "opp"}
+    games = games[[c for c in games.columns if c in keep_id or games[c].notna().any()]]
+    summ = {"games": int(len(g))}
+    if len(g):
+        if "fp" in g:
+            summ["fp_avg"] = round(float(g["fp"].mean()), 1)
+        if "xfp" in g and g["xfp"].notna().any():
+            summ["xfp_avg"] = round(float(g["xfp"].mean()), 1)
+    return {"dc": cd["dc"], "dc_since": cd["season"], "games": games, "summary": summ}
 
 
 def regression_lean(name_key: str, pos: str) -> dict:
