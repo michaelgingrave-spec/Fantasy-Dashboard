@@ -100,6 +100,17 @@ def scheme_tables(season: int) -> list[dict]:
          f"passing-coverage_offense_{season}.csv"),
         ("receiving/advanced", f"seasons={season}&positions=WR,TE&splits=alignmentPosition&mode=defense",
          f"receiving-alignment_defense_{season}.csv"),
+        # personnel groupings (11 / 12 / 21) — split=personnel
+        ("rushing/advanced", f"seasons={season}&positions=RB&splits=personnel",
+         f"rushing-personnel_player_{season}.csv"),
+        ("rushing/advanced", f"seasons={season}&splits=personnel&mode=defense",
+         f"rushing-personnel_defense_{season}.csv"),
+        ("receiving/advanced", f"seasons={season}&positions=WR&splits=personnel",
+         f"receiving-personnel_wr_{season}.csv"),
+        ("receiving/advanced", f"seasons={season}&positions=TE&splits=personnel",
+         f"receiving-personnel_te_{season}.csv"),
+        ("receiving/advanced", f"seasons={season}&positions=WR,TE&splits=personnel&mode=defense",
+         f"receiving-personnel_defense_{season}.csv"),
     ]
     return [{"name": n, "url": f"{BASE}/{n}?{q}", "dest": d} for n, q, d in t]
 
