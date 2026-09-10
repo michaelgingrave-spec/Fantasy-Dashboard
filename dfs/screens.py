@@ -366,6 +366,7 @@ def render(screen: str) -> None:
         from dfs import matchup_view as mv
         from dfs.names import normalize_name as _nn
         from dfs.names import norm_team as _nt
+        from dfs.names import DK_TEAM_NICKNAME as _NICK
 
         if not mv.scheme_available():
             st.info("Scheme-split data not loaded (data/dfs/matchup/*coverage*/*concept*). "
@@ -373,12 +374,15 @@ def render(screen: str) -> None:
             st.stop()
 
         all_teams = mv.scheme_teams()
+        # label like "LAR — Rams" so the search box matches "rams" / "49ers" too
+        labels = [f"{t} — {_NICK.get(t, t).capitalize()}" for t in all_teams]
+        _lab2team = dict(zip(labels, all_teams))
         _has_slate = slate_df is not None and not slate_df.empty
         slate_teams = ({_nt(t) for t in slate_df["team"].dropna().astype(str)}
                        if _has_slate else set())
         default_i = next((i for i, t in enumerate(all_teams) if t in slate_teams), 0)
         c_team, c_opp = st.columns(2)
-        team = c_team.selectbox("Team", all_teams, index=default_i, key="mm_team")
+        team = _lab2team[c_team.selectbox("Team", labels, index=default_i, key="mm_team")]
 
         if _has_slate:
             tdf = slate_df[slate_df["team"].map(lambda x: _nt(str(x))) == team].copy()
@@ -386,7 +390,7 @@ def render(screen: str) -> None:
             tdf = pd.DataFrame(columns=["name", "pos", "proj", "opp"])
         slate_opp = str(tdf["opp"].iloc[0]).lstrip("@") if not tdf.empty else ""
         opp_default = next((i for i, t in enumerate(all_teams) if t == _nt(slate_opp)), 0)
-        opp = c_opp.selectbox("Opponent defense", all_teams, index=opp_default, key="mm_opp")
+        opp = _lab2team[c_opp.selectbox("Opponent defense", labels, index=opp_default, key="mm_opp")]
         if not tdf.empty and _nt(slate_opp) != opp:
             st.caption(f"(slate opponent is {_nt(slate_opp)} — showing {opp} by choice)")
         elif tdf.empty:
