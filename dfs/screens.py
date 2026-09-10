@@ -58,6 +58,20 @@ def _projections(week: int, file_hash: str):
     return load_weekly_projections(week)
 
 
+@st.cache_data(ttl=1800, show_spinner=False)
+def _prop_events():
+    """Upcoming NFL games from the odds feed. Free — no credits."""
+    from dfs.props import list_events
+    return list_events()
+
+
+@st.cache_data(ttl=900, show_spinner=False)
+def _prop_edges(event_id: str, markets: tuple, week: int):
+    """Player-prop lines vs our projection. Costs 1 credit/market — cached 15 min."""
+    from dfs.props import event_prop_edges
+    return event_prop_edges(event_id, list(markets), week)
+
+
 @st.cache_data(show_spinner=True)
 def _edges(slate_key: str, _slate: pd.DataFrame, _ds_hash: str):
     return weekly_edges(_slate)
@@ -649,6 +663,113 @@ def render(screen: str) -> None:
             else:
                 st.caption(f"No games vs **{vc['dc']}** ({opp}'s DC since {vc['dc_since']}) "
                            "in the 2022–25 data.")
+
+    # ── Prop Edges ────────────────────────────────────────────────────────
+    elif screen == "Prop Edges":
+        st.header("🎰 DFS Prop Edges")
+        st.caption(
+            "Player-prop lines from US sportsbooks (The Odds API) next to our trailing-usage "
+            "projection. **Edge = our proj − line**; `lean` is the side that implies. "
+            "⚠️ Our projection still runs on 2025 game logs — a player whose role changed for "
+            "2026 will show a false edge. The role filter (on by default) hides those."
+        )
+        if not ODDS_API_KEY:
+            st.error("No Odds API key. Add a free key from the-odds-api.com as "
+                     "`ODDS_API_KEY` in `.env` (don't paste it into code).")
+            st.stop()
+
+        from dfs.props import CORE_MARKETS, MARKETS, PropsError, confident_only
+
+        try:
+            events, ev_rem = _prop_events()
+        except PropsError as e:
+            st.error(str(e)); st.stop()
+        except Exception as e:  # noqa: BLE001
+            st.error(f"Odds feed error: {type(e).__name__}: {e}"); st.stop()
+        if not events:
+            st.info("No NFL games in the next ~8 days from the odds feed.")
+            st.stop()
+
+        ev_labels = {e["label"]: e["id"] for e in events}
+        ev_pick = st.selectbox("Game", list(ev_labels), key="pe_game")
+        event_id = ev_labels[ev_pick]
+
+        _mk_nice = {"player_reception_yds": "rec yds", "player_receptions": "receptions",
+                    "player_rush_yds": "rush yds", "player_rush_attempts": "rush att",
+                    "player_pass_yds": "pass yds", "player_pass_tds": "pass TD",
+                    "player_pass_attempts": "pass att"}
+        mk_sel = st.multiselect(
+            "Markets", list(MARKETS), default=CORE_MARKETS,
+            format_func=lambda k: _mk_nice.get(k, k), key="pe_markets",
+            help="Each market costs 1 API credit per pull (free tier = 500/month). Result is "
+                 "cached 15 minutes.",
+        )
+        c1, c2 = st.columns([1, 2])
+        go = c1.button("💰 Pull odds", type="primary", key="pe_go",
+                       help=f"Spends {len(mk_sel)} credit(s) — 1 per market.")
+        if ev_rem is not None:
+            c2.caption(f"Odds API credits left this month: **{ev_rem}**")
+
+        if go:
+            if not mk_sel:
+                st.warning("Pick at least one market.")
+            else:
+                try:
+                    with st.spinner("Pulling prop lines…"):
+                        _df, _rem = _prop_edges(event_id, tuple(mk_sel), week)
+                    st.session_state["pe_data"] = {"df": _df, "rem": _rem, "game": ev_pick}
+                except PropsError as e:
+                    st.error(str(e))
+                except Exception as e:  # noqa: BLE001
+                    st.error(f"{type(e).__name__}: {e}")
+
+        cache = st.session_state.get("pe_data")
+        if not cache:
+            st.info("Pick a game and markets, then **Pull odds**.")
+            st.stop()
+
+        df = cache["df"]
+        st.caption(f"Lines for **{cache['game']}**"
+                   + (f"  ·  credits left: **{cache['rem']}**" if cache.get("rem") else ""))
+        if df is None or df.empty:
+            st.warning("No comparable props came back — either the book hasn't posted this "
+                       "game yet, or we have no trailing game logs for those players "
+                       "(`data/dfs/matchup/`).")
+            st.stop()
+
+        only_conf = st.toggle(
+            "Higher-confidence rows only", value=True, key="pe_stable",
+            help="Keeps rows where the player's 2026 role looks unchanged vs 2025 AND our "
+                 "number is within ~0.6–1.7× the market line. Off = every row, including "
+                 "ones where the 2025-data projection is the likelier thing to be wrong.",
+        )
+        show = confident_only(df) if only_conf else df
+        hidden = len(df) - len(show)
+        if show.empty:
+            st.warning("Nothing cleared the confidence filter for this game — our 2025-based "
+                       "projection is too far from the market on every player. Untoggle to "
+                       "see the raw rows.")
+            st.stop()
+
+        show = show.sort_values("~EV %", ascending=False, na_position="last")
+        view = show.drop(columns=["role_ratio"])
+        try:
+            from dfs import matchup_view as _mvh
+            table = _mvh.heat(view, ["~EV %", "edge %"], good_high=True)
+        except Exception:  # noqa: BLE001
+            table = view
+        st.dataframe(table, hide_index=True, width="stretch")
+        st.caption(
+            "`line` = median across books · `our proj` = the player's trailing usage × "
+            "efficiency (2025 data) · `edge` = our proj − line · `book %` = de-vigged book "
+            "probability for the leaned side · `~EV %` = rough expected value from a "
+            "market-anchored version of our projection (illustrative, not a staking guide) · "
+            "`best` = best price on that side across books."
+            + (f"  ·  {hidden} lower-confidence row(s) hidden." if hidden else "")
+        )
+        if not df["role_ratio"].notna().any():
+            st.caption("⚠️ No weekly projection file for this week — couldn't run the role "
+                       f"check. Drop the export at `{projection_path(week)}`.")
 
     # ── Data Check ─────────────────────────────────────────────────────────
     elif screen == "Data Check":

@@ -810,11 +810,13 @@ _BEST_BALL_SCREENS = ["📊 Player Projections", "🛡️ Defense Matchups", "�
                       "📅 Schedule Viewer", "📉 Weekly Projections", "🧩 Roster Optimizer",
                       "🎯 Draft Room"]
 _DFS_SCREENS = ["🏈 DFS Optimizer", "🎯 DFS Matchup Edge", "💡 DFS Suggestions",
-                "🧬 DFS Matchup Machine", "🔎 DFS Player Lookup", "🔍 DFS Data Check"]
+                "🧬 DFS Matchup Machine", "🔎 DFS Player Lookup", "🎰 DFS Prop Edges",
+                "🔍 DFS Data Check"]
 _DFS_SCREEN_MAP = {
     "🏈 DFS Optimizer": "Optimizer", "🎯 DFS Matchup Edge": "Matchup Finder",
     "💡 DFS Suggestions": "Suggestions", "🧬 DFS Matchup Machine": "Matchup Machine",
-    "🔎 DFS Player Lookup": "Player Lookup", "🔍 DFS Data Check": "Data Check",
+    "🔎 DFS Player Lookup": "Player Lookup", "🎰 DFS Prop Edges": "Prop Edges",
+    "🔍 DFS Data Check": "Data Check",
 }
 
 with st.sidebar:
