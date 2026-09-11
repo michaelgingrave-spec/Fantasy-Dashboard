@@ -146,6 +146,16 @@ def _parse_amer(best: str | None) -> int:
     return int(m.group(1)) if m else -110
 
 
+def _fmt_pulled_at(iso: str | None) -> str:
+    if not iso:
+        return "earlier"
+    try:
+        from datetime import datetime
+        return datetime.fromisoformat(iso).strftime("%a %I:%M %p").lstrip("0").replace(" 0", " ")
+    except Exception:  # noqa: BLE001
+        return iso
+
+
 # ── entry point ────────────────────────────────────────────────────────────
 def render(screen: str) -> None:
     st.sidebar.markdown("---")
@@ -841,17 +851,32 @@ def render(screen: str) -> None:
                             _df.insert(0, "game", ev_pick)
                         game_lbl = ev_pick
                         event_lbl_for_snapshot = ev_pick.split("  ·")[0]
-                    st.session_state["pe_data"] = {"df": _df, "rem": _rem, "game": game_lbl}
+                    nsnap = None
                     try:
                         from dfs.props import snapshot_lines
                         nsnap = snapshot_lines(_df, _cur_season(), int(week), event_lbl_for_snapshot)
-                        st.session_state["pe_data"]["snap"] = nsnap
+                    except Exception:  # noqa: BLE001
+                        pass
+                    st.session_state["pe_data"] = {"df": _df, "rem": _rem, "game": game_lbl,
+                                                   "snap": nsnap}
+                    try:
+                        from dfs.props import save_last_pull
+                        save_last_pull(_df, game_lbl, _rem, nsnap)
                     except Exception:  # noqa: BLE001
                         pass
                 except PropsError as e:
                     st.error(str(e))
                 except Exception as e:  # noqa: BLE001
                     st.error(f"{type(e).__name__}: {e}")
+
+        if "pe_data" not in st.session_state:
+            try:
+                from dfs.props import load_last_pull
+                restored = load_last_pull()
+                if restored is not None:
+                    st.session_state["pe_data"] = restored
+            except Exception:  # noqa: BLE001
+                pass
 
         cache = st.session_state.get("pe_data")
         if not cache:
@@ -860,10 +885,21 @@ def render(screen: str) -> None:
             st.stop()
 
         df = cache["df"]
-        st.caption(f"Lines for **{cache['game']}**"
-                   + (f"  ·  credits left: **{cache['rem']}**" if cache.get("rem") else "")
-                   + (f"  ·  {cache['snap']} lines saved for calibration → grade them on "
-                      "**Bet Log** after the game" if cache.get("snap") else ""))
+        cc1, cc2 = st.columns([5, 1])
+        cc1.caption(
+            f"Lines for **{cache['game']}**"
+            + (f"  ·  credits left: **{cache['rem']}**" if cache.get("rem") else "")
+            + (f"  ·  {cache['snap']} lines saved for calibration → grade them on "
+               "**Bet Log** after the game" if cache.get("snap") else "")
+            + (f"  ·  📦 restored from a pull saved {_fmt_pulled_at(cache.get('pulled_at'))} "
+               "— no credits spent" if cache.get("restored") else "")
+        )
+        if cc2.button("🗑️ Clear", key="pe_clear",
+                      help="Forget the saved pull so the next Pull click is a fresh one."):
+            from dfs.props import clear_last_pull
+            clear_last_pull()
+            st.session_state.pop("pe_data", None)
+            st.rerun()
         if df is not None and df.attrs.get("errors"):
             st.caption(f"⚠️ {len(df.attrs['errors'])} game(s) failed to pull and were skipped.")
         if df is None or df.empty:

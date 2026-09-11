@@ -12,6 +12,8 @@ outputs/
 # under data/dfs/ are intentionally tracked so the deployed app has them.
 data/dfs/dk/
 data/dfs/.cache/
+data/dfs/props/last_pull.csv
+data/dfs/props/last_pull_meta.json
 
 # matchup model outputs / artifacts
 data/dfs/matchup/_model/

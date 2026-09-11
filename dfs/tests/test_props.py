@@ -113,6 +113,27 @@ def test_dec_amer_roundtrip():
         assert props._dec_to_amer(props._amer_to_dec(a)) == a
 
 
+def test_save_load_clear_last_pull(tmp_path, monkeypatch):
+    monkeypatch.setattr(props, "LAST_PULL_CSV", tmp_path / "last_pull.csv")
+    monkeypatch.setattr(props, "LAST_PULL_META", tmp_path / "last_pull_meta.json")
+
+    assert props.load_last_pull() is None          # nothing saved yet
+
+    df = pd.DataFrame({"player": ["A", "B"], "market": ["rec yds"] * 2,
+                       "conf": ["solid", "strong"], "role_ratio": [0.9, 1.1]})
+    props.save_last_pull(df, "Game A @ B", "417", snap=2)
+
+    restored = props.load_last_pull()
+    assert restored is not None and restored["restored"] is True
+    assert restored["game"] == "Game A @ B" and restored["rem"] == "417" and restored["snap"] == 2
+    assert list(restored["df"]["player"]) == ["A", "B"]
+    assert "role_ratio" in restored["df"].columns    # full frame round-trips, not a subset
+
+    props.clear_last_pull()
+    assert props.load_last_pull() is None
+    assert not props.LAST_PULL_CSV.exists() and not props.LAST_PULL_META.exists()
+
+
 def test_bulk_prop_edges_tags_game_and_sorts_by_conf(monkeypatch):
     import dfs.projections as pj
     import matchup_model.opp.blend as blend

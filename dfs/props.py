@@ -9,6 +9,7 @@ changed for 2026 shows a fake edge. `role_ratio` flags those.
 """
 from __future__ import annotations
 
+import json
 import statistics as _st
 from datetime import datetime, timedelta, timezone
 
@@ -21,6 +22,11 @@ from dfs.names import normalize_name
 # every pull appends here so the edge calibration can use *real* book lines, not just
 # hand-logged bets (see dfs.bets.line_history_buckets)
 LINE_HISTORY_PATH = DATA / "props" / "line_history.csv"
+
+# the most recent pull, saved so reloading the screen (or restarting the app) doesn't
+# need a fresh — and billable — pull. Local cache, not synced (like data/dfs/dk/).
+LAST_PULL_CSV = DATA / "props" / "last_pull.csv"
+LAST_PULL_META = DATA / "props" / "last_pull_meta.json"
 
 _BASE = "https://api.the-odds-api.com/v4/sports/americanfootball_nfl"
 
@@ -341,3 +347,35 @@ def snapshot_lines(edges: pd.DataFrame, season: int, week: int, event: str) -> i
                 .drop_duplicates(["season", "week", "player", "market"], keep="last"))
     snap.to_csv(LINE_HISTORY_PATH, index=False)
     return int(len(edges))
+
+
+def save_last_pull(df: pd.DataFrame, game: str, rem: str | None, snap: int | None = None) -> None:
+    """Cache the full pull (every column, including role_ratio) to disk so reopening the
+    screen — or restarting the app — restores it instead of needing a fresh pull."""
+    LAST_PULL_CSV.parent.mkdir(parents=True, exist_ok=True)
+    (df if df is not None else pd.DataFrame()).to_csv(LAST_PULL_CSV, index=False)
+    meta = {"game": game, "rem": rem, "snap": snap,
+            "pulled_at": datetime.now().isoformat(timespec="seconds")}
+    LAST_PULL_META.write_text(json.dumps(meta), encoding="utf-8")
+
+
+def load_last_pull() -> dict | None:
+    """The last-saved pull as a `pe_data`-shaped dict, or None if there isn't one / it's
+    unreadable."""
+    if not LAST_PULL_CSV.exists() or not LAST_PULL_META.exists():
+        return None
+    try:
+        df = pd.read_csv(LAST_PULL_CSV)
+        meta = json.loads(LAST_PULL_META.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return None
+    return {"df": df, "rem": meta.get("rem"), "game": meta.get("game"),
+            "snap": meta.get("snap"), "pulled_at": meta.get("pulled_at"), "restored": True}
+
+
+def clear_last_pull() -> None:
+    for p in (LAST_PULL_CSV, LAST_PULL_META):
+        try:
+            p.unlink()
+        except FileNotFoundError:
+            pass
