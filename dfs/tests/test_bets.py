@@ -93,3 +93,28 @@ def test_line_history_snapshot_and_buckets(tmp_path, monkeypatch):
     strong = "strong"
     assert bk.loc[strong, "win%"] == 100.0
     assert bk.loc[lean, "win%"] == 0.0
+
+
+def test_line_history_by_market(tmp_path, monkeypatch):
+    import pandas as pd
+    from dfs import props
+
+    monkeypatch.setattr(props, "LINE_HISTORY_PATH", tmp_path / "lh2.csv")
+    edf = pd.DataFrame({
+        "player": ["A", "B", "C"], "market": ["rec yds", "rec yds", "pass TD"],
+        "line": [50.0] * 3, "our proj": [56.0] * 3, "edge": [6.0] * 3,
+        "z": [0.3] * 3, "conf": ["solid"] * 3,
+        "p(hit)%": [58] * 3, "p edge": [5.0] * 3, "book %": [50] * 3,
+        "edge %": [12.0] * 3, "lean": ["OVER"] * 3, "best": [""] * 3, "role_ratio": [1.0] * 3,
+    })
+    props.snapshot_lines(edf, 2026, 1, "X @ Y")
+    lh = B.load_line_history()
+    lh.loc[lh.player.isin(["A", "B"]), "result"] = ["win", "loss"]
+    lh.loc[lh.player == "C", "result"] = "win"
+    lh.to_csv(props.LINE_HISTORY_PATH, index=False)
+
+    bm = B.line_history_by_market().set_index("market")
+    assert bm.loc["rec yds", "n"] == 2 and bm.loc["rec yds", "win%"] == 50.0
+    assert bm.loc["pass TD", "win%"] == 100.0
+    # sorted best-ROI first
+    assert list(B.line_history_by_market()["market"])[0] == "pass TD"

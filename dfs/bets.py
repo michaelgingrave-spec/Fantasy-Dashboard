@@ -274,6 +274,26 @@ def line_history_buckets(df: pd.DataFrame | None = None) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def line_history_by_market(df: pd.DataFrame | None = None, min_n: int = 1) -> pd.DataFrame:
+    """Win% + notional ROI@-110 by market, graded vs the real book line — every prop we've
+    pulled this season (line_history.csv only ever holds the current season), not just
+    ones you bet. Sorted by ROI so the best-calibrated markets sort first."""
+    df = load_line_history() if df is None else df
+    if df.empty or "market" not in df.columns:
+        return pd.DataFrame()
+    g = df[df["result"].isin(["win", "loss", "push"])].copy()
+    if g.empty:
+        return pd.DataFrame()
+    rows = []
+    for mk, s in g.groupby("market"):
+        w, l = int((s.result == "win").sum()), int((s.result == "loss").sum())
+        if w + l < min_n:
+            continue
+        rows.append({"market": mk, "n": len(s), "win%": round(100 * w / (w + l), 1),
+                     "ROI@-110%": round(100 * _roi_at(_PRICE, w, l), 1)})
+    return pd.DataFrame(rows).sort_values("ROI@-110%", ascending=False).reset_index(drop=True)
+
+
 def backtest_buckets() -> pd.DataFrame:
     """The 2023-25 trailing-form-proxy calibration (no real lines needed).
     Empty until `python -m matchup_model.opp.edge_calib` has been run."""
