@@ -44,21 +44,20 @@ def test_delete(tmp_log):
 
 
 def test_edge_bucket_analysis(tmp_log):
-    # rec yds sigma at a 100 line ~= 49.5, so edge 6 -> z~0.12 (<0.15), edge 30 -> z~0.61
+    # rec yds sigma at a 100 line ~= 49.5, so edge 6 -> z~0.12 ("—"), edge 30 -> z~0.61 ("strong")
     B.add_bet(season=2025, week=1, event="x", player="A", market="rec yds",
               side="OVER", line=100, odds=-110, our_proj=106)
     B.add_bet(season=2025, week=1, event="x", player="B", market="rec yds",
               side="OVER", line=100, odds=-110, our_proj=130)
     df = B.load()
     assert df.loc[0, "z"] < 0.15 and df.loc[1, "z"] > 0.5
+    assert df.loc[0, "conf"] == "—" and df.loc[1, "conf"] == "strong"
     df.loc[0, ["result", "payout", "stake"]] = ["win", 0.909, 1.0]
     df.loc[1, ["result", "payout", "stake"]] = ["loss", -1.0, 1.0]
     B._save(df)
-    eb = B.by_edge_bucket().set_index("edge (SD)")
-    lo = next(i for i in eb.index if i.startswith("—"))
-    hi = next(i for i in eb.index if i.startswith("strong"))
-    assert eb.loc[lo, "win%"] == 100.0
-    assert eb.loc[hi, "ROI%"] == -100.0
+    eb = B.by_edge_bucket().set_index("conf")
+    assert eb.loc["—", "win%"] == 100.0
+    assert eb.loc["strong", "ROI%"] == -100.0
 
 
 def test_load_missing_is_empty(tmp_log):
@@ -78,18 +77,19 @@ def test_line_history_snapshot_and_buckets(tmp_path, monkeypatch):
         "our proj": [56.0] * 6 + [70.0] * 6,
         "edge": [6.0] * 6 + [20.0] * 6,
         "z": [0.18] * 6 + [0.61] * 6,                  # small edge x6, big edge x6
+        "conf": ["lean"] * 6 + ["strong"] * 6,
         "p(hit)%": [55] * 12, "p edge": [3.0] * 12, "book %": [52] * 12,
         "edge %": [12.0] * 6 + [40.0] * 6,
         "lean": ["OVER"] * 12, "best": [""] * 12, "role_ratio": [1.0] * 12,
     })
     assert props.snapshot_lines(edf, 2025, 3, "X @ Y") == 12
     lh = B.load_line_history()
-    assert len(lh) == 12 and "result" in lh.columns and "z" in lh.columns
-    lh.loc[lh["z"] == 0.18, "result"] = "loss"        # small edges lose
-    lh.loc[lh["z"] == 0.61, "result"] = "win"         # big edges win
+    assert len(lh) == 12 and "result" in lh.columns and "conf" in lh.columns
+    lh.loc[lh["conf"] == "lean", "result"] = "loss"   # small edges lose
+    lh.loc[lh["conf"] == "strong", "result"] = "win"  # big edges win
     lh.to_csv(props.LINE_HISTORY_PATH, index=False)
-    bk = B.line_history_buckets().set_index("edge (SD)")
-    lean = next(i for i in bk.index if i.startswith("lean"))
-    strong = next(i for i in bk.index if i.startswith("strong"))
+    bk = B.line_history_buckets().set_index("conf")
+    lean = "lean"
+    strong = "strong"
     assert bk.loc[strong, "win%"] == 100.0
     assert bk.loc[lean, "win%"] == 0.0

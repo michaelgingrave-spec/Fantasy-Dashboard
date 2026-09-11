@@ -52,6 +52,11 @@ def _sigma_of(comp: str, line: float) -> float:
     from dfs.props import _sigma          # one source of truth for the fitted sigma model
     return _sigma(comp, line)
 
+
+def _conf_of(z: float, comp: str) -> str:
+    from dfs.props import conf_label      # applies the per-market offset (rush)/skip (pass att)
+    return conf_label(z, comp)
+
 ROWS_CSV = Path(__file__).resolve().parents[1] / "opp_edge_calibration.csv"
 REPORT = Path(__file__).resolve().parents[1] / "opp_edge_calibration.md"
 
@@ -100,6 +105,7 @@ def run() -> pd.DataFrame:
                 actual = float(r[col])
                 edge = our - proxy
                 sigma = _sigma_of(comp, proxy)
+                z = edge / sigma
                 side = "OVER" if edge > 0 else "UNDER"
                 res = ("push" if actual == proxy else
                        "win" if ((actual > proxy) == (side == "OVER")) else "loss")
@@ -108,7 +114,7 @@ def run() -> pd.DataFrame:
                     market=NICE[comp], line=round(proxy, 2), our=round(our, 2),
                     actual=round(actual, 2), edge=round(edge, 2),
                     edge_pct=round(100 * edge / proxy, 1),
-                    z=round(edge / sigma, 3), side=side, result=res,
+                    z=round(z, 3), conf=_conf_of(z, comp), side=side, result=res,
                     realized_pct=round(100 * (actual - proxy) / proxy, 1),
                     realized_z=round((actual - proxy) / sigma, 3),
                 ))
@@ -116,15 +122,32 @@ def run() -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+_CONF_ORDER = ["—", "lean", "solid", "strong", "high"]
+
+
 def _bucket_stats(df: pd.DataFrame, by: str = "z") -> pd.DataFrame:
-    """`by`='z' → |z| buckets (the comparable unit); 'edge_pct' → the old |edge %| view."""
-    if by == "z" and "z" not in df.columns:
+    """`by`='z' → confidence tier (the `conf` column — per-market-adjusted, matches what
+    the app actually shows/filters on); 'edge_pct' → the old, unadjusted |edge %| view."""
+    if by == "z" and "conf" not in df.columns:
         by = "edge_pct"
-    e = df[by].abs()
-    buckets = Z_BUCKETS if by == "z" else BUCKETS
-    label = "edge (SD)" if by == "z" else "edge %"
     out = []
-    for lo, hi, lbl in buckets:
+    if by == "z":
+        for tier in _CONF_ORDER:
+            s = df[df["conf"] == tier]
+            dec = s[s.result.isin(["win", "loss"])]
+            w, l = int((dec.result == "win").sum()), int((dec.result == "loss").sum())
+            if w + l < 15:
+                continue
+            dirhit = ((np.sign(s["edge"]) == np.sign(s["actual"] - s["line"]))
+                      [s["actual"] != s["line"]].mean())
+            row = {"conf": tier, "n": len(s), "win%": round(100 * w / (w + l), 1),
+                   "ROI@-110": round(100 * _roi(w, l), 1), "dir hit%": round(100 * dirhit, 1)}
+            if "realized_z" in s.columns:
+                row["realized z"] = round((s["realized_z"] * np.sign(s["edge"])).mean(), 2)
+            out.append(row)
+        return pd.DataFrame(out)
+    e = df["edge_pct"].abs()
+    for lo, hi, lbl in BUCKETS:
         s = df[(e >= lo) & (e < hi)]
         dec = s[s.result.isin(["win", "loss"])]
         w, l = int((dec.result == "win").sum()), int((dec.result == "loss").sum())
@@ -132,19 +155,9 @@ def _bucket_stats(df: pd.DataFrame, by: str = "z") -> pd.DataFrame:
             continue
         dirhit = ((np.sign(s["edge"]) == np.sign(s["actual"] - s["line"]))
                   [s["actual"] != s["line"]].mean())
-        row = {label: lbl, "n": len(s), "win%": round(100 * w / (w + l), 1),
-               "ROI@-110": round(100 * _roi(w, l), 1), "dir hit%": round(100 * dirhit, 1)}
-        if by == "z":
-            row["conf"] = _CONF_BY_BUCKET.get(lbl, "")
-            if "realized_z" in s.columns:
-                row["realized z"] = round((s["realized_z"] * np.sign(s["edge"])).mean(), 2)
-        out.append(row)
+        out.append({"edge %": lbl, "n": len(s), "win%": round(100 * w / (w + l), 1),
+                    "ROI@-110": round(100 * _roi(w, l), 1), "dir hit%": round(100 * dirhit, 1)})
     return pd.DataFrame(out)
-
-
-# label each |z| bucket with its confidence tier (matches dfs.props.conf_label)
-_CONF_BY_BUCKET = {"<0.15 SD": "—", "0.15-0.30": "lean", "0.30-0.50": "solid",
-                   "0.50-0.80": "strong", "0.80+ SD": "high"}
 
 
 def bucket_table(by: str = "z") -> pd.DataFrame:
@@ -191,14 +204,14 @@ def report(df: pd.DataFrame) -> str:
     L.append(f"Overall: **{w}-{l}** ({100*w/(w+l):.1f}%) · ROI@-110 **{100*_roi(w,l):+.1f}%** "
              f"· break-even is 52.4%")
     L.append("")
-    L.append("## By |z| — standardized edge  (the number to use)")
+    L.append("## By confidence tier (the `conf` column — market-offset-adjusted |z|)")
     L.append("")
     bz = _bucket_stats(df, by="z")
     L += _md_table(bz)
     L.append("")
     if not bz.empty:
         pos = bz[bz["ROI@-110"] > 1]
-        thr = pos.iloc[0]["edge (SD)"] if len(pos) else "—"
+        thr = pos.iloc[0]["conf"] if len(pos) else "—"
         L.append(f"**Rule: bet at |z| ≥ ~0.30 SD.** Below ~0.15 it's a coin flip "
                  f"({bz.iloc[0]['win%']}% / {bz.iloc[0]['ROI@-110']:+}%); from 0.30 up it's a "
                  f"clear edge and stays positive as z grows. First +EV bucket: {thr}.")

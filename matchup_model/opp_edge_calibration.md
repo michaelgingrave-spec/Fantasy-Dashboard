@@ -6,17 +6,17 @@
 
 Overall: **8581-7207** (54.4%) · ROI@-110 **+3.8%** · break-even is 52.4%
 
-## By |z| — standardized edge  (the number to use)
+## By confidence tier (the `conf` column — market-offset-adjusted |z|)
 
-| edge (SD) | n | win% | ROI@-110 | dir hit% | conf | realized z |
-|---|---|---|---|---|---|---|
-| <0.15 SD | 6557 | 51.9 | -0.9 | 51.2 | — | 0.04 |
-| 0.15-0.30 | 4422 | 54.4 | 3.8 | 54.4 | lean | 0.12 |
-| 0.30-0.50 | 3097 | 57.2 | 9.3 | 57.3 | solid | 0.2 |
-| 0.50-0.80 | 1332 | 57.4 | 9.6 | 57.4 | strong | 0.28 |
-| 0.80+ SD | 380 | 62.1 | 18.6 | 62.3 | high | 0.44 |
+| conf | n | win% | ROI@-110 | dir hit% | realized z |
+|---|---|---|---|---|---|
+| — | 8514 | 51.8 | -1.1 | 51.3 | 0.04 |
+| lean | 3567 | 55.6 | 6.2 | 55.6 | 0.16 |
+| solid | 2379 | 58.8 | 12.2 | 58.8 | 0.26 |
+| strong | 1012 | 59.0 | 12.6 | 59.0 | 0.34 |
+| high | 316 | 59.8 | 14.2 | 60.0 | 0.41 |
 
-**Rule: bet at |z| ≥ ~0.30 SD.** Below ~0.15 it's a coin flip (51.9% / -0.9%); from 0.30 up it's a clear edge and stays positive as z grows. First +EV bucket: 0.15-0.30.
+**Rule: bet at |z| ≥ ~0.30 SD.** Below ~0.15 it's a coin flip (51.8% / -1.1%); from 0.30 up it's a clear edge and stays positive as z grows. First +EV bucket: lean.
 
 ## By |z| within each market  (win% / ROI@-110, n)
 

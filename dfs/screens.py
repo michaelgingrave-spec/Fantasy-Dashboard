@@ -1095,15 +1095,16 @@ def render(screen: str) -> None:
                 _bets.delete_bet(del_id.strip())
                 st.rerun()
 
-            st.subheader("📊 Your logged bets, by |z|")
+            st.subheader("📊 Your logged bets, by confidence tier")
             eb = _bets.by_edge_bucket(log)
             if eb.empty:
-                st.info("Grade some logged bets to see your own results by standardized-edge bucket.")
+                st.info("Grade some logged bets to see your own results by confidence tier.")
             else:
                 st.dataframe(eb, hide_index=True, width="stretch")
-                st.caption("`edge (SD)` = |our proj − line| ÷ the stat's outcome SD. Compare "
-                           "against the calibration tables above — if your live results "
-                           "diverge from the backtest shape, that's information.")
+                st.caption("`conf` = the same tier shown on Prop Edges (— / lean / solid / "
+                           "strong / high), from |z| with the per-market adjustment applied. "
+                           "Compare against the calibration tables above — if your live "
+                           "results diverge from the backtest shape, that's information.")
             b1, b2 = st.columns(2)
             with b1:
                 st.caption("By market")
