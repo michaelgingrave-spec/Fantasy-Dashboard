@@ -113,10 +113,39 @@ def list_events(days_ahead: int = 8) -> tuple[list[dict], str | None]:
         except Exception:
             continue
         if now - timedelta(hours=4) <= ts <= cut:
+            local = ts.astimezone()
             out.append({"id": e["id"], "commence_time": e["commence_time"],
+                        "away_team": e.get("away_team", ""), "home_team": e.get("home_team", ""),
+                        "is_sunday": local.weekday() == 6,
                         "label": f"{e['away_team']} @ {e['home_team']}  ·  "
-                                 f"{ts.astimezone().strftime('%a %m/%d %I:%M %p')}"})
+                                 f"{local.strftime('%a %m/%d %I:%M %p')}"})
     return out, rem
+
+
+def bulk_prop_edges(events: list[dict], markets: list[str],
+                    week: int) -> tuple[pd.DataFrame, str | None]:
+    """Pull + build edge rows for several events in one go (e.g. every Sunday game).
+    Costs `len(events) * len(markets)` credits total. A per-event fetch failure is
+    skipped, not fatal, so one bad game doesn't lose the rest of the pull."""
+    frames, rem, errors = [], None, []
+    for ev in events:
+        try:
+            raw, rem = fetch_event_odds(ev["id"], markets)
+        except PropsError as e:
+            errors.append(f"{ev.get('label', ev.get('id'))}: {e}")
+            continue
+        d = edges_from_raw(raw, week)
+        if not d.empty:
+            d.insert(0, "game", ev.get("label", ev.get("id", "")))
+        frames.append(d)
+    df = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+    if not df.empty and "conf" in df.columns:
+        df = (df.assign(_rank=df["conf"].map(_CONF_RANK).fillna(0))
+                .sort_values(["_rank", "p edge"], ascending=False, na_position="last")
+                .drop(columns="_rank").reset_index(drop=True))
+    if errors:
+        df.attrs["errors"] = errors
+    return df, rem
 
 
 def _amer_to_prob(price: float) -> float:
@@ -125,6 +154,20 @@ def _amer_to_prob(price: float) -> float:
 
 def _amer_to_dec(price: float) -> float:
     return 1 + price / 100 if price > 0 else 1 + 100 / (-price)
+
+
+def _dec_to_amer(dec: float) -> int:
+    return round((dec - 1) * 100) if dec >= 2.0 else round(-100 / (dec - 1))
+
+
+def parlay_odds(prices: list[int]) -> dict:
+    """Combined price for a same-slip parlay of independent legs (naive product of
+    decimal odds — correct for legs on different games; optimistic for same-game legs,
+    which are usually correlated one way or another)."""
+    dec = 1.0
+    for p in prices:
+        dec *= _amer_to_dec(p)
+    return {"decimal": round(dec, 3), "american": _dec_to_amer(dec), "implied_from_price": 1 / dec}
 
 
 def _norm_cdf(z: float) -> float:

@@ -72,6 +72,15 @@ def _prop_edges(event_id: str, markets: tuple, week: int):
     return event_prop_edges(event_id, list(markets), week)
 
 
+@st.cache_data(ttl=900, show_spinner=False)
+def _bulk_prop_edges(event_ids: tuple, event_labels: tuple, markets: tuple, week: int):
+    """Same as _prop_edges but for several events at once. Costs
+    len(event_ids)*len(markets) credits total — cached 15 min."""
+    from dfs.props import bulk_prop_edges
+    events = [{"id": i, "label": lbl} for i, lbl in zip(event_ids, event_labels)]
+    return bulk_prop_edges(events, list(markets), week)
+
+
 @st.cache_data(show_spinner="Building value board…")
 def _value_table(week: int, proj_hash: str, sal_key: str, _plist, _sal: dict):
     """One row per projected player: FantasyPoints projection, value, chalk ownership."""
@@ -772,7 +781,7 @@ def render(screen: str) -> None:
                      "`ODDS_API_KEY` in `.env` (don't paste it into code).")
             st.stop()
 
-        from dfs.props import CORE_MARKETS, MARKETS, PropsError, confident_only
+        from dfs.props import CORE_MARKETS, MARKETS, PropsError, confident_only, parlay_odds
 
         try:
             events, ev_rem = _prop_events()
@@ -785,7 +794,9 @@ def render(screen: str) -> None:
             st.stop()
 
         ev_labels = {e["label"]: e["id"] for e in events}
-        ev_pick = st.selectbox("Game", list(ev_labels), key="pe_game")
+        sunday = [e for e in events if e.get("is_sunday")]
+
+        ev_pick = st.selectbox("Game (single-game pull)", list(ev_labels), key="pe_game")
         event_id = ev_labels[ev_pick]
 
         _mk_nice = {"player_reception_yds": "rec yds", "player_receptions": "receptions",
@@ -795,27 +806,45 @@ def render(screen: str) -> None:
         mk_sel = st.multiselect(
             "Markets", list(MARKETS), default=CORE_MARKETS,
             format_func=lambda k: _mk_nice.get(k, k), key="pe_markets",
-            help="Each market costs 1 API credit per pull (free tier = 500/month). Result is "
-                 "cached 15 minutes.",
+            help="Each market costs 1 API credit per pull, per game (free tier = 500/month).",
         )
-        c1, c2 = st.columns([1, 2])
-        go = c1.button("💰 Pull odds", type="primary", key="pe_go",
-                       help=f"Spends {len(mk_sel)} credit(s) — 1 per market.")
-        if ev_rem is not None:
-            c2.caption(f"Odds API credits left this month: **{ev_rem}**")
+        bulk_cost = len(sunday) * len(mk_sel)
 
-        if go:
+        c1, c2 = st.columns(2)
+        go = c1.button("💰 Pull this game", type="primary", key="pe_go",
+                       help=f"Spends {len(mk_sel)} credit(s) — 1 per market.")
+        go_bulk = c2.button(f"🏈 Pull ALL {len(sunday)} Sunday games (~{bulk_cost} credits)",
+                            key="pe_go_bulk", disabled=not sunday,
+                            help="One request per game — pulls every Sunday game's odds in "
+                                 "one go so you can build parlays across the whole slate.")
+        if ev_rem is not None:
+            st.caption(f"Odds API credits left this month: **{ev_rem}**")
+
+        if go or go_bulk:
             if not mk_sel:
                 st.warning("Pick at least one market.")
+            elif go_bulk and not sunday:
+                st.warning("No Sunday games in the odds feed right now.")
             else:
                 try:
-                    with st.spinner("Pulling prop lines…"):
-                        _df, _rem = _prop_edges(event_id, tuple(mk_sel), week)
-                    st.session_state["pe_data"] = {"df": _df, "rem": _rem, "game": ev_pick}
+                    if go_bulk:
+                        ids = tuple(e["id"] for e in sunday)
+                        labels = tuple(e["label"] for e in sunday)
+                        with st.spinner(f"Pulling {len(sunday)} Sunday games ({bulk_cost} credits)…"):
+                            _df, _rem = _bulk_prop_edges(ids, labels, tuple(mk_sel), week)
+                        game_lbl = f"All {len(sunday)} Sunday games"
+                        event_lbl_for_snapshot = game_lbl
+                    else:
+                        with st.spinner("Pulling prop lines…"):
+                            _df, _rem = _prop_edges(event_id, tuple(mk_sel), week)
+                        if not _df.empty and "game" not in _df.columns:
+                            _df.insert(0, "game", ev_pick)
+                        game_lbl = ev_pick
+                        event_lbl_for_snapshot = ev_pick.split("  ·")[0]
+                    st.session_state["pe_data"] = {"df": _df, "rem": _rem, "game": game_lbl}
                     try:
                         from dfs.props import snapshot_lines
-                        nsnap = snapshot_lines(_df, _cur_season(), int(week),
-                                               ev_pick.split("  ·")[0])
+                        nsnap = snapshot_lines(_df, _cur_season(), int(week), event_lbl_for_snapshot)
                         st.session_state["pe_data"]["snap"] = nsnap
                     except Exception:  # noqa: BLE001
                         pass
@@ -826,7 +855,8 @@ def render(screen: str) -> None:
 
         cache = st.session_state.get("pe_data")
         if not cache:
-            st.info("Pick a game and markets, then **Pull odds**.")
+            st.info("Pick a game and markets, then **Pull this game** — or **Pull ALL Sunday "
+                    "games** to build parlays across the whole slate.")
             st.stop()
 
         df = cache["df"]
@@ -834,25 +864,27 @@ def render(screen: str) -> None:
                    + (f"  ·  credits left: **{cache['rem']}**" if cache.get("rem") else "")
                    + (f"  ·  {cache['snap']} lines saved for calibration → grade them on "
                       "**Bet Log** after the game" if cache.get("snap") else ""))
+        if df is not None and df.attrs.get("errors"):
+            st.caption(f"⚠️ {len(df.attrs['errors'])} game(s) failed to pull and were skipped.")
         if df is None or df.empty:
             st.warning("No comparable props came back — either the book hasn't posted this "
                        "game yet, or we have no recent game logs for those players.")
             st.stop()
 
-        only_conf = st.toggle(
-            "Higher-confidence rows only", value=True, key="pe_stable",
-            help="Keeps rows with |z| ≥ 0.15 (our projection at least ~0.15 outcome-SDs past "
-                 "the line — below that it's a coin flip historically) AND a plausible role. "
-                 "Off = every row.",
+        tiers = st.multiselect(
+            "Show tiers", ["lean", "solid", "strong", "high"], default=["solid", "strong"],
+            key="pe_tiers",
+            help="Confidence tier from |z| (standardized edge). Backtest: lean ~54% hit, "
+                 "solid ~57% / +9% ROI, strong ~57% / +10% ROI, high ~62% / +19% ROI "
+                 "(break-even 52.4%). `—` (under ~0.15 SD) is never shown — it's a coin flip.",
         )
-        show = confident_only(df) if only_conf else df
+        show = confident_only(df)
+        show = show[show["conf"].isin(tiers)] if tiers else show.iloc[0:0]
         hidden = len(df) - len(show)
         if show.empty:
-            st.warning("Nothing cleared the confidence filter — no bet is even 0.15 SD past "
-                       "its line. Untoggle to see the raw rows.")
+            st.warning("Nothing in the selected tier(s). Pick a wider set of tiers above.")
             st.stop()
 
-        show = show.sort_values("p edge", ascending=False, na_position="last")
         view = show.drop(columns=["role_ratio"])
         try:
             from dfs import matchup_view as _mvh
@@ -862,23 +894,56 @@ def render(screen: str) -> None:
         st.dataframe(table, hide_index=True, width="stretch")
         st.caption(
             "`conf` = confidence tier from |z| (standardized edge = SDs past the line, "
-            "comparable across markets): **— / lean / solid / strong / high**. Backtest hit "
-            "rates: lean ~54%, solid ~57%, strong ~57%, high ~62% (break-even 52.4%). "
-            "`z` = the raw number · `p(hit)%` = our shrunk probability the bet lands · "
-            "`book %` = de-vigged book prob · `p edge` = p(hit) − book% (EV proxy) · `best` = "
-            "best price across DK/FD."
-            + (f"  ·  {hidden} `—` row(s) hidden." if hidden else "")
+            "comparable across markets). `z` = the raw number · `p(hit)%` = our shrunk "
+            "probability the bet lands · `book %` = de-vigged book prob · `p edge` = "
+            "p(hit) − book% (EV proxy) · `best` = best price across DK/FD."
+            + (f"  ·  {hidden} row(s) outside the selected tiers hidden." if hidden else "")
         )
-        st.caption("The `conf` tier already accounts for market: rush yds / rush att need a "
-                   "bigger raw z before they rate **solid+**, and pass att never rates (it "
-                   "loses at every z historically). Full calibration on the Bet Log screen.")
         if not df["role_ratio"].notna().any():
             st.caption("⚠️ No weekly projection file for this week — couldn't run the role "
                        f"check. Drop the export at `{projection_path(week)}`.")
 
-        # log a bet straight from the table
+        # ── parlay builder ──────────────────────────────────────────────
+        with st.expander("🎰 Build a parlay", expanded=len(show) > 0):
+            recs = show.to_dict("records")
+            leg_opts = {f'{d["player"]} · {d["market"]} · {d["lean"]} {d["line"]} '
+                        f'· {d["conf"]} · {d.get("game", cache["game"])} '
+                        f'({d.get("best") or "?"})': d for d in recs}
+            legs_pick = st.multiselect("Legs (from the table above)", list(leg_opts), key="pe_legs")
+            if len(legs_pick) >= 2:
+                legs = [leg_opts[k] for k in legs_pick]
+                prices = [_parse_amer(g.get("best")) for g in legs]
+                combo = parlay_odds(prices)
+                p_our = 1.0
+                for g in legs:
+                    p_our *= max(min((g.get("p(hit)%") or 55) / 100.0, 0.97), 0.03)
+                stake = st.number_input("Stake ($)", 0.0, 100000.0, 10.0, 5.0, key="pe_parstake")
+                payout = stake * (combo["decimal"] - 1)
+                ev = p_our * payout - (1 - p_our) * stake
+                pc1, pc2, pc3, pc4 = st.columns(4)
+                pc1.metric("Combined odds", f"{combo['american']:+d}")
+                pc2.metric("Our win prob", f"{100*p_our:.1f}%")
+                pc3.metric("Payout on win", f"${payout:,.2f}")
+                pc4.metric("Est. EV", f"${ev:+,.2f}", delta_color="off")
+                games_in_parlay = {g.get("game", cache["game"]) for g in legs}
+                if len(games_in_parlay) < len(legs):
+                    st.caption("⚠️ Two or more legs share a game — they're **not independent**. "
+                               "A QB's pass yds and his own WR1's rec yds tend to hit together "
+                               "(correlated up); two RBs' rush yds on the same team tend to "
+                               "trade off (correlated down). The win-prob above assumes "
+                               "independence and will be off for those legs specifically.")
+                else:
+                    st.caption("All legs are from different games — the independence "
+                               "assumption for the combined probability is reasonable.")
+                st.caption("Uses each leg's best DK/FD price · the parlay itself isn't logged "
+                           "to the Bet Log yet — log the individual legs below if you want to "
+                           "track them.")
+            elif legs_pick:
+                st.caption("Pick at least 2 legs to price a parlay.")
+
+        # log a single bet straight from the table
         from dfs import bets as _bets
-        with st.expander("🧾 Log a bet from this table"):
+        with st.expander("🧾 Log a single bet from this table"):
             recs = show.to_dict("records")
             opts = {f'{d["player"]} · {d["market"]} · {d["lean"]} {d["line"]} '
                     f'({d.get("best") or "?"})': d for d in recs}
@@ -893,7 +958,8 @@ def render(screen: str) -> None:
             if st.button("Log it", key="pe_logbtn"):
                 bid = _bets.add_bet(
                     season=int(_cur_season()), week=int(week),
-                    event=cache["game"].split("  ·")[0], player=br["player"], market=br["market"],
+                    event=str(br.get("game", cache["game"])).split("  ·")[0],
+                    player=br["player"], market=br["market"],
                     side=br["lean"], line=float(br["line"]), odds=int(odds_in), book=book_in,
                     stake=float(stake_in), our_proj=float(br["our proj"]),
                     ev_pct=(float(br["p edge"]) if br.get("p edge") is not None else None),

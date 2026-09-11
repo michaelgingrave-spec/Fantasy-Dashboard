@@ -98,3 +98,53 @@ def test_american_odds_helpers():
     assert abs(props._amer_to_dec(100) - 2.0) < 1e-9
     assert abs(props._amer_to_dec(-200) - 1.5) < 1e-9
     assert abs(props._norm_cdf(0) - 0.5) < 1e-6
+
+
+def test_parlay_odds_two_leg_pickem():
+    # two -110 legs: dec 1.909 each -> combined ~3.645 -> american +264ish
+    p = props.parlay_odds([-110, -110])
+    assert p["decimal"] == pytest.approx(3.645, abs=0.01)
+    assert p["american"] == pytest.approx(264, abs=2)
+    assert p["implied_from_price"] < 0.5           # parlay is a worse bet than either leg alone
+
+
+def test_dec_amer_roundtrip():
+    for a in (-250, -110, 120, 350):
+        assert props._dec_to_amer(props._amer_to_dec(a)) == a
+
+
+def test_bulk_prop_edges_tags_game_and_sorts_by_conf(monkeypatch):
+    import dfs.projections as pj
+    import matchup_model.opp.blend as blend
+
+    monkeypatch.setattr(pj, "load_weekly_projections",
+                        lambda *_a, **_k: (_ for _ in ()).throw(RuntimeError("no file")))
+
+    def fake_line(name_key, pos, *a, **k):
+        # small edge for the WR (line 50 -> proj 55), big edge for the RB (line 80.5 -> proj 130)
+        if name_key == props.normalize_name("Test Wr"):
+            return {"line": {"rec_yds": 55.0}, "fp": 12.0, "games": 6}
+        if name_key == props.normalize_name("Test Rb"):
+            return {"line": {"rush_yds": 130.0}, "fp": 20.0, "games": 6}
+        return {"fp": None, "reason": "x"}
+
+    monkeypatch.setattr(blend, "blended_line", fake_line)
+
+    calls = []
+
+    def fake_fetch(event_id, markets):
+        calls.append(event_id)
+        return _raw(), "999"
+
+    monkeypatch.setattr(props, "fetch_event_odds", fake_fetch)
+    events = [{"id": "e1", "label": "Game One"}, {"id": "e2", "label": "Game Two"}]
+    df, rem = props.bulk_prop_edges(events, ["player_reception_yds", "player_rush_yds"], week=1)
+
+    assert calls == ["e1", "e2"]              # one fetch per event, in order
+    assert rem == "999"
+    assert set(df["game"]) == {"Game One", "Game Two"}
+    assert len(df) == 4                        # 2 players x 2 games
+    # sorted by conf rank (desc) then p edge (desc) — never increasing in rank
+    ranks = df["conf"].map(props._CONF_RANK).tolist()
+    assert ranks == sorted(ranks, reverse=True)
+    assert df.iloc[0]["player"] == "Test Rb"   # biggest edge (RB) sorts first
