@@ -23,7 +23,7 @@ _REL = "https://github.com/nflverse/nflverse-data/releases/download"
 _GAMES_URL = "https://github.com/nflverse/nfldata/raw/master/data/games.csv"
 
 # season range we keep locally (backtest seasons + the live one)
-SEASONS = [2021, 2022, 2023, 2024, 2025]
+SEASONS = [2021, 2022, 2023, 2024, 2025, 2026]
 
 POS_KEEP = {"QB", "RB", "WR", "TE"}
 
