@@ -841,33 +841,37 @@ def render(screen: str) -> None:
 
         only_conf = st.toggle(
             "Higher-confidence rows only", value=True, key="pe_stable",
-            help="Keeps rows where the player's 2026 FP projection looks consistent with our "
-                 "number AND our number is within ~0.6–1.7× the market line. Off = every "
-                 "row, including ones where our projection is the likelier thing to be wrong.",
+            help="Keeps rows with |z| ≥ 0.15 (our projection at least ~0.15 outcome-SDs past "
+                 "the line — below that it's a coin flip historically) AND a plausible role. "
+                 "Off = every row.",
         )
         show = confident_only(df) if only_conf else df
         hidden = len(df) - len(show)
         if show.empty:
-            st.warning("Nothing cleared the confidence filter for this game — our projection "
-                       "is too far from the market on every player. Untoggle to see the raw rows.")
+            st.warning("Nothing cleared the confidence filter — no bet is even 0.15 SD past "
+                       "its line. Untoggle to see the raw rows.")
             st.stop()
 
-        show = show.sort_values("~EV %", ascending=False, na_position="last")
+        show = show.sort_values("p edge", ascending=False, na_position="last")
         view = show.drop(columns=["role_ratio"])
         try:
             from dfs import matchup_view as _mvh
-            table = _mvh.heat(view, ["~EV %", "edge %"], good_high=True)
+            table = _mvh.heat(view, ["p edge", "z"], good_high=True)
         except Exception:  # noqa: BLE001
             table = view
         st.dataframe(table, hide_index=True, width="stretch")
         st.caption(
-            "`line` = median across books · `our proj` = opportunity/trailing blend "
-            "(same model as Player Lookup) · `edge` = our proj − line · `book %` = de-vigged "
-            "book probability for the leaned side · `~EV %` = rough expected value from a "
-            "market-anchored version of our projection (illustrative, not a staking guide) · "
-            "`best` = best price on that side across books."
-            + (f"  ·  {hidden} lower-confidence row(s) hidden." if hidden else "")
+            "`conf` = confidence tier from |z| (standardized edge = SDs past the line, "
+            "comparable across markets): **— / lean / solid / strong / high**. Backtest hit "
+            "rates: lean ~54%, solid ~57%, strong ~57%, high ~62% (break-even 52.4%). "
+            "`z` = the raw number · `p(hit)%` = our shrunk probability the bet lands · "
+            "`book %` = de-vigged book prob · `p edge` = p(hit) − book% (EV proxy) · `best` = "
+            "best price across DK/FD."
+            + (f"  ·  {hidden} `—` row(s) hidden." if hidden else "")
         )
+        st.caption("The `conf` tier already accounts for market: rush yds / rush att need a "
+                   "bigger raw z before they rate **solid+**, and pass att never rates (it "
+                   "loses at every z historically). Full calibration on the Bet Log screen.")
         if not df["role_ratio"].notna().any():
             st.caption("⚠️ No weekly projection file for this week — couldn't run the role "
                        f"check. Drop the export at `{projection_path(week)}`.")
@@ -892,7 +896,7 @@ def render(screen: str) -> None:
                     event=cache["game"].split("  ·")[0], player=br["player"], market=br["market"],
                     side=br["lean"], line=float(br["line"]), odds=int(odds_in), book=book_in,
                     stake=float(stake_in), our_proj=float(br["our proj"]),
-                    ev_pct=(float(br["~EV %"]) if br.get("~EV %") is not None else None),
+                    ev_pct=(float(br["p edge"]) if br.get("p edge") is not None else None),
                 )
                 st.success(f"Logged ({bid}). Grade it on the **Bet Log** screen after the game.")
 
@@ -900,8 +904,8 @@ def render(screen: str) -> None:
     elif screen == "Bet Log":
         st.header("🧾 DFS Bet Log")
         st.caption("Log prop bets as you place them, grade them from box scores after the "
-                   "games, and see which **edge range** actually cashes. Stored in "
-                   "`data/dfs/bets/bet_log.csv` (commit it to sync across machines).")
+                   "games, and see which **standardized edge (z)** actually cashes. Stored "
+                   "in `data/dfs/bets/bet_log.csv` (commit it to sync across machines).")
         from dfs import bets as _bets
 
         log = _bets.load()
@@ -923,10 +927,12 @@ def render(screen: str) -> None:
         gc2.caption("Grading needs the nflverse cache and only works once the game has been "
                     "played and stats posted.")
 
-        # ── calibration: which edge range actually wins ──────────────────
-        st.subheader("📈 Which edge range wins")
-        st.caption("Every **Prop Edges** pull auto-saves its lines here — you don't have to "
-                   "log bets. After games, *Grade ungraded* fills them from box scores.")
+        # ── calibration: which standardized edge actually wins ──────────
+        st.subheader("📈 Which edge wins — by z (standardized edge)")
+        st.caption("`z` = how many outcome-SDs our projection sits past the line — comparable "
+                   "across markets (a +33% rec-yd edge and a +7% pass-yd edge can be the same "
+                   "z). Every **Prop Edges** pull auto-saves its lines here; *Grade ungraded* "
+                   "fills them after games.")
         lh = _bets.load_line_history()
         graded_lh = int(lh["result"].isin(["win", "loss", "push"]).sum()) if not lh.empty else 0
         cc1, cc2 = st.columns(2)
@@ -946,12 +952,11 @@ def render(screen: str) -> None:
             if bb.empty:
                 st.info("Run `python -m matchup_model.opp.edge_calib` once to populate this.")
             else:
-                st.dataframe(bb[["edge range", "n", "win%", "ROI@-110", "dir hit%"]],
-                             hide_index=True, width="stretch")
-        st.caption("`edge range` = |our proj − line| / line. Break-even at -110 is **52.4%**. "
-                   "The backtest is optimistic (a real book line already prices matchup / "
-                   "pace / injuries that our trailing stand-in doesn't) — trust the **shape** "
-                   "across buckets more than the absolute win%.")
+                st.dataframe(bb, hide_index=True, width="stretch")
+        st.caption("Break-even at -110 is **52.4%**. Backtest read: **|z| ≥ 0.30 SD** is the "
+                   "threshold (≈57% / +9% ROI); below 0.15 SD is a coin flip. rush yds / rush "
+                   "att need z ≥ 0.60; skip pass att. The backtest is optimistic vs a real "
+                   "book line — trust the threshold, not the absolute win%.")
 
         with st.expander("➕ Add a bet manually"):
             f = st.columns(3)
@@ -988,15 +993,15 @@ def render(screen: str) -> None:
                 _bets.delete_bet(del_id.strip())
                 st.rerun()
 
-            st.subheader("📊 Your logged bets, by the edge you had")
+            st.subheader("📊 Your logged bets, by |z|")
             eb = _bets.by_edge_bucket(log)
             if eb.empty:
-                st.info("Grade some logged bets to see your own results by edge bucket.")
+                st.info("Grade some logged bets to see your own results by standardized-edge bucket.")
             else:
                 st.dataframe(eb, hide_index=True, width="stretch")
-                st.caption("`edge range` = |our proj − line| / line, in the bet's direction. "
-                           "Compare against the calibration tables above — if your live "
-                           "results diverge from the backtest shape, that's information.")
+                st.caption("`edge (SD)` = |our proj − line| ÷ the stat's outcome SD. Compare "
+                           "against the calibration tables above — if your live results "
+                           "diverge from the backtest shape, that's information.")
             b1, b2 = st.columns(2)
             with b1:
                 st.caption("By market")

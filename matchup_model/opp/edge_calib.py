@@ -41,10 +41,16 @@ NICE = {"rec_yds": "rec yds", "rec": "receptions", "rush_yds": "rush yds",
         "rush_att": "rush att", "pass_yds": "pass yds", "pass_td": "pass TD",
         "pass_att": "pass att"}
 
-# |edge| % buckets (same as dfs.bets so the two analyses line up)
-BUCKETS = [(0, 4, "0-4%"), (4, 8, "4-8%"), (8, 12, "8-12%"),
-           (12, 20, "12-20%"), (20, 1e9, "20%+")]
+# |z| (standardized-edge) buckets — the comparable unit. Also keep |edge %| for reference.
+Z_BUCKETS = [(0.0, 0.15, "<0.15 SD"), (0.15, 0.30, "0.15-0.30"), (0.30, 0.50, "0.30-0.50"),
+             (0.50, 0.80, "0.50-0.80"), (0.80, 9.0, "0.80+ SD")]
+BUCKETS = [(0, 4, "0-4%"), (4, 8, "4-8%"), (8, 12, "8-12%"), (12, 20, "12-20%"), (20, 1e9, "20%+")]
 PRICE = -110  # assumed juice for the ROI column
+
+
+def _sigma_of(comp: str, line: float) -> float:
+    from dfs.props import _sigma          # one source of truth for the fitted sigma model
+    return _sigma(comp, line)
 
 ROWS_CSV = Path(__file__).resolve().parents[1] / "opp_edge_calibration.csv"
 REPORT = Path(__file__).resolve().parents[1] / "opp_edge_calibration.md"
@@ -93,6 +99,7 @@ def run() -> pd.DataFrame:
                 our = float(ln[comp])
                 actual = float(r[col])
                 edge = our - proxy
+                sigma = _sigma_of(comp, proxy)
                 side = "OVER" if edge > 0 else "UNDER"
                 res = ("push" if actual == proxy else
                        "win" if ((actual > proxy) == (side == "OVER")) else "loss")
@@ -100,38 +107,51 @@ def run() -> pd.DataFrame:
                     season=season, week=wk, player=r["player_display_name"], pos=pos,
                     market=NICE[comp], line=round(proxy, 2), our=round(our, 2),
                     actual=round(actual, 2), edge=round(edge, 2),
-                    edge_pct=round(100 * edge / proxy, 1), side=side, result=res,
+                    edge_pct=round(100 * edge / proxy, 1),
+                    z=round(edge / sigma, 3), side=side, result=res,
                     realized_pct=round(100 * (actual - proxy) / proxy, 1),
+                    realized_z=round((actual - proxy) / sigma, 3),
                 ))
         print(f"  {season}: {len(rows)} rows ({time.time()-t0:.0f}s)")
     return pd.DataFrame(rows)
 
 
-def _bucket_stats(df: pd.DataFrame) -> pd.DataFrame:
-    e = df["edge_pct"].abs()
+def _bucket_stats(df: pd.DataFrame, by: str = "z") -> pd.DataFrame:
+    """`by`='z' → |z| buckets (the comparable unit); 'edge_pct' → the old |edge %| view."""
+    if by == "z" and "z" not in df.columns:
+        by = "edge_pct"
+    e = df[by].abs()
+    buckets = Z_BUCKETS if by == "z" else BUCKETS
+    label = "edge (SD)" if by == "z" else "edge %"
     out = []
-    for lo, hi, lbl in BUCKETS:
+    for lo, hi, lbl in buckets:
         s = df[(e >= lo) & (e < hi)]
         dec = s[s.result.isin(["win", "loss"])]
         w, l = int((dec.result == "win").sum()), int((dec.result == "loss").sum())
         if w + l < 15:
             continue
-        # directional: did the actual move our way at all
         dirhit = ((np.sign(s["edge"]) == np.sign(s["actual"] - s["line"]))
                   [s["actual"] != s["line"]].mean())
-        out.append({"edge range": lbl, "n": len(s), "win%": round(100 * w / (w + l), 1),
-                    "ROI@-110": round(100 * _roi(w, l), 1),
-                    "dir hit%": round(100 * dirhit, 1),
-                    "mean edge%": round(s["edge_pct"].abs().mean(), 1),
-                    "mean realized%": round((s["realized_pct"] * np.sign(s["edge"])).mean(), 1)})
+        row = {label: lbl, "n": len(s), "win%": round(100 * w / (w + l), 1),
+               "ROI@-110": round(100 * _roi(w, l), 1), "dir hit%": round(100 * dirhit, 1)}
+        if by == "z":
+            row["conf"] = _CONF_BY_BUCKET.get(lbl, "")
+            if "realized_z" in s.columns:
+                row["realized z"] = round((s["realized_z"] * np.sign(s["edge"])).mean(), 2)
+        out.append(row)
     return pd.DataFrame(out)
 
 
-def bucket_table() -> pd.DataFrame:
-    """Cached read for the app. Empty frame (with a hint) if the calc hasn't been run."""
+# label each |z| bucket with its confidence tier (matches dfs.props.conf_label)
+_CONF_BY_BUCKET = {"<0.15 SD": "—", "0.15-0.30": "lean", "0.30-0.50": "solid",
+                   "0.50-0.80": "strong", "0.80+ SD": "high"}
+
+
+def bucket_table(by: str = "z") -> pd.DataFrame:
+    """Cached read for the app. Empty frame if the calc hasn't been run."""
     if not ROWS_CSV.exists():
         return pd.DataFrame()
-    return _bucket_stats(pd.read_csv(ROWS_CSV))
+    return _bucket_stats(pd.read_csv(ROWS_CSV), by=by)
 
 
 def by_market() -> pd.DataFrame:
@@ -147,41 +167,63 @@ def by_market() -> pd.DataFrame:
     return pd.DataFrame(out).sort_values("ROI@-110", ascending=False)
 
 
+def _md_table(bs: pd.DataFrame) -> list:
+    if bs.empty:
+        return ["_(no buckets met the sample floor)_"]
+    L = ["| " + " | ".join(bs.columns) + " |", "|" + "|".join(["---"] * len(bs.columns)) + "|"]
+    for _, r in bs.iterrows():
+        L.append("| " + " | ".join(str(x) for x in r.values) + " |")
+    return L
+
+
 def report(df: pd.DataFrame) -> str:
     L = ["# Model edge calibration — vs a trailing-form stand-in line", ""]
     L.append(f"- {len(df)} player-week-market rows, {TEST_SEASONS} wk {TEST_WEEKS.start}-"
              f"{TEST_WEEKS.stop-1}. Line = EWMA of the stat over the player's last {_LB} games.")
-    L.append("- **Hit rates are an upper bound** — a real sportsbook line already prices "
-             "matchup/pace/injuries, so a real edge is smaller. Trust the *ranking* of buckets.")
+    L.append("- **`z` = edge / outcome-SD** (sigma = a + b*line, fitted per market). This is the "
+             "unit that's comparable across markets — a +33% edge on a 1.5-catch line and a "
+             "+7% edge on a 270 pass-yd line are ~0.3 vs ~0.35 SD, not 5x apart.")
+    L.append("- Hit rates are an **upper bound** — a real sportsbook line already prices "
+             "matchup/pace/injuries. Trust the threshold/ranking, not the absolute win%.")
     L.append("")
     dec = df[df.result.isin(["win", "loss"])]
     w, l = int((dec.result == "win").sum()), int((dec.result == "loss").sum())
     L.append(f"Overall: **{w}-{l}** ({100*w/(w+l):.1f}%) · ROI@-110 **{100*_roi(w,l):+.1f}%** "
              f"· break-even is 52.4%")
     L.append("")
-    L.append("## By |edge| bucket")
+    L.append("## By |z| — standardized edge  (the number to use)")
     L.append("")
-    bs = _bucket_stats(df)
-    L.append("| " + " | ".join(bs.columns) + " |")
-    L.append("|" + "|".join(["---"] * len(bs.columns)) + "|")
-    for _, r in bs.iterrows():
-        L.append("| " + " | ".join(str(x) for x in r.values) + " |")
+    bz = _bucket_stats(df, by="z")
+    L += _md_table(bz)
     L.append("")
-    best = bs.loc[bs["ROI@-110"].idxmax()] if not bs.empty else None
-    if best is not None:
-        L.append(f"**Best bucket: {best['edge range']}** — {best['win%']}% hit, "
-                 f"{best['ROI@-110']:+}% ROI on n={best['n']}. "
-                 + ("Bigger edges do NOT do better — likely model error."
-                    if bs.iloc[-1]["ROI@-110"] < best["ROI@-110"] else
-                    "ROI keeps climbing with edge here."))
+    if not bz.empty:
+        pos = bz[bz["ROI@-110"] > 1]
+        thr = pos.iloc[0]["edge (SD)"] if len(pos) else "—"
+        L.append(f"**Rule: bet at |z| ≥ ~0.30 SD.** Below ~0.15 it's a coin flip "
+                 f"({bz.iloc[0]['win%']}% / {bz.iloc[0]['ROI@-110']:+}%); from 0.30 up it's a "
+                 f"clear edge and stays positive as z grows. First +EV bucket: {thr}.")
     L.append("")
-    L.append("## By market")
+    L.append("## By |z| within each market  (win% / ROI@-110, n)")
     L.append("")
-    for mk, s in df.groupby("market"):
-        d = s[s.result.isin(["win", "loss"])]
-        ww, ll = int((d.result == "win").sum()), int((d.result == "loss").sum())
-        L.append(f"- **{mk}**: {ww}-{ll} ({100*ww/max(ww+ll,1):.1f}%), "
-                 f"ROI {100*_roi(ww,ll):+.1f}%  (n={len(s)})")
+    L.append("| market | z<0.30 | 0.30-0.60 | z>=0.60 |")
+    L.append("|---|---|---|---|")
+    for mk in ["rec yds", "receptions", "rush yds", "pass yds", "pass TD", "rush att", "pass att"]:
+        g = df[df.market == mk]
+        cells = []
+        for lo, hi in [(0.0, 0.30), (0.30, 0.60), (0.60, 9.0)]:
+            s = g[(g["z"].abs() >= lo) & (g["z"].abs() < hi)]
+            d = s[s.result.isin(["win", "loss"])]
+            ww, ll = int((d.result == "win").sum()), int((d.result == "loss").sum())
+            cells.append(f"{100*ww/max(ww+ll,1):.0f}% / {100*_roi(ww,ll):+.0f}% (n={len(s)})"
+                         if ww + ll >= 15 else "—")
+        L.append(f"| {mk} | " + " | ".join(cells) + " |")
+    L.append("")
+    L.append("_rush yds / rush att: only z≥0.60 is reliably +EV. pass att: negative at every z "
+             "— skip it._")
+    L.append("")
+    L.append("## For reference — the old |edge %| view")
+    L.append("")
+    L += _md_table(_bucket_stats(df, by="edge_pct"))
     return "\n".join(L)
 
 

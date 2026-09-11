@@ -1,5 +1,6 @@
 """`dfs.props` edge-table math — hermetic, no network (a hand-built Odds API payload)."""
 import pandas as pd
+import pytest
 
 from dfs import props
 
@@ -52,30 +53,44 @@ def test_edges_from_raw_shape(monkeypatch):
     monkeypatch.setattr(ps, "projected_line", fake_line)
 
     df = props.edges_from_raw(_raw(), week=1)
-    assert set(["player", "market", "line", "our proj", "edge", "lean", "best"]).issubset(df.columns)
+    assert set(["player", "market", "line", "our proj", "edge", "conf", "z", "p edge",
+                "lean", "best"]).issubset(df.columns)
 
     wr = df[df["player"] == "Test Wr"].iloc[0]
     assert wr["market"] == "rec yds"
     assert wr["line"] == 50.0                     # median of 50.5 / 49.5
     assert wr["our proj"] == 62.0
     assert wr["edge"] == 12.0 and wr["lean"] == "OVER"
+    # edge 12 on a 50 rec-yd line: sigma ~ 16.28 + 0.332*50 ~ 33 -> z ~ 0.36 -> "solid"
+    assert wr["z"] == pytest.approx(0.36, abs=0.05)
+    assert wr["conf"] == "solid"
     assert "fanduel" in wr["best"] or "draftkings" in wr["best"]
 
     rb = df[df["player"] == "Test Rb"].iloc[0]
     assert rb["lean"] == "UNDER"                  # 78 proj < 80.5 line
 
 
-def test_confident_only_filters_ratio_and_role():
+def test_confident_only_filters_conf_ratio_and_role():
     df = pd.DataFrame({
-        "player": ["A", "B", "C", "D"],
-        "market": ["rec yds"] * 4,
-        "line": [50.0, 50.0, 50.0, 50.0],
-        "our proj": [58.0, 120.0, 55.0, 55.0],   # B is 2.4x the line -> dropped
-        "edge": [8.0, 70.0, 5.0, 5.0],
-        "role_ratio": [0.9, 0.9, 0.2, None],     # C role collapsed -> dropped; D unknown -> kept
+        "player": ["A", "B", "C", "D", "E"],
+        "market": ["rec yds"] * 5,
+        "line": [50.0] * 5,
+        "our proj": [58.0, 120.0, 55.0, 55.0, 55.0],
+        "edge": [8.0, 70.0, 5.0, 5.0, 5.0],
+        "conf": ["solid", "high", "solid", "solid", "—"],   # E has no edge tier -> dropped
+        "role_ratio": [0.9, 0.9, 0.2, None, 0.9],           # C role collapsed -> dropped
     })
-    out = props.confident_only(df)
+    out = props.confident_only(df)                          # B dropped: proj 2.4x line
     assert set(out["player"]) == {"A", "D"}
+
+
+def test_conf_label_scale():
+    assert props.conf_label(0.05) == "—"
+    assert props.conf_label(0.20, "rec_yds") == "lean"
+    assert props.conf_label(0.40, "rec_yds") == "solid"
+    assert props.conf_label(0.90, "rec_yds") == "high"
+    assert props.conf_label(0.50, "rush_yds") == "lean"     # rush needs more z
+    assert props.conf_label(3.0, "pass_att") == "—"         # pass att never rates
 
 
 def test_american_odds_helpers():

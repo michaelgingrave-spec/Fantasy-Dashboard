@@ -23,7 +23,13 @@ LOG_PATH = DATA / "bets" / "bet_log.csv"
 
 COLUMNS = ["bet_id", "logged_at", "season", "week", "event", "player", "market", "side",
            "line", "odds", "book", "stake", "our_proj", "edge_toward", "edge_pct_toward",
-           "ev_pct", "close_line", "result", "actual", "payout", "graded_at", "note"]
+           "z", "ev_pct", "close_line", "result", "actual", "payout", "graded_at", "note"]
+
+# |z| (standardized-edge) buckets → a confidence tier. From the calibration: <0.15 SD is a
+# coin flip; +EV starts ~0.30 SD ("solid"); 0.80+ is "high".
+Z_BUCKETS = [(0.0, 0.15, "— (<0.15 SD)"), (0.15, 0.30, "lean (0.15-0.30)"),
+             (0.30, 0.50, "solid (0.30-0.50)"), (0.50, 0.80, "strong (0.50-0.80)"),
+             (0.80, 9.0, "high (0.80+ SD)")]
 
 # our market label -> nflverse player_weeks column
 _STAT_COL = {"rec yds": "receiving_yards", "receptions": "receptions", "rush yds": "rushing_yards",
@@ -58,9 +64,15 @@ def add_bet(*, season: int, week: int, event: str, player: str, market: str, sid
             close_line: float | None = None, note: str = "") -> str:
     """Append one bet. `side` is 'OVER' or 'UNDER'. Returns the new bet_id."""
     side = side.upper().strip()
-    edge_toward = None
+    edge_toward = z = None
     if our_proj is not None:
         edge_toward = (our_proj - line) if side == "OVER" else (line - our_proj)
+        try:
+            from dfs.props import _NICE, _sigma
+            comp = next((k for k, v in _NICE.items() if v == market), market)
+            z = edge_toward / _sigma(comp, line)
+        except Exception:  # noqa: BLE001
+            z = None
     row = {
         "bet_id": uuid.uuid4().hex[:8], "logged_at": date.today().isoformat(),
         "season": int(season), "week": int(week), "event": event, "player": player,
@@ -69,6 +81,7 @@ def add_bet(*, season: int, week: int, event: str, player: str, market: str, sid
         "our_proj": None if our_proj is None else round(float(our_proj), 2),
         "edge_toward": None if edge_toward is None else round(edge_toward, 2),
         "edge_pct_toward": None if (edge_toward is None or not line) else round(100 * edge_toward / line, 1),
+        "z": None if z is None else round(z, 2),
         "ev_pct": None if ev_pct is None else round(float(ev_pct), 1),
         "close_line": close_line, "result": "", "actual": None, "payout": None,
         "graded_at": "", "note": note,
@@ -131,8 +144,6 @@ def grade(force: bool = False) -> tuple[pd.DataFrame, int]:
 
 
 # ── analysis ────────────────────────────────────────────────────────────────
-EDGE_BUCKETS = [(-100, 0, "<=0 (no edge)"), (0, 4, "0-4%"), (4, 8, "4-8%"),
-                (8, 12, "8-12%"), (12, 20, "12-20%"), (20, 1e9, "20%+")]
 
 
 def _summ(g: pd.DataFrame) -> dict:
@@ -157,17 +168,18 @@ def _summ(g: pd.DataFrame) -> dict:
 
 
 def by_edge_bucket(df: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Your logged bets bucketed by |z| (standardized edge)."""
     df = load() if df is None else df
     g = df[df["result"].isin(["win", "loss", "push"])].copy()
-    if g.empty:
+    if g.empty or "z" not in g.columns:
         return pd.DataFrame()
-    e = pd.to_numeric(g["edge_pct_toward"], errors="coerce")
+    e = pd.to_numeric(g["z"], errors="coerce").abs()
     rows = []
-    for lo, hi, lbl in EDGE_BUCKETS:
+    for lo, hi, lbl in Z_BUCKETS:
         sub = g[(e >= lo) & (e < hi)]
         if sub.empty:
             continue
-        rows.append({"edge range": lbl, **_summ(sub)})
+        rows.append({"edge (SD)": lbl, **_summ(sub)})
     return pd.DataFrame(rows)
 
 
@@ -238,21 +250,21 @@ def grade_line_history(force: bool = False) -> tuple[pd.DataFrame, int]:
 
 
 def line_history_buckets(df: pd.DataFrame | None = None) -> pd.DataFrame:
-    """Win% + notional ROI@-110 by |edge %| bucket, graded vs the real book line."""
+    """Win% + notional ROI@-110 by |z| bucket, graded vs the real book line."""
     df = load_line_history() if df is None else df
-    if df.empty:
+    if df.empty or "z" not in df.columns:
         return pd.DataFrame()
     g = df[df["result"].isin(["win", "loss", "push"])].copy()
     if g.empty:
         return pd.DataFrame()
-    e = pd.to_numeric(g["edge %"], errors="coerce").abs()
+    e = pd.to_numeric(g["z"], errors="coerce").abs()
     rows = []
-    for lo, hi, lbl in EDGE_BUCKETS:
+    for lo, hi, lbl in Z_BUCKETS:
         s = g[(e >= lo) & (e < hi)]
         w, l = int((s.result == "win").sum()), int((s.result == "loss").sum())
         if w + l < 5:
             continue
-        rows.append({"edge range": lbl, "n": len(s), "win%": round(100 * w / (w + l), 1),
+        rows.append({"edge (SD)": lbl, "n": len(s), "win%": round(100 * w / (w + l), 1),
                      "ROI@-110%": round(100 * _roi_at(_PRICE, w, l), 1)})
     return pd.DataFrame(rows)
 
