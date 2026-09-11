@@ -788,11 +788,13 @@ def render(screen: str) -> None:
             "(on by default) hides the worst of those."
         )
         from dfs import bets as _bets0
-        mkt_perf = _bets0.line_history_by_market()
-        if not mkt_perf.empty:
-            st.caption(f"**2026 so far, by market** ({int(mkt_perf['n'].sum())} graded props "
-                       "pulled this season — small samples this early, read directionally)")
-            st.dataframe(mkt_perf, hide_index=True, width="stretch")
+        conf_perf = _bets0.line_history_buckets()
+        conf_perf = conf_perf[conf_perf["conf"] != "—"] if not conf_perf.empty else conf_perf
+        if not conf_perf.empty:
+            st.caption(f"**2026 so far, by confidence tier** ({int(conf_perf['n'].sum())} "
+                       "graded props pulled this season — small samples this early, read "
+                       "directionally)")
+            st.dataframe(conf_perf, hide_index=True, width="stretch")
 
         if not ODDS_API_KEY:
             st.error("No Odds API key. Add a free key from the-odds-api.com as "
