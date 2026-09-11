@@ -789,12 +789,13 @@ def render(screen: str) -> None:
         )
         from dfs import bets as _bets0
         conf_perf = _bets0.line_history_buckets()
-        conf_perf = conf_perf[conf_perf["conf"] != "—"] if not conf_perf.empty else conf_perf
         if not conf_perf.empty:
             st.caption(f"**2026 so far, by confidence tier** ({int(conf_perf['n'].sum())} "
                        "graded props pulled this season — small samples this early, read "
                        "directionally)")
-            st.dataframe(conf_perf, hide_index=True, width="stretch")
+            _small_col, _ = st.columns([7, 3])   # ~30% narrower than full width
+            _small_col.dataframe(conf_perf, hide_index=True, width="content",
+                                 height=35 * (len(conf_perf) + 1))
 
         if not ODDS_API_KEY:
             st.error("No Odds API key. Add a free key from the-odds-api.com as "

@@ -253,10 +253,12 @@ def grade_line_history(force: bool = False) -> tuple[pd.DataFrame, int]:
     return df, n
 
 
-def line_history_buckets(df: pd.DataFrame | None = None) -> pd.DataFrame:
+def line_history_buckets(df: pd.DataFrame | None = None, min_n: int = 0) -> pd.DataFrame:
     """Win% + notional ROI@-110 by confidence tier, graded vs the real book line. Buckets
     by the stored `conf` column (matches Prop Edges) — not re-derived from raw |z|, which
-    disagrees with `conf` for rush props (per-market offset) and pass att (always excluded)."""
+    disagrees with `conf` for rush props (per-market offset) and pass att (always excluded).
+    Shows every tier that has at least one graded row by default (`min_n=0`) — early season
+    that means small samples, but hiding a tier outright is worse than a visible small n."""
     df = load_line_history() if df is None else df
     if df.empty or "conf" not in df.columns:
         return pd.DataFrame()
@@ -266,11 +268,14 @@ def line_history_buckets(df: pd.DataFrame | None = None) -> pd.DataFrame:
     rows = []
     for tier in CONF_ORDER:
         s = g[g["conf"] == tier]
-        w, l = int((s.result == "win").sum()), int((s.result == "loss").sum())
-        if w + l < 5:
+        if s.empty:
             continue
-        rows.append({"conf": tier, "n": len(s), "win%": round(100 * w / (w + l), 1),
-                     "ROI@-110%": round(100 * _roi_at(_PRICE, w, l), 1)})
+        w, l = int((s.result == "win").sum()), int((s.result == "loss").sum())
+        if w + l < min_n:
+            continue
+        rows.append({"conf": tier, "n": len(s),
+                     "win%": round(100 * w / (w + l), 1) if (w + l) else None,
+                     "ROI@-110%": round(100 * _roi_at(_PRICE, w, l), 1) if (w + l) else None})
     return pd.DataFrame(rows)
 
 
