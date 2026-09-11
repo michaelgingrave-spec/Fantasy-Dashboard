@@ -188,6 +188,7 @@ def _hist(key: str, pos: str, season: int, week: int, by: str = "name") -> pd.Da
     return h.sort_values(["season", "week"]).tail(LOOKBACK)
 
 
+@lru_cache(maxsize=4096)
 def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
              injury_adj: bool = False) -> dict:
     pos = (pos or "").upper()

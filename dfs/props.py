@@ -10,6 +10,7 @@ changed for 2026 shows a fake edge. `role_ratio` flags those.
 from __future__ import annotations
 
 import json
+import math
 import statistics as _st
 from datetime import datetime, timedelta, timezone
 
@@ -47,6 +48,14 @@ _NICE = {"rec_yds": "rec yds", "rec": "receptions", "rush_yds": "rush yds",
          "rush_att": "rush att", "pass_yds": "pass yds", "pass_td": "pass TD",
          "pass_att": "pass att"}
 
+# when a player pulled from the odds feed isn't in this week's projections (missing file,
+# or a name-normalization mismatch), guess their position from which market is being priced
+# rather than always guessing WR — a QB with no projections row would otherwise get every
+# pass_yds/pass_td row silently dropped (projected_line("QB"-shaped stat) returns no
+# pass-market keys when built as a WR).
+_FALLBACK_POS = {"pass_yds": "QB", "pass_td": "QB", "pass_att": "QB",
+                 "rush_yds": "RB", "rush_att": "RB", "rec_yds": "WR", "rec": "WR"}
+
 # Outcome standard deviation per market, fitted as sigma = a + b*line from 2023-25
 # box scores (matchup_model/opp/edge_calib). Lets us express the edge in SD units (`z`),
 # which IS comparable across markets — a "+33% edge" on a 1.5 reception line and a "+7%
@@ -79,10 +88,19 @@ _MKT_Z_OFFSET = {"rush_yds": 0.28, "rush_att": 0.28}
 _MKT_SKIP = {"pass_att"}
 
 
-def conf_label(z: float, comp: str | None = None) -> str:
+def _adj_z(z: float, comp: str | None = None) -> float:
+    """Effective |z| after the per-market adjustment (rush needs more raw z to count;
+    pass_att never counts). Shared by conf_label's tier lookup AND the p(hit) probability
+    below so the displayed tier and the EV math they sit next to always agree."""
     if comp in _MKT_SKIP or z is None or not (abs(z) == abs(z)):   # NaN-safe
+        return 0.0
+    return max(abs(float(z)) - _MKT_Z_OFFSET.get(comp, 0.0), 0.0)
+
+
+def conf_label(z: float, comp: str | None = None) -> str:
+    if z is None or not (abs(z) == abs(z)):   # NaN-safe
         return "—"
-    az = abs(float(z)) - _MKT_Z_OFFSET.get(comp, 0.0)
+    az = _adj_z(z, comp)
     for thr, lbl in _CONF_TIERS:
         if az >= thr:
             return lbl
@@ -177,17 +195,7 @@ def parlay_odds(prices: list[int]) -> dict:
 
 
 def _norm_cdf(z: float) -> float:
-    return 0.5 * (1 + _erf(z / (2 ** 0.5)))
-
-
-def _erf(x: float) -> float:
-    # Abramowitz & Stegun 7.1.26
-    s = 1 if x >= 0 else -1
-    x = abs(x)
-    t = 1 / (1 + 0.3275911 * x)
-    y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t
-              - 0.284496736) * t + 0.254829592) * t * (2.718281828 ** (-x * x))
-    return s * y
+    return 0.5 * (1 + math.erf(z / (2 ** 0.5)))
 
 
 def fetch_event_odds(event_id: str, markets: list[str]) -> tuple[dict, str | None]:
@@ -244,7 +252,7 @@ def edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
         comp = MARKETS[mk]
         line = float(_st.median(d["points"]))
         nk = normalize_name(player)
-        pos, wk_proj = info.get(nk, ("WR", None))
+        pos, wk_proj = info.get(nk, (_FALLBACK_POS.get(comp, "WR"), None))
         if nk not in line_cache:
             line_cache[nk] = projected_line(nk, pos, as_of_season=_season, as_of_week=week)
         pl = line_cache[nk]
@@ -259,8 +267,10 @@ def edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
         # THIS is the number to compare across markets (not `edge %`).
         sigma = _sigma(comp, line)
         z = edge / sigma
-        # model P(bet hits), shrunk toward .5 (the raw normal model is overconfident)
-        p_raw = _norm_cdf(abs(z))
+        # model P(bet hits), shrunk toward .5 (the raw normal model is overconfident).
+        # Uses the same market-adjusted z as conf_label so the tier and the probability
+        # never disagree (a rush prop needs the same "extra" edge for both).
+        p_raw = _norm_cdf(_adj_z(z, comp))
         p_hit = 0.5 + _P_SHRINK * (p_raw - 0.5)
 
         # best price on the leaned side + no-vig prob from the median two-way

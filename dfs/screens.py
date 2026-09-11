@@ -32,8 +32,6 @@ from dfs.projections import ProjectionError, load_weekly_projections
 from dfs.slate import build_slate
 from dfs import suggestions as sug
 
-SCREENS = ["Optimizer", "Matchup Finder", "Suggestions", "Data Check"]
-
 
 # ── cached loaders ──────────────────────────────────────────────────────────
 def _hash_path(p: Path) -> str:
@@ -671,8 +669,11 @@ def render(screen: str) -> None:
         fp_proj = float(r["proj"])
         salary = _sal.get(nk)
 
-        mp = mv.model_projection(fp_proj, nk, pos) if mv.available() else {"proj": fp_proj, "lean": 0.0, "reason": ""}
-        pl = mv.projected_line(nk, pos, as_of_week=week) if mv.available() else {"fp": None, "reason": ""}
+        # NOT gated on mv.available() (that only checks the OLD Data Suite CSVs) — both
+        # functions have their own fallback to the nflverse opportunity/trailing blend,
+        # same as Prop Edges uses, so they work independently of the Data Suite tables.
+        mp = mv.model_projection(fp_proj, nk, pos)
+        pl = mv.projected_line(nk, pos, as_of_week=week)
         _src = pl.get("source", "")
         _src_lbl = {"opp_blend": "opp+trailing blend", "opp": "opportunity model",
                     "project_stats": "trailing usage×eff (fallback)"}.get(_src, "")
@@ -933,7 +934,8 @@ def render(screen: str) -> None:
             "comparable across markets). `z` = the raw number · `p(hit)%` = our shrunk "
             "probability the bet lands · `book %` = de-vigged book prob · `p edge` = "
             "p(hit) − book% (EV proxy) · `best` = best price across DK/FD."
-            + (f"  ·  {hidden} row(s) outside the selected tiers hidden." if hidden else "")
+            + (f"  ·  {hidden} row(s) hidden (no real edge, a role-ratio red flag, or "
+               "outside the selected tiers)." if hidden else "")
         )
         if not df["role_ratio"].notna().any():
             st.caption("⚠️ No weekly projection file for this week — couldn't run the role "

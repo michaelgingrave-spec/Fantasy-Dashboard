@@ -34,7 +34,7 @@ CONF_ORDER = ["—", "lean", "solid", "strong", "high"]
 # our market label -> nflverse player_weeks column
 _STAT_COL = {"rec yds": "receiving_yards", "receptions": "receptions", "rush yds": "rushing_yards",
              "rush att": "carries", "pass yds": "passing_yards", "pass TD": "passing_tds",
-             "pass att": "attempts", "rec": "receptions"}
+             "pass att": "attempts"}
 
 
 def _empty() -> pd.DataFrame:
@@ -156,9 +156,11 @@ def _summ(g: pd.DataFrame) -> dict:
     clv = played.dropna(subset=["close_line"])
     clv_beat = None
     if len(clv):
-        # beating the number: OVER wants a lower close, UNDER wants a higher close
+        # beating the number: an OVER bettor wants the line to have RISEN by close (they
+        # locked in the cheaper number before the market agreed with them); an UNDER
+        # bettor wants it to have FALLEN.
         b = np.where(clv["side"].str.upper() == "OVER",
-                     clv["line"] > clv["close_line"], clv["line"] < clv["close_line"])
+                     clv["line"] < clv["close_line"], clv["line"] > clv["close_line"])
         clv_beat = float(np.mean(b))
     return {
         "bets": len(g), "graded": len(played),

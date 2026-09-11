@@ -53,6 +53,7 @@ def _ewma(v: np.ndarray) -> float:
     return float((w * v).sum() / w.sum())
 
 
+@lru_cache(maxsize=4096)
 def _naive_fp(name_key: str, pos: str, season: int, week: int) -> float:
     from matchup_model.opp import data as D
     d = D.player_weeks()
