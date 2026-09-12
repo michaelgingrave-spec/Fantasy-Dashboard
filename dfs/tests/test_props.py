@@ -84,6 +84,17 @@ def test_confident_only_filters_conf_ratio_and_role():
     assert set(out["player"]) == {"A", "D"}
 
 
+def test_role_stable_requires_confirmed_role_and_tighter_ratio():
+    df = pd.DataFrame({
+        "player": ["A", "B", "C", "D"],
+        "line": [50.0] * 4,
+        "our proj": [56.0, 56.0, 75.0, 56.0],   # C is 1.5x -> over role_stable's 1.4x cap
+        "role_ratio": [1.0, 1.35, 1.0, None],   # B role drifted; D unknown (not confirmed)
+    })
+    out = props.role_stable(df)
+    assert set(out["player"]) == {"A"}          # B: role drift; C: ratio too high; D: no data
+
+
 def test_conf_label_scale():
     assert props.conf_label(0.05) == "—"
     assert props.conf_label(0.20, "rec_yds") == "lean"

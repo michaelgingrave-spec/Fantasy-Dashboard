@@ -802,7 +802,8 @@ def render(screen: str) -> None:
                      "`ODDS_API_KEY` in `.env` (don't paste it into code).")
             st.stop()
 
-        from dfs.props import CORE_MARKETS, MARKETS, PropsError, confident_only, parlay_odds
+        from dfs.props import (CORE_MARKETS, MARKETS, PropsError, confident_only,
+                               parlay_odds, role_stable)
 
         try:
             events, ev_rem = _prop_events()
@@ -918,21 +919,33 @@ def render(screen: str) -> None:
                        "game yet, or we have no recent game logs for those players.")
             st.stop()
 
-        tiers = st.multiselect(
+        tc1, tc2 = st.columns([3, 2])
+        tiers = tc1.multiselect(
             "Show tiers", ["lean", "solid", "strong", "high"], default=["solid", "strong"],
             key="pe_tiers",
             help="Confidence tier from |z| (standardized edge). Backtest: lean ~54% hit, "
                  "solid ~57% / +9% ROI, strong ~57% / +10% ROI, high ~62% / +19% ROI "
                  "(break-even 52.4%). `—` (under ~0.15 SD) is never shown — it's a coin flip.",
         )
+        rec_only = tc2.toggle(
+            "✓ Recommended only", value=True, key="pe_recommended",
+            help="Also requires role_ratio between 0.85-1.20 (this week's FantasyPoints "
+                 "projection agrees our number isn't running on a stale 2025 role) AND our "
+                 "proj under 1.4x the line. This is the extra screen on top of the tier — "
+                 "off shows everything in the selected tier(s), including rows a changed "
+                 "2026 role could be inflating.",
+        )
         show = confident_only(df)
         show = show[show["conf"].isin(tiers)] if tiers else show.iloc[0:0]
+        if rec_only:
+            show = role_stable(show)
         hidden = len(df) - len(show)
         if show.empty:
-            st.warning("Nothing in the selected tier(s). Pick a wider set of tiers above.")
+            st.warning("Nothing cleared the filters. Widen the tiers, or turn off "
+                       "\"Recommended only\" to see rows with a role-ratio flag.")
             st.stop()
 
-        view = show.drop(columns=["role_ratio"])
+        view = show.drop(columns=["role_ratio", "game"])
         try:
             from dfs import matchup_view as _mvh
             table = _mvh.heat(view, ["p edge", "z"], good_high=True)
@@ -945,7 +958,14 @@ def render(screen: str) -> None:
             "probability the bet lands · `book %` = de-vigged book prob · `p edge` = "
             "p(hit) − book% (EV proxy) · `best` = best price across DK/FD."
             + (f"  ·  {hidden} row(s) hidden (no real edge, a role-ratio red flag, or "
-               "outside the selected tiers)." if hidden else "")
+               "outside the selected filters)." if hidden else "")
+        )
+        st.caption(
+            "**role_ratio** (hidden from the table, used by the Recommended filter) = this "
+            "week's FantasyPoints projection ÷ our model's own number. Near 1.0 = they agree "
+            "— role looks stable. Far from 1.0 = FantasyPoints' current-season info disagrees "
+            "with our still mostly-2025-trained read, i.e. a real role change our model "
+            "doesn't know about yet."
         )
         if not df["role_ratio"].notna().any():
             st.caption("⚠️ No weekly projection file for this week — couldn't run the role "

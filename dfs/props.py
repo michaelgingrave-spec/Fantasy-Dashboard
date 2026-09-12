@@ -331,6 +331,33 @@ def confident_only(df: pd.DataFrame, role_lo: float = 0.65, role_hi: float = 1.5
     return df[keep].reset_index(drop=True)
 
 
+def role_stable(df: pd.DataFrame, role_lo: float = 0.85, role_hi: float = 1.20,
+                ratio_hi: float = 1.40) -> pd.DataFrame:
+    """A tighter follow-on filter for what's actually worth betting, not just "not obvious
+    garbage" (that's confident_only's job). Requires:
+
+    * `role_ratio` in [role_lo, role_hi] — a CONFIRMED stable role. Unlike confident_only,
+      a missing role_ratio does NOT pass here — "recommended" means we checked and it's
+      fine, not that we couldn't check.
+    * `our proj <= ratio_hi * line` — tighter than confident_only's 1.9x; the 1.4-1.9x zone
+      is exactly where stale-2025-role inflation concentrates (rec yds/receptions props on
+      players whose role changed for 2026), so it's excluded here even though confident_only
+      lets it through.
+
+    Meant to run on top of confident_only's output.
+    """
+    if df.empty:
+        return df
+    keep = pd.Series(True, index=df.index)
+    if "role_ratio" in df.columns:
+        keep &= df["role_ratio"].notna() & df["role_ratio"].between(role_lo, role_hi)
+    else:
+        keep &= False
+    if {"our proj", "line"}.issubset(df.columns):
+        keep &= (df["our proj"] / df["line"].replace(0, pd.NA)) <= ratio_hi
+    return df[keep].reset_index(drop=True)
+
+
 # back-compat alias
 stable_only = confident_only
 
