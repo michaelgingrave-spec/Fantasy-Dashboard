@@ -13,6 +13,7 @@ import json
 import math
 import statistics as _st
 from datetime import datetime, timedelta, timezone
+from functools import lru_cache
 
 import pandas as pd
 import requests
@@ -28,6 +29,7 @@ LINE_HISTORY_PATH = DATA / "props" / "line_history.csv"
 # need a fresh — and billable — pull. Local cache, not synced (like data/dfs/dk/).
 LAST_PULL_CSV = DATA / "props" / "last_pull.csv"
 LAST_PULL_META = DATA / "props" / "last_pull_meta.json"
+LAST_PULL_ATTD_CSV = DATA / "props" / "last_pull_attd.csv"   # optional 2nd frame, see save_last_pull
 
 _BASE = "https://api.the-odds-api.com/v4/sports/americanfootball_nfl"
 
@@ -43,6 +45,10 @@ MARKETS = {
 }
 CORE_MARKETS = ["player_reception_yds", "player_receptions", "player_rush_yds",
                 "player_pass_yds", "player_pass_tds"]
+# anytime-TD prices as a Yes/No moneyline (no line/point) — a different shape from every
+# market above, so it's pulled and priced separately (see attd_edges_from_raw) rather than
+# folded into MARKETS/edges_from_raw.
+ATTD_MARKET = "player_anytime_td"
 BOOKS = "draftkings,fanduel"      # only pull these two books
 _NICE = {"rec_yds": "rec yds", "rec": "receptions", "rush_yds": "rush yds",
          "rush_att": "rush att", "pass_yds": "pass yds", "pass_td": "pass TD",
@@ -103,6 +109,49 @@ def conf_label(z: float, comp: str | None = None) -> str:
     az = _adj_z(z, comp)
     for thr, lbl in _CONF_TIERS:
         if az >= thr:
+            return lbl
+    return "—"
+
+
+# Anytime-TD confidence: there's no line/point on a Yes/No market, so this ISN'T the
+# z-score system above — it's tiers on |model p - flat league-baseline p| for the position
+# group. Backtested in matchup_model/opp/td_calib.py (9213 player-games, 2023-25 walk-
+# forward): the model beats the flat baseline overall (Brier score: WR/TE +4.9%, RB +9.9%),
+# and that edge concentrates almost entirely in the top `dev` tercile (WR/TE +11.4% there
+# vs +0.7% in the bottom third; RB +18.8% vs +1.1%). Thresholds below are hand-set off
+# those tercile boundaries — v1, not exhaustively fit.
+_ATTD_DEV_TIERS = {
+    "WR/TE": ((0.22, "high"), (0.14, "strong"), (0.08, "solid"), (0.04, "lean")),
+    "RB": ((0.25, "high"), (0.16, "strong"), (0.10, "solid"), (0.05, "lean")),
+}
+
+
+def _attd_group(pos: str | None) -> str | None:
+    pos = (pos or "").upper()
+    if pos in ("WR", "TE"):
+        return "WR/TE"
+    if pos == "RB":
+        return "RB"
+    return None                      # QB anytime-TD wasn't in the backtest — skip it
+
+
+@lru_cache(maxsize=4)
+def _attd_baseline(group: str) -> float:
+    """Flat league anytime-TD rate for the position group, over every season on file — the
+    same 'just guess the average' comparator td_calib.py backtests against, just run
+    through 'now' (season=2100 -> every real season counts) instead of held out for a
+    walk-forward test."""
+    from matchup_model.opp import data as _D
+    from matchup_model.opp.td_calib import GROUPS, _baseline_rate
+    return _baseline_rate(_D.player_weeks(), 2100, GROUPS[group])
+
+
+def attd_conf_label(dev: float, group: str) -> str:
+    if dev is None or not (abs(dev) == abs(dev)) or group not in _ATTD_DEV_TIERS:
+        return "—"
+    adev = abs(float(dev))
+    for thr, lbl in _ATTD_DEV_TIERS[group]:
+        if adev >= thr:
             return lbl
     return "—"
 
@@ -308,6 +357,123 @@ def edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
     return df
 
 
+def attd_edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
+    """One row per player for the anytime-TD (Yes/No) market. It prices as a moneyline with
+    no line/point, so it can't reuse edges_from_raw's line-vs-projection math:
+
+    * `p(model)%` = 1 - e^-lam, lam = rec_td + rush_td from the same blended projection
+      used everywhere else on this screen.
+    * `dev` = model prob − a flat league-average rate for the position group — the
+      *backtested* signal (see attd_conf_label / matchup_model/opp/td_calib.py). `conf`
+      tiers off this, not off the book price.
+    * `p edge` / `book %` = model prob vs the book's own de-vigged Yes probability — the
+      actual market-mispricing check. `lean` follows this (falls back to `dev`'s sign only
+      when a book doesn't post a No price to de-vig against).
+
+    QBs are skipped — td_calib.py only validated WR/TE/RB. Returns the same `conf` /
+    `role_ratio` column names as edges_from_raw so confident_only/role_stable apply as-is.
+    """
+    from dfs.projections import load_weekly_projections
+    from matchup_model.opp.blend import blended_line, current_season
+    season = current_season()
+
+    # player -> {"yes": [(price, book)], "no": [(price, book)]}
+    acc: dict = {}
+    for bk in raw.get("bookmakers", []):
+        for mkt in bk.get("markets", []):
+            if mkt["key"] != ATTD_MARKET:
+                continue
+            for o in mkt.get("outcomes", []):
+                side = str(o.get("name", "")).strip().lower()
+                if side not in ("yes", "no"):
+                    continue
+                d = acc.setdefault(o.get("description", ""), {"yes": [], "no": []})
+                d[side].append((o["price"], bk["key"]))
+
+    try:
+        proj = load_weekly_projections(week)
+        info = {normalize_name(n): (p, float(fp)) for n, p, fp in
+                zip(proj["name"], proj["pos"], proj["proj"])}
+    except Exception:
+        info = {}
+
+    rows = []
+    for player, d in acc.items():
+        if not d["yes"]:
+            continue
+        nk = normalize_name(player)
+        pos, wk_proj = info.get(nk, (None, None))
+        group = _attd_group(pos)
+        if group is None:
+            continue                  # unknown position, or a QB — not backtested, skip
+        pl = blended_line(nk, pos, as_of_season=season, as_of_week=week)
+        if pl.get("fp") is None:
+            continue
+        line = pl.get("line", {})
+        lam = float(line.get("rec_td", 0.0)) + float(line.get("rush_td", 0.0))
+        p_model = 1.0 - math.exp(-lam)
+        p_base = _attd_baseline(group)
+        dev = p_model - p_base
+        conf = attd_conf_label(dev, group)
+
+        best_price, best_book = max(d["yes"], key=lambda x: _amer_to_dec(x[0]))
+        p_yes = _st.median([_amer_to_prob(p) for p, _ in d["yes"]])
+        p_no = _st.median([_amer_to_prob(p) for p, _ in d["no"]]) if d["no"] else None
+        novig = (p_yes / (p_yes + p_no)) if (p_no is not None and (p_yes + p_no)) else p_yes
+        p_edge = (p_model - novig) if novig is not None else None
+        lean = "YES" if (p_edge if p_edge is not None else dev) >= 0 else "NO"
+
+        role_ratio = (wk_proj / pl["fp"]) if (wk_proj and pl.get("fp")) else None
+        rows.append({
+            "player": player, "pos": pos, "conf": conf,
+            "p(model)%": round(100 * p_model), "p(base)%": round(100 * p_base),
+            "dev": round(100 * dev, 1),
+            "book %": round(100 * novig) if novig is not None else None,
+            "p edge": round(100 * p_edge, 1) if p_edge is not None else None,
+            "lean": lean,
+            "best": f"{best_book} {best_price:+d}",
+            "role_ratio": round(role_ratio, 2) if role_ratio is not None else None,
+            "_rank": _CONF_RANK.get(conf, 0),
+        })
+
+    df = pd.DataFrame(rows)
+    if not df.empty:
+        df = df.sort_values(["_rank", "p edge"], ascending=False,
+                            na_position="last").drop(columns="_rank").reset_index(drop=True)
+    return df
+
+
+def event_attd_edges(event_id: str, week: int) -> tuple[pd.DataFrame, str | None]:
+    """Fetch one event's Anytime-TD props and build the edge table. See attd_edges_from_raw."""
+    raw, rem = fetch_event_odds(event_id, [ATTD_MARKET])
+    return attd_edges_from_raw(raw, week), rem
+
+
+def bulk_attd_edges(events: list[dict], week: int) -> tuple[pd.DataFrame, str | None]:
+    """Same idea as bulk_prop_edges, for the Anytime-TD market — pulled and shown separately
+    since its pricing shape (Yes/No, no line) and confidence math are unrelated to the rest
+    of the table. Costs `len(events)` credits total (1 market)."""
+    frames, rem, errors = [], None, []
+    for ev in events:
+        try:
+            raw, rem = fetch_event_odds(ev["id"], [ATTD_MARKET])
+        except PropsError as e:
+            errors.append(f"{ev.get('label', ev.get('id'))}: {e}")
+            continue
+        d = attd_edges_from_raw(raw, week)
+        if not d.empty:
+            d.insert(0, "game", ev.get("label", ev.get("id", "")))
+        frames.append(d)
+    df = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+    if not df.empty and "conf" in df.columns:
+        df = (df.assign(_rank=df["conf"].map(_CONF_RANK).fillna(0))
+                .sort_values(["_rank", "p edge"], ascending=False, na_position="last")
+                .drop(columns="_rank").reset_index(drop=True))
+    if errors:
+        df.attrs["errors"] = errors
+    return df, rem
+
+
 def confident_only(df: pd.DataFrame, role_lo: float = 0.65, role_hi: float = 1.5,
                    ratio_hi: float = 1.9) -> pd.DataFrame:
     """Keep rows with a real edge:
@@ -386,11 +552,19 @@ def snapshot_lines(edges: pd.DataFrame, season: int, week: int, event: str) -> i
     return int(len(edges))
 
 
-def save_last_pull(df: pd.DataFrame, game: str, rem: str | None, snap: int | None = None) -> None:
+def save_last_pull(df: pd.DataFrame, game: str, rem: str | None, snap: int | None = None,
+                   attd_df: pd.DataFrame | None = None) -> None:
     """Cache the full pull (every column, including role_ratio) to disk so reopening the
-    screen — or restarting the app — restores it instead of needing a fresh pull."""
+    screen — or restarting the app — restores it instead of needing a fresh pull.
+    `attd_df`, if pulled, is cached the same way in its own file (a run that didn't pull
+    Anytime TD clears any stale file from an earlier run, so a restore never shows props
+    that weren't actually part of this pull)."""
     LAST_PULL_CSV.parent.mkdir(parents=True, exist_ok=True)
     (df if df is not None else pd.DataFrame()).to_csv(LAST_PULL_CSV, index=False)
+    if attd_df is not None and not attd_df.empty:
+        attd_df.to_csv(LAST_PULL_ATTD_CSV, index=False)
+    else:
+        LAST_PULL_ATTD_CSV.unlink(missing_ok=True)
     meta = {"game": game, "rem": rem, "snap": snap,
             "pulled_at": datetime.now().isoformat(timespec="seconds")}
     LAST_PULL_META.write_text(json.dumps(meta), encoding="utf-8")
@@ -398,7 +572,7 @@ def save_last_pull(df: pd.DataFrame, game: str, rem: str | None, snap: int | Non
 
 def load_last_pull() -> dict | None:
     """The last-saved pull as a `pe_data`-shaped dict, or None if there isn't one / it's
-    unreadable."""
+    unreadable. `attd_df` is None when the last pull didn't include Anytime TD props."""
     if not LAST_PULL_CSV.exists() or not LAST_PULL_META.exists():
         return None
     try:
@@ -406,12 +580,19 @@ def load_last_pull() -> dict | None:
         meta = json.loads(LAST_PULL_META.read_text(encoding="utf-8"))
     except Exception:  # noqa: BLE001
         return None
+    attd_df = None
+    if LAST_PULL_ATTD_CSV.exists():
+        try:
+            attd_df = pd.read_csv(LAST_PULL_ATTD_CSV)
+        except Exception:  # noqa: BLE001
+            attd_df = None
     return {"df": df, "rem": meta.get("rem"), "game": meta.get("game"),
-            "snap": meta.get("snap"), "pulled_at": meta.get("pulled_at"), "restored": True}
+            "snap": meta.get("snap"), "pulled_at": meta.get("pulled_at"), "restored": True,
+            "attd_df": attd_df}
 
 
 def clear_last_pull() -> None:
-    for p in (LAST_PULL_CSV, LAST_PULL_META):
+    for p in (LAST_PULL_CSV, LAST_PULL_META, LAST_PULL_ATTD_CSV):
         try:
             p.unlink()
         except FileNotFoundError:

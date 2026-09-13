@@ -79,6 +79,22 @@ def _bulk_prop_edges(event_ids: tuple, event_labels: tuple, markets: tuple, week
     return bulk_prop_edges(events, list(markets), week)
 
 
+@st.cache_data(ttl=900, show_spinner=False)
+def _event_attd_edges(event_id: str, week: int):
+    """Anytime-TD (Yes/No) props vs our model. Costs 1 credit — cached 15 min."""
+    from dfs.props import event_attd_edges
+    return event_attd_edges(event_id, week)
+
+
+@st.cache_data(ttl=900, show_spinner=False)
+def _bulk_attd_edges(event_ids: tuple, event_labels: tuple, week: int):
+    """Same as _event_attd_edges but for several events at once. Costs len(event_ids)
+    credits total — cached 15 min."""
+    from dfs.props import bulk_attd_edges
+    events = [{"id": i, "label": lbl} for i, lbl in zip(event_ids, event_labels)]
+    return bulk_attd_edges(events, week)
+
+
 @st.cache_data(show_spinner="Building value board…")
 def _value_table(week: int, proj_hash: str, sal_key: str, _plist, _sal: dict):
     """One row per projected player: FantasyPoints projection, value, chalk ownership."""
@@ -830,11 +846,17 @@ def render(screen: str) -> None:
             format_func=lambda k: _mk_nice.get(k, k), key="pe_markets",
             help="Each market costs 1 API credit per pull, per game (free tier = 500/month).",
         )
-        bulk_cost = len(sunday) * len(mk_sel)
+        pull_attd = st.checkbox(
+            "🎯 Also pull Anytime TD (Yes/No) props", key="pe_attd_pull",
+            help="Priced as a moneyline, not a line — shown in its own table below with its "
+                 "own confidence math (see that table's caption). +1 credit per game.",
+        )
+        bulk_cost = len(sunday) * len(mk_sel) + (len(sunday) if pull_attd else 0)
+        single_cost = len(mk_sel) + (1 if pull_attd else 0)
 
         c1, c2 = st.columns(2)
         go = c1.button("💰 Pull this game", type="primary", key="pe_go",
-                       help=f"Spends {len(mk_sel)} credit(s) — 1 per market.")
+                       help=f"Spends {single_cost} credit(s).")
         go_bulk = c2.button(f"🏈 Pull ALL {len(sunday)} Sunday games (~{bulk_cost} credits)",
                             key="pe_go_bulk", disabled=not sunday,
                             help="One request per game — pulls every Sunday game's odds in "
@@ -849,18 +871,27 @@ def render(screen: str) -> None:
                 st.warning("No Sunday games in the odds feed right now.")
             else:
                 try:
+                    _attd_df = pd.DataFrame()
                     if go_bulk:
                         ids = tuple(e["id"] for e in sunday)
                         labels = tuple(e["label"] for e in sunday)
                         with st.spinner(f"Pulling {len(sunday)} Sunday games ({bulk_cost} credits)…"):
                             _df, _rem = _bulk_prop_edges(ids, labels, tuple(mk_sel), week)
+                            if pull_attd:
+                                _attd_df, _rem2 = _bulk_attd_edges(ids, labels, week)
+                                _rem = _rem2 if _rem2 is not None else _rem
                         game_lbl = f"All {len(sunday)} Sunday games"
                         event_lbl_for_snapshot = game_lbl
                     else:
                         with st.spinner("Pulling prop lines…"):
                             _df, _rem = _prop_edges(event_id, tuple(mk_sel), week)
+                            if pull_attd:
+                                _attd_df, _rem2 = _event_attd_edges(event_id, week)
+                                _rem = _rem2 if _rem2 is not None else _rem
                         if not _df.empty and "game" not in _df.columns:
                             _df.insert(0, "game", ev_pick)
+                        if not _attd_df.empty and "game" not in _attd_df.columns:
+                            _attd_df.insert(0, "game", ev_pick)
                         game_lbl = ev_pick
                         event_lbl_for_snapshot = ev_pick.split("  ·")[0]
                     nsnap = None
@@ -870,10 +901,10 @@ def render(screen: str) -> None:
                     except Exception:  # noqa: BLE001
                         pass
                     st.session_state["pe_data"] = {"df": _df, "rem": _rem, "game": game_lbl,
-                                                   "snap": nsnap}
+                                                   "snap": nsnap, "attd_df": _attd_df}
                     try:
                         from dfs.props import save_last_pull
-                        save_last_pull(_df, game_lbl, _rem, nsnap)
+                        save_last_pull(_df, game_lbl, _rem, nsnap, attd_df=_attd_df)
                     except Exception:  # noqa: BLE001
                         pass
                 except PropsError as e:
@@ -1033,6 +1064,62 @@ def render(screen: str) -> None:
                     ev_pct=(float(br["p edge"]) if br.get("p edge") is not None else None),
                 )
                 st.success(f"Logged ({bid}). Grade it on the **Bet Log** screen after the game.")
+
+        # ── Anytime TD props — separate table: different pricing shape (Yes/No, no
+        # line) and different confidence math (dev vs a flat baseline, not z) ──────
+        st.divider()
+        st.subheader("🎯 Anytime TD props")
+        attd_df = cache.get("attd_df")
+        if attd_df is None or attd_df.empty:
+            st.caption("Not pulled this round — check **Also pull Anytime TD (Yes/No) "
+                       "props** above and pull again.")
+        else:
+            at1, at2 = st.columns([3, 2])
+            attd_tiers = at1.multiselect(
+                "Show tiers", ["lean", "solid", "strong", "high"],
+                default=["solid", "strong", "high"], key="pe_attd_tiers",
+                help="Tier from |model prob − flat league-average prob| for the position "
+                     "group (WR/TE and RB have their own thresholds) — backtested in "
+                     "matchup_model/opp/td_calib.py: the model's edge over a flat baseline "
+                     "concentrates almost entirely in the top tier of this gap.",
+            )
+            attd_rec_only = at2.toggle(
+                "✓ Recommended only", value=True, key="pe_attd_recommended",
+                help="Same role-ratio check as the table above — requires this week's "
+                     "FantasyPoints projection to agree our read on this player's role "
+                     "isn't stale.",
+            )
+            attd_show = confident_only(attd_df)
+            attd_show = attd_show[attd_show["conf"].isin(attd_tiers)] if attd_tiers else attd_show.iloc[0:0]
+            if attd_rec_only:
+                attd_show = role_stable(attd_show)
+            attd_hidden = len(attd_df) - len(attd_show)
+            if attd_show.empty:
+                st.warning("Nothing cleared the filters. Widen the tiers, or turn off "
+                           "\"Recommended only\".")
+            else:
+                attd_view = attd_show.drop(columns=[c for c in ("role_ratio", "game")
+                                                    if c in attd_show.columns])
+                try:
+                    from dfs import matchup_view as _mvh
+                    attd_table = _mvh.heat(attd_view, ["p edge", "dev"], good_high=True)
+                except Exception:  # noqa: BLE001
+                    attd_table = attd_view
+                st.dataframe(attd_table, hide_index=True, width="stretch")
+                st.caption(
+                    "`p(model)%` = our P(scores anytime), from the same projection as the "
+                    "table above (1 − e^-λ, λ = projected rec TD + rush TD) · `p(base)%` = "
+                    "flat league-average rate for the position group · `dev` = model − base "
+                    "(what `conf` tiers off) · `book %` = de-vigged book prob · `p edge` = "
+                    "p(model) − book% · `lean` = which side p edge favors."
+                    + (f"  ·  {attd_hidden} row(s) hidden." if attd_hidden else "")
+                )
+            st.caption(
+                "Backtest (2023-25, 9,213 player-games): beats a flat baseline on Brier "
+                "score for both groups (WR/TE +4.9%, RB +9.9%), and that edge concentrates "
+                "in the top `dev` tier — see `matchup_model/opp_td_calibration.md` for the "
+                "full breakdown, including by scoring environment and role share."
+            )
 
     # ── Bet Log ──────────────────────────────────────────────────────────
     elif screen == "Bet Log":

@@ -145,6 +145,84 @@ def test_save_load_clear_last_pull(tmp_path, monkeypatch):
     assert not props.LAST_PULL_CSV.exists() and not props.LAST_PULL_META.exists()
 
 
+def _raw_attd():
+    """Minimal Odds API anytime-TD payload: Yes/No moneyline, no point value."""
+    return {
+        "id": "evt1",
+        "bookmakers": [
+            {"key": "draftkings", "markets": [
+                {"key": "player_anytime_td", "outcomes": [
+                    {"description": "Test Wr", "name": "Yes", "price": -150},
+                    {"description": "Test Wr", "name": "No", "price": 120},
+                    {"description": "Test Rb", "name": "Yes", "price": -200},
+                    {"description": "Test Rb", "name": "No", "price": 160},
+                ]},
+            ]},
+            {"key": "fanduel", "markets": [
+                {"key": "player_anytime_td", "outcomes": [
+                    {"description": "Test Wr", "name": "Yes", "price": -140},
+                    {"description": "Test Wr", "name": "No", "price": 110},
+                ]},
+            ]},
+        ],
+    }
+
+
+def test_attd_group_positions():
+    assert props._attd_group("WR") == "WR/TE"
+    assert props._attd_group("TE") == "WR/TE"
+    assert props._attd_group("RB") == "RB"
+    assert props._attd_group("QB") is None       # not backtested — skip
+    assert props._attd_group(None) is None
+    assert props._attd_group("") is None
+
+
+def test_attd_conf_label_tiers():
+    assert props.attd_conf_label(0.03, "WR/TE") == "—"
+    assert props.attd_conf_label(0.05, "WR/TE") == "lean"
+    assert props.attd_conf_label(0.10, "WR/TE") == "solid"
+    assert props.attd_conf_label(0.15, "WR/TE") == "strong"
+    assert props.attd_conf_label(0.25, "WR/TE") == "high"
+    assert props.attd_conf_label(-0.25, "WR/TE") == "high"    # sign-agnostic (magnitude only)
+    assert props.attd_conf_label(0.15, "RB") == "solid"       # RB needs more raw dev than WR/TE
+    assert props.attd_conf_label(0.20, "QB") == "—"           # no QB tier table -> never rates
+
+
+def test_attd_edges_from_raw_shape(monkeypatch):
+    import dfs.projections as pj
+    import matchup_model.opp.blend as blend
+
+    monkeypatch.setattr(pj, "load_weekly_projections", lambda *_a, **_k: pd.DataFrame({
+        "name": ["Test Wr", "Test Rb"], "pos": ["WR", "RB"], "proj": [12.0, 14.0],
+    }))
+
+    def fake_line(name_key, pos, *a, **k):
+        if name_key == props.normalize_name("Test Wr"):
+            return {"line": {"rec_yds": 60.0, "rec_td": 0.55}, "fp": 12.0, "games": 6}
+        if name_key == props.normalize_name("Test Rb"):
+            return {"line": {"rush_yds": 70.0, "rush_td": 0.35, "rec_td": 0.05}, "fp": 14.0, "games": 6}
+        return {"fp": None}
+
+    monkeypatch.setattr(blend, "blended_line", fake_line)
+    monkeypatch.setattr(props, "_attd_baseline", lambda group: 0.20)
+
+    df = props.attd_edges_from_raw(_raw_attd(), week=1)
+    assert set(["player", "pos", "conf", "p(model)%", "p(base)%", "dev", "book %",
+               "p edge", "lean", "best", "role_ratio"]).issubset(df.columns)
+
+    wr = df[df["player"] == "Test Wr"].iloc[0]
+    assert wr["pos"] == "WR"
+    assert wr["p(model)%"] == pytest.approx(42, abs=1)     # 1-e^-0.55
+    assert wr["p(base)%"] == 20
+    assert wr["dev"] == pytest.approx(22.3, abs=1)
+    assert wr["conf"] == "high"                            # dev 0.223 clears WR/TE's 0.22
+    assert wr["best"] == "fanduel -140"                     # best (highest-decimal) Yes price
+
+    rb = df[df["player"] == "Test Rb"].iloc[0]
+    assert rb["p(model)%"] == pytest.approx(33, abs=1)      # 1-e^-0.40
+    assert rb["conf"] == "solid"                            # dev ~0.13, RB's solid band
+
+
 def test_bulk_prop_edges_tags_game_and_sorts_by_conf(monkeypatch):
     import dfs.projections as pj
     import matchup_model.opp.blend as blend
@@ -180,3 +258,66 @@ def test_bulk_prop_edges_tags_game_and_sorts_by_conf(monkeypatch):
     ranks = df["conf"].map(props._CONF_RANK).tolist()
     assert ranks == sorted(ranks, reverse=True)
     assert df.iloc[0]["player"] == "Test Rb"   # biggest edge (RB) sorts first
+
+
+def test_bulk_attd_edges_tags_game_and_sorts_by_conf(monkeypatch):
+    import dfs.projections as pj
+    import matchup_model.opp.blend as blend
+
+    monkeypatch.setattr(pj, "load_weekly_projections", lambda *_a, **_k: pd.DataFrame({
+        "name": ["Test Wr", "Test Rb"], "pos": ["WR", "RB"], "proj": [12.0, 14.0],
+    }))
+
+    def fake_line(name_key, pos, *a, **k):
+        # big dev for the WR (well above a 0.20 baseline), small dev for the RB
+        if name_key == props.normalize_name("Test Wr"):
+            return {"line": {"rec_td": 0.55}, "fp": 12.0, "games": 6}
+        if name_key == props.normalize_name("Test Rb"):
+            return {"line": {"rush_td": 0.05}, "fp": 14.0, "games": 6}
+        return {"fp": None}
+
+    monkeypatch.setattr(blend, "blended_line", fake_line)
+    monkeypatch.setattr(props, "_attd_baseline", lambda group: 0.20)
+
+    calls = []
+
+    def fake_fetch(event_id, markets):
+        calls.append((event_id, tuple(markets)))
+        return _raw_attd(), "999"
+
+    monkeypatch.setattr(props, "fetch_event_odds", fake_fetch)
+    events = [{"id": "e1", "label": "Game One"}, {"id": "e2", "label": "Game Two"}]
+    df, rem = props.bulk_attd_edges(events, week=1)
+
+    assert calls == [("e1", (props.ATTD_MARKET,)), ("e2", (props.ATTD_MARKET,))]
+    assert rem == "999"
+    assert set(df["game"]) == {"Game One", "Game Two"}
+    assert len(df) == 4                        # 2 players x 2 games
+    ranks = df["conf"].map(props._CONF_RANK).tolist()
+    assert ranks == sorted(ranks, reverse=True)
+    assert df.iloc[0]["player"] == "Test Wr"    # bigger dev sorts first
+
+
+def test_save_load_clear_last_pull_with_attd(tmp_path, monkeypatch):
+    monkeypatch.setattr(props, "LAST_PULL_CSV", tmp_path / "last_pull.csv")
+    monkeypatch.setattr(props, "LAST_PULL_META", tmp_path / "last_pull_meta.json")
+    monkeypatch.setattr(props, "LAST_PULL_ATTD_CSV", tmp_path / "last_pull_attd.csv")
+
+    df = pd.DataFrame({"player": ["A"], "market": ["rec yds"], "conf": ["solid"]})
+    attd_df = pd.DataFrame({"player": ["B"], "conf": ["high"], "lean": ["YES"]})
+    props.save_last_pull(df, "Game A @ B", "417", snap=1, attd_df=attd_df)
+
+    restored = props.load_last_pull()
+    assert restored is not None and restored["attd_df"] is not None
+    assert list(restored["attd_df"]["player"]) == ["B"]
+
+    # a later save WITHOUT attd_df clears the stale file, so a restore never shows props
+    # that weren't actually part of the most recent pull
+    props.save_last_pull(df, "Game A @ B", "417", snap=1)
+    restored2 = props.load_last_pull()
+    assert restored2["attd_df"] is None
+    assert not props.LAST_PULL_ATTD_CSV.exists()
+
+    props.clear_last_pull()
+    assert props.load_last_pull() is None
+    assert not props.LAST_PULL_ATTD_CSV.exists()
