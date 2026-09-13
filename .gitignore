@@ -14,6 +14,7 @@ data/dfs/dk/
 data/dfs/.cache/
 data/dfs/props/last_pull.csv
 data/dfs/props/last_pull_meta.json
+data/dfs/props/last_pull_attd.csv
 
 # matchup model outputs / artifacts
 data/dfs/matchup/_model/
@@ -24,3 +25,4 @@ matchup_model/__pycache__/
 # nflverse parquet cache (opportunity model) — re-downloaded on demand
 data/dfs/nflverse/
 matchup_model/opp_edge_calibration.csv
+matchup_model/opp_td_calibration.csv
