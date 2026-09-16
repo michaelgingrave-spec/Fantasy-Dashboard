@@ -122,6 +122,7 @@ def clear_caches() -> None:
         from matchup_model.opp import blend as _b
         _b._ready.cache_clear()
         _b._naive_fp.cache_clear()
+        _b._fp_projections.cache_clear()
     except Exception:  # noqa: BLE001
         pass
     try:

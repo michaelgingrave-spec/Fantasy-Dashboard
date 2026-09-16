@@ -24,6 +24,21 @@ INJURY_ADJ = True         # fold the weekly injury report into projected usage s
 
 _HL, _LB = 4, 10          # trailing-FP EWMA — matches the backtest
 
+# ── FantasyPoints projection nudge (v1, hand-set — NOT backtested the way BLEND_W was) ──
+# matchup_model/opp/week_accuracy.py, week 1 2026 (n=267, the only real data point we
+# have — FantasyPoints history isn't archived before this season): when our own blend
+# and FantasyPoints' weekly export already agree (role_ratio 0.88-1.12), we're ~tied
+# (RMSE 8.84 vs 8.89) — trailing-usage read is fine on its own. Once they disagree, they
+# pull ahead (7.16 vs 8.13 RMSE at mid disagreement; 4.83 vs 5.54 at the widest) — exactly
+# the stale-2025-role cases role_ratio already exists to flag. So: leave the blend alone
+# when they agree, nudge toward FantasyPoints' number in proportion to the disagreement,
+# capped well short of fully replacing our own read (FP was better even at the widest
+# mismatches, not dominant). Revisit these three constants once a few more weeks of 2026
+# data land — rerun week_accuracy.py and re-fit rather than trusting a single week.
+FP_DEV_FLOOR = 0.12   # |role_ratio-1| below this: no nudge, trust our own blend fully
+FP_DEV_SPAN = 0.40    # dev range the nudge ramps over, from 0 to FP_SHIFT_CAP
+FP_SHIFT_CAP = 0.50   # never move more than half the distance to FantasyPoints' number
+
 
 def current_season() -> int:
     """NFL season year for 'right now' (season spans Sep-Feb)."""
@@ -65,6 +80,34 @@ def _naive_fp(name_key: str, pos: str, season: int, week: int) -> float:
     return _ewma(h["dk_fp"].to_numpy())
 
 
+@lru_cache(maxsize=4)
+def _fp_projections(week: int) -> dict:
+    """FantasyPoints' own weekly projection for every player in that week's export,
+    name_key -> FPTS. Empty dict if the file hasn't been dropped for this week yet —
+    callers treat that as 'nothing to compare', not an error."""
+    try:
+        from dfs.names import normalize_name
+        from dfs.projections import load_weekly_projections
+        df = load_weekly_projections(week)
+        return {normalize_name(n): float(p) for n, p in zip(df["name"], df["proj"])}
+    except Exception:  # noqa: BLE001 — no file yet, bad file, whatever — just means no nudge
+        return {}
+
+
+def _fp_shift(base_fp: float, fp_proj: float | None) -> tuple[float, float | None]:
+    """Nudge base_fp toward fp_proj in proportion to how much they disagree (see the
+    FP_* constants above). Returns (adjusted_fp, role_ratio); role_ratio is None when
+    there's no FantasyPoints number for this player to compare against."""
+    if fp_proj is None or base_fp < 1.0:
+        return base_fp, None
+    role_ratio = fp_proj / base_fp
+    dev = abs(role_ratio - 1.0)
+    shift = min(max(dev - FP_DEV_FLOOR, 0.0) / FP_DEV_SPAN, FP_SHIFT_CAP)
+    if shift <= 0:
+        return base_fp, role_ratio
+    return (1 - shift) * base_fp + shift * fp_proj, role_ratio
+
+
 def _fallback(name_key: str, pos: str, as_of_season, as_of_week) -> dict:
     from matchup_model import project_stats as _pjs
     out = _pjs.projected_line(name_key, pos, as_of_season, as_of_week)
@@ -100,17 +143,33 @@ def blended_line(name_key: str, pos: str, as_of_season: int | None = None,
         line_fp = dk_points_from_line(line)     # the opp line's own DK total
         naive = _naive_fp(name_key, pos, season, week)
         if not np.isfinite(naive):
-            return {"line": line, "fp": round(float(opp_fp), 1), "games": o.get("games"),
-                    "method": o.get("method", ""), "source": "opp", "line_fp": round(line_fp, 1)}
+            base_fp, method, source = float(opp_fp), o.get("method", ""), "opp"
+        else:
+            w = BLEND_W[pos]
+            base_fp = w * float(opp_fp) + (1.0 - w) * float(naive)
+            method = f"opp x{w:.2f} + trailing avg x{1 - w:.2f}  ({o.get('method', '')})"
+            source = "opp_blend"
 
-        w = BLEND_W[pos]
-        blend_fp = w * float(opp_fp) + (1.0 - w) * float(naive)
-        # the stat line stays the opportunity model's (its yardage is the trustworthy part);
-        # `fp` is the blended total, which the 2025 holdout says is the better point estimate.
-        return {"line": line, "fp": round(blend_fp, 1), "games": o.get("games"),
-                "method": f"opp x{w:.2f} + trailing avg x{1 - w:.2f}  ({o.get('method', '')})",
-                "source": "opp_blend", "opp_fp": round(float(opp_fp), 1),
-                "trailing_fp": round(float(naive), 1), "line_fp": round(line_fp, 1)}
+        fp_proj = _fp_projections(week).get(name_key)
+        adj_fp, fp_role_ratio = _fp_shift(base_fp, fp_proj)
+        if fp_role_ratio is not None and abs(adj_fp - base_fp) > 1e-6:
+            # nudged — scale every stat in the line by the same factor, not just the
+            # total, so the individual prop numbers (rec_yds, rush_yds, ...) move too;
+            # that's the whole point, this is exactly what feeds the props screen's
+            # "our proj" column for the stale-2025-role cases role_ratio flags there.
+            scale = adj_fp / base_fp if base_fp > 0 else 1.0
+            line = {k: round(v * scale, 2) for k, v in line.items()}
+            method += f"  ·  FP-nudged x{scale:.2f} (role_ratio {fp_role_ratio:.2f})"
+
+        out = {"line": line, "fp": round(adj_fp, 1), "games": o.get("games"),
+              "method": method, "source": source, "line_fp": round(line_fp, 1),
+              "pre_fp_shift": round(base_fp, 1)}
+        if source == "opp_blend":
+            out["opp_fp"] = round(float(opp_fp), 1)
+            out["trailing_fp"] = round(float(naive), 1)
+        if fp_role_ratio is not None:
+            out["fp_role_ratio"] = round(fp_role_ratio, 3)
+        return out
     except Exception as e:  # noqa: BLE001 — never let the projection layer crash a screen
         fb = _fallback(name_key, pos, as_of_season, as_of_week)
         fb.setdefault("reason", f"blend error: {e}")
