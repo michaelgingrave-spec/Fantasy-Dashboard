@@ -24,13 +24,26 @@ spot — that's normal flakiness on this site, not a sign the approach is wrong.
 click read from a fresh screenshot; verify with move_fresh rather than trusting a ref
 click succeeded.
 
-A bigger version of that same symptom: after ~5-10 downloads on ONE browser tab, that
-tab starts silently swallowing every further download click — not a per-file fluke, the
-tab itself gets throttled (matches Chrome's per-tab automatic-download-abuse guard).
-Confirmed by rescuing two files that had failed 10-20+ consecutive retries: opening a
-brand new tab and trying again worked on the first click, both times. For any pull of
-more than a handful of files, rotate to a fresh tab every 4-5 downloads rather than
-waiting for a tab to start failing.
+CORRECTION, found on a later pull after the "fresh tab" theory below sent a long chase
+in the wrong direction: the dominant cause of repeated download-click failures is that
+**the download icon's pixel position moves** depending on the page's layout that load —
+NOT a per-tab throttle. Specifically it sits at a standard spot (roughly y=212 in a
+1568x765 screenshot) on a plain table, but shifts down ~70-120px (to roughly y=283, in a
+shorter ~1568x726 frame) when the page shows an active-filter badge row ("MIB 7+",
+"Split: Week", an over-cap row-count warning, etc.) above the table. Reusing a
+remembered coordinate across different pages/filters means the click silently lands on
+the wrong icon (often "Glossary" or empty space) and nothing downloads — that looked
+exactly like random flakiness until confirmed via `getBoundingClientRect()` in
+`javascript_tool` on the actual "Download CSV" button. **Take a fresh screenshot of the
+specific page you're on and read the icon's real position before every click that isn't
+immediately after a click that just worked on that exact page** — don't trust a
+coordinate carried over from a different table/filter state, even one used successfully
+minutes earlier.
+
+(The "rotate to a fresh tab every 4-5 downloads" idea below is probably not a real fix —
+it likely just happened to correlate with page layouts that matched the assumed
+coordinate. Harmless to keep doing as a habit, but don't rely on it if downloads are
+failing; check the actual icon position first.)
 
     from matchup_model.weekly_pull import tables, move_fresh, finalize
     for t in tables(2026, 3):
