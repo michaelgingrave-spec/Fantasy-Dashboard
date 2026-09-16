@@ -20,6 +20,10 @@ data/dfs/props/last_pull_attd.csv
 data/dfs/matchup/_model/
 matchup_model/backtest_rows.csv
 matchup_model/opp_backtest_rows.csv
+matchup_model/opp_defense_calibration_rows.csv
+matchup_model/opp_scheme_calibration_rows.csv
+matchup_model/opp_personnel_calibration_rows.csv
+matchup_model/week*_accuracy_rows.csv
 matchup_model/__pycache__/
 
 # nflverse parquet cache (opportunity model) — re-downloaded on demand
