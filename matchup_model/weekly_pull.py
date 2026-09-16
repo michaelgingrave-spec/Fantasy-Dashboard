@@ -1,10 +1,28 @@
 """Recipe + bookkeeping for the weekly FantasyPoints Data Suite pull.
 
 The CSV export is a client-side button, so the actual downloading has to be done by a
-browser (the claude-in-chrome session in Chrome, logged into fantasypointsdata.com, with
-automatic downloads allow-listed for that site). This module supplies the exact URL list
-and the file move / rename / verify / commit steps so the browser part is just "click
-Download CSV on each of these pages".
+browser (the claude-in-chrome session in Chrome, logged into fantasypointsdata.com). This
+module supplies the URL list and the file move / rename / verify / commit steps so the
+browser part is "get to the right page + split, click Download CSV, run move_fresh".
+
+IMPORTANT — learned the hard way, don't re-discover this: `tables()`'s ~10 weekly URLs
+download fine from a direct navigate. `scheme_tables()`'s 13 URLs (all carry `splits=`)
+mostly do NOT — the download click silently no-ops on most of them (confirmed: zero
+network requests, zero console output, even with tracking armed before the click), while
+the page renders completely normally and looks identical to a working one. The fix:
+navigate to the BASE page (no `splits=` in the URL), set position/mode, then apply the
+split through the UI itself — Open Filters (left sidebar) -> Split tab -> find the
+checkbox (Personnel under OFFENSE, Coverage Scheme under DEFENSE, Alignment/Rush Concept
+under RECEIVING/RUSHING) -> Apply Filters -> close the panel -> download. That reliably
+works for all 13. Full step-by-step is in the `fantasypoints-weekly-pull` scheduled task's
+SKILL.md (~/.claude/scheduled-tasks/fantasypoints-weekly-pull/SKILL.md) — read that before
+doing a pull by hand, it has the exact click sequence and section names.
+
+Also: the download-icon click itself sometimes needs 2-3 tries even at the exact right
+spot — that's normal flakiness on this site, not a sign the approach is wrong. And
+`find`-based ref clicks on "Download CSV" are less reliable than a precise coordinate
+click read from a fresh screenshot; verify with move_fresh rather than trusting a ref
+click succeeded.
 
     from matchup_model.weekly_pull import tables, move_fresh, finalize
     for t in tables(2026, 3):
