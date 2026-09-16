@@ -174,7 +174,12 @@ def _fmt_pulled_at(iso: str | None) -> str:
 def render(screen: str) -> None:
     st.sidebar.markdown("---")
     st.sidebar.markdown("### 🏈 DFS controls")
-    week = int(st.sidebar.number_input("NFL week", 1, 18, value=1, step=1, key="dfs_week"))
+    from matchup_model.opp.blend import current_week
+    week = int(st.sidebar.number_input(
+        "NFL week", 1, 18, value=current_week(), step=1, key="dfs_week",
+        help="Defaults to the current NFL week (last_completed_week + 1) on a fresh "
+             "session. Bump it manually if you want an earlier week's read.",
+    ))
     if st.sidebar.button(
         "↻ Refresh DK / data", key="dfs_refresh",
         help="Re-pulls DK slate data AND force-refreshes the nflverse game logs the "

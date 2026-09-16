@@ -46,6 +46,20 @@ def current_season() -> int:
     return t.year if t.month >= 3 else t.year - 1
 
 
+def current_week() -> int:
+    """NFL week to project FOR right now — the week whose games haven't kicked off yet.
+    Drives the DFS screens' 'NFL week' sidebar default so a fresh session doesn't
+    silently sit on week 1 (2025-only trailing data, stale role reads) all season.
+    One past matchup_model.weekly_pull.last_completed_week(), which owns the season's
+    kickoff date (update that each year) — reused here rather than re-pinning a second
+    copy of the same constant. Falls back to 1 if that's unavailable for any reason."""
+    try:
+        from matchup_model.weekly_pull import last_completed_week
+        return max(1, min(18, last_completed_week() + 1))
+    except Exception:  # noqa: BLE001 — a sidebar default is never worth crashing a screen
+        return 1
+
+
 @lru_cache(maxsize=1)
 def _ready() -> bool:
     try:
