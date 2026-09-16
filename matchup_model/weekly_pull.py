@@ -24,6 +24,14 @@ spot — that's normal flakiness on this site, not a sign the approach is wrong.
 click read from a fresh screenshot; verify with move_fresh rather than trusting a ref
 click succeeded.
 
+A bigger version of that same symptom: after ~5-10 downloads on ONE browser tab, that
+tab starts silently swallowing every further download click — not a per-file fluke, the
+tab itself gets throttled (matches Chrome's per-tab automatic-download-abuse guard).
+Confirmed by rescuing two files that had failed 10-20+ consecutive retries: opening a
+brand new tab and trying again worked on the first click, both times. For any pull of
+more than a handful of files, rotate to a fresh tab every 4-5 downloads rather than
+waiting for a tab to start failing.
+
     from matchup_model.weekly_pull import tables, move_fresh, finalize
     for t in tables(2026, 3):
         # (browser) navigate t["url"], click Download CSV
