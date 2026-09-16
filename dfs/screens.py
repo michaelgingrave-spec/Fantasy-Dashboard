@@ -175,7 +175,18 @@ def render(screen: str) -> None:
     st.sidebar.markdown("---")
     st.sidebar.markdown("### 🏈 DFS controls")
     week = int(st.sidebar.number_input("NFL week", 1, 18, value=1, step=1, key="dfs_week"))
-    if st.sidebar.button("↻ Refresh DK / data", key="dfs_refresh"):
+    if st.sidebar.button(
+        "↻ Refresh DK / data", key="dfs_refresh",
+        help="Re-pulls DK slate data AND force-refreshes the nflverse game logs the "
+             "projection model runs on, so last week's results feed this week's "
+             "trailing-average projections. Safe to click anytime.",
+    ):
+        try:
+            from matchup_model.opp import data as _mdata
+            _mdata.refresh(seasons=[_mdata.SEASONS[-1]], force=True)
+            _mdata.clear_caches()
+        except Exception as e:  # noqa: BLE001 — never let a refresh hiccup break the sidebar
+            st.sidebar.caption(f"⚠️ nflverse refresh: {type(e).__name__}: {e}")
         st.cache_data.clear()
         st.session_state.pop("dfs_lineups", None)
         st.rerun()

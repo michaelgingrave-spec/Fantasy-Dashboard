@@ -102,6 +102,35 @@ def _ensure(name_fmt: str, seasons: list[int]) -> list[Path]:
     return [p for p in have if p.exists()]
 
 
+def clear_caches() -> None:
+    """Drop every in-memory cache across the opportunity model so a freshly re-downloaded
+    parquet (new game logs) actually gets used instead of the running process's stale
+    DataFrame — `refresh(force=True)` alone only replaces the files on disk, it doesn't
+    know anything is holding an lru_cache'd copy in memory. Safe to call regardless of
+    which modules happen to be imported yet."""
+    for fn in (player_weeks, team_weeks, games, _reachable):
+        fn.cache_clear()
+    try:
+        from matchup_model.opp import model as _m
+        for fn in (_m._priors, _m._team_weeks_idx, _m.team_context, _m._games_idx,
+                  _m.vegas_row, _m.team_volume, _m._pw_with_team, _m.opp_line,
+                  _m._share_priors):
+            fn.cache_clear()
+    except Exception:  # noqa: BLE001 — best-effort, a missing/changed function shouldn't block the rest
+        pass
+    try:
+        from matchup_model.opp import blend as _b
+        _b._ready.cache_clear()
+        _b._naive_fp.cache_clear()
+    except Exception:  # noqa: BLE001
+        pass
+    try:
+        from dfs import props as _p
+        _p._attd_baseline.cache_clear()
+    except Exception:  # noqa: BLE001
+        pass
+
+
 @lru_cache(maxsize=1)
 def player_weeks() -> pd.DataFrame:
     """One row per player-game: usage + box score + PPR/DK-ready fields, QB/RB/WR/TE."""
