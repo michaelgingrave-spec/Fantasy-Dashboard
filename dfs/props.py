@@ -535,7 +535,7 @@ def snapshot_lines(edges: pd.DataFrame, season: int, week: int, event: str) -> i
     if edges is None or edges.empty:
         return 0
     keep = ["player", "market", "line", "our proj", "conf", "z", "edge", "p(hit)%", "p edge",
-            "book %", "edge %", "lean", "best"]
+            "book %", "edge %", "lean", "best", "role_ratio"]
     snap = edges[[c for c in keep if c in edges.columns]].copy()
     snap.insert(0, "season", int(season))
     snap.insert(1, "week", int(week))
@@ -553,26 +553,32 @@ def snapshot_lines(edges: pd.DataFrame, season: int, week: int, event: str) -> i
 
 
 def save_last_pull(df: pd.DataFrame, game: str, rem: str | None, snap: int | None = None,
-                   attd_df: pd.DataFrame | None = None) -> None:
+                   attd_df: pd.DataFrame | None = None, week: int | None = None) -> None:
     """Cache the full pull (every column, including role_ratio) to disk so reopening the
     screen — or restarting the app — restores it instead of needing a fresh pull.
     `attd_df`, if pulled, is cached the same way in its own file (a run that didn't pull
     Anytime TD clears any stale file from an earlier run, so a restore never shows props
-    that weren't actually part of this pull)."""
+    that weren't actually part of this pull). `week` is the walk-forward week this pull's
+    projections were actually computed against (the game's own week, not necessarily
+    whatever the sidebar shows *now*) — persisted so a restored pull, and anything logged
+    from it later (e.g. the Bet Log), stays tagged with the week it was really pulled for
+    even if the sidebar value has since moved on."""
     LAST_PULL_CSV.parent.mkdir(parents=True, exist_ok=True)
     (df if df is not None else pd.DataFrame()).to_csv(LAST_PULL_CSV, index=False)
     if attd_df is not None and not attd_df.empty:
         attd_df.to_csv(LAST_PULL_ATTD_CSV, index=False)
     else:
         LAST_PULL_ATTD_CSV.unlink(missing_ok=True)
-    meta = {"game": game, "rem": rem, "snap": snap,
+    meta = {"game": game, "rem": rem, "snap": snap, "week": week,
             "pulled_at": datetime.now().isoformat(timespec="seconds")}
     LAST_PULL_META.write_text(json.dumps(meta), encoding="utf-8")
 
 
 def load_last_pull() -> dict | None:
     """The last-saved pull as a `pe_data`-shaped dict, or None if there isn't one / it's
-    unreadable. `attd_df` is None when the last pull didn't include Anytime TD props."""
+    unreadable. `attd_df` is None when the last pull didn't include Anytime TD props.
+    `week` is None for pulls saved before this field existed — callers should fall back
+    to the sidebar's current week in that case."""
     if not LAST_PULL_CSV.exists() or not LAST_PULL_META.exists():
         return None
     try:
@@ -588,7 +594,7 @@ def load_last_pull() -> dict | None:
             attd_df = None
     return {"df": df, "rem": meta.get("rem"), "game": meta.get("game"),
             "snap": meta.get("snap"), "pulled_at": meta.get("pulled_at"), "restored": True,
-            "attd_df": attd_df}
+            "attd_df": attd_df, "week": meta.get("week")}
 
 
 def clear_last_pull() -> None:

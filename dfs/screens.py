@@ -853,6 +853,21 @@ def render(screen: str) -> None:
         ev_pick = st.selectbox("Game (single-game pull)", list(ev_labels), key="pe_game")
         event_id = ev_labels[ev_pick]
 
+        # Derive the walk-forward week from the SELECTED GAME's own kickoff, not the
+        # sidebar's global "NFL week" -- that sidebar value has been wrong twice this
+        # season already (two separate bugs in current_week()'s date math), and every
+        # time it silently made "our proj" use the wrong week's trailing cutoff while
+        # still pricing against the right week's actual book line. A specific game pull
+        # should never depend on that widget being right.
+        from matchup_model.weekly_pull import week_of_date
+        _sel_ev = next((e for e in events if e["id"] == event_id), None)
+        event_week = week_of_date(_sel_ev["commence_time"]) if _sel_ev else week
+        bulk_week = week_of_date(sunday[0]["commence_time"]) if sunday else week
+        if event_week != week:
+            st.caption(f"⚠️ This game is week {event_week} — using that for the projection "
+                       f"basis (sidebar 'NFL week' shows {week}, only used for the Player "
+                       f"Lookup/injury panels below).")
+
         _mk_nice = {"player_reception_yds": "rec yds", "player_receptions": "receptions",
                     "player_rush_yds": "rush yds", "player_rush_attempts": "rush att",
                     "player_pass_yds": "pass yds", "player_pass_tds": "pass TD",
@@ -892,17 +907,17 @@ def render(screen: str) -> None:
                         ids = tuple(e["id"] for e in sunday)
                         labels = tuple(e["label"] for e in sunday)
                         with st.spinner(f"Pulling {len(sunday)} Sunday games ({bulk_cost} credits)…"):
-                            _df, _rem = _bulk_prop_edges(ids, labels, tuple(mk_sel), week)
+                            _df, _rem = _bulk_prop_edges(ids, labels, tuple(mk_sel), bulk_week)
                             if pull_attd:
-                                _attd_df, _rem2 = _bulk_attd_edges(ids, labels, week)
+                                _attd_df, _rem2 = _bulk_attd_edges(ids, labels, bulk_week)
                                 _rem = _rem2 if _rem2 is not None else _rem
                         game_lbl = f"All {len(sunday)} Sunday games"
                         event_lbl_for_snapshot = game_lbl
                     else:
                         with st.spinner("Pulling prop lines…"):
-                            _df, _rem = _prop_edges(event_id, tuple(mk_sel), week)
+                            _df, _rem = _prop_edges(event_id, tuple(mk_sel), event_week)
                             if pull_attd:
-                                _attd_df, _rem2 = _event_attd_edges(event_id, week)
+                                _attd_df, _rem2 = _event_attd_edges(event_id, event_week)
                                 _rem = _rem2 if _rem2 is not None else _rem
                         if not _df.empty and "game" not in _df.columns:
                             _df.insert(0, "game", ev_pick)
@@ -911,16 +926,18 @@ def render(screen: str) -> None:
                         game_lbl = ev_pick
                         event_lbl_for_snapshot = ev_pick.split("  ·")[0]
                     nsnap = None
+                    pull_week = bulk_week if go_bulk else event_week   # week actually used for this pull
                     try:
                         from dfs.props import snapshot_lines
-                        nsnap = snapshot_lines(_df, _cur_season(), int(week), event_lbl_for_snapshot)
+                        nsnap = snapshot_lines(_df, _cur_season(), int(pull_week), event_lbl_for_snapshot)
                     except Exception:  # noqa: BLE001
                         pass
                     st.session_state["pe_data"] = {"df": _df, "rem": _rem, "game": game_lbl,
-                                                   "snap": nsnap, "attd_df": _attd_df}
+                                                   "snap": nsnap, "attd_df": _attd_df,
+                                                   "week": pull_week}
                     try:
                         from dfs.props import save_last_pull
-                        save_last_pull(_df, game_lbl, _rem, nsnap, attd_df=_attd_df)
+                        save_last_pull(_df, game_lbl, _rem, nsnap, attd_df=_attd_df, week=pull_week)
                     except Exception:  # noqa: BLE001
                         pass
                 except PropsError as e:
@@ -1071,8 +1088,12 @@ def render(screen: str) -> None:
             book_in = lc3.text_input("Book", str(br.get("best") or "").split()[0] if br.get("best") else "",
                                      key="pe_logbook")
             if st.button("Log it", key="pe_logbtn"):
+                # tag with the week THIS pull actually used, not whatever the sidebar
+                # currently shows — they can drift apart if the pull was restored from an
+                # earlier session or the sidebar's default has since advanced.
+                _log_week = cache.get("week") if cache else None
                 bid = _bets.add_bet(
-                    season=int(_cur_season()), week=int(week),
+                    season=int(_cur_season()), week=int(_log_week or week),
                     event=str(br.get("game", cache["game"])).split("  ·")[0],
                     player=br["player"], market=br["market"],
                     side=br["lean"], line=float(br["line"]), odds=int(odds_in), book=book_in,

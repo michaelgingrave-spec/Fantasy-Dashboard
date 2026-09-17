@@ -257,3 +257,35 @@ def last_completed_week(today=None, kickoff: str = "2026-09-10") -> int:
     in_grace_period = (days % 7) >= 5  # Tue/Wed of that window -> that week now counts done
     last_done = week_in_progress if in_grace_period else week_in_progress - 1
     return max(1, min(18, last_done))
+
+
+def week_of_date(d, kickoff: str = "2026-09-10") -> int:
+    """Which NFL week's Thu..Wed window a given date falls in -- for deriving
+    `as_of_week` from a SPECIFIC GAME's own commence_time, rather than from "today" (via
+    last_completed_week/current_week) or a UI widget that may not match the game actually
+    being pulled.
+
+    That mismatch is a real bug this found live: the DFS Prop Edges screen passes the
+    sidebar's global "NFL week" number into every props pull regardless of which game is
+    selected (dfs/screens.py) -- so whenever that sidebar value is wrong (it has been,
+    twice, from two separate bugs in last_completed_week/current_week) OR just hasn't
+    been bumped yet for a new week, "our proj" gets computed with a walk-forward cutoff
+    for the WRONG week while being priced against the RIGHT week's actual book line --
+    silently comparing two different games' worth of trailing data. Deriving the week
+    from the event's own commence_time instead makes a specific-game pull correct
+    regardless of whatever the sidebar currently shows.
+
+    `d` may be a `date`, `datetime`, or ISO string (e.g. the Odds API's `commence_time`).
+    """
+    from datetime import date, datetime
+    from zoneinfo import ZoneInfo
+    eastern = ZoneInfo("America/New_York")
+    if isinstance(d, str):
+        d = datetime.fromisoformat(d.replace("Z", "+00:00")).astimezone(eastern).date()
+    elif isinstance(d, datetime):
+        # naive datetimes are assumed already-Eastern (this codebase's convention
+        # elsewhere), not system-local -- system-local is UTC on Streamlit Cloud, the
+        # exact bug this function exists to avoid reintroducing.
+        d = d.astimezone(eastern).date() if d.tzinfo else d.date()
+    days = (d - date.fromisoformat(kickoff)).days
+    return max(1, min(18, days // 7 + 1))
