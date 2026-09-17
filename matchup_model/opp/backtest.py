@@ -26,6 +26,16 @@ TOPK = {"QB": 12, "RB": 24, "WR": 30, "TE": 12}
 REPORT = Path(__file__).resolve().parents[1] / "opp_backtest_report.md"
 ROWS_CSV = Path(__file__).resolve().parents[1] / "opp_backtest_rows.csv"
 
+# the single yardage stat BLEND_W would be fit against if fit on the stat that actually
+# drives props, instead of the composite DK-fp total -- see the stat-vs-fp comparison in
+# report(). TD/reception-count are left out: at these sample sizes TD is almost pure
+# variance (see td_calib.py) and would just add noise to a *weight-fitting* regression
+# the same way it does to any other backtest target.
+PRIMARY_STAT = {"QB": "passing_yards", "RB": "rushing_yards",
+                "WR": "receiving_yards", "TE": "receiving_yards"}
+PRIMARY_LINE_KEY = {"QB": "pass_yds", "RB": "rush_yds",
+                    "WR": "rec_yds", "TE": "rec_yds"}
+
 _HL, _LB = 4, 10
 
 
@@ -104,11 +114,21 @@ def run() -> pd.DataFrame:
                 continue
             if opp_i is None or not np.isfinite(opp_i):
                 opp_i = opp
+            # primary-stat (yardage) side, parallel to the dk_fp side above -- lets
+            # BLEND_W be fit/compared against the number that actually drives props
+            # (rec_yds/rush_yds/pass_yds) instead of only the composite fp total.
+            stat_col = PRIMARY_STAT[pos]
+            naive_stat = _ewma(h[stat_col].to_numpy())
+            opp_stat = o.get("line", {}).get(PRIMARY_LINE_KEY[pos])
+            actual_stat = r.get(stat_col)
             rows.append(dict(season=season, week=wk, player=r["player_display_name"],
                              pos=pos, team=r["team"], actual=float(r["dk_fp"]),
                              naive=float(naive), current=float(cur), opp=float(opp),
                              opp_inj=float(opp_i),
-                             inj_applied=abs(oi.get("inj_mult", 1.0) - 1.0) > 0.02))
+                             inj_applied=abs(oi.get("inj_mult", 1.0) - 1.0) > 0.02,
+                             actual_stat=float(actual_stat) if actual_stat is not None and np.isfinite(actual_stat) else np.nan,
+                             naive_stat=float(naive_stat) if np.isfinite(naive_stat) else np.nan,
+                             opp_stat=float(opp_stat) if opp_stat is not None and np.isfinite(opp_stat) else np.nan))
         print(f"  {season}: {len(rows)} rows ({time.time()-t0:.0f}s)")
     return pd.DataFrame(rows)
 
@@ -131,6 +151,28 @@ def _fit_blend(train: pd.DataFrame) -> dict:
 def _apply_blend(df: pd.DataFrame, w: dict) -> pd.Series:
     ww = df.pos.map(w).astype(float)
     return ww * df.opp + (1 - ww) * df.naive
+
+
+def _fit_blend_stat(train: pd.DataFrame) -> dict:
+    """Same closed-form fit as _fit_blend, but against the position's primary YARDAGE
+    stat (naive_stat/opp_stat/actual_stat) instead of composite DK-fp -- the number that
+    actually drives props, and that skips the TD-variance dilution a fp total carries."""
+    w = {}
+    for p in POS:
+        g = train[(train.pos == p)].dropna(subset=["naive_stat", "opp_stat", "actual_stat"])
+        if len(g) < 50:
+            w[p] = 0.5
+            continue
+        d = (g.opp_stat - g.naive_stat).to_numpy()
+        y = (g.actual_stat - g.naive_stat).to_numpy()
+        denom = float(np.dot(d, d))
+        w[p] = float(np.clip(np.dot(d, y) / denom, 0.0, 1.0)) if denom > 0 else 0.5
+    return w
+
+
+def _apply_blend_stat(df: pd.DataFrame, w: dict) -> pd.Series:
+    ww = df.pos.map(w).astype(float)
+    return ww * df.opp_stat + (1 - ww) * df.naive_stat
 
 
 def _rmse(a, b):
@@ -192,8 +234,39 @@ def report(df: pd.DataFrame) -> str:
     L.append("- **naive** = EWMA trailing DK pts · **current** = trailing usage x efficiency "
              "(`project_stats` port) · **opp** = opportunity model · **blend** = "
              "per-position naive/opp mix, weights fit on train only")
-    L.append(f"- fitted opp weight in blend: " + ", ".join(f"{p} {w[p]:.2f}" for p in POS))
+    L.append(f"- fitted opp weight in blend (fit on DK-fp): " + ", ".join(f"{p} {w[p]:.2f}" for p in POS))
     L.append("")
+
+    # ── does fitting BLEND_W on the composite fp total (TD variance and all) give a
+    # different weight than fitting it on the actual yardage stat that drives props? ──
+    w_stat = _fit_blend_stat(train)
+    df["blend_stat"] = _apply_blend_stat(df, w_stat)          # w_stat applied to the stat cols
+    df["blend_w_on_stat_col"] = _apply_blend_stat(df, w)      # fp-fitted w applied to the SAME stat cols
+    hold_s = df[(df.season == HOLDOUT_SEASON)].dropna(subset=["naive_stat", "opp_stat", "actual_stat"])
+    L.append("## fp-fit vs stat-fit BLEND_W — does the composite fp target change the weight?")
+    L.append("")
+    L.append(f"- fitted opp weight, fit on the primary YARDAGE stat directly "
+             f"({', '.join(f'{p}={PRIMARY_LINE_KEY[p]}' for p in POS)}), same train rows: "
+             + ", ".join(f"{p} {w_stat[p]:.2f}" for p in POS))
+    L.append(f"- fp-fit weight for reference: " + ", ".join(f"{p} {w[p]:.2f}" for p in POS))
+    L.append("")
+    L.append(f"Holdout RMSE on the primary stat itself (n={len(hold_s)}), using each weight set "
+             "to blend the SAME naive/opp stat columns — isolates whether the weight source "
+             "(fp vs stat) matters, not whether opp beats naive at all:")
+    L.append("")
+    L.append("| pos | n | RMSE naive_stat | RMSE opp_stat | RMSE fp-fit-w | RMSE stat-fit-w | Δ (stat-fit better by) |")
+    L.append("|---|--:|--:|--:|--:|--:|--:|")
+    for p in POS:
+        g = hold_s[hold_s.pos == p]
+        if len(g) < 20:
+            continue
+        rn = _rmse(g.naive_stat, g.actual_stat)
+        ro = _rmse(g.opp_stat, g.actual_stat)
+        r_fpw = _rmse(g.blend_w_on_stat_col, g.actual_stat)
+        r_statw = _rmse(g.blend_stat, g.actual_stat)
+        L.append(f"| {p} | {len(g)} | {rn:.2f} | {ro:.2f} | {r_fpw:.2f} | {r_statw:.2f} | **{r_fpw-r_statw:+.3f}** |")
+    L.append("")
+
     L.append("## Accuracy - all test rows (lower RMSE, higher rho better)")
     L += _acc_table(df, ["naive", "current", "opp", "blend"])
     L.append("")

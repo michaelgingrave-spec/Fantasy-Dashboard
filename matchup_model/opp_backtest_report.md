@@ -2,7 +2,21 @@
 
 - rows: **9198**  (6137 train [2023, 2024] / 3061 holdout 2025)  ·  weeks 4-18  ·  DK scoring
 - **naive** = EWMA trailing DK pts · **current** = trailing usage x efficiency (`project_stats` port) · **opp** = opportunity model · **blend** = per-position naive/opp mix, weights fit on train only
-- fitted opp weight in blend: QB 0.64, RB 0.54, WR 0.91, TE 1.00
+- fitted opp weight in blend (fit on DK-fp): QB 0.64, RB 0.54, WR 0.91, TE 1.00
+
+## fp-fit vs stat-fit BLEND_W — does the composite fp target change the weight?
+
+- fitted opp weight, fit on the primary YARDAGE stat directly (QB=pass_yds, RB=rush_yds, WR=rec_yds, TE=rec_yds), same train rows: QB 0.50, RB 0.33, WR 0.88, TE 1.00
+- fp-fit weight for reference: QB 0.64, RB 0.54, WR 0.91, TE 1.00
+
+Holdout RMSE on the primary stat itself (n=3061), using each weight set to blend the SAME naive/opp stat columns — isolates whether the weight source (fp vs stat) matters, not whether opp beats naive at all:
+
+| pos | n | RMSE naive_stat | RMSE opp_stat | RMSE fp-fit-w | RMSE stat-fit-w | Δ (stat-fit better by) |
+|---|--:|--:|--:|--:|--:|--:|
+| QB | 445 | 82.68 | 85.22 | 83.76 | 83.37 | **+0.396** |
+| RB | 924 | 33.07 | 33.13 | 32.79 | 32.82 | **-0.024** |
+| WR | 1169 | 33.35 | 32.63 | 32.61 | 32.61 | **+0.002** |
+| TE | 523 | 26.77 | 25.34 | 25.34 | 25.34 | **+0.000** |
 
 ## Accuracy - all test rows (lower RMSE, higher rho better)
 | slice | n | RMSE naive | RMSE current | RMSE opp | RMSE blend | rho naive | rho current | rho opp | rho blend |
