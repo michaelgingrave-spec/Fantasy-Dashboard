@@ -1166,6 +1166,15 @@ def render(screen: str) -> None:
                    "in `data/dfs/bets/bet_log.csv` (commit it to sync across machines).")
         from dfs import bets as _bets
 
+        # Auto-grade on every visit -- grading only fills rows whose game already has
+        # box-score data, so a bet placed before kickoff silently sits ungraded until
+        # someone happens to click "Grade ungraded" AFTER nflverse posts that game's
+        # stats. Nothing was re-triggering that, so 322 of 412 week-1 pulled lines sat
+        # ungraded for days after the data was actually available (2026-09-17 incident).
+        # Cheap and idempotent -- grade() only writes rows that just became gradeable.
+        _bets.grade()
+        _bets.grade_line_history()
+
         log = _bets.load()
         top = st.columns(4)
         ov = _bets.overall(log)
