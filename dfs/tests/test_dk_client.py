@@ -21,13 +21,18 @@ def test_parse_slates_classifies_classic_vs_showdown(getcontests_json):
         assert s.game_count >= 2
 
 
-def test_pick_main_slate_prefers_sunday_biggest(getcontests_json):
+def test_pick_main_slate_prefers_sunday_main_type(getcontests_json):
     slates = parse_slates(getcontests_json)
     main = pick_main_slate(slates)
     assert main is not None
     assert main.is_classic
     if main.start:
         assert main.start.weekday() == 6  # Sunday
+    # 153069 (Sunday-Monday, 14 games) outnumbers 153096/151307 (Sunday main, 12 games
+    # each) in this fixture -- pick_main_slate must not be fooled by MNF into picking
+    # the bigger slate over the 1pm/4pm-only one.
+    assert main.slate_type == "Sunday main"
+    assert main.draft_group_id in (153096, 151307)
 
 
 def test_slate_type_classification(getcontests_json):

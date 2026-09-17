@@ -249,12 +249,21 @@ def classic_slates(sport: str = DK_SPORT, use_cache: bool = True) -> list[Slate]
 
 
 def pick_main_slate(slates: list[Slate]) -> Slate | None:
-    """Default choice: the earliest Sunday slate with the most games (the Sunday main).
-    Falls back to the largest classic slate overall.
+    """Default choice: DK's own 'Sunday main' slate (Sunday 1pm + 4pm games only --
+    no Thu/Sun-night/Monday games) when one exists that week. A 'Sunday-Monday' or
+    'Full week' slate often has MORE games than 'Sunday main' (it just adds MNF/TNF on
+    top), so picking by raw game-count among Sunday-starting slates can silently select
+    one of those instead -- confirmed live 2026-09-17, DK draft group 153430 (Sun-Mon,
+    15 games) outranking 153428 (Sunday main, 13 games) under the old game-count-only
+    rule. Falls back to the earliest Sunday slate with the most games, then the largest
+    classic slate overall, for weeks with no distinct 'Sunday main' bucket.
     """
     classic = [s for s in slates if s.is_classic]
     if not classic:
         return None
+    main = [s for s in classic if s.slate_type == "Sunday main"]
+    if main:
+        return max(main, key=lambda s: s.game_count)
     sundays = [s for s in classic if s.start_et and s.start_et.weekday() == 6]
     pool = sundays or classic
     earliest = min(s.start_et for s in pool if s.start_et)
