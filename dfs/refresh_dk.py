@@ -28,9 +28,12 @@ if __name__ == "__main__" and __package__ is None:  # allow `python dfs/refresh_
 
 from dfs.config import DK_SNAPSHOT_DIR
 from dfs.dk_client import (
+    CSV_URL,
     DRAFTABLES_URL,
     LOBBY_URL,
     DKError,
+    _csv_to_draftables,
+    _get_csv,
     _get_json,
     classic_slates,
 )
@@ -85,14 +88,21 @@ def refresh(prune: bool = True) -> list[int]:
         try:
             dr = _get_json(DRAFTABLES_URL.format(gid=s.draft_group_id))
         except DKError as e:
-            print(f"  ! skip dg {s.draft_group_id}: {e}")
-            continue
+            try:
+                dr = _csv_to_draftables(_get_csv(CSV_URL.format(gid=s.draft_group_id)))
+                print(f"  ! dg {s.draft_group_id}: JSON blocked ({e}) -- used CSV export instead")
+            except DKError as e2:
+                print(f"  ! skip dg {s.draft_group_id}: {e2}")
+                continue
         n = len({r.get("playerDkId") for r in dr.get("draftables", [])})
         _save(f"draftables_{s.draft_group_id}.json", _slim_draftables(dr))
         saved.append(s.draft_group_id)
         print(f"  draftables_{s.draft_group_id}.json  [{s.slate_type}, {s.game_count} games, {n} players]")
 
-    if prune:
+    # Only prune when something actually saved -- if every slate failed (e.g. both DK
+    # hosts blocked at once), keeping last week's stale-but-real snapshot beats leaving
+    # the deployed app with zero salary data (a real incident, 2026-09-17).
+    if prune and saved:
         keep = {LOBBY_FILE} | {f"draftables_{i}.json" for i in saved}
         for f in DK_SNAPSHOT_DIR.glob("*.json"):
             if f.name not in keep:

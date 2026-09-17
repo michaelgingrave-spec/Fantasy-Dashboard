@@ -7,12 +7,17 @@ Flow:
     draftgroups/{id}/draftables     -> player pool with salaries
 
 DK blocks datacenter IPs, so this must run from the user's machine. Responses are cached
-to data/dk/ for a few minutes. On failure the caller can drop a manual
-data/dk/draftables_<id>.json (the browser-Claude session can save one).
+to data/dk/ for a few minutes. If api.draftkings.com's draftables endpoint gets bot-blocked
+(seen 2026-09-17 - Akamai 403, unrelated to any code change here), CSV_URL's public
+"Export to CSV" feed on the www host is tried next - same data, a host that isn't blocked.
+On total failure the caller can drop a manual data/dk/draftables_<id>.json (the
+browser-Claude session can save one).
 """
 from __future__ import annotations
 
+import csv
 import gzip
+import io
 import json
 import re
 import time
@@ -44,6 +49,10 @@ _HEADERS = {
 
 LOBBY_URL = "https://www.draftkings.com/lobby/getcontests?sport={sport}"
 DRAFTABLES_URL = "https://api.draftkings.com/draftgroups/v1/draftgroups/{gid}/draftables"
+# Same salary data DK's own "Export to CSV" link on the lineup-builder page fetches.
+# Lives on www.draftkings.com, not api.draftkings.com -- a useful fallback host when
+# the JSON endpoint above is bot-blocked but the site itself isn't.
+CSV_URL = "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId={gid}"
 
 # ContestTypeIds that are salary-cap Classic (not showdown / snake / tiers / novelty).
 CLASSIC_CONTEST_TYPE_IDS = {21, 189}
@@ -65,6 +74,18 @@ def _get_json(url: str, timeout: int = 25) -> dict:
             return json.loads(raw)
     except Exception as e:  # noqa: BLE001 - surface a single clean error to the UI
         raise DKError(f"DraftKings request failed ({url}): {e}") from e
+
+
+def _get_csv(url: str, timeout: int = 25) -> str:
+    req = Request(url, headers=_HEADERS)
+    try:
+        with urlopen(req, timeout=timeout) as resp:
+            raw = resp.read()
+            if resp.headers.get("Content-Encoding") == "gzip":
+                raw = gzip.decompress(raw)
+            return raw.decode("utf-8-sig")
+    except Exception as e:  # noqa: BLE001 - surface a single clean error to the UI
+        raise DKError(f"DraftKings CSV request failed ({url}): {e}") from e
 
 
 def _cache_path(name: str) -> Path:
@@ -242,6 +263,51 @@ def pick_main_slate(slates: list[Slate]) -> Slate | None:
 
 
 # ── Draftables (salaries) ────────────────────────────────────────────────────
+_GAME_INFO_RE = re.compile(
+    r"^([A-Za-z]{2,3})@([A-Za-z]{2,3})\s+(\d{1,2}/\d{1,2}/\d{4})\s+(\d{1,2}:\d{2})(AM|PM)\s*ET",
+    re.IGNORECASE,
+)
+
+
+def _parse_game_info(game_info: str) -> tuple[str, str]:
+    """CSV 'Game Info' e.g. 'CAR@ATL 09/20/2026 01:00PM ET' -> ('CAR @ ATL', iso_utc_start),
+    in the same shape _opponent_from_competition()/parse_draftables() already expect from
+    the JSON endpoint's `competition` block. ('', '') if the field doesn't parse."""
+    m = _GAME_INFO_RE.match((game_info or "").strip())
+    if not m:
+        return "", ""
+    away, home, mdY, hm, ampm = m.groups()
+    try:
+        dt = datetime.strptime(f"{mdY} {hm}{ampm.upper()}", "%m/%d/%Y %I:%M%p").replace(tzinfo=_ET)
+        start_iso = dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except ValueError:
+        start_iso = ""
+    return f"{norm_team(away)} @ {norm_team(home)}", start_iso
+
+
+def _csv_to_draftables(csv_text: str) -> dict:
+    """DK's public 'Export to CSV' feed -> the same {"draftables": [...]} shape the live
+    JSON endpoint returns, using the JSON endpoint's own field names, so parse_draftables()
+    needs no changes to consume either source."""
+    rows = []
+    for r in csv.DictReader(io.StringIO(csv_text)):
+        salary = (r.get("Salary") or "").strip()
+        dk_id = (r.get("ID") or "").strip()
+        comp_name, start_iso = _parse_game_info(r.get("Game Info", ""))
+        status = (r.get("Status") or "").strip().upper()
+        rows.append({
+            "playerDkId": int(dk_id) if dk_id.isdigit() else dk_id,
+            "displayName": r.get("Name") or "",
+            "position": r.get("Position") or "",
+            "salary": int(salary) if salary.isdigit() else None,
+            "teamAbbreviation": r.get("TeamAbbrev") or "",
+            "status": status or "None",
+            "isDisabled": False,
+            "competition": {"name": comp_name, "startTime": start_iso},
+        })
+    return {"draftables": rows}
+
+
 def _load_draftables_json(draft_group_id: int, use_cache: bool = True) -> dict:
     cache_name = f"draftables_{draft_group_id}.json"
     # A manually-dropped file (no timestamp check) always wins if present.
@@ -252,14 +318,17 @@ def _load_draftables_json(draft_group_id: int, use_cache: bool = True) -> dict:
     if data is None:
         try:
             data = _get_json(DRAFTABLES_URL.format(gid=draft_group_id))
-            _write_cache(cache_name, data)
         except DKError:
-            if manual.exists():
-                return json.loads(manual.read_text(encoding="utf-8"))
-            snap = _snapshot(cache_name)
-            if snap is not None:
-                return snap
-            raise
+            try:
+                data = _csv_to_draftables(_get_csv(CSV_URL.format(gid=draft_group_id)))
+            except DKError:
+                if manual.exists():
+                    return json.loads(manual.read_text(encoding="utf-8"))
+                snap = _snapshot(cache_name)
+                if snap is not None:
+                    return snap
+                raise
+        _write_cache(cache_name, data)
     return data
 
 
