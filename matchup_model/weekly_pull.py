@@ -228,9 +228,19 @@ def last_completed_week(today=None, kickoff: str = "2026-09-10") -> int:
     `kickoff` = the Thursday of Week 1. Week N's games run Thu..Mon of week N, so by the
     following Wednesday week N is complete. Returns 0 before the season starts. The
     scheduled task should still sanity-check this against the site before committing.
+
+    `today` defaults to the current date in US/Eastern (the NFL's own reference
+    timezone), NOT naive server-local time — Streamlit Cloud's container runs on UTC,
+    which is 4-5 hours ahead of Eastern. Using naive `date.today()` there flips to the
+    next calendar day while it's still evening in the US, which silently bumped this
+    (and current_week() in opp/blend.py, which calls this) a week early — e.g. showing
+    week 3 as "current" on a Wednesday night when every US clock still says week 2.
+    Confirmed live on 2026-09-16: UTC was already 2026-09-17 by ~10pm ET.
     """
-    from datetime import date
-    today = today or date.today()
+    from datetime import date, datetime
+    from zoneinfo import ZoneInfo
+    if today is None:
+        today = datetime.now(ZoneInfo("America/New_York")).date()
     days = (today - date.fromisoformat(kickoff)).days
     if days < 5:                      # Week 1 not done yet (or preseason)
         return 0

@@ -11,8 +11,9 @@ vs 7.70 project_stats.
 """
 from __future__ import annotations
 
-from datetime import date
+from datetime import datetime
 from functools import lru_cache
+from zoneinfo import ZoneInfo
 
 import numpy as np
 
@@ -41,8 +42,14 @@ FP_SHIFT_CAP = 0.50   # never move more than half the distance to FantasyPoints'
 
 
 def current_season() -> int:
-    """NFL season year for 'right now' (season spans Sep-Feb)."""
-    t = date.today()
+    """NFL season year for 'right now' (season spans Sep-Feb).
+
+    Uses US/Eastern, not naive server-local time — Streamlit Cloud's container runs on
+    UTC (4-5h ahead of Eastern), so late evening in the US can already be "tomorrow" on
+    the server. That flip caused current_week() to jump a week early in practice
+    (confirmed live 2026-09-16: UTC hit 2026-09-17 by ~10pm ET) — same fix applied here
+    for the season-year boundary, even though it's a much rarer edge case (Feb/Mar)."""
+    t = datetime.now(ZoneInfo("America/New_York")).date()
     return t.year if t.month >= 3 else t.year - 1
 
 
