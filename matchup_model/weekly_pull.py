@@ -225,9 +225,11 @@ def finalize_backfill(season: int, push: bool = True) -> str:
 def last_completed_week(today=None, kickoff: str = "2026-09-10") -> int:
     """Best-guess NFL week whose games have all finished, for a Wednesday pull.
 
-    `kickoff` = the Thursday of Week 1. Week N's games run Thu..Mon of week N, so by the
-    following Wednesday week N is complete. Returns 0 before the season starts. The
-    scheduled task should still sanity-check this against the site before committing.
+    `kickoff` = the Thursday of Week 1. Week N's games run Thu..Mon of week N; from the
+    Tuesday after through the following Wednesday is a "grace period" where week N counts
+    as complete (MNF is done, no more football that calendar week). Returns 0 before the
+    season starts. The scheduled task should still sanity-check this against the site
+    before committing.
 
     `today` defaults to the current date in US/Eastern (the NFL's own reference
     timezone), NOT naive server-local time — Streamlit Cloud's container runs on UTC,
@@ -236,6 +238,13 @@ def last_completed_week(today=None, kickoff: str = "2026-09-10") -> int:
     (and current_week() in opp/blend.py, which calls this) a week early — e.g. showing
     week 3 as "current" on a Wednesday night when every US clock still says week 2.
     Confirmed live on 2026-09-16: UTC was already 2026-09-17 by ~10pm ET.
+
+    NOTE the separate bug this fixes, found live on 2026-09-17: `days // 7 + 1` jumps a
+    full week early the moment `days` crosses a multiple of 7 -- which is week N+1's own
+    *kickoff* day, not its completion. That showed "week 2 complete" the instant week 2's
+    Thursday game started, 5 days before it actually finished. Decomposing into "which
+    week's window are we in" (`days // 7`) x "are we past that week's games into its own
+    grace period" (`days % 7 >= 5`) avoids the boundary crossing entirely.
     """
     from datetime import date, datetime
     from zoneinfo import ZoneInfo
@@ -244,4 +253,7 @@ def last_completed_week(today=None, kickoff: str = "2026-09-10") -> int:
     days = (today - date.fromisoformat(kickoff)).days
     if days < 5:                      # Week 1 not done yet (or preseason)
         return 0
-    return max(1, min(18, days // 7 + 1))
+    week_in_progress = days // 7 + 1  # 1-indexed week whose Thu..Wed window `days` falls in
+    in_grace_period = (days % 7) >= 5  # Tue/Wed of that window -> that week now counts done
+    last_done = week_in_progress if in_grace_period else week_in_progress - 1
+    return max(1, min(18, last_done))
