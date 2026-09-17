@@ -18,9 +18,15 @@ from zoneinfo import ZoneInfo
 import numpy as np
 
 # opp-model weight in the blend, per position (rest is the trailing-FP average).
+# QB and RB are fit on the position's primary YARDAGE stat (pass_yds / rush_yds)
+# directly, not on composite DK-fp -- fp mixes in TD variance, which distorted the
+# weight without actually costing holdout accuracy for QB (stat-fit RMSE was 0.4 yards
+# *better*) and left RB a toss-up either way (stat-fit is the more defensible choice in
+# principle even though the two were statistically indistinguishable on this holdout).
+# WR/TE showed no meaningful fp-vs-stat difference, so those stayed fp-fit.
 # Fitted on 2023-24, judged on a 2025 holdout — see matchup_model/opp_backtest_report.md.
-# Re-pin from that report's "fitted opp weight" line whenever the model changes materially.
-BLEND_W = {"QB": 0.64, "RB": 0.55, "WR": 0.90, "TE": 1.00}
+# Re-pin from that report's "fitted opp weight" lines whenever the model changes materially.
+BLEND_W = {"QB": 0.50, "RB": 0.33, "WR": 0.90, "TE": 1.00}
 INJURY_ADJ = True         # fold the weekly injury report into projected usage share
 
 _HL, _LB = 4, 10          # trailing-FP EWMA — matches the backtest
