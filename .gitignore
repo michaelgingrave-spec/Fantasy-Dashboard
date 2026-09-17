@@ -26,6 +26,7 @@ matchup_model/opp_personnel_calibration_rows.csv
 matchup_model/opp_alignment_calibration_rows.csv
 matchup_model/opp_box_calibration_rows.csv
 matchup_model/opp_defstrength_calibration_rows.csv
+matchup_model/opp_shell_calibration_rows.csv
 matchup_model/week*_accuracy_rows.csv
 matchup_model/__pycache__/
 
