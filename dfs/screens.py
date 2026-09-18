@@ -502,9 +502,20 @@ def render(screen: str) -> None:
             st.caption(f"{team} isn't on the current slate — players ranked by 2025 volume, "
                        "no projections.")
 
-        bw = mv.scheme_blend_weight()
-        src = "2025" if bw == 0 else f"2026×{bw:.0%} + 2025×{1 - bw:.0%}"
-        st.caption(f"Scheme data: **{src}**.")
+        win_label = st.radio("Scheme data window", list(mv.SCHEME_WINDOWS), index=0,
+                             key="mm_window", horizontal=True,
+                             help="'2026' is thin early in the season (just the games "
+                                  "played so far). 'Last 10 games' is real trailing data "
+                                  "for the coverage-shell rate table only right now — the "
+                                  "coverage/concept/personnel efficiency grids fall back "
+                                  "to the 2025+2026 blend until their own weekly pull "
+                                  "lands (flagged inline below where that applies).")
+        window = mv.SCHEME_WINDOWS[win_label]
+        if window == "l10" and not mv.scheme_window_available("l10", "grid"):
+            st.caption("⚠️ 'Last 10 games' isn't available yet for the coverage/concept/"
+                       "personnel tables below — showing the 2025+2026 blend instead. "
+                       "The coverage-**rate** callouts (plays%, lean vs league) further "
+                       "down ARE true last-10.")
 
         # ── player picker ─────────────────────────────────────────────────
         # candidates + a projection/volume for each; auto-pick the clear starters, then
@@ -548,7 +559,7 @@ def render(screen: str) -> None:
         # ── highlight table: best scheme edges vs this opponent ─────────────
         st.subheader(f"⭐ Highlights — {team} vs {opp}")
         hl = mv.matchup_highlights(opp, [n for n, _ in pass_players],
-                                   [n for n, _ in rb_players])
+                                   [n for n, _ in rb_players], window=window)
         if hl.empty:
             st.caption("No standout scheme edges — the opponent isn't a league outlier in "
                        "any coverage/concept these players are efficient against.")
@@ -564,14 +575,14 @@ def render(screen: str) -> None:
         def _pass_block(name, proj):
             tag = f"  ·  FP proj {proj:.1f}" if proj is not None else ""
             st.markdown(f"**{name}**{tag}")
-            t = mv.player_pass_by_coverage(_nn(name))
+            t = mv.player_pass_by_coverage(_nn(name), window)
             if t.empty:
-                st.caption("No 2025 coverage-split routes for this player.")
+                st.caption("No coverage-split routes for this player in this window.")
             else:
                 st.dataframe(mv.heat(t, ["tgt/rt", "yds/rt", "yds/tgt", "catch%",
                                          "1st-read%", "TD"]),
                              hide_index=True, width="stretch")
-            pt = mv.player_pass_by_personnel(_nn(name))
+            pt = mv.player_pass_by_personnel(_nn(name), window)
             if not pt.empty:
                 st.caption("by personnel")
                 st.dataframe(mv.heat(pt, ["tgt/rt", "yds/rt", "catch%", "TD"]),
@@ -580,13 +591,13 @@ def render(screen: str) -> None:
         def _run_block(name, proj):
             tag = f"  ·  FP proj {proj:.1f}" if proj is not None else ""
             st.markdown(f"**{name}**{tag}")
-            t = mv.player_run_by_concept(_nn(name))
+            t = mv.player_run_by_concept(_nn(name), window)
             if t.empty:
-                st.caption("No 2025 concept-split carries for this player.")
+                st.caption("No concept-split carries for this player in this window.")
             else:
                 st.dataframe(mv.heat(t, ["YPC", "yards", "TD", "success%", "exp-run%", "att%"]),
                              hide_index=True, width="stretch")
-            pt = mv.player_run_by_personnel(_nn(name))
+            pt = mv.player_run_by_personnel(_nn(name), window)
             if not pt.empty:
                 st.caption("by personnel")
                 st.dataframe(mv.heat(pt, ["YPC", "success%", "exp-run%", "att%"]),
@@ -602,7 +613,7 @@ def render(screen: str) -> None:
         if opp:
             st.markdown(f"**{opp} defense — allowed by coverage**  ·  `rk` 1–32, "
                         "**32 = softest** (allows the most); `plays% rk` **1 = plays it most**")
-            dpc = mv.defense_pass_by_coverage(opp)
+            dpc = mv.defense_pass_by_coverage(opp, window)
             if dpc.empty:
                 st.caption(f"No coverage data for {opp}.")
             else:
@@ -610,7 +621,7 @@ def render(screen: str) -> None:
                 eff_rk = [f"{m} rk" for m in eff if f"{m} rk" in dpc.columns]
                 st.dataframe(mv.heat(dpc, eff + eff_rk, good_high=True),
                              hide_index=True, width="stretch")
-            dpp = mv.defense_pass_by_personnel(opp)
+            dpp = mv.defense_pass_by_personnel(opp, window)
             if not dpp.empty:
                 st.caption(f"**{opp} defense — allowed by personnel**  ·  `sees% rk` 1 = faces it most")
                 st.dataframe(mv.heat(dpp, ["yds/tgt", "yds/tgt rk", "catch%", "catch% rk",
@@ -619,7 +630,7 @@ def render(screen: str) -> None:
 
         # ── rushing ────────────────────────────────────────────────────────
         st.subheader(f"{team} backs — by run concept")
-        tm = mv.team_run_by_concept(team, "offense")
+        tm = mv.team_run_by_concept(team, "offense", window)
         if not tm.empty:
             st.markdown(f"**{team} offense** — run mix")
             st.dataframe(mv.heat(tm, ["YPC", "success%", "exp-run%", "att%"]),
@@ -631,13 +642,13 @@ def render(screen: str) -> None:
 
         if opp:
             st.markdown(f"**{opp} defense — allowed by concept**")
-            drc = mv.team_run_by_concept(opp, "defense")
+            drc = mv.team_run_by_concept(opp, "defense", window)
             if drc.empty:
                 st.caption(f"No concept data for {opp}.")
             else:
                 st.dataframe(mv.heat(drc, ["YPC", "success%", "exp-run%"], good_high=True),
                              hide_index=True, width="stretch")
-            drp = mv.defense_run_by_personnel(opp)
+            drp = mv.defense_run_by_personnel(opp, window)
             if not drp.empty:
                 st.caption(f"**{opp} defense — allowed by personnel**  ·  `sees% rk` 1 = faces it most")
                 st.dataframe(mv.heat(drp, ["YPC", "YPC rk", "success%", "success% rk",

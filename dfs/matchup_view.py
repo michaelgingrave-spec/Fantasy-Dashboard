@@ -250,30 +250,46 @@ def scheme_available() -> bool:
     return _OK and _sch.available()
 
 
-def player_pass_by_coverage(name_key: str) -> pd.DataFrame:
-    """A pass-catcher's 2025 efficiency by coverage (Cover 0-6)."""
-    return _sch.player_pass_by_coverage(name_key) if scheme_available() else pd.DataFrame()
+#: Matchup Machine window picker options, label -> the value scheme.py's functions take.
+SCHEME_WINDOWS = {"2025": "2025", "2026": "2026", "Last 10 games": "l10"}
 
 
-def player_run_by_concept(name_key: str) -> pd.DataFrame:
-    """A back's 2025 efficiency by run concept."""
-    return _sch.player_run_by_concept(name_key) if scheme_available() else pd.DataFrame()
+def player_pass_by_coverage(name_key: str, window: str = "auto") -> pd.DataFrame:
+    """A pass-catcher's efficiency by coverage (Cover 0-6), for `window`
+    ('2025' | '2026' | 'l10' | 'auto' -- see SCHEME_WINDOWS for the UI labels)."""
+    return _sch.player_pass_by_coverage(name_key, window) if scheme_available() else pd.DataFrame()
 
 
-def team_run_by_concept(team: str, side: str = "offense") -> pd.DataFrame:
-    """A team's 2025 run mix (side='offense') or what it allows (side='defense')."""
-    return _sch.team_run_by_concept(team, side) if scheme_available() else pd.DataFrame()
+def player_run_by_concept(name_key: str, window: str = "auto") -> pd.DataFrame:
+    """A back's efficiency by run concept, for `window`."""
+    return _sch.player_run_by_concept(name_key, window) if scheme_available() else pd.DataFrame()
 
 
-def defense_pass_by_coverage(team: str) -> pd.DataFrame:
+def team_run_by_concept(team: str, side: str = "offense", window: str = "auto") -> pd.DataFrame:
+    """A team's run mix (side='offense') or what it allows (side='defense'), for `window`."""
+    return _sch.team_run_by_concept(team, side, window) if scheme_available() else pd.DataFrame()
+
+
+def defense_pass_by_coverage(team: str, window: str = "auto") -> pd.DataFrame:
     """A defense's allowed efficiency by man/zone/1-high/2-high then Cover 0-6, with a
-    league rank on every stat (1 = softest)."""
-    return _sch.defense_pass_allowed_by_coverage(team) if scheme_available() else pd.DataFrame()
+    league rank on every stat (1 = softest), for `window`."""
+    return _sch.defense_pass_allowed_by_coverage(team, window) if scheme_available() else pd.DataFrame()
 
 
 def scheme_blend_weight() -> float:
-    """0.0 until 2026 scheme files land, then ramps toward 1.0 over ~8 weeks."""
+    """0.0 until 2026 scheme files land, then ramps toward 1.0 over ~8 weeks. Only
+    meaningful for window='auto' -- an explicit '2025'/'2026'/'l10' pick doesn't blend."""
     return _sch.blend_weight() if scheme_available() else 0.0
+
+
+def scheme_window_available(window: str, table: str = "coverage") -> bool:
+    """Whether `window` ('2025'|'2026'|'l10') is real (not a silent fallback) for a given
+    table family. 'l10' is real data for 'coverage_rate' (coverage-matrix, weekly since
+    2022); everywhere else it currently falls back to the same mix as 'auto', pending a
+    weekly-split pull of the season-total grid exports."""
+    if window != "l10":
+        return True
+    return table == "coverage_rate"
 
 
 def scheme_teams() -> list[str]:
@@ -297,28 +313,30 @@ def team_back_volume(team: str) -> dict:
     return _sch.team_back_volume(team) if scheme_available() else {}
 
 
-def matchup_highlights(opp: str, pass_names, rb_names, n: int = 12) -> pd.DataFrame:
+def matchup_highlights(opp: str, pass_names, rb_names, n: int = 12, window: str = "auto") -> pd.DataFrame:
     """Top scheme edges: where `opp` leans on / is weak against a coverage or run concept
     (by league rank) and one of the listed players is efficient in it."""
     if not scheme_available():
         return pd.DataFrame()
-    return _sch.matchup_highlights(opp, list(pass_names), list(rb_names), n)
+    return _sch.matchup_highlights(opp, list(pass_names), list(rb_names), n, window)
 
 
-def player_pass_by_personnel(name_key: str) -> pd.DataFrame:
-    return _sch.player_pass_by_personnel(name_key, for_display=True) if scheme_available() else pd.DataFrame()
+def player_pass_by_personnel(name_key: str, window: str = "auto") -> pd.DataFrame:
+    return (_sch.player_pass_by_personnel(name_key, for_display=True, window=window)
+           if scheme_available() else pd.DataFrame())
 
 
-def player_run_by_personnel(name_key: str) -> pd.DataFrame:
-    return _sch.player_run_by_personnel(name_key, for_display=True) if scheme_available() else pd.DataFrame()
+def player_run_by_personnel(name_key: str, window: str = "auto") -> pd.DataFrame:
+    return (_sch.player_run_by_personnel(name_key, for_display=True, window=window)
+           if scheme_available() else pd.DataFrame())
 
 
-def defense_pass_by_personnel(team: str) -> pd.DataFrame:
-    return _sch.defense_pass_allowed_by_personnel(team) if scheme_available() else pd.DataFrame()
+def defense_pass_by_personnel(team: str, window: str = "auto") -> pd.DataFrame:
+    return _sch.defense_pass_allowed_by_personnel(team, window) if scheme_available() else pd.DataFrame()
 
 
-def defense_run_by_personnel(team: str) -> pd.DataFrame:
-    return _sch.defense_run_allowed_by_personnel(team) if scheme_available() else pd.DataFrame()
+def defense_run_by_personnel(team: str, window: str = "auto") -> pd.DataFrame:
+    return _sch.defense_run_allowed_by_personnel(team, window) if scheme_available() else pd.DataFrame()
 
 
 def pass_matchup(name_key: str, opp_team: str) -> dict:
@@ -338,9 +356,9 @@ def run_matchup(name_key: str, team: str, opp_team: str) -> dict:
             "defense": _sch.team_run_by_concept(opp_team, "defense")}
 
 
-def defense_alignment_grid() -> pd.DataFrame:
+def defense_alignment_grid(window: str = "auto") -> pd.DataFrame:
     """All 32 defenses x yds/route allowed to wide/slot/inline/backfield."""
-    return _sch.defense_alignment_grid() if scheme_available() else pd.DataFrame()
+    return _sch.defense_alignment_grid(window) if scheme_available() else pd.DataFrame()
 
 
 def heat(df: pd.DataFrame, cols, good_high=True):

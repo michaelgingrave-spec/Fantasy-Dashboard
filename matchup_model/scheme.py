@@ -40,6 +40,17 @@ BUCKET_NAMES = list(BUCKETS)
 # Season blend: once 2026 scheme files land, ramp their weight in over the first ~8 weeks.
 RAMP_WEEKS = 8
 
+# Matchup Machine window picker -- every public function below takes `window`.
+# "auto"  -- legacy behavior: blend_weight()-ramped 2025/2026 mix (default, back-compat).
+# "2025" / "2026" -- that season only, from the season-total export files.
+# "l10"   -- trailing 10 games from real weekly files where they exist (coverage-matrix
+#            rates); falls back to "auto" with an explicit note where they don't yet
+#            (the coverage/concept/personnel/alignment "grid" tables are season-total
+#            exports only -- see matchup_model/scheme_calib scratch notes on the weekly
+#            pull needed to give those a true trailing window).
+WINDOWS = ["2025", "2026", "l10"]
+L10_GAMES = 10
+
 
 def _read(name: str) -> pd.DataFrame:
     p = DATA / name
@@ -67,6 +78,29 @@ def _read_years(stem_fmt: str) -> pd.DataFrame:
             d["yr"] = yr
             frames.append(d)
     return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+
+
+def _read_window(stem_fmt: str, window: str, blend_auto: bool = False) -> pd.DataFrame:
+    """stem_fmt has one `{}` for the year. window: '2025' | '2026' -> that season's export
+    file only. 'l10' has no weekly version of these season-total files yet, so it falls
+    back to the same place 'auto' does -- callers built on real weekly data
+    (coverage-matrix) override 'l10' properly instead of calling this.
+
+    `blend_auto` controls what 'auto'/'l10' fall back to, and must match whether this
+    table's callers already blend multi-year rows (_year_blend) downstream:
+      - True  (receiving-coverage): legacy blend_weight()-ramped 2025+2026 mix -- these
+        callers already collapse the resulting 'yr'-tagged rows with _year_blend().
+      - False (rushing-concept, personnel, alignment): unchanged pre-existing behavior,
+        2025 only. These callers never called _year_blend() -- concatenating raw 2026
+        rows in under them would silently double-count every row (caught by testing:
+        'auto' returned 12 rows for a table that should show 6)."""
+    if window == "2025":
+        return _read(stem_fmt.format(2025))
+    if window == "2026":
+        return _read(stem_fmt.format(2026))
+    if blend_auto:
+        return _read_years(stem_fmt)
+    return _read(stem_fmt.format(2025))
 
 
 @lru_cache(maxsize=1)
@@ -106,11 +140,11 @@ def _year_blend(df: pd.DataFrame, keys: list[str], count_cols: list[str]) -> pd.
 
 
 # ── receiving by coverage ──────────────────────────────────────────────────
-@lru_cache(maxsize=1)
-def _rec_cov_players() -> pd.DataFrame:
+@lru_cache(maxsize=8)
+def _rec_cov_players(window: str = "auto") -> pd.DataFrame:
     frames = []
     for p in ("wr", "te"):
-        d = _read_years(f"receiving-coverage_{p}_{{}}.csv")
+        d = _read_window(f"receiving-coverage_{p}_{{}}.csv", window, blend_auto=True)
         if not d.empty:
             frames.append(d)
     if not frames:
@@ -121,9 +155,9 @@ def _rec_cov_players() -> pd.DataFrame:
     return d
 
 
-@lru_cache(maxsize=1)
-def _rec_cov_defense() -> pd.DataFrame:
-    d = _read_years("receiving-coverage_defense_{}.csv")
+@lru_cache(maxsize=8)
+def _rec_cov_defense(window: str = "auto") -> pd.DataFrame:
+    d = _read_window("receiving-coverage_defense_{}.csv", window, blend_auto=True)
     if not d.empty:
         d["team"] = d["Name"].map(norm_team)
     return d
@@ -192,11 +226,13 @@ def _keep_rows(df: pd.DataFrame, vol_col: str, min_vol: float, always) -> pd.Dat
     return df[keep].reset_index(drop=True)
 
 
-def player_pass_by_coverage(name_key: str) -> pd.DataFrame:
+def player_pass_by_coverage(name_key: str, window: str = "auto") -> pd.DataFrame:
     """A pass-catcher's efficiency by man/zone/1-high/2-high, then Cover 0-6 (specific
     coverages with < MIN_COV_ROUTES routes are hidden): routes, targets, tgt/route,
-    yds/route, yds/tgt, catch%, 1st-read%, TD."""
-    d = _rec_cov_players()
+    yds/route, yds/tgt, catch%, 1st-read%, TD. `window`: '2025' | '2026' | 'auto' (default,
+    legacy 2025/2026 blend) -- 'l10' isn't available for this table yet (season-total
+    export only, no weekly file), falls back to 'auto'."""
+    d = _rec_cov_players(window)
     if d.empty:
         return pd.DataFrame()
     g = _year_blend(d[d["name_key"] == name_key], keys=["COV"], count_cols=_REC_COUNTS)
@@ -215,12 +251,12 @@ def _rank_descending(vals: dict) -> dict:
     return {k: i for i, k in enumerate(sorted(vals, key=lambda k: vals[k], reverse=True), 1)}
 
 
-@lru_cache(maxsize=1)
-def _defense_cov_ranks() -> dict:
+@lru_cache(maxsize=8)
+def _defense_cov_ranks(window: str = "auto") -> dict:
     """{team: {look: {metric: rank}}}. rank runs 1..N with **N = allows the most =
     softest** for each metric+look, over all defenses on the same bucket+coverage rollup.
     Includes 'plays%' (N = plays that coverage most)."""
-    d = _rec_cov_defense()
+    d = _rec_cov_defense(window)
     if d.empty:
         return {}
     tables = {}
@@ -233,7 +269,7 @@ def _defense_cov_ranks() -> dict:
     if not tables:
         return out
     looks = next(iter(tables.values())).index.tolist()
-    plays = {t: {lk: v for lk, v in defense_coverage_rates(t).set_index("coverage")["plays%"].items()}
+    plays = {t: {lk: v for lk, v in defense_coverage_rates(t, window).set_index("coverage")["plays%"].items()}
              for t in tables}
     for lk in looks:
         for m in _DEF_RANK_METRICS:
@@ -247,11 +283,13 @@ def _defense_cov_ranks() -> dict:
     return out
 
 
-def defense_pass_allowed_by_coverage(team: str) -> pd.DataFrame:
+def defense_pass_allowed_by_coverage(team: str, window: str = "auto") -> pd.DataFrame:
     """What a defense allows by man/zone/1-high/2-high then Cover 0-6: plays%, targets,
     yds/tgt, catch%, yds/rec, passer rating, TD — each with its league rank.
-    `plays% rk`: **1 = runs that coverage most**. Allowed-efficiency ranks: **32 = softest**."""
-    d = _rec_cov_defense()
+    `plays% rk`: **1 = runs that coverage most**. Allowed-efficiency ranks: **32 = softest**.
+    `window`: '2025' | '2026' | 'auto' (default) | 'l10' (falls back to 'auto' -- season-
+    total export only, no weekly version of this specific table yet)."""
+    d = _rec_cov_defense(window)
     if d.empty:
         return pd.DataFrame()
     t = norm_team(team)
@@ -259,9 +297,9 @@ def defense_pass_allowed_by_coverage(team: str) -> pd.DataFrame:
     base = _rec_rows_for(g, "defense")
     if base.empty:
         return pd.DataFrame()
-    rates = defense_coverage_rates(team).rename(columns={"coverage": "look"})
+    rates = defense_coverage_rates(team, window).rename(columns={"coverage": "look"})
     out = base.merge(rates[["look", "plays%"]], on="look", how="left")
-    rk = _defense_cov_ranks().get(t, {})
+    rk = _defense_cov_ranks(window).get(t, {})
     for m in ["plays%"] + _DEF_RANK_METRICS:
         out[f"{m} rk"] = out["look"].map(lambda lk, _m=m: rk.get(lk, {}).get(_m))
     order = ["look", "plays%", "plays% rk", "targets", "yds/tgt", "yds/tgt rk",
@@ -272,13 +310,48 @@ def defense_pass_allowed_by_coverage(team: str) -> pd.DataFrame:
 
 
 # ── defense coverage rates (from the weekly coverage matrix) ────────────────
-@lru_cache(maxsize=1)
-def _cov_matrix() -> pd.DataFrame:
-    d = _read("coverage-matrix_2025_week.csv")
+# Real per-week files, unlike the season-total exports above -- these can support a true
+# 'l10' trailing window today, no new pull needed.
+_COV_MATRIX_YEARS = {2022: "coverage-matrix_2022_week.csv", 2023: "coverage-matrix_2023_week.csv",
+                     2024: "coverage-matrix_2024_week.csv", 2025: "coverage-matrix_2025_week.csv",
+                     2026: "coverage-matrix_2026wk1_week.csv"}
+
+
+def _cov_matrix_year(year: int) -> pd.DataFrame:
+    d = _read(_COV_MATRIX_YEARS.get(year, f"coverage-matrix_{year}_week.csv"))
     if d.empty:
         return d
+    d = d.copy()
     d["team"] = d["Name"].map(norm_team)
+    d["season"] = year
     return d
+
+
+@lru_cache(maxsize=1)
+def _cov_matrix_all() -> pd.DataFrame:
+    """Every season's weekly coverage-matrix rows on disk, concatenated -- the pool 'l10'
+    draws its trailing window from."""
+    frames = [f for f in (_cov_matrix_year(y) for y in _COV_MATRIX_YEARS) if not f.empty]
+    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+
+
+@lru_cache(maxsize=8)
+def _cov_matrix(window: str = "auto") -> pd.DataFrame:
+    """'2025' / '2026' -> that season's weekly rows. 'l10' -> each team's trailing
+    L10_GAMES rows across every season on disk (crosses the season boundary early in a
+    year, same as the Data Suite's own L10 view). 'auto' (default) -- unchanged legacy
+    behavior: 2025 only."""
+    if window == "2025":
+        return _cov_matrix_year(2025)
+    if window == "2026":
+        return _cov_matrix_year(2026)
+    if window == "l10":
+        d = _cov_matrix_all()
+        if d.empty:
+            return d
+        d = d.sort_values(["team", "season", "WEEK"])
+        return d.groupby("team", group_keys=False).tail(L10_GAMES)
+    return _cov_matrix_year(2025)   # 'auto' -- unchanged legacy default
 
 
 _COV_RATE_COL = {"Cover 0": "COVER 0 %", "Cover 1": "COVER 1 %", "Cover 2": "COVER 2 %",
@@ -286,10 +359,11 @@ _COV_RATE_COL = {"Cover 0": "COVER 0 %", "Cover 1": "COVER 1 %", "Cover 2": "COV
                  "Cover 4": "COVER 4 %", "Cover 6": "COVER 6 %"}
 
 
-def defense_coverage_rates(team: str) -> pd.DataFrame:
-    """look -> plays% (season mean) + lean vs league average, for man/zone/1-high/2-high
-    (summed from members) and Cover 0-6."""
-    cm = _cov_matrix()
+def defense_coverage_rates(team: str, window: str = "auto") -> pd.DataFrame:
+    """look -> plays% (mean over the window) + lean vs league average, for
+    man/zone/1-high/2-high (summed from members) and Cover 0-6. `window`: '2025' |
+    '2026' | 'l10' (trailing 10 games, real data) | 'auto' (default, unchanged: 2025)."""
+    cm = _cov_matrix(window)
     order = BUCKET_NAMES + COVERAGES
     if cm.empty:
         return pd.DataFrame({"coverage": order, "plays%": np.nan, "vs lg": np.nan})
@@ -314,9 +388,13 @@ def defense_coverage_rates(team: str) -> pd.DataFrame:
 
 
 # ── rushing by concept ────────────────────────────────────────────────────
-@lru_cache(maxsize=3)
-def _rush_concept(kind: str) -> pd.DataFrame:
-    d = _read(f"rushing-concept_{kind}_2025.csv")
+@lru_cache(maxsize=12)
+def _rush_concept(kind: str, window: str = "auto") -> pd.DataFrame:
+    """kind: 'player' | 'offense' | 'defense'. `window`: '2025' | '2026' | 'auto'
+    (default, was hardcoded to 2025-only before -- now also picks up the 2026 file that's
+    been sitting unused on disk). 'l10' falls back to 'auto': no weekly version of this
+    export yet."""
+    d = _read_window(f"rushing-concept_{kind}_{{}}.csv", window)
     if d.empty:
         return d
     if kind == "player":
@@ -327,8 +405,8 @@ def _rush_concept(kind: str) -> pd.DataFrame:
     return d
 
 
-def player_run_by_concept(name_key: str) -> pd.DataFrame:
-    d = _rush_concept("player")
+def player_run_by_concept(name_key: str, window: str = "auto") -> pd.DataFrame:
+    d = _rush_concept("player", window)
     if d.empty:
         return pd.DataFrame()
     g = d[(d["name_key"] == name_key) & (d["CONCEPT"].isin(CONCEPTS))]
@@ -342,9 +420,9 @@ def player_run_by_concept(name_key: str) -> pd.DataFrame:
     return out.round(2).reset_index(drop=True)
 
 
-def team_run_by_concept(team: str, side: str) -> pd.DataFrame:
+def team_run_by_concept(team: str, side: str, window: str = "auto") -> pd.DataFrame:
     """side='offense' (team's own run mix) or 'defense' (what the D allows)."""
-    d = _rush_concept(side)
+    d = _rush_concept(side, window)
     if d.empty:
         return pd.DataFrame()
     t = norm_team(team)
@@ -357,18 +435,18 @@ def team_run_by_concept(team: str, side: str) -> pd.DataFrame:
            .rename(columns={"ATT %": "att%", "ATT": "att", "YDS": "yards",
                             "SUCC %": "success%", "EXP RUN %": "exp-run%"}))
     if side == "defense":
-        rk = _defense_concept_ranks().get(t, {})
+        rk = _defense_concept_ranks(window).get(t, {})
         for m in ("att%", "YPC", "success%", "exp-run%"):
             out[f"{m} rk"] = out["concept"].astype(str).map(
                 lambda c, _m=m: rk.get(c, {}).get(_m)).astype("Int64")
     return out.round(2).reset_index(drop=True)
 
 
-@lru_cache(maxsize=1)
-def _defense_concept_ranks() -> dict:
+@lru_cache(maxsize=8)
+def _defense_concept_ranks(window: str = "auto") -> dict:
     """{team: {concept: {metric: rank}}}, 1..N with N = the league extreme:
     att% -> faces that concept most; YPC / success% / exp-run% -> allows the most."""
-    d = _rush_concept("defense")
+    d = _rush_concept("defense", window)
     if d.empty:
         return {}
     d = d[d["CONCEPT"].isin(CONCEPTS)]
@@ -396,16 +474,18 @@ def _pers_label(x) -> str:
         return str(x)
 
 
-@lru_cache(maxsize=4)
-def _pers_frame(kind: str) -> pd.DataFrame:
-    """kind: 'rec_player' | 'rec_defense' | 'rush_player' | 'rush_defense'."""
+@lru_cache(maxsize=12)
+def _pers_frame(kind: str, window: str = "auto") -> pd.DataFrame:
+    """kind: 'rec_player' | 'rec_defense' | 'rush_player' | 'rush_defense'. `window`:
+    '2025' | '2026' | 'auto' (default, was hardcoded 2025-only -- now also picks up the
+    2026 file on disk). 'l10' falls back to 'auto': no weekly version yet."""
     unit, mode = kind.split("_")
     if unit == "rec" and mode == "player":
-        frames = [_read(f"receiving-personnel_{p}_2025.csv") for p in ("wr", "te")]
+        frames = [_read_window(f"receiving-personnel_{p}_{{}}.csv", window) for p in ("wr", "te")]
         d = pd.concat([f for f in frames if not f.empty], ignore_index=True) if any(
             not f.empty for f in frames) else pd.DataFrame()
     else:
-        d = _read(f"{'receiving' if unit == 'rec' else 'rushing'}-personnel_{mode}_2025.csv")
+        d = _read_window(f"{'receiving' if unit == 'rec' else 'rushing'}-personnel_{mode}_{{}}.csv", window)
     if d.empty:
         return d
     d["pers"] = d["PERS"].map(_pers_label)
@@ -415,10 +495,10 @@ def _pers_frame(kind: str) -> pd.DataFrame:
     return d
 
 
-def player_pass_by_personnel(name_key: str, for_display: bool = False) -> pd.DataFrame:
+def player_pass_by_personnel(name_key: str, for_display: bool = False, window: str = "auto") -> pd.DataFrame:
     """A pass-catcher by 11 / 12 / 21 ... personnel. `for_display` drops groupings with
     < MIN_PERS_ROUTES routes."""
-    d = _pers_frame("rec_player")
+    d = _pers_frame("rec_player", window)
     if d.empty:
         return pd.DataFrame()
     g = d[(d["name_key"] == name_key) & (d["pers"].isin(PERSONNEL))]
@@ -434,8 +514,8 @@ def player_pass_by_personnel(name_key: str, for_display: bool = False) -> pd.Dat
     return out.reset_index(drop=True)
 
 
-def player_run_by_personnel(name_key: str, for_display: bool = False) -> pd.DataFrame:
-    d = _pers_frame("rush_player")
+def player_run_by_personnel(name_key: str, for_display: bool = False, window: str = "auto") -> pd.DataFrame:
+    d = _pers_frame("rush_player", window)
     if d.empty:
         return pd.DataFrame()
     g = d[(d["name_key"] == name_key) & (d["pers"].isin(PERSONNEL))]
@@ -451,18 +531,18 @@ def player_run_by_personnel(name_key: str, for_display: bool = False) -> pd.Data
     return out.reset_index(drop=True)
 
 
-def defense_pass_allowed_by_personnel(team: str) -> pd.DataFrame:
+def defense_pass_allowed_by_personnel(team: str, window: str = "auto") -> pd.DataFrame:
     """What a defense allows to WR/TE by personnel: sees%, targets, yds/tgt, catch%,
     rating, TD — with league ranks (sees% rk 1 = faces it most; allowed 32 = softest).
     Rare groupings (< MIN_PERS_DEF_TGT targets) hidden."""
-    d = _pers_frame("rec_defense")
+    d = _pers_frame("rec_defense", window)
     if d.empty:
         return pd.DataFrame()
     t = norm_team(team)
     g = d[(d["team"] == t) & (d["pers"].isin(PERSONNEL))].copy()
     if g.empty:
         return pd.DataFrame()
-    rk = _defense_personnel_ranks("rec").get(t, {})
+    rk = _defense_personnel_ranks("rec", window).get(t, {})
     rows = []
     for p in PERSONNEL:
         s = g[g["pers"] == p]
@@ -482,17 +562,17 @@ def defense_pass_allowed_by_personnel(team: str) -> pd.DataFrame:
     return out[pd.to_numeric(out["targets"], errors="coerce") >= MIN_PERS_DEF_TGT].reset_index(drop=True)
 
 
-def defense_run_allowed_by_personnel(team: str) -> pd.DataFrame:
+def defense_run_allowed_by_personnel(team: str, window: str = "auto") -> pd.DataFrame:
     """What a defense allows on the ground by personnel: sees%, att, YPC, success%,
     exp-run%, TD — with league ranks. Rare groupings hidden."""
-    d = _pers_frame("rush_defense")
+    d = _pers_frame("rush_defense", window)
     if d.empty:
         return pd.DataFrame()
     t = norm_team(team)
     g = d[(d["team"] == t) & (d["pers"].isin(PERSONNEL))].copy()
     if g.empty:
         return pd.DataFrame()
-    rk = _defense_personnel_ranks("rush").get(t, {})
+    rk = _defense_personnel_ranks("rush", window).get(t, {})
     rows = []
     for p in PERSONNEL:
         s = g[g["pers"] == p]
@@ -512,11 +592,11 @@ def defense_run_allowed_by_personnel(team: str) -> pd.DataFrame:
     return out[pd.to_numeric(out["att"], errors="coerce") >= MIN_PERS_ATT].reset_index(drop=True)
 
 
-@lru_cache(maxsize=2)
-def _defense_personnel_ranks(unit: str) -> dict:
+@lru_cache(maxsize=8)
+def _defense_personnel_ranks(unit: str, window: str = "auto") -> dict:
     """unit: 'rec' or 'rush'. {team: {pers: {metric: rank}}}, N = league extreme
     (softest allowed / faces it most)."""
-    d = _pers_frame(f"{unit}_defense")
+    d = _pers_frame(f"{unit}_defense", window)
     if d.empty:
         return {}
     d = d[d["pers"].isin(PERSONNEL)]
@@ -536,18 +616,18 @@ def _defense_personnel_ranks(unit: str) -> dict:
 
 
 # ── defense allowed by alignment (the "Defense Vs WR heat map") ─────────────
-@lru_cache(maxsize=1)
-def _align_defense() -> pd.DataFrame:
-    d = _read("receiving-alignment_defense_2025.csv")
+@lru_cache(maxsize=4)
+def _align_defense(window: str = "auto") -> pd.DataFrame:
+    d = _read_window("receiving-alignment_defense_{}.csv", window)
     if not d.empty:
         d["team"] = d["Name"].map(norm_team)
     return d
 
 
-def defense_alignment_grid() -> pd.DataFrame:
+def defense_alignment_grid(window: str = "auto") -> pd.DataFrame:
     """All 32 defenses x alignment: yds/rt, tgt/rt, catch%, 1st-read% allowed. Wide/Slot/
     Inline/Backfield as columns of yds/rt so it reads like the sheet's heat map."""
-    d = _align_defense()
+    d = _align_defense(window)
     if d.empty:
         return pd.DataFrame()
     piv = (d[d["ALIGN"].isin(["Wide", "Slot", "Inline", "Backfield"])]
@@ -562,7 +642,7 @@ def _ord(n: int) -> str:
 
 
 def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
-                       n: int = 12) -> pd.DataFrame:
+                       n: int = 12, window: str = "auto") -> pd.DataFrame:
     """The offense's best scheme edges against `opp`: for the coverages / run concepts
     this defense leans on (league rank) or is weak against, which of the listed players
     are the most efficient. One row per (player, look). Columns: kind, look, player, why, mark."""
@@ -576,8 +656,8 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
         return sum(v) / len(v) if v else float("nan")
 
     # ── pass: coverage ────────────────────────────────────────────────────
-    covrk = _defense_cov_ranks().get(o, {})
-    cov_rate = defense_coverage_rates(opp).set_index("coverage")["plays%"].to_dict()
+    covrk = _defense_cov_ranks(window).get(o, {})
+    cov_rate = defense_coverage_rates(opp, window).set_index("coverage")["plays%"].to_dict()
     for c in BUCKET_NAMES + COVERAGES:
         r = covrk.get(c, {})
         usage = r.get("plays%")                       # 1 = runs it most
@@ -592,7 +672,7 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
         why = f"{o}: " + " · ".join(why_bits)
         cands = []
         for nm in pass_names:
-            t = player_pass_by_coverage(_nk(nm))
+            t = player_pass_by_coverage(_nk(nm), window)
             if t.empty or c not in set(t["look"]):
                 continue
             pr = t.set_index("look").loc[c]
@@ -607,7 +687,7 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
                          "_score": freq_score + min(eff / 4.0, 1.5)})
 
     # ── run: concept ─────────────────────────────────────────────────────
-    conrk = _defense_concept_ranks().get(o, {})
+    conrk = _defense_concept_ranks(window).get(o, {})
     for c in CONCEPTS:
         r = conrk.get(c, {})
         faces = r.get("att%")                         # 1 = faces it most
@@ -622,7 +702,7 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
         why = f"{o}: " + " · ".join(why_bits)
         cands = []
         for nm in rb_names:
-            t = player_run_by_concept(_nk(nm))
+            t = player_run_by_concept(_nk(nm), window)
             if t.empty or c not in set(t["concept"]):
                 continue
             pr = t.set_index("concept").loc[c]
@@ -637,7 +717,7 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
                          "_score": freq_score + min(ypc / 5.0, 1.5)})
 
     # ── personnel (11 / 12 / 21) — pass ──────────────────────────────────
-    prk_rec = _defense_personnel_ranks("rec").get(o, {})
+    prk_rec = _defense_personnel_ranks("rec", window).get(o, {})
     for p in PERSONNEL:
         r = prk_rec.get(p, {})
         used = r.get("TGT %")                          # 1 = faces this personnel most
@@ -652,7 +732,7 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
         why = f"{o}: " + " · ".join(why_bits)
         cands = []
         for nm in pass_names:
-            t = player_pass_by_personnel(_nk(nm))
+            t = player_pass_by_personnel(_nk(nm), window=window)
             if t.empty or p not in set(t["personnel"]):
                 continue
             pr = t.set_index("personnel").loc[p]
@@ -667,7 +747,7 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
                          "_score": freq_score + min(eff / 4.0, 1.5)})
 
     # ── personnel — run ─────────────────────────────────────────────────
-    prk_rush = _defense_personnel_ranks("rush").get(o, {})
+    prk_rush = _defense_personnel_ranks("rush", window).get(o, {})
     for p in PERSONNEL:
         r = prk_rush.get(p, {})
         faces = r.get("ATT %")
@@ -682,7 +762,7 @@ def matchup_highlights(opp: str, pass_names: list[str], rb_names: list[str],
         why = f"{o}: " + " · ".join(why_bits)
         cands = []
         for nm in rb_names:
-            t = player_run_by_personnel(_nk(nm))
+            t = player_run_by_personnel(_nk(nm), window=window)
             if t.empty or p not in set(t["personnel"]):
                 continue
             pr = t.set_index("personnel").loc[p]
