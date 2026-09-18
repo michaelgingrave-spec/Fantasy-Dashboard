@@ -1,413 +1,451 @@
-season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,edge %,lean,best,pulled_at,actual,result
-2026,1,Atlanta Falcons @ Pittsburgh Steelers,Tua Tagovailoa,pass TD,0.5,1.0,strong,0.52,0.5,62,-4.6,66,108,OVER,draftkings -224,2026-09-11T10:36:01,,
-2026,1,Atlanta Falcons @ Pittsburgh Steelers,Tua Tagovailoa,pass yds,199.5,196.1,—,-0.04,-3.4,51,0.9,50,-2,UNDER,draftkings -113,2026-09-11T10:36:01,,
-2026,1,Atlanta Falcons @ Pittsburgh Steelers,Tua Tagovailoa,rush yds,1.5,1.5,—,-0.0,-0.0,50,-0.9,51,-2,UNDER,draftkings -108,2026-09-11T10:36:01,,
-2026,1,San Francisco 49ers @ Los Angeles Rams,Colby Parkinson,receptions,2.5,4.0,high,0.86,1.5,68,27.3,41,62,OVER,betmgm +135,2026-09-11T17:34:34,1.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,George Kittle,receptions,3.5,5.8,high,1.14,2.3,72,24.5,48,66,OVER,betonlineag +100,2026-09-11T17:34:34,2.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,George Kittle,rec yds,34.5,64.9,high,1.1,30.4,72,21.7,50,88,OVER,bovada +150,2026-09-11T17:34:34,12.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Tyler Higbee,rec yds,17.5,38.2,high,0.94,20.8,70,19.7,50,119,OVER,betmgm -111,2026-09-11T17:34:34,12.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Demarcus Robinson,rec yds,11.5,29.5,high,0.89,18.0,69,19.2,50,156,OVER,draftkings -108,2026-09-11T17:34:34,50.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Colby Parkinson,rec yds,19.0,39.7,high,0.92,20.7,69,19.1,50,109,OVER,draftkings -110,2026-09-11T17:34:34,6.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Matthew Stafford,pass TD,1.5,2.8,high,1.1,1.3,72,15.3,57,85,OVER,bovada -145,2026-09-11T17:34:34,0.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Tyler Higbee,receptions,1.5,3.3,high,1.13,1.8,72,15.1,57,117,OVER,betonlineag -143,2026-09-11T17:34:34,2.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Demarcus Robinson,receptions,1.5,2.4,strong,0.59,0.9,63,27.3,36,61,OVER,fanduel +162,2026-09-11T17:34:34,2.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Deebo Samuel,rec yds,29.5,50.3,strong,0.8,20.8,67,17.3,50,70,OVER,draftkings -113,2026-09-11T17:34:34,48.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Jordan Whittington,rec yds,8.5,18.9,strong,0.54,10.4,62,12.4,50,122,OVER,fanduel -113,2026-09-11T17:34:34,8.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Deebo Samuel,receptions,2.5,3.8,strong,0.75,1.3,66,11.0,55,54,OVER,fanduel -136,2026-09-11T17:34:34,6.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Brock Purdy,pass TD,1.5,1.9,solid,0.35,0.4,58,10.7,48,27,OVER,betrivers +104,2026-09-11T17:34:34,3.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Christian McCaffrey,rec yds,40.5,29.0,solid,-0.39,-11.5,59,8.9,50,-28,UNDER,bovada +150,2026-09-11T17:34:34,20.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Mike Evans,receptions,3.5,4.3,solid,0.4,0.8,59,4.4,55,23,OVER,fanduel -132,2026-09-11T17:34:34,6.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Kyren Williams,receptions,1.5,2.2,solid,0.45,0.7,60,3.9,57,47,OVER,fanduel -148,2026-09-11T17:34:34,3.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Blake Corum,receptions,0.5,0.9,solid,0.33,0.4,58,-2.7,61,88,OVER,fanduel -172,2026-09-11T17:34:34,0.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Matthew Stafford,pass yds,263.0,282.8,lean,0.26,19.8,56,6.3,50,8,OVER,bovada +170,2026-09-11T17:34:34,155.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Mike Evans,rec yds,49.5,56.4,lean,0.21,6.9,55,4.9,50,14,OVER,bovada +140,2026-09-11T17:34:34,49.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Davante Adams,rec yds,51.5,58.1,lean,0.2,6.6,55,4.8,50,13,OVER,bovada +135,2026-09-11T17:34:34,26.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Terrance Ferguson,receptions,1.5,1.9,lean,0.23,0.4,55,-3.3,59,24,OVER,betrivers -143,2026-09-11T17:34:34,0.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Jordan Whittington,receptions,1.5,1.6,—,0.06,0.1,52,18.4,33,7,OVER,fanduel +182,2026-09-11T17:34:34,1.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Matthew Stafford,rush yds,0.5,1.2,—,0.04,0.7,51,9.7,41,148,OVER,fanduel +154,2026-09-11T17:34:34,-1.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Kyren Williams,rush yds,55.5,64.6,—,0.28,9.1,57,6.9,50,16,OVER,bovada +155,2026-09-11T17:34:34,41.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Christian McCaffrey,rush yds,59.5,67.5,—,0.24,8.0,56,5.5,50,13,OVER,bovada +145,2026-09-11T17:34:34,68.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Davante Adams,receptions,4.5,4.7,—,0.1,0.2,52,5.0,47,5,OVER,betmgm +105,2026-09-11T17:34:34,3.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Puka Nacua,rec yds,90.5,96.1,—,0.12,5.6,53,2.6,50,6,OVER,bovada +170,2026-09-11T17:34:34,74.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Blake Corum,rec yds,3.5,5.3,—,0.1,1.8,52,2.5,50,52,OVER,draftkings -113,2026-09-11T17:34:34,0.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Kyren Williams,rec yds,11.0,12.7,—,0.08,1.7,52,2.2,50,15,OVER,draftkings -109,2026-09-11T17:34:34,24.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Blake Corum,rush yds,44.5,47.0,—,0.08,2.5,52,2.0,50,6,OVER,bovada +155,2026-09-11T17:34:34,54.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Christian McCaffrey,receptions,4.5,4.4,—,-0.04,-0.1,51,1.2,50,-2,UNDER,betonlineag +105,2026-09-11T17:34:34,5.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Brock Purdy,pass yds,242.5,240.2,—,-0.03,-2.3,51,0.9,50,-1,UNDER,bovada +185,2026-09-11T17:34:34,205.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Brock Purdy,rush yds,18.5,18.4,—,-0.0,-0.1,50,0.6,49,0,UNDER,bovada +105,2026-09-11T17:34:34,29.0,loss
-2026,1,San Francisco 49ers @ Los Angeles Rams,Terrance Ferguson,rec yds,24.0,24.0,—,-0.0,-0.0,50,0.1,50,0,UNDER,draftkings -112,2026-09-11T17:34:34,0.0,win
-2026,1,San Francisco 49ers @ Los Angeles Rams,Puka Nacua,receptions,7.5,7.1,—,-0.13,-0.4,53,-2.3,55,-5,UNDER,betmgm -140,2026-09-11T17:34:34,5.0,win
-2026,1,All 13 Sunday games,Jauan Jennings,receptions,2.5,4.3,high,1.01,1.8,71,30.5,40,72,OVER,draftkings +134,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,KaVontae Turpin,rec yds,8.5,45.9,high,1.96,37.4,78,29.3,49,440,OVER,draftkings -105,2026-09-12T05:47:10,8.0,loss
-2026,1,All 13 Sunday games,Ryan Flournoy,receptions,2.5,4.0,high,0.86,1.5,68,26.5,42,62,OVER,draftkings +134,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Dawson Knox,receptions,1.5,3.2,high,1.1,1.7,72,25.8,46,114,OVER,draftkings +106,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Michael Wilson,rec yds,41.5,84.8,high,1.44,43.3,76,25.8,50,104,OVER,draftkings -110,2026-09-12T05:47:10,56.0,win
-2026,1,All 13 Sunday games,Theo Johnson,rec yds,13.5,44.2,high,1.48,30.7,76,25.8,50,227,OVER,draftkings -112,2026-09-12T05:47:10,9.0,loss
-2026,1,All 13 Sunday games,Keenan Allen,receptions,3.5,5.1,high,0.81,1.6,67,24.1,43,47,OVER,fanduel +120,2026-09-12T05:47:10,6.0,win
-2026,1,All 13 Sunday games,Jauan Jennings,rec yds,22.5,53.3,high,1.3,30.8,74,24.1,50,137,OVER,draftkings -113,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Calvin Ridley,rec yds,27.5,58.4,high,1.22,30.9,73,23.4,50,113,OVER,draftkings -111,2026-09-12T05:47:10,,
-2026,1,All 13 Sunday games,Darnell Mooney,receptions,1.5,3.0,high,0.98,1.5,70,23.0,47,101,OVER,draftkings +100,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Wan'Dale Robinson,receptions,4.5,6.7,high,0.98,2.2,70,22.5,48,49,OVER,fanduel -102,2026-09-12T05:47:10,5.0,win
-2026,1,All 13 Sunday games,Dawson Knox,rec yds,13.5,35.5,high,1.06,22.0,71,21.8,50,163,OVER,draftkings -108,2026-09-12T05:47:10,7.0,loss
-2026,1,All 13 Sunday games,Theo Johnson,receptions,1.5,3.2,high,1.1,1.7,72,21.5,50,114,OVER,fanduel -112,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Malik Willis,pass yds,180.0,97.0,high,-1.05,-83.0,71,21.1,50,-46,UNDER,draftkings -113,2026-09-12T05:47:10,220.0,loss
-2026,1,All 13 Sunday games,Jakobi Meyers,receptions,3.5,5.4,high,0.96,1.9,70,20.9,49,55,OVER,draftkings -103,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Keenan Allen,rec yds,27.0,52.5,high,1.01,25.5,71,20.5,50,94,OVER,draftkings -113,2026-09-12T05:47:10,32.0,win
-2026,1,All 13 Sunday games,Andrei Iosivas,rec yds,15.0,36.0,high,0.99,21.0,70,20.2,50,140,OVER,draftkings -113,2026-09-12T05:47:10,12.0,loss
-2026,1,All 13 Sunday games,Andrei Iosivas,receptions,1.5,2.8,high,0.85,1.3,68,19.4,49,88,OVER,draftkings -102,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Wan'Dale Robinson,rec yds,42.5,69.2,high,0.88,26.7,69,18.9,50,63,OVER,draftkings -109,2026-09-12T05:47:10,38.0,loss
-2026,1,All 13 Sunday games,Darnell Mooney,rec yds,19.5,40.0,high,0.9,20.5,69,18.9,50,105,OVER,draftkings -113,2026-09-12T05:47:10,27.0,win
-2026,1,All 13 Sunday games,Michael Wilson,receptions,3.5,5.4,high,0.92,1.9,69,18.1,51,53,OVER,draftkings -118,2026-09-12T05:47:10,5.0,win
-2026,1,All 13 Sunday games,Kalif Raymond,rec yds,14.5,33.3,high,0.89,18.8,69,18.0,51,130,OVER,draftkings -116,2026-09-12T05:47:10,84.0,win
-2026,1,All 13 Sunday games,Jakobi Meyers,rec yds,37.5,61.1,high,0.82,23.6,68,17.5,50,63,OVER,draftkings -114,2026-09-12T05:47:10,40.0,win
-2026,1,All 13 Sunday games,Cole Kmet,receptions,1.5,2.8,high,0.83,1.3,68,16.5,51,86,OVER,draftkings -119,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Chig Okonkwo,receptions,2.5,4.1,high,0.88,1.6,69,11.7,57,63,OVER,draftkings -150,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Darnell Washington,receptions,1.5,3.1,high,1.0,1.6,71,11.2,59,104,OVER,draftkings -171,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Darren Waller,receptions,1.5,2.9,high,0.92,1.4,69,9.1,60,95,OVER,draftkings -169,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Geno Smith,pass TD,0.5,1.3,high,0.81,0.8,67,0.4,67,168,OVER,fanduel -245,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Calvin Ridley,receptions,2.5,3.7,strong,0.68,1.2,65,26.2,39,48,OVER,draftkings +144,2026-09-12T05:47:10,,
-2026,1,All 13 Sunday games,Mason Taylor,receptions,2.5,3.7,strong,0.69,1.2,65,19.7,46,49,OVER,draftkings +106,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Cade Otton,receptions,3.5,4.8,strong,0.62,1.3,64,18.4,46,36,OVER,draftkings +106,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Xavier Hutchinson,rec yds,18.5,36.1,strong,0.79,17.6,67,17.4,50,95,OVER,draftkings -109,2026-09-12T05:47:10,32.0,win
-2026,1,All 13 Sunday games,Quentin Johnston,receptions,3.5,4.6,strong,0.55,1.1,63,17.4,45,32,OVER,fanduel +116,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Darnell Washington,rec yds,16.0,33.1,strong,0.79,17.1,67,17.0,50,107,OVER,draftkings -113,2026-09-12T05:47:10,18.0,win
-2026,1,All 13 Sunday games,Parker Washington,rec yds,53.0,79.7,strong,0.79,26.7,67,17.0,50,50,OVER,draftkings -113,2026-09-12T05:47:10,83.0,win
-2026,1,All 13 Sunday games,Woody Marks,rush yds,25.5,51.6,strong,1.06,26.1,67,16.7,50,102,OVER,fanduel -114,2026-09-12T05:47:10,42.0,win
-2026,1,All 13 Sunday games,Tre Harris,receptions,2.5,3.5,strong,0.59,1.0,63,16.4,47,42,OVER,draftkings +102,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Ryan Flournoy,rec yds,25.5,43.7,strong,0.74,18.2,66,16.2,50,71,OVER,draftkings -111,2026-09-12T05:47:10,22.0,loss
-2026,1,All 13 Sunday games,Darren Waller,rec yds,16.5,31.8,strong,0.7,15.3,66,16.0,49,93,OVER,draftkings -107,2026-09-12T05:47:10,28.0,win
-2026,1,All 13 Sunday games,Tank Bigsby,rush yds,17.5,40.4,strong,1.02,22.9,66,16.0,50,131,OVER,draftkings -114,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Harold Fannin Jr.,rec yds,36.5,56.2,strong,0.69,19.7,65,15.6,50,54,OVER,draftkings -110,2026-09-12T05:47:10,21.0,loss
-2026,1,All 13 Sunday games,Dalton Schultz,receptions,3.5,4.9,strong,0.68,1.4,65,15.4,50,39,OVER,draftkings -110,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,Jalen Tolbert,rec yds,12.0,26.7,strong,0.72,14.7,66,15.4,51,122,OVER,fanduel -114,2026-09-12T05:47:10,,
-2026,1,All 13 Sunday games,Mike Gesicki,rec yds,21.0,37.1,strong,0.69,16.1,65,15.3,50,77,OVER,draftkings -113,2026-09-12T05:47:10,78.0,win
-2026,1,All 13 Sunday games,Greg Dulcich,rec yds,25.5,42.5,strong,0.69,17.0,65,15.2,50,67,OVER,draftkings -112,2026-09-12T05:47:10,18.0,loss
-2026,1,All 13 Sunday games,Cole Kmet,rec yds,14.0,27.8,strong,0.66,13.8,65,15.0,50,98,OVER,draftkings -109,2026-09-12T05:47:10,35.0,win
-2026,1,All 13 Sunday games,Quentin Johnston,rec yds,42.5,63.1,strong,0.68,20.6,65,14.8,50,48,OVER,draftkings -114,2026-09-12T05:47:10,17.0,loss
-2026,1,All 13 Sunday games,Trevor Lawrence,pass TD,1.5,2.2,strong,0.59,0.7,63,14.4,49,46,OVER,fanduel -106,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,Isaac TeSlaa,rec yds,17.0,30.8,strong,0.63,13.8,64,14.4,50,81,OVER,draftkings -110,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Kalif Raymond,receptions,1.5,2.5,strong,0.61,1.0,64,14.2,50,63,OVER,draftkings -111,2026-09-12T05:47:10,8.0,win
-2026,1,All 13 Sunday games,Kayshon Boutte,rec yds,26.5,41.8,strong,0.61,15.3,64,13.9,50,58,OVER,draftkings -110,2026-09-12T05:47:10,21.0,loss
-2026,1,All 13 Sunday games,Stefon Diggs,rec yds,41.5,59.9,strong,0.61,18.4,64,13.9,50,44,OVER,draftkings -111,2026-09-12T05:47:10,55.0,win
-2026,1,All 13 Sunday games,Tommy Tremble,receptions,1.5,2.3,strong,0.52,0.8,62,13.8,48,54,OVER,draftkings -102,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Sam LaPorta,receptions,4.0,5.4,strong,0.65,1.4,64,13.8,51,34,OVER,draftkings +123,2026-09-12T05:47:10,5.0,win
-2026,1,All 13 Sunday games,Alec Pierce,rec yds,43.5,62.5,strong,0.62,19.0,64,13.7,50,44,OVER,draftkings -114,2026-09-12T05:47:10,61.0,win
-2026,1,All 13 Sunday games,Chig Okonkwo,rec yds,25.5,40.7,strong,0.61,15.2,64,13.7,50,59,OVER,draftkings -113,2026-09-12T05:47:10,16.0,loss
-2026,1,All 13 Sunday games,Brenton Strange,rec yds,35.5,51.8,strong,0.58,16.3,63,13.5,50,46,OVER,draftkings -109,2026-09-12T05:47:10,23.0,loss
-2026,1,All 13 Sunday games,Cam Ward,pass yds,202.0,248.7,strong,0.6,46.7,63,13.4,50,23,OVER,draftkings -113,2026-09-12T05:47:10,140.0,loss
-2026,1,All 13 Sunday games,Tre Harris,rec yds,26.5,40.9,strong,0.57,14.4,63,13.3,50,54,OVER,draftkings -109,2026-09-12T05:47:10,20.0,loss
-2026,1,All 13 Sunday games,Juwan Johnson,rec yds,42.0,59.9,strong,0.59,17.9,63,13.2,50,43,OVER,draftkings -114,2026-09-12T05:47:10,54.0,win
-2026,1,All 13 Sunday games,Kendrick Bourne,rec yds,18.5,31.1,strong,0.56,12.6,63,13.1,50,68,OVER,draftkings -109,2026-09-12T05:47:10,75.0,win
-2026,1,All 13 Sunday games,Dalton Schultz,rec yds,34.5,50.2,strong,0.57,15.7,63,13.0,50,46,OVER,draftkings -111,2026-09-12T05:47:10,35.0,win
-2026,1,All 13 Sunday games,Greg Dulcich,receptions,2.5,3.4,strong,0.52,0.9,62,12.9,49,37,OVER,draftkings -104,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Jack Bech,rec yds,18.0,30.7,strong,0.57,12.7,63,12.6,50,71,OVER,fanduel -114,2026-09-12T05:47:10,23.0,win
-2026,1,All 13 Sunday games,Jordan Love,pass yds,241.5,199.3,strong,-0.55,-42.2,63,12.4,50,-17,UNDER,draftkings -113,2026-09-12T05:47:10,387.0,loss
-2026,1,All 13 Sunday games,Matthew Golden,receptions,3.5,2.2,strong,-0.65,-1.3,65,12.4,52,-38,UNDER,draftkings -121,2026-09-12T05:47:10,6.0,loss
-2026,1,All 13 Sunday games,Tommy Tremble,rec yds,12.5,23.0,strong,0.51,10.5,62,12.1,50,84,OVER,draftkings -109,2026-09-12T05:47:10,25.0,win
-2026,1,All 13 Sunday games,Brian Thomas Jr,rec yds,38.5,53.9,strong,0.53,15.4,62,12.1,50,40,OVER,draftkings -112,2026-09-12T05:47:10,40.0,win
-2026,1,All 13 Sunday games,Bhayshul Tuten,rush yds,48.5,23.9,strong,-0.8,-24.6,62,12.1,50,-51,UNDER,draftkings -111,2026-09-12T05:47:10,66.0,loss
-2026,1,All 13 Sunday games,Dallas Goedert,receptions,3.5,4.6,strong,0.56,1.1,63,12.0,51,32,OVER,draftkings -113,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,Jahmyr Gibbs,rush yds,85.0,52.3,strong,-0.81,-32.7,62,11.9,50,-38,UNDER,fanduel -114,2026-09-12T05:47:10,156.0,loss
-2026,1,All 13 Sunday games,Zay Flowers,rec yds,65.0,84.6,strong,0.52,19.6,62,11.8,50,30,OVER,draftkings -112,2026-09-12T05:47:10,150.0,win
-2026,1,All 13 Sunday games,Sam LaPorta,rec yds,43.0,58.7,strong,0.51,15.7,62,11.8,50,37,OVER,draftkings -112,2026-09-12T05:47:10,48.0,win
-2026,1,All 13 Sunday games,Mason Taylor,rec yds,21.0,32.8,strong,0.51,11.8,62,11.8,50,56,OVER,draftkings -110,2026-09-12T05:47:10,-2.0,loss
-2026,1,All 13 Sunday games,Jahan Dotson,rec yds,14.5,25.2,strong,0.51,10.7,62,11.2,50,74,OVER,fanduel -114,2026-09-12T05:47:10,19.0,win
-2026,1,All 13 Sunday games,Xavier Hutchinson,receptions,2.0,2.8,strong,0.5,0.8,62,10.5,51,42,OVER,fanduel +134,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Rico Dowdle,receptions,1.5,2.7,strong,0.79,1.2,67,10.4,57,82,OVER,fanduel -148,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Quinshon Judkins,receptions,1.5,2.4,strong,0.6,0.9,64,9.6,54,62,OVER,fanduel -130,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Jordan Addison,receptions,3.5,2.4,strong,-0.53,-1.1,62,9.6,52,-30,UNDER,draftkings -118,2026-09-12T05:47:10,0.0,win
-2026,1,All 13 Sunday games,Jalen Nailor,receptions,3.5,2.1,strong,-0.71,-1.4,66,8.7,57,-41,UNDER,draftkings -151,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Khalil Shakir,receptions,3.5,4.5,strong,0.51,1.0,62,8.4,53,29,OVER,fanduel -130,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,Jameson Williams,receptions,3.5,4.8,strong,0.62,1.3,64,8.2,56,36,OVER,draftkings -145,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,De'Von Achane,receptions,4.5,3.0,strong,-0.65,-1.5,65,8.2,56,-33,UNDER,draftkings -140,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,Emeka Egbuka,receptions,4.5,3.3,strong,-0.55,-1.2,62,7.9,55,-27,UNDER,draftkings -130,2026-09-12T05:47:10,5.0,loss
-2026,1,All 13 Sunday games,Brian Thomas Jr,receptions,2.5,3.8,strong,0.74,1.3,66,7.7,59,53,OVER,draftkings -161,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,DeVonta Smith,receptions,5.5,4.2,strong,-0.53,-1.3,62,7.5,55,-24,UNDER,draftkings -137,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Stefon Diggs,receptions,3.5,4.7,strong,0.6,1.2,63,7.2,56,34,OVER,fanduel -148,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,DK Metcalf,receptions,3.5,4.7,strong,0.57,1.2,63,7.0,56,33,OVER,fanduel -136,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,Jack Bech,receptions,1.5,2.4,strong,0.59,0.9,63,6.8,56,61,OVER,fanduel -148,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Jerry Jeudy,receptions,2.5,3.7,strong,0.67,1.2,65,5.4,59,48,OVER,draftkings -171,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,KaVontae Turpin,receptions,1.5,2.2,solid,0.45,0.7,60,26.7,34,47,OVER,draftkings +183,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Mike Gesicki,receptions,2.5,3.2,solid,0.4,0.7,59,17.6,42,29,OVER,draftkings +125,2026-09-12T05:47:10,5.0,win
-2026,1,All 13 Sunday games,Omarion Hampton,receptions,2.5,3.4,solid,0.49,0.9,61,17.3,44,35,OVER,fanduel +124,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Jalen Tolbert,receptions,1.5,2.0,solid,0.32,0.5,58,16.6,41,33,OVER,fanduel +130,2026-09-12T05:47:10,,
-2026,1,All 13 Sunday games,Jalen Hurts,pass TD,1.5,2.0,solid,0.42,0.5,60,15.8,44,33,OVER,fanduel +114,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Isaac TeSlaa,receptions,1.5,2.2,solid,0.47,0.7,61,15.7,45,49,OVER,draftkings +114,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Parker Washington,receptions,4.5,5.2,solid,0.32,0.7,57,14.5,43,16,OVER,draftkings +119,2026-09-12T05:47:10,5.0,win
-2026,1,All 13 Sunday games,DJ Moore,receptions,3.5,2.9,solid,-0.32,-0.6,58,12.8,45,-19,UNDER,draftkings +111,2026-09-12T05:47:10,5.0,loss
-2026,1,All 13 Sunday games,Brenton Strange,receptions,3.5,4.2,solid,0.37,0.7,59,12.3,46,21,OVER,draftkings +108,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Breece Hall,receptions,2.5,1.9,solid,-0.35,-0.6,58,11.8,46,-25,UNDER,fanduel +104,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Gunnar Helm,receptions,2.5,3.2,solid,0.4,0.7,59,11.2,48,28,OVER,fanduel -102,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,Kyle Pitts,rec yds,37.5,51.4,solid,0.48,13.9,61,10.9,50,37,OVER,draftkings -114,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Jerry Jeudy,rec yds,31.5,44.5,solid,0.49,13.0,61,10.9,50,41,OVER,fanduel -114,2026-09-12T05:47:10,26.0,loss
-2026,1,All 13 Sunday games,Jaylin Noel,rec yds,14.0,23.5,solid,0.45,9.5,60,10.5,50,68,OVER,draftkings -111,2026-09-12T05:47:10,53.0,win
-2026,1,All 13 Sunday games,Jacoby Brissett,pass yds,222.5,257.1,solid,0.45,34.6,60,10.5,50,16,OVER,draftkings -111,2026-09-12T05:47:10,277.0,win
-2026,1,All 13 Sunday games,Matthew Golden,rec yds,40.5,27.0,solid,-0.45,-13.5,61,10.3,50,-33,UNDER,draftkings -114,2026-09-12T05:47:10,95.0,loss
-2026,1,All 13 Sunday games,Aaron Jones,receptions,2.5,3.3,solid,0.45,0.8,60,10.2,50,32,OVER,draftkings -111,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Jameson Williams,rec yds,57.5,73.2,solid,0.44,15.7,60,10.1,50,27,OVER,draftkings -114,2026-09-12T05:47:10,45.0,loss
-2026,1,All 13 Sunday games,Cade Otton,rec yds,32.0,43.3,solid,0.42,11.3,60,10.0,50,35,OVER,draftkings -110,2026-09-12T05:47:10,26.0,loss
-2026,1,All 13 Sunday games,Jayden Daniels,pass yds,202.5,169.2,solid,-0.43,-33.3,60,9.9,50,-16,UNDER,draftkings -112,2026-09-12T05:47:10,164.0,win
-2026,1,All 13 Sunday games,Terry McLaurin,rec yds,51.0,65.2,solid,0.43,14.2,60,9.8,50,28,OVER,draftkings -113,2026-09-12T05:47:10,14.0,loss
-2026,1,All 13 Sunday games,Lamar Jackson,rush yds,40.5,20.2,solid,-0.71,-20.2,60,9.7,50,-50,UNDER,fanduel -114,2026-09-12T05:47:10,40.0,win
-2026,1,All 13 Sunday games,Trey McBride,rec yds,56.0,70.1,solid,0.4,14.1,59,9.5,50,25,OVER,draftkings -111,2026-09-12T05:47:10,95.0,win
-2026,1,All 13 Sunday games,Michael Mayer,receptions,4.5,3.7,solid,-0.36,-0.8,58,9.1,49,-18,UNDER,fanduel -108,2026-09-12T05:47:10,6.0,loss
-2026,1,All 13 Sunday games,Pat Freiermuth,rec yds,26.0,35.2,solid,0.37,9.2,59,9.0,50,36,OVER,draftkings -109,2026-09-12T05:47:10,46.0,win
-2026,1,All 13 Sunday games,Justin Jefferson,rec yds,74.0,58.6,solid,-0.38,-15.4,59,8.9,50,-21,UNDER,draftkings -111,2026-09-12T05:47:10,92.0,loss
-2026,1,All 13 Sunday games,Colston Loveland,receptions,4.5,5.5,solid,0.44,1.0,60,8.7,52,22,OVER,draftkings -114,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Xavier Legette,rec yds,18.5,26.3,solid,0.35,7.8,58,8.6,50,42,OVER,draftkings -108,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Ashton Jeanty,rec yds,17.5,25.1,solid,0.34,7.6,58,8.6,49,43,OVER,draftkings -107,2026-09-12T05:47:10,45.0,win
-2026,1,All 13 Sunday games,Nico Collins,rec yds,69.5,83.7,solid,0.36,14.2,58,8.5,50,20,OVER,draftkings -111,2026-09-12T05:47:10,75.0,win
-2026,1,All 13 Sunday games,Trevor Lawrence,pass yds,234.5,262.8,solid,0.37,28.3,59,8.5,50,12,OVER,draftkings -113,2026-09-12T05:47:10,245.0,win
-2026,1,All 13 Sunday games,Breece Hall,rec yds,21.0,12.4,solid,-0.37,-8.6,59,8.5,50,-41,UNDER,draftkings -113,2026-09-12T05:47:10,16.0,win
-2026,1,All 13 Sunday games,Caleb Williams,pass TD,1.5,1.9,solid,0.35,0.4,58,8.3,50,27,OVER,draftkings -113,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Tyjae Spears,receptions,2.5,3.4,solid,0.5,0.9,61,8.3,53,36,OVER,draftkings -121,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Rachaad White,rush yds,24.0,39.5,solid,0.64,15.5,58,8.3,50,64,OVER,draftkings -113,2026-09-12T05:47:10,22.0,loss
-2026,1,All 13 Sunday games,James Cook,rec yds,21.0,13.0,solid,-0.34,-8.0,58,8.1,50,-38,UNDER,draftkings -111,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Jared Goff,pass yds,261.0,287.1,solid,0.34,26.1,58,8.1,50,10,OVER,draftkings -111,2026-09-12T05:47:10,206.0,loss
-2026,1,All 13 Sunday games,Odell Beckham Jr.,rec yds,10.5,17.0,solid,0.33,6.5,58,8.0,50,62,OVER,draftkings -109,2026-09-12T05:47:10,,
-2026,1,All 13 Sunday games,Kyle Pitts,receptions,4.0,4.8,solid,0.37,0.8,59,7.8,51,20,OVER,fanduel +114,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Chuba Hubbard,rush yds,50.5,31.4,solid,-0.61,-19.1,58,7.8,50,-38,UNDER,draftkings -112,2026-09-12T05:47:10,49.0,win
-2026,1,All 13 Sunday games,DJ Moore,rec yds,47.5,37.4,solid,-0.32,-10.1,57,7.7,50,-21,UNDER,draftkings -110,2026-09-12T05:47:10,100.0,loss
-2026,1,All 13 Sunday games,David Montgomery,rush yds,55.5,35.8,solid,-0.61,-19.8,58,7.7,50,-36,UNDER,draftkings -112,2026-09-12T05:47:10,60.0,loss
-2026,1,All 13 Sunday games,Khalil Shakir,rec yds,36.0,44.6,solid,0.3,8.6,57,7.3,50,24,OVER,draftkings -111,2026-09-12T05:47:10,50.0,win
-2026,1,All 13 Sunday games,CeeDee Lamb,rec yds,75.0,62.2,solid,-0.31,-12.8,57,7.3,50,-17,UNDER,draftkings -112,2026-09-12T05:47:10,44.0,win
-2026,1,All 13 Sunday games,Bijan Robinson,rec yds,35.0,26.1,solid,-0.32,-8.9,57,7.2,50,-25,UNDER,fanduel -114,2026-09-12T05:47:10,90.0,loss
-2026,1,All 13 Sunday games,DK Metcalf,rec yds,50.5,60.6,solid,0.31,10.1,57,7.1,50,20,OVER,draftkings -113,2026-09-12T05:47:10,40.0,loss
-2026,1,All 13 Sunday games,Jaylen Warren,rec yds,19.0,11.8,solid,-0.32,-7.2,58,7.1,50,-38,UNDER,fanduel -114,2026-09-12T05:47:10,27.0,loss
-2026,1,All 13 Sunday games,Aaron Jones,rush yds,29.0,43.8,solid,0.58,14.8,57,7.1,50,51,OVER,draftkings -112,2026-09-12T05:47:10,40.0,win
-2026,1,All 13 Sunday games,Jalen Nailor,rec yds,37.5,28.9,solid,-0.3,-8.6,57,7.1,50,-23,UNDER,draftkings -112,2026-09-12T05:47:10,27.0,win
-2026,1,All 13 Sunday games,Dallas Goedert,rec yds,36.5,45.4,solid,0.31,8.9,57,7.1,50,24,OVER,draftkings -114,2026-09-12T05:47:10,77.0,win
-2026,1,All 13 Sunday games,Tetairoa McMillan,receptions,4.5,3.8,solid,-0.32,-0.7,57,7.0,50,-16,UNDER,fanduel -114,2026-09-12T05:47:10,5.0,loss
-2026,1,All 13 Sunday games,Saquon Barkley,rec yds,16.0,9.3,solid,-0.31,-6.7,57,6.8,51,-42,UNDER,fanduel -114,2026-09-12T05:47:10,-3.0,win
-2026,1,All 13 Sunday games,Jahan Dotson,receptions,1.5,2.0,solid,0.32,0.5,58,6.6,51,33,OVER,draftkings -115,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Pat Freiermuth,receptions,2.5,3.1,solid,0.36,0.6,59,4.9,54,26,OVER,draftkings -128,2026-09-12T05:47:10,5.0,win
-2026,1,All 13 Sunday games,Isaiah Likely,receptions,3.5,2.8,solid,-0.35,-0.7,58,4.3,54,-20,UNDER,draftkings -135,2026-09-12T05:47:10,8.0,loss
-2026,1,All 13 Sunday games,Tre Tucker,receptions,4.5,3.6,solid,-0.41,-0.9,59,3.3,56,-20,UNDER,draftkings -145,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Josh Downs,receptions,4.5,3.5,solid,-0.44,-1.0,60,2.8,57,-22,UNDER,draftkings -148,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Aaron Rodgers,pass TD,1.5,1.1,solid,-0.3,-0.4,57,2.0,55,-23,UNDER,fanduel -136,2026-09-12T05:47:10,1.0,win
-2026,1,All 13 Sunday games,Terry McLaurin,receptions,3.5,4.3,solid,0.41,0.8,60,1.3,58,24,OVER,draftkings -155,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Nico Collins,receptions,5.5,4.7,solid,-0.32,-0.8,58,0.8,57,-14,UNDER,fanduel -148,2026-09-12T05:47:10,7.0,loss
-2026,1,All 13 Sunday games,Zay Flowers,receptions,4.5,5.3,solid,0.36,0.8,58,-0.2,59,18,OVER,draftkings -161,2026-09-12T05:47:10,5.0,win
-2026,1,All 13 Sunday games,Rachaad White,receptions,2.5,1.9,solid,-0.35,-0.6,58,-0.3,58,-25,UNDER,draftkings -163,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Kirk Cousins,pass TD,1.5,1.0,solid,-0.42,-0.5,60,-0.5,60,-33,UNDER,draftkings -173,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Tyler Shough,pass TD,1.5,1.1,solid,-0.32,-0.4,57,-1.5,59,-25,UNDER,draftkings -166,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Javonte Williams,receptions,2.5,1.9,solid,-0.32,-0.6,58,-1.9,59,-23,UNDER,draftkings -165,2026-09-12T05:47:10,5.0,loss
-2026,1,All 13 Sunday games,Jared Goff,pass TD,1.5,2.0,solid,0.45,0.5,61,-2.0,63,35,OVER,draftkings -198,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Jaxson Dart,pass TD,1.5,1.1,solid,-0.36,-0.4,58,-2.2,61,-28,UNDER,draftkings -176,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Malik Willis,pass TD,0.5,1.0,solid,0.47,0.5,61,-3.0,64,98,OVER,draftkings -201,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Justin Herbert,pass TD,1.5,1.9,solid,0.33,0.4,58,-6.4,64,26,OVER,fanduel -210,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Jayden Daniels,pass TD,0.5,0.9,solid,0.37,0.4,59,-7.6,66,78,OVER,fanduel -230,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Cam Ward,pass TD,1.5,1.0,solid,-0.39,-0.5,59,-8.2,67,-31,UNDER,draftkings -238,2026-09-12T05:47:10,1.0,win
-2026,1,All 13 Sunday games,Derrick Henry,receptions,1.5,1.0,solid,-0.31,-0.5,57,-9.1,66,-32,UNDER,draftkings -231,2026-09-12T05:47:10,1.0,win
-2026,1,All 13 Sunday games,Kyle Monangai,receptions,1.5,1.9,lean,0.27,0.4,56,22.9,33,28,OVER,draftkings +184,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Samaje Perine,receptions,1.5,1.8,lean,0.19,0.3,54,16.6,38,19,OVER,draftkings +157,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Bhayshul Tuten,receptions,1.5,1.1,lean,-0.29,-0.4,57,15.4,41,-30,UNDER,fanduel +128,2026-09-12T05:47:10,1.0,win
-2026,1,All 13 Sunday games,Kenny Gainwell,receptions,3.5,4.1,lean,0.29,0.6,57,13.8,43,17,OVER,draftkings +126,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Charlie Kolar,receptions,1.5,1.2,lean,-0.16,-0.2,54,13.0,41,-17,UNDER,draftkings +132,2026-09-12T05:47:10,0.0,win
-2026,1,All 13 Sunday games,Harold Fannin Jr.,receptions,4.5,4.9,lean,0.19,0.4,54,12.4,42,9,OVER,fanduel +124,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Trey McBride,receptions,6.5,7.2,lean,0.24,0.7,56,12.1,44,10,OVER,fanduel +120,2026-09-12T05:47:10,9.0,win
-2026,1,All 13 Sunday games,Jaylen Warren,receptions,2.5,2.0,lean,-0.29,-0.5,57,11.6,45,-21,UNDER,draftkings +113,2026-09-12T05:47:10,5.0,loss
-2026,1,All 13 Sunday games,James Cook,receptions,2.5,2.0,lean,-0.3,-0.5,57,11.2,46,-21,UNDER,draftkings +106,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Marvin Harrison Jr.,receptions,3.5,3.2,lean,-0.17,-0.3,54,10.5,43,-10,UNDER,draftkings +116,2026-09-12T05:47:10,1.0,win
-2026,1,All 13 Sunday games,Cam Skattebo,receptions,2.5,2.8,lean,0.16,0.3,54,9.8,44,12,OVER,fanduel +116,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Jaylin Noel,receptions,1.5,2.0,lean,0.3,0.5,57,9.0,48,31,OVER,draftkings -101,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Garrett Wilson,receptions,5.5,4.8,lean,-0.28,-0.7,57,7.3,49,-13,UNDER,draftkings -106,2026-09-12T05:47:10,6.0,loss
-2026,1,All 13 Sunday games,Tyler Warren,rec yds,46.5,37.3,lean,-0.29,-9.2,57,7.1,50,-20,UNDER,draftkings -110,2026-09-12T05:47:10,13.0,win
-2026,1,All 13 Sunday games,Devaughn Vele,receptions,3.5,3.8,lean,0.15,0.3,54,7.0,47,9,OVER,draftkings +104,2026-09-12T05:47:10,7.0,win
-2026,1,All 13 Sunday games,Kyle Monangai,rec yds,6.0,11.4,lean,0.3,5.4,57,6.9,50,90,OVER,draftkings -107,2026-09-12T05:47:10,24.0,win
-2026,1,All 13 Sunday games,Jake Ferguson,receptions,3.5,3.1,lean,-0.21,-0.4,55,6.8,48,-12,UNDER,fanduel -102,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,De'Von Achane,rec yds,27.5,20.3,lean,-0.28,-7.2,57,6.7,50,-26,UNDER,draftkings -112,2026-09-12T05:47:10,30.0,loss
-2026,1,All 13 Sunday games,Emeka Egbuka,rec yds,56.0,45.9,lean,-0.29,-10.1,57,6.6,50,-18,UNDER,draftkings -114,2026-09-12T05:47:10,63.0,loss
-2026,1,All 13 Sunday games,Tee Higgins,rec yds,64.0,74.1,lean,0.27,10.1,56,6.5,50,16,OVER,draftkings -111,2026-09-12T05:47:10,59.0,loss
-2026,1,All 13 Sunday games,Bhayshul Tuten,rec yds,11.5,5.8,lean,-0.28,-5.7,57,6.5,50,-49,UNDER,draftkings -113,2026-09-12T05:47:10,22.0,loss
-2026,1,All 13 Sunday games,Rico Dowdle,rec yds,10.5,15.9,lean,0.27,5.4,56,6.4,50,52,OVER,draftkings -113,2026-09-12T05:47:10,6.0,loss
-2026,1,All 13 Sunday games,Colston Loveland,rec yds,54.5,63.4,lean,0.26,8.9,56,6.4,50,16,OVER,draftkings -110,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Rome Odunze,rec yds,39.5,47.1,lean,0.26,7.6,56,6.4,50,19,OVER,draftkings -109,2026-09-12T05:47:10,52.0,win
-2026,1,All 13 Sunday games,Gunnar Helm,rec yds,22.0,28.1,lean,0.26,6.1,56,6.3,50,28,OVER,draftkings -110,2026-09-12T05:47:10,28.0,win
-2026,1,All 13 Sunday games,Jacory Croskey-Merritt,rec yds,6.5,2.8,lean,-0.2,-3.7,55,6.1,49,-57,UNDER,draftkings -106,2026-09-12T05:47:10,-7.0,win
-2026,1,All 13 Sunday games,Justin Herbert,rush yds,20.0,32.9,lean,0.56,12.9,57,6.0,51,64,OVER,fanduel -114,2026-09-12T05:47:10,29.0,win
-2026,1,All 13 Sunday games,Chase Brown,receptions,3.5,3.9,lean,0.2,0.4,55,5.9,49,12,OVER,fanduel -108,2026-09-12T05:47:10,5.0,win
-2026,1,All 13 Sunday games,Javonte Williams,rush yds,75.0,55.3,lean,-0.52,-19.7,56,5.8,50,-26,UNDER,draftkings -112,2026-09-12T05:47:10,41.0,win
-2026,1,All 13 Sunday games,Rashod Bateman,rec yds,26.5,20.2,lean,-0.25,-6.3,56,5.7,50,-24,UNDER,fanduel -114,2026-09-12T05:47:10,0.0,win
-2026,1,All 13 Sunday games,Bryce Young,pass yds,209.0,190.5,lean,-0.24,-18.5,56,5.6,50,-9,UNDER,draftkings -112,2026-09-12T05:47:10,361.0,loss
-2026,1,All 13 Sunday games,Baker Mayfield,pass yds,232.0,213.8,lean,-0.24,-18.2,56,5.5,50,-8,UNDER,draftkings -113,2026-09-12T05:47:10,216.0,win
-2026,1,All 13 Sunday games,Malik Washington,rec yds,27.0,32.4,lean,0.21,5.4,55,5.4,50,20,OVER,draftkings -109,2026-09-12T05:47:10,53.0,win
-2026,1,All 13 Sunday games,Jalen Coker,rec yds,40.0,47.0,lean,0.24,7.0,56,5.3,50,18,OVER,fanduel -114,2026-09-12T05:47:10,138.0,win
-2026,1,All 13 Sunday games,Kirk Cousins,pass yds,207.0,189.2,lean,-0.23,-17.8,55,5.3,50,-9,UNDER,draftkings -113,2026-09-12T05:47:10,160.0,win
-2026,1,All 13 Sunday games,Xavier Legette,receptions,2.0,2.5,lean,0.29,0.5,57,5.1,52,25,OVER,draftkings +132,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Tyler Shough,pass yds,245.5,261.7,lean,0.21,16.2,55,5.0,50,7,OVER,draftkings -112,2026-09-12T05:47:10,410.0,win
-2026,1,All 13 Sunday games,Garrett Wilson,rec yds,62.5,54.3,lean,-0.22,-8.2,55,5.0,50,-13,UNDER,draftkings -114,2026-09-12T05:47:10,79.0,loss
-2026,1,All 13 Sunday games,Jaxson Dart,pass yds,212.5,195.8,lean,-0.22,-16.8,55,5.0,50,-8,UNDER,draftkings -113,2026-09-12T05:47:10,230.0,loss
-2026,1,All 13 Sunday games,Alec Pierce,receptions,3.0,3.3,lean,0.15,0.3,54,4.9,49,10,OVER,draftkings +137,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,Samaje Perine,rec yds,6.5,9.9,lean,0.18,3.4,54,4.9,49,52,OVER,draftkings -107,2026-09-12T05:47:10,30.0,win
-2026,1,All 13 Sunday games,Omarion Hampton,rec yds,13.0,17.8,lean,0.23,4.8,56,4.9,51,37,OVER,fanduel -114,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Woody Marks,receptions,1.5,1.9,lean,0.26,0.4,56,4.8,51,27,OVER,draftkings -112,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Omarion Hampton,rush yds,68.0,51.2,lean,-0.47,-16.8,55,4.7,50,-25,UNDER,draftkings -110,2026-09-12T05:47:10,43.0,win
-2026,1,All 13 Sunday games,DeVonta Smith,rec yds,67.0,59.4,lean,-0.2,-7.6,55,4.7,50,-11,UNDER,draftkings -112,2026-09-12T05:47:10,53.0,win
-2026,1,All 13 Sunday games,Malik Nabers,rec yds,58.5,65.4,lean,0.19,6.9,55,4.7,50,12,OVER,draftkings -111,2026-09-12T05:47:10,69.0,win
-2026,1,All 13 Sunday games,Kyle Monangai,rush yds,31.0,43.4,lean,0.48,12.4,55,4.6,50,40,OVER,draftkings -113,2026-09-12T05:47:10,100.0,win
-2026,1,All 13 Sunday games,Rachaad White,rec yds,14.5,10.9,lean,-0.17,-3.6,54,4.5,49,-24,UNDER,draftkings -107,2026-09-12T05:47:10,5.0,win
-2026,1,All 13 Sunday games,Rome Odunze,receptions,3.0,3.4,lean,0.19,0.4,55,4.3,50,12,OVER,fanduel +124,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Tucker Kraft,rec yds,45.5,51.6,lean,0.19,6.1,55,4.3,50,13,OVER,fanduel -114,2026-09-12T05:47:10,65.0,win
-2026,1,All 13 Sunday games,Devaughn Vele,rec yds,40.0,45.1,lean,0.17,5.1,54,4.2,50,13,OVER,draftkings -111,2026-09-12T05:47:10,69.0,win
-2026,1,All 13 Sunday games,Mark Andrews,rec yds,35.5,30.3,lean,-0.18,-5.2,54,4.1,50,-15,UNDER,fanduel -114,2026-09-12T05:47:10,49.0,loss
-2026,1,All 13 Sunday games,Brian Robinson Jr.,rush yds,19.5,29.7,lean,0.45,10.2,54,4.0,50,53,OVER,draftkings -112,2026-09-12T05:47:10,31.0,win
-2026,1,All 13 Sunday games,CeeDee Lamb,receptions,6.0,5.5,lean,-0.2,-0.5,55,4.0,51,-8,UNDER,draftkings +120,2026-09-12T05:47:10,5.0,win
-2026,1,All 13 Sunday games,Quinshon Judkins,rush yds,58.0,43.4,lean,-0.44,-14.6,54,3.9,50,-25,UNDER,draftkings -111,2026-09-12T05:47:10,33.0,win
-2026,1,All 13 Sunday games,Jordan Addison,rec yds,43.0,37.9,lean,-0.17,-5.1,54,3.9,50,-12,UNDER,draftkings -113,2026-09-12T05:47:10,0.0,win
-2026,1,All 13 Sunday games,Christian Watson,rec yds,57.5,62.9,lean,0.15,5.4,54,3.7,50,9,OVER,draftkings -111,2026-09-12T05:47:10,147.0,win
-2026,1,All 13 Sunday games,T.J. Hockenson,rec yds,27.0,30.8,lean,0.15,3.8,54,3.7,50,14,OVER,draftkings -111,2026-09-12T05:47:10,36.0,win
-2026,1,All 13 Sunday games,Tre Tucker,rec yds,46.5,41.3,lean,-0.16,-5.2,54,3.7,50,-11,UNDER,draftkings -114,2026-09-12T05:47:10,27.0,win
-2026,1,All 13 Sunday games,Drake London,rec yds,55.0,60.6,lean,0.16,5.6,54,3.6,50,10,OVER,draftkings -114,2026-09-12T05:47:10,29.0,loss
-2026,1,All 13 Sunday games,Justice Hill,receptions,2.0,1.7,lean,-0.19,-0.3,54,3.6,51,-16,UNDER,draftkings +137,2026-09-12T05:47:10,1.0,win
-2026,1,All 13 Sunday games,Dalton Kincaid,receptions,3.5,2.9,lean,-0.29,-0.6,57,3.5,53,-17,UNDER,fanduel -130,2026-09-12T05:47:10,5.0,loss
-2026,1,All 13 Sunday games,Quinshon Judkins,rec yds,9.5,12.9,lean,0.17,3.4,54,3.5,51,36,OVER,fanduel -114,2026-09-12T05:47:10,17.0,win
-2026,1,All 13 Sunday games,Chris Olave,rec yds,76.0,82.5,lean,0.16,6.5,54,3.5,50,9,OVER,draftkings -114,2026-09-12T05:47:10,182.0,win
-2026,1,All 13 Sunday games,Jalen Coker,receptions,3.5,4.0,lean,0.27,0.5,56,3.1,53,15,OVER,fanduel -128,2026-09-12T05:47:10,8.0,win
-2026,1,All 13 Sunday games,Jordan Love,pass TD,1.5,1.2,lean,-0.21,-0.2,55,3.0,52,-17,UNDER,draftkings -118,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Saquon Barkley,receptions,2.5,2.1,lean,-0.21,-0.4,55,2.8,52,-15,UNDER,draftkings -120,2026-09-12T05:47:10,1.0,win
-2026,1,All 13 Sunday games,Tony Pollard,receptions,1.5,1.8,lean,0.17,0.3,54,2.5,52,18,OVER,draftkings -115,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Kyler Murray,pass TD,1.5,1.2,lean,-0.27,-0.3,56,-0.2,56,-21,UNDER,draftkings -146,2026-09-12T05:47:10,0.0,win
-2026,1,All 13 Sunday games,Tee Higgins,receptions,4.5,5.1,lean,0.25,0.6,56,-0.8,57,13,OVER,fanduel -148,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Bryce Young,pass TD,1.5,1.3,lean,-0.18,-0.2,54,-1.0,55,-14,UNDER,draftkings -133,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Chris Olave,receptions,6.5,6.1,lean,-0.16,-0.4,54,-1.2,55,-7,UNDER,fanduel -136,2026-09-12T05:47:10,10.0,loss
-2026,1,All 13 Sunday games,Chris Godwin,receptions,4.5,4.2,lean,-0.16,-0.3,54,-1.6,55,-8,UNDER,draftkings -140,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,Malik Washington,receptions,2.5,2.9,lean,0.25,0.4,56,-1.6,57,18,OVER,draftkings -157,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,George Pickens,receptions,4.5,4.9,lean,0.19,0.4,54,-2.9,57,9,OVER,draftkings -155,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Daniel Jones,pass TD,1.5,1.3,lean,-0.19,-0.2,54,-3.4,58,-15,UNDER,draftkings -156,2026-09-12T05:47:10,1.0,win
-2026,1,All 13 Sunday games,D'Andre Swift,receptions,2.5,2.0,lean,-0.25,-0.5,56,-3.7,60,-18,UNDER,draftkings -154,2026-09-12T05:47:10,1.0,win
-2026,1,All 13 Sunday games,Deshaun Watson,pass TD,0.5,0.7,lean,0.18,0.2,54,-5.5,60,38,OVER,draftkings -169,2026-09-12T05:47:10,1.0,win
-2026,1,All 13 Sunday games,Kendrick Bourne,receptions,2.5,2.1,lean,-0.21,-0.4,55,-6.9,62,-15,UNDER,draftkings -190,2026-09-12T05:47:10,8.0,loss
-2026,1,All 13 Sunday games,Josh Allen,pass TD,1.5,1.3,lean,-0.2,-0.2,55,-7.8,62,-15,UNDER,draftkings -191,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Joe Burrow,pass TD,2.5,2.6,—,0.09,0.1,52,16.5,36,4,OVER,draftkings +171,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Jacoby Brissett,pass TD,1.5,1.6,—,0.06,0.1,51,14.2,37,5,OVER,draftkings +157,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Kayshon Boutte,receptions,2.5,2.7,—,0.13,0.2,53,12.0,41,9,OVER,draftkings +133,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Odell Beckham Jr.,receptions,1.5,1.6,—,0.08,0.1,52,11.1,41,9,OVER,draftkings +131,2026-09-12T05:47:10,,
-2026,1,All 13 Sunday games,Jared Goff,rush yds,0.5,1.9,—,0.08,1.4,50,10.4,40,278,OVER,fanduel +142,2026-09-12T05:47:10,2.0,win
-2026,1,All 13 Sunday games,Ja'Marr Chase,receptions,7.5,7.7,—,0.05,0.2,51,7.8,43,2,OVER,draftkings +116,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Justin Jefferson,receptions,5.5,5.4,—,-0.05,-0.1,51,7.8,43,-2,UNDER,draftkings +121,2026-09-12T05:47:10,8.0,loss
-2026,1,All 13 Sunday games,Juwan Johnson,receptions,4.5,4.5,—,0.0,0.0,50,7.7,42,0,OVER,draftkings +128,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Ladd McConkey,receptions,4.5,4.2,—,-0.12,-0.3,53,7.3,45,-6,UNDER,fanduel +110,2026-09-12T05:47:10,5.0,loss
-2026,1,All 13 Sunday games,Jonathan Taylor,receptions,2.5,2.5,—,-0.02,-0.0,51,7.0,44,-2,UNDER,fanduel +116,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Tyler Warren,receptions,4.5,4.2,—,-0.12,-0.3,53,6.7,46,-6,UNDER,draftkings +110,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Ashton Jeanty,receptions,3.5,3.8,—,0.12,0.2,53,6.7,46,7,OVER,draftkings +103,2026-09-12T05:47:10,6.0,win
-2026,1,All 13 Sunday games,Dak Prescott,pass TD,1.5,1.4,—,-0.04,-0.1,51,6.7,44,-3,UNDER,fanduel +114,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Luther Burden III,receptions,4.5,4.5,—,0.0,0.0,50,5.6,44,0,UNDER,fanduel +112,2026-09-12T05:47:10,5.0,loss
-2026,1,All 13 Sunday games,Jayden Reed,receptions,3.5,3.5,—,-0.01,-0.0,50,5.6,45,-1,UNDER,draftkings +125,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Lamar Jackson,pass TD,1.5,1.6,—,0.08,0.1,52,4.8,47,6,OVER,draftkings +105,2026-09-12T05:47:10,1.0,loss
-2026,1,All 13 Sunday games,Jonathon Brooks,receptions,1.5,1.3,—,-0.14,-0.2,53,4.4,49,-15,UNDER,draftkings -108,2026-09-12T05:47:10,1.0,win
-2026,1,All 13 Sunday games,Jonathan Taylor,rec yds,18.5,15.2,—,-0.15,-3.3,54,3.8,50,-18,UNDER,draftkings -109,2026-09-12T05:47:10,23.0,loss
-2026,1,All 13 Sunday games,Tucker Kraft,receptions,4.0,3.8,—,-0.09,-0.2,52,3.7,49,-5,UNDER,fanduel +128,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Aaron Rodgers,pass yds,212.5,223.9,—,0.15,11.4,54,3.5,50,5,OVER,draftkings -112,2026-09-12T05:47:10,221.0,win
-2026,1,All 13 Sunday games,David Montgomery,receptions,1.5,1.4,—,-0.03,-0.1,51,3.5,47,-3,UNDER,draftkings +105,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,C.J. Stroud,pass yds,221.5,232.4,—,0.14,10.9,53,3.3,50,5,OVER,draftkings -113,2026-09-12T05:47:10,274.0,win
-2026,1,All 13 Sunday games,Isaiah Likely,rec yds,35.0,31.4,—,-0.13,-3.6,53,3.3,50,-10,UNDER,draftkings -110,2026-09-12T05:47:10,78.0,loss
-2026,1,All 13 Sunday games,D'Andre Swift,rec yds,14.0,11.4,—,-0.13,-2.6,53,3.2,50,-19,UNDER,draftkings -110,2026-09-12T05:47:10,10.0,win
-2026,1,All 13 Sunday games,Samaje Perine,rush yds,18.0,26.8,—,0.39,8.8,53,3.2,49,49,OVER,draftkings -107,2026-09-12T05:47:10,20.0,win
-2026,1,All 13 Sunday games,Jahmyr Gibbs,rec yds,30.5,26.7,—,-0.14,-3.8,53,3.2,50,-13,UNDER,draftkings -114,2026-09-12T05:47:10,30.0,win
-2026,1,All 13 Sunday games,Caleb Williams,pass yds,228.0,237.9,—,0.13,9.9,53,3.1,50,4,OVER,draftkings -112,2026-09-12T05:47:10,269.0,win
-2026,1,All 13 Sunday games,Baker Mayfield,rush yds,16.0,25.2,—,0.42,9.2,53,3.1,50,57,OVER,draftkings -114,2026-09-12T05:47:10,30.0,win
-2026,1,All 13 Sunday games,Michael Pittman Jr.,rec yds,38.5,34.8,—,-0.13,-3.7,53,3.0,50,-10,UNDER,draftkings -112,2026-09-12T05:47:10,58.0,loss
-2026,1,All 13 Sunday games,Daniel Jones,pass yds,234.0,224.2,—,-0.13,-9.8,53,2.9,50,-4,UNDER,draftkings -113,2026-09-12T05:47:10,166.0,win
-2026,1,All 13 Sunday games,Justin Herbert,pass yds,237.0,245.9,—,0.12,8.9,53,2.9,50,4,OVER,draftkings -111,2026-09-12T05:47:10,209.0,loss
-2026,1,All 13 Sunday games,Kyler Murray,pass yds,221.0,230.7,—,0.13,9.7,53,2.9,50,4,OVER,draftkings -113,2026-09-12T05:47:10,18.0,loss
-2026,1,All 13 Sunday games,Jake Ferguson,rec yds,30.0,26.8,—,-0.12,-3.2,53,2.6,50,-11,UNDER,fanduel -114,2026-09-12T05:47:10,6.0,win
-2026,1,All 13 Sunday games,Javonte Williams,rec yds,10.5,8.0,—,-0.13,-2.5,53,2.6,51,-24,UNDER,fanduel -114,2026-09-12T05:47:10,31.0,loss
-2026,1,All 13 Sunday games,Lamar Jackson,pass yds,220.0,212.3,—,-0.1,-7.7,52,2.5,50,-3,UNDER,draftkings -111,2026-09-12T05:47:10,324.0,loss
-2026,1,All 13 Sunday games,Braelon Allen,rush yds,18.0,26.9,—,0.4,8.9,53,2.5,50,50,OVER,fanduel -114,2026-09-12T05:47:10,40.0,win
-2026,1,All 13 Sunday games,T.J. Hockenson,receptions,3.5,3.6,—,0.05,0.1,51,2.5,49,3,OVER,draftkings -108,2026-09-12T05:47:10,4.0,win
-2026,1,All 13 Sunday games,Cam Skattebo,rec yds,15.5,17.4,—,0.09,1.9,52,2.5,50,12,OVER,draftkings -108,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Dontayvion Wicks,rec yds,29.0,26.4,—,-0.1,-2.6,52,2.4,50,-9,UNDER,draftkings -112,2026-09-12T05:47:10,73.0,loss
-2026,1,All 13 Sunday games,Charlie Kolar,rec yds,17.5,15.0,—,-0.11,-2.5,53,2.3,50,-14,UNDER,fanduel -114,2026-09-12T05:47:10,0.0,win
-2026,1,All 13 Sunday games,Aaron Rodgers,rush yds,0.5,6.6,—,0.34,6.1,51,2.2,49,1224,OVER,draftkings -105,2026-09-12T05:47:10,-3.0,loss
-2026,1,All 13 Sunday games,Ja'Marr Chase,rec yds,85.0,89.5,—,0.1,4.5,52,2.2,50,5,OVER,draftkings -114,2026-09-12T05:47:10,12.0,loss
-2026,1,All 13 Sunday games,Aaron Jones,rec yds,14.5,16.1,—,0.08,1.6,52,2.2,50,11,OVER,draftkings -108,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Kyler Murray,rush yds,24.0,32.7,—,0.36,8.7,52,2.2,50,36,OVER,draftkings -109,2026-09-12T05:47:10,9.0,loss
-2026,1,All 13 Sunday games,Josh Downs,rec yds,45.5,42.3,—,-0.1,-3.2,52,2.1,50,-7,UNDER,fanduel -114,2026-09-12T05:47:10,37.0,win
-2026,1,All 13 Sunday games,Chuba Hubbard,receptions,2.0,1.8,—,-0.1,-0.2,52,2.1,50,-8,UNDER,fanduel +140,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Chris Godwin,rec yds,47.5,44.5,—,-0.1,-3.0,52,2.0,50,-6,UNDER,fanduel -114,2026-09-12T05:47:10,40.0,win
-2026,1,All 13 Sunday games,Amon-Ra St. Brown,rec yds,76.5,80.1,—,0.09,3.6,52,2.0,50,5,OVER,draftkings -113,2026-09-12T05:47:10,67.0,loss
-2026,1,All 13 Sunday games,Travis Etienne Jr.,receptions,2.5,2.4,—,-0.05,-0.1,51,2.0,49,-4,UNDER,draftkings -106,2026-09-12T05:47:10,7.0,loss
-2026,1,All 13 Sunday games,Geno Smith,pass yds,210.5,204.1,—,-0.08,-6.4,52,2.0,50,-3,UNDER,draftkings -112,2026-09-12T05:47:10,215.0,loss
-2026,1,All 13 Sunday games,Marvin Harrison Jr.,rec yds,47.5,45.1,—,-0.08,-2.4,52,2.0,50,-5,UNDER,draftkings -110,2026-09-12T05:47:10,33.0,win
-2026,1,All 13 Sunday games,Jonathon Brooks,rec yds,9.5,7.7,—,-0.1,-1.8,52,1.9,50,-19,UNDER,draftkings -114,2026-09-12T05:47:10,48.0,loss
-2026,1,All 13 Sunday games,Jacory Croskey-Merritt,rush yds,40.0,50.4,—,0.37,10.4,52,1.9,50,26,OVER,draftkings -114,2026-09-12T05:47:10,63.0,win
-2026,1,All 13 Sunday games,Kenny Gainwell,rec yds,23.5,25.6,—,0.09,2.1,52,1.8,50,9,OVER,draftkings -114,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Christian Watson,receptions,4.0,3.9,—,-0.03,-0.1,51,1.5,49,-2,UNDER,fanduel +132,2026-09-12T05:47:10,6.0,loss
-2026,1,All 13 Sunday games,George Pickens,rec yds,67.5,70.0,—,0.07,2.5,52,1.5,50,4,OVER,draftkings -113,2026-09-12T05:47:10,28.0,loss
-2026,1,All 13 Sunday games,David Montgomery,rec yds,11.0,9.4,—,-0.08,-1.6,52,1.4,51,-15,UNDER,fanduel -114,2026-09-12T05:47:10,19.0,loss
-2026,1,All 13 Sunday games,Woody Marks,rec yds,9.5,8.6,—,-0.05,-0.9,51,1.4,50,-9,UNDER,draftkings -109,2026-09-12T05:47:10,-2.0,win
-2026,1,All 13 Sunday games,Bucky Irving,rec yds,13.5,15.3,—,0.09,1.8,52,1.4,51,13,OVER,fanduel -114,2026-09-12T05:47:10,48.0,win
-2026,1,All 13 Sunday games,Travis Etienne Jr.,rec yds,14.5,16.0,—,0.07,1.5,52,1.4,50,10,OVER,fanduel -114,2026-09-12T05:47:10,32.0,win
-2026,1,All 13 Sunday games,Travis Etienne Jr.,rush yds,56.5,45.2,—,-0.35,-11.3,52,1.4,50,-20,UNDER,draftkings -114,2026-09-12T05:47:10,46.0,win
-2026,1,All 13 Sunday games,Ladd McConkey,rec yds,57.5,59.7,—,0.06,2.2,52,1.4,50,4,OVER,draftkings -113,2026-09-12T05:47:10,82.0,win
-2026,1,All 13 Sunday games,Jayden Reed,rec yds,45.0,43.4,—,-0.05,-1.6,51,1.3,50,-3,UNDER,draftkings -111,2026-09-12T05:47:10,20.0,win
-2026,1,All 13 Sunday games,Derrick Henry,rec yds,7.0,7.5,—,0.03,0.5,51,1.2,49,7,OVER,draftkings -107,2026-09-12T05:47:10,19.0,win
-2026,1,All 13 Sunday games,Justice Hill,rec yds,11.0,9.9,—,-0.05,-1.1,51,1.1,50,-10,UNDER,draftkings -114,2026-09-12T05:47:10,10.0,win
-2026,1,All 13 Sunday games,Josh Allen,pass yds,223.5,220.1,—,-0.04,-3.4,51,1.1,50,-2,UNDER,draftkings -112,2026-09-12T05:47:10,334.0,loss
-2026,1,All 13 Sunday games,Dalton Kincaid,rec yds,37.5,38.8,—,0.05,1.3,51,1.1,50,4,OVER,draftkings -112,2026-09-12T05:47:10,130.0,win
-2026,1,All 13 Sunday games,Justice Hill,rush yds,8.5,15.2,—,0.33,6.7,51,1.0,50,79,OVER,fanduel -114,2026-09-12T05:47:10,18.0,win
-2026,1,All 13 Sunday games,Chase Brown,rec yds,24.0,25.4,—,0.06,1.4,51,1.0,50,6,OVER,fanduel -114,2026-09-12T05:47:10,22.0,loss
-2026,1,All 13 Sunday games,Adonai Mitchell,rec yds,31.5,32.9,—,0.05,1.4,51,0.9,50,4,OVER,fanduel -114,2026-09-12T05:47:10,60.0,win
-2026,1,All 13 Sunday games,Ashton Jeanty,rush yds,59.0,48.6,—,-0.31,-10.4,51,0.9,50,-18,UNDER,draftkings -111,2026-09-12T05:47:10,102.0,loss
-2026,1,All 13 Sunday games,Malik Nabers,receptions,5.0,4.9,—,-0.05,-0.1,51,0.8,50,-2,UNDER,draftkings +125,2026-09-12T05:47:10,6.0,loss
-2026,1,All 13 Sunday games,Baker Mayfield,pass TD,1.5,1.4,—,-0.12,-0.1,53,0.7,52,-9,UNDER,draftkings -120,2026-09-12T05:47:10,0.0,win
-2026,1,All 13 Sunday games,Joe Burrow,pass yds,270.0,267.8,—,-0.03,-2.2,51,0.7,50,-1,UNDER,draftkings -112,2026-09-12T05:47:10,254.0,win
-2026,1,All 13 Sunday games,Tony Pollard,rec yds,9.5,9.1,—,-0.02,-0.4,51,0.7,50,-5,UNDER,draftkings -111,2026-09-12T05:47:10,-1.0,win
-2026,1,All 13 Sunday games,Jordan Love,rush yds,10.0,11.2,—,0.06,1.2,50,0.7,49,12,OVER,draftkings -106,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Dontayvion Wicks,receptions,2.5,2.6,—,0.04,0.1,51,0.7,50,3,OVER,draftkings -110,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Deshaun Watson,pass yds,178.0,180.1,—,0.03,2.1,51,0.6,50,1,OVER,draftkings -112,2026-09-12T05:47:10,205.0,win
-2026,1,All 13 Sunday games,Trevor Lawrence,rush yds,17.0,23.7,—,0.3,6.7,50,0.6,50,39,OVER,draftkings -111,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Amon-Ra St. Brown,receptions,6.5,6.3,—,-0.06,-0.2,51,0.5,51,-2,UNDER,fanduel -114,2026-09-12T05:47:10,10.0,loss
-2026,1,All 13 Sunday games,Tyjae Spears,rec yds,16.5,16.6,—,0.0,0.1,50,0.5,50,0,OVER,draftkings -108,2026-09-12T05:47:10,12.0,loss
-2026,1,All 13 Sunday games,Michael Mayer,rec yds,40.0,39.3,—,-0.02,-0.7,51,0.5,50,-2,UNDER,draftkings -113,2026-09-12T05:47:10,32.0,win
-2026,1,All 13 Sunday games,Chris Rodriguez Jr.,rush yds,36.5,44.8,—,0.3,8.3,51,0.4,50,23,OVER,draftkings -113,2026-09-12T05:47:10,23.0,loss
-2026,1,All 13 Sunday games,Jalen Hurts,pass yds,213.0,211.7,—,-0.02,-1.3,50,0.4,50,-1,UNDER,draftkings -112,2026-09-12T05:47:10,203.0,win
-2026,1,All 13 Sunday games,Jalen Hurts,rush yds,29.0,23.7,—,-0.21,-5.3,50,0.4,50,-18,UNDER,draftkings -108,2026-09-12T05:47:10,46.0,loss
-2026,1,All 13 Sunday games,Luther Burden III,rec yds,58.0,58.6,—,0.02,0.6,50,0.3,50,1,OVER,draftkings -113,2026-09-12T05:47:10,63.0,win
-2026,1,All 13 Sunday games,Jonathon Brooks,rush yds,32.5,25.5,—,-0.27,-7.0,50,0.3,50,-22,UNDER,draftkings -109,2026-09-12T05:47:10,14.0,win
-2026,1,All 13 Sunday games,Breece Hall,rush yds,63.5,62.1,—,-0.04,-1.4,50,0.3,50,-2,UNDER,draftkings -109,2026-09-12T05:47:10,102.0,loss
-2026,1,All 13 Sunday games,Geno Smith,rush yds,6.5,2.9,—,-0.19,-3.6,50,0.3,50,-56,UNDER,draftkings -109,2026-09-12T05:47:10,7.0,loss
-2026,1,All 13 Sunday games,Jordan Mason,rush yds,44.0,36.2,—,-0.27,-7.8,50,0.3,50,-18,UNDER,draftkings -109,2026-09-12T05:47:10,59.0,loss
-2026,1,All 13 Sunday games,James Cook,rush yds,75.5,77.9,—,0.06,2.4,50,0.2,50,3,OVER,draftkings -110,2026-09-12T05:47:10,57.0,loss
-2026,1,All 13 Sunday games,Josh Allen,rush yds,32.0,34.5,—,0.1,2.5,50,0.2,50,8,OVER,draftkings -110,2026-09-12T05:47:10,23.0,loss
-2026,1,All 13 Sunday games,C.J. Stroud,rush yds,10.0,7.6,—,-0.12,-2.4,50,0.2,50,-24,UNDER,draftkings -111,2026-09-12T05:47:10,15.0,loss
-2026,1,All 13 Sunday games,Tetairoa McMillan,rec yds,60.5,60.0,—,-0.01,-0.5,50,0.2,50,-1,UNDER,draftkings -113,2026-09-12T05:47:10,75.0,loss
-2026,1,All 13 Sunday games,Chase Brown,rush yds,57.5,50.8,—,-0.2,-6.7,50,0.2,50,-12,UNDER,draftkings -110,2026-09-12T05:47:10,56.0,win
-2026,1,All 13 Sunday games,Tony Pollard,rush yds,49.5,54.9,—,0.17,5.4,50,0.2,50,11,OVER,draftkings -110,2026-09-12T05:47:10,35.0,loss
-2026,1,All 13 Sunday games,Saquon Barkley,rush yds,75.5,66.0,—,-0.25,-9.5,50,0.2,50,-13,UNDER,draftkings -110,2026-09-12T05:47:10,83.0,loss
-2026,1,All 13 Sunday games,Rico Dowdle,rush yds,45.5,48.6,—,0.1,3.1,50,0.1,50,7,OVER,draftkings -111,2026-09-12T05:47:10,15.0,loss
-2026,1,All 13 Sunday games,Jonathan Taylor,rush yds,76.5,67.0,—,-0.25,-9.5,50,0.1,50,-12,UNDER,draftkings -111,2026-09-12T05:47:10,98.0,loss
-2026,1,All 13 Sunday games,Caleb Williams,rush yds,20.0,19.3,—,-0.03,-0.7,50,0.1,50,-3,UNDER,draftkings -111,2026-09-12T05:47:10,65.0,loss
-2026,1,All 13 Sunday games,Bryce Young,rush yds,14.0,17.1,—,0.15,3.1,50,0.1,50,22,OVER,draftkings -111,2026-09-12T05:47:10,10.0,loss
-2026,1,All 13 Sunday games,Adonai Mitchell,receptions,2.5,2.7,—,0.11,0.2,53,0.1,52,8,OVER,draftkings -123,2026-09-12T05:47:10,3.0,win
-2026,1,All 13 Sunday games,Jaxson Dart,rush yds,31.5,37.2,—,0.22,5.7,50,0.1,50,18,OVER,draftkings -111,2026-09-12T05:47:10,54.0,win
-2026,1,All 13 Sunday games,Bijan Robinson,receptions,4.5,4.2,—,-0.12,-0.3,53,-0.0,53,-6,UNDER,draftkings -127,2026-09-12T05:47:10,8.0,loss
-2026,1,All 13 Sunday games,Jaylen Warren,rush yds,42.0,49.6,—,0.26,7.6,50,0.0,50,18,OVER,draftkings -112,2026-09-12T05:47:10,46.0,win
-2026,1,All 13 Sunday games,Derrick Henry,rush yds,80.5,89.8,—,0.24,9.3,50,0.0,50,12,OVER,draftkings -112,2026-09-12T05:47:10,144.0,win
-2026,1,All 13 Sunday games,Dak Prescott,pass yds,262.0,262.2,—,0.0,0.2,50,-0.0,50,0,OVER,draftkings -113,2026-09-12T05:47:10,175.0,loss
-2026,1,All 13 Sunday games,Cam Skattebo,rush yds,49.0,47.6,—,-0.05,-1.4,50,0.0,50,-3,UNDER,draftkings -112,2026-09-12T05:47:10,81.0,loss
-2026,1,All 13 Sunday games,Bijan Robinson,rush yds,78.5,81.9,—,0.09,3.4,50,-0.1,50,4,OVER,draftkings -113,2026-09-12T05:47:10,83.0,win
-2026,1,All 13 Sunday games,Tyler Shough,rush yds,16.5,21.0,—,0.2,4.5,50,-0.1,50,27,OVER,draftkings -113,2026-09-12T05:47:10,8.0,loss
-2026,1,All 13 Sunday games,Tyjae Spears,rush yds,25.5,21.0,—,-0.18,-4.5,50,-0.1,50,-18,UNDER,draftkings -113,2026-09-12T05:47:10,12.0,win
-2026,1,All 13 Sunday games,Tyler Allgeier,rush yds,29.5,35.3,—,0.23,5.8,50,-0.1,50,20,OVER,draftkings -113,2026-09-12T05:47:10,61.0,win
-2026,1,All 13 Sunday games,D'Andre Swift,rush yds,63.0,59.3,—,-0.11,-3.7,50,-0.2,50,-6,UNDER,draftkings -114,2026-09-12T05:47:10,124.0,loss
-2026,1,All 13 Sunday games,Joe Burrow,rush yds,8.0,6.8,—,-0.06,-1.2,50,-0.2,50,-15,UNDER,draftkings -114,2026-09-12T05:47:10,20.0,loss
-2026,1,All 13 Sunday games,Cam Ward,rush yds,9.5,11.0,—,0.08,1.5,50,-0.2,50,16,OVER,draftkings -114,2026-09-12T05:47:10,21.0,win
-2026,1,All 13 Sunday games,Jacoby Brissett,rush yds,10.5,11.4,—,0.04,0.9,50,-0.2,50,8,OVER,draftkings -114,2026-09-12T05:47:10,14.0,win
-2026,1,All 13 Sunday games,De'Von Achane,rush yds,69.0,78.9,—,0.27,9.9,50,-0.2,50,14,OVER,draftkings -114,2026-09-12T05:47:10,36.0,loss
-2026,1,All 13 Sunday games,Daniel Jones,rush yds,11.5,11.5,—,0.0,0.0,50,-0.3,50,0,OVER,fanduel -114,2026-09-12T05:47:10,4.0,loss
-2026,1,All 13 Sunday games,Chuba Hubbard,rec yds,10.5,10.6,—,0.01,0.1,50,-0.3,50,1,OVER,fanduel -114,2026-09-12T05:47:10,38.0,win
-2026,1,All 13 Sunday games,Bucky Irving,rush yds,58.5,52.8,—,-0.17,-5.7,50,-0.3,50,-10,UNDER,fanduel -114,2026-09-12T05:47:10,45.0,win
-2026,1,All 13 Sunday games,Deshaun Watson,rush yds,19.0,18.3,—,-0.03,-0.7,50,-0.3,50,-3,UNDER,fanduel -114,2026-09-12T05:47:10,38.0,loss
-2026,1,All 13 Sunday games,Kenny Gainwell,rush yds,21.0,26.2,—,0.22,5.2,50,-0.4,50,25,OVER,fanduel -114,2026-09-12T05:47:10,15.0,loss
-2026,1,All 13 Sunday games,Jayden Daniels,rush yds,36.5,42.9,—,0.23,6.4,50,-0.4,50,18,OVER,fanduel -114,2026-09-12T05:47:10,31.0,loss
-2026,1,All 13 Sunday games,Dak Prescott,rush yds,8.0,10.3,—,0.12,2.3,50,-1.2,51,29,OVER,draftkings -118,2026-09-12T05:47:10,14.0,win
-2026,1,All 13 Sunday games,Mark Andrews,receptions,3.5,3.2,—,-0.12,-0.2,53,-3.5,56,-7,UNDER,draftkings -147,2026-09-12T05:47:10,4.0,loss
-2026,1,All 13 Sunday games,Jahmyr Gibbs,receptions,4.5,4.3,—,-0.09,-0.2,52,-4.2,56,-5,UNDER,draftkings -141,2026-09-12T05:47:10,5.0,loss
-2026,1,All 13 Sunday games,C.J. Stroud,pass TD,1.5,1.4,—,-0.12,-0.1,53,-4.5,57,-9,UNDER,fanduel -152,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Kirk Cousins,rush yds,0.5,0.3,—,-0.01,-0.2,50,-6.6,57,-38,UNDER,draftkings -144,2026-09-12T05:47:10,-6.0,win
-2026,1,All 13 Sunday games,Drake London,receptions,4.5,4.5,—,0.01,0.0,50,-6.7,57,0,OVER,draftkings -148,2026-09-12T05:47:10,2.0,loss
-2026,1,All 13 Sunday games,Michael Pittman Jr.,receptions,3.5,3.6,—,0.06,0.1,51,-7.6,59,3,OVER,draftkings -152,2026-09-12T05:47:10,3.0,loss
-2026,1,All 13 Sunday games,Rashod Bateman,receptions,1.5,1.7,—,0.14,0.2,53,-8.6,62,15,OVER,draftkings -183,2026-09-12T05:47:10,0.0,loss
-2026,1,All 13 Sunday games,Bucky Irving,receptions,2.5,2.3,—,-0.1,-0.2,52,-8.9,61,-7,UNDER,draftkings -177,2026-09-12T05:47:10,7.0,loss
+season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,edge %,lean,best,pulled_at,actual,result,role_ratio
+2026,1,Atlanta Falcons @ Pittsburgh Steelers,Tua Tagovailoa,pass TD,0.5,1.0,strong,0.52,0.5,62,-4.6,66,108,OVER,draftkings -224,2026-09-11T10:36:01,,,
+2026,1,Atlanta Falcons @ Pittsburgh Steelers,Tua Tagovailoa,pass yds,199.5,196.1,—,-0.04,-3.4,51,0.9,50,-2,UNDER,draftkings -113,2026-09-11T10:36:01,,,
+2026,1,Atlanta Falcons @ Pittsburgh Steelers,Tua Tagovailoa,rush yds,1.5,1.5,—,-0.0,-0.0,50,-0.9,51,-2,UNDER,draftkings -108,2026-09-11T10:36:01,,,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Colby Parkinson,receptions,2.5,4.0,high,0.86,1.5,68,27.3,41,62,OVER,betmgm +135,2026-09-11T17:34:34,1.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,George Kittle,receptions,3.5,5.8,high,1.14,2.3,72,24.5,48,66,OVER,betonlineag +100,2026-09-11T17:34:34,2.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,George Kittle,rec yds,34.5,64.9,high,1.1,30.4,72,21.7,50,88,OVER,bovada +150,2026-09-11T17:34:34,12.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Tyler Higbee,rec yds,17.5,38.2,high,0.94,20.8,70,19.7,50,119,OVER,betmgm -111,2026-09-11T17:34:34,12.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Demarcus Robinson,rec yds,11.5,29.5,high,0.89,18.0,69,19.2,50,156,OVER,draftkings -108,2026-09-11T17:34:34,50.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Colby Parkinson,rec yds,19.0,39.7,high,0.92,20.7,69,19.1,50,109,OVER,draftkings -110,2026-09-11T17:34:34,6.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Matthew Stafford,pass TD,1.5,2.8,high,1.1,1.3,72,15.3,57,85,OVER,bovada -145,2026-09-11T17:34:34,0.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Tyler Higbee,receptions,1.5,3.3,high,1.13,1.8,72,15.1,57,117,OVER,betonlineag -143,2026-09-11T17:34:34,2.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Demarcus Robinson,receptions,1.5,2.4,strong,0.59,0.9,63,27.3,36,61,OVER,fanduel +162,2026-09-11T17:34:34,2.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Deebo Samuel,rec yds,29.5,50.3,strong,0.8,20.8,67,17.3,50,70,OVER,draftkings -113,2026-09-11T17:34:34,48.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Jordan Whittington,rec yds,8.5,18.9,strong,0.54,10.4,62,12.4,50,122,OVER,fanduel -113,2026-09-11T17:34:34,8.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Deebo Samuel,receptions,2.5,3.8,strong,0.75,1.3,66,11.0,55,54,OVER,fanduel -136,2026-09-11T17:34:34,6.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Brock Purdy,pass TD,1.5,1.9,solid,0.35,0.4,58,10.7,48,27,OVER,betrivers +104,2026-09-11T17:34:34,3.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Christian McCaffrey,rec yds,40.5,29.0,solid,-0.39,-11.5,59,8.9,50,-28,UNDER,bovada +150,2026-09-11T17:34:34,20.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Mike Evans,receptions,3.5,4.3,solid,0.4,0.8,59,4.4,55,23,OVER,fanduel -132,2026-09-11T17:34:34,6.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Kyren Williams,receptions,1.5,2.2,solid,0.45,0.7,60,3.9,57,47,OVER,fanduel -148,2026-09-11T17:34:34,3.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Blake Corum,receptions,0.5,0.9,solid,0.33,0.4,58,-2.7,61,88,OVER,fanduel -172,2026-09-11T17:34:34,0.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Matthew Stafford,pass yds,263.0,282.8,lean,0.26,19.8,56,6.3,50,8,OVER,bovada +170,2026-09-11T17:34:34,155.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Mike Evans,rec yds,49.5,56.4,lean,0.21,6.9,55,4.9,50,14,OVER,bovada +140,2026-09-11T17:34:34,49.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Davante Adams,rec yds,51.5,58.1,lean,0.2,6.6,55,4.8,50,13,OVER,bovada +135,2026-09-11T17:34:34,26.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Terrance Ferguson,receptions,1.5,1.9,lean,0.23,0.4,55,-3.3,59,24,OVER,betrivers -143,2026-09-11T17:34:34,0.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Jordan Whittington,receptions,1.5,1.6,—,0.06,0.1,52,18.4,33,7,OVER,fanduel +182,2026-09-11T17:34:34,1.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Matthew Stafford,rush yds,0.5,1.2,—,0.04,0.7,51,9.7,41,148,OVER,fanduel +154,2026-09-11T17:34:34,-1.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Kyren Williams,rush yds,55.5,64.6,—,0.28,9.1,57,6.9,50,16,OVER,bovada +155,2026-09-11T17:34:34,41.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Christian McCaffrey,rush yds,59.5,67.5,—,0.24,8.0,56,5.5,50,13,OVER,bovada +145,2026-09-11T17:34:34,68.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Davante Adams,receptions,4.5,4.7,—,0.1,0.2,52,5.0,47,5,OVER,betmgm +105,2026-09-11T17:34:34,3.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Puka Nacua,rec yds,90.5,96.1,—,0.12,5.6,53,2.6,50,6,OVER,bovada +170,2026-09-11T17:34:34,74.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Blake Corum,rec yds,3.5,5.3,—,0.1,1.8,52,2.5,50,52,OVER,draftkings -113,2026-09-11T17:34:34,0.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Kyren Williams,rec yds,11.0,12.7,—,0.08,1.7,52,2.2,50,15,OVER,draftkings -109,2026-09-11T17:34:34,24.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Blake Corum,rush yds,44.5,47.0,—,0.08,2.5,52,2.0,50,6,OVER,bovada +155,2026-09-11T17:34:34,54.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Christian McCaffrey,receptions,4.5,4.4,—,-0.04,-0.1,51,1.2,50,-2,UNDER,betonlineag +105,2026-09-11T17:34:34,5.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Brock Purdy,pass yds,242.5,240.2,—,-0.03,-2.3,51,0.9,50,-1,UNDER,bovada +185,2026-09-11T17:34:34,205.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Brock Purdy,rush yds,18.5,18.4,—,-0.0,-0.1,50,0.6,49,0,UNDER,bovada +105,2026-09-11T17:34:34,29.0,loss,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Terrance Ferguson,rec yds,24.0,24.0,—,-0.0,-0.0,50,0.1,50,0,UNDER,draftkings -112,2026-09-11T17:34:34,0.0,win,
+2026,1,San Francisco 49ers @ Los Angeles Rams,Puka Nacua,receptions,7.5,7.1,—,-0.13,-0.4,53,-2.3,55,-5,UNDER,betmgm -140,2026-09-11T17:34:34,5.0,win,
+2026,1,All 13 Sunday games,Jauan Jennings,receptions,2.5,4.3,high,1.01,1.8,71,30.5,40,72,OVER,draftkings +134,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,KaVontae Turpin,rec yds,8.5,45.9,high,1.96,37.4,78,29.3,49,440,OVER,draftkings -105,2026-09-12T05:47:10,8.0,loss,
+2026,1,All 13 Sunday games,Ryan Flournoy,receptions,2.5,4.0,high,0.86,1.5,68,26.5,42,62,OVER,draftkings +134,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Dawson Knox,receptions,1.5,3.2,high,1.1,1.7,72,25.8,46,114,OVER,draftkings +106,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Michael Wilson,rec yds,41.5,84.8,high,1.44,43.3,76,25.8,50,104,OVER,draftkings -110,2026-09-12T05:47:10,56.0,win,
+2026,1,All 13 Sunday games,Theo Johnson,rec yds,13.5,44.2,high,1.48,30.7,76,25.8,50,227,OVER,draftkings -112,2026-09-12T05:47:10,9.0,loss,
+2026,1,All 13 Sunday games,Keenan Allen,receptions,3.5,5.1,high,0.81,1.6,67,24.1,43,47,OVER,fanduel +120,2026-09-12T05:47:10,6.0,win,
+2026,1,All 13 Sunday games,Jauan Jennings,rec yds,22.5,53.3,high,1.3,30.8,74,24.1,50,137,OVER,draftkings -113,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Calvin Ridley,rec yds,27.5,58.4,high,1.22,30.9,73,23.4,50,113,OVER,draftkings -111,2026-09-12T05:47:10,,,
+2026,1,All 13 Sunday games,Darnell Mooney,receptions,1.5,3.0,high,0.98,1.5,70,23.0,47,101,OVER,draftkings +100,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Wan'Dale Robinson,receptions,4.5,6.7,high,0.98,2.2,70,22.5,48,49,OVER,fanduel -102,2026-09-12T05:47:10,5.0,win,
+2026,1,All 13 Sunday games,Dawson Knox,rec yds,13.5,35.5,high,1.06,22.0,71,21.8,50,163,OVER,draftkings -108,2026-09-12T05:47:10,7.0,loss,
+2026,1,All 13 Sunday games,Theo Johnson,receptions,1.5,3.2,high,1.1,1.7,72,21.5,50,114,OVER,fanduel -112,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Malik Willis,pass yds,180.0,97.0,high,-1.05,-83.0,71,21.1,50,-46,UNDER,draftkings -113,2026-09-12T05:47:10,220.0,loss,
+2026,1,All 13 Sunday games,Jakobi Meyers,receptions,3.5,5.4,high,0.96,1.9,70,20.9,49,55,OVER,draftkings -103,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Keenan Allen,rec yds,27.0,52.5,high,1.01,25.5,71,20.5,50,94,OVER,draftkings -113,2026-09-12T05:47:10,32.0,win,
+2026,1,All 13 Sunday games,Andrei Iosivas,rec yds,15.0,36.0,high,0.99,21.0,70,20.2,50,140,OVER,draftkings -113,2026-09-12T05:47:10,12.0,loss,
+2026,1,All 13 Sunday games,Andrei Iosivas,receptions,1.5,2.8,high,0.85,1.3,68,19.4,49,88,OVER,draftkings -102,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Wan'Dale Robinson,rec yds,42.5,69.2,high,0.88,26.7,69,18.9,50,63,OVER,draftkings -109,2026-09-12T05:47:10,38.0,loss,
+2026,1,All 13 Sunday games,Darnell Mooney,rec yds,19.5,40.0,high,0.9,20.5,69,18.9,50,105,OVER,draftkings -113,2026-09-12T05:47:10,27.0,win,
+2026,1,All 13 Sunday games,Michael Wilson,receptions,3.5,5.4,high,0.92,1.9,69,18.1,51,53,OVER,draftkings -118,2026-09-12T05:47:10,5.0,win,
+2026,1,All 13 Sunday games,Kalif Raymond,rec yds,14.5,33.3,high,0.89,18.8,69,18.0,51,130,OVER,draftkings -116,2026-09-12T05:47:10,84.0,win,
+2026,1,All 13 Sunday games,Jakobi Meyers,rec yds,37.5,61.1,high,0.82,23.6,68,17.5,50,63,OVER,draftkings -114,2026-09-12T05:47:10,40.0,win,
+2026,1,All 13 Sunday games,Cole Kmet,receptions,1.5,2.8,high,0.83,1.3,68,16.5,51,86,OVER,draftkings -119,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Chig Okonkwo,receptions,2.5,4.1,high,0.88,1.6,69,11.7,57,63,OVER,draftkings -150,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Darnell Washington,receptions,1.5,3.1,high,1.0,1.6,71,11.2,59,104,OVER,draftkings -171,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Darren Waller,receptions,1.5,2.9,high,0.92,1.4,69,9.1,60,95,OVER,draftkings -169,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Geno Smith,pass TD,0.5,1.3,high,0.81,0.8,67,0.4,67,168,OVER,fanduel -245,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Calvin Ridley,receptions,2.5,3.7,strong,0.68,1.2,65,26.2,39,48,OVER,draftkings +144,2026-09-12T05:47:10,,,
+2026,1,All 13 Sunday games,Mason Taylor,receptions,2.5,3.7,strong,0.69,1.2,65,19.7,46,49,OVER,draftkings +106,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Cade Otton,receptions,3.5,4.8,strong,0.62,1.3,64,18.4,46,36,OVER,draftkings +106,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Xavier Hutchinson,rec yds,18.5,36.1,strong,0.79,17.6,67,17.4,50,95,OVER,draftkings -109,2026-09-12T05:47:10,32.0,win,
+2026,1,All 13 Sunday games,Quentin Johnston,receptions,3.5,4.6,strong,0.55,1.1,63,17.4,45,32,OVER,fanduel +116,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Darnell Washington,rec yds,16.0,33.1,strong,0.79,17.1,67,17.0,50,107,OVER,draftkings -113,2026-09-12T05:47:10,18.0,win,
+2026,1,All 13 Sunday games,Parker Washington,rec yds,53.0,79.7,strong,0.79,26.7,67,17.0,50,50,OVER,draftkings -113,2026-09-12T05:47:10,83.0,win,
+2026,1,All 13 Sunday games,Woody Marks,rush yds,25.5,51.6,strong,1.06,26.1,67,16.7,50,102,OVER,fanduel -114,2026-09-12T05:47:10,42.0,win,
+2026,1,All 13 Sunday games,Tre Harris,receptions,2.5,3.5,strong,0.59,1.0,63,16.4,47,42,OVER,draftkings +102,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Ryan Flournoy,rec yds,25.5,43.7,strong,0.74,18.2,66,16.2,50,71,OVER,draftkings -111,2026-09-12T05:47:10,22.0,loss,
+2026,1,All 13 Sunday games,Darren Waller,rec yds,16.5,31.8,strong,0.7,15.3,66,16.0,49,93,OVER,draftkings -107,2026-09-12T05:47:10,28.0,win,
+2026,1,All 13 Sunday games,Tank Bigsby,rush yds,17.5,40.4,strong,1.02,22.9,66,16.0,50,131,OVER,draftkings -114,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Harold Fannin Jr.,rec yds,36.5,56.2,strong,0.69,19.7,65,15.6,50,54,OVER,draftkings -110,2026-09-12T05:47:10,21.0,loss,
+2026,1,All 13 Sunday games,Dalton Schultz,receptions,3.5,4.9,strong,0.68,1.4,65,15.4,50,39,OVER,draftkings -110,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,Jalen Tolbert,rec yds,12.0,26.7,strong,0.72,14.7,66,15.4,51,122,OVER,fanduel -114,2026-09-12T05:47:10,,,
+2026,1,All 13 Sunday games,Mike Gesicki,rec yds,21.0,37.1,strong,0.69,16.1,65,15.3,50,77,OVER,draftkings -113,2026-09-12T05:47:10,78.0,win,
+2026,1,All 13 Sunday games,Greg Dulcich,rec yds,25.5,42.5,strong,0.69,17.0,65,15.2,50,67,OVER,draftkings -112,2026-09-12T05:47:10,18.0,loss,
+2026,1,All 13 Sunday games,Cole Kmet,rec yds,14.0,27.8,strong,0.66,13.8,65,15.0,50,98,OVER,draftkings -109,2026-09-12T05:47:10,35.0,win,
+2026,1,All 13 Sunday games,Quentin Johnston,rec yds,42.5,63.1,strong,0.68,20.6,65,14.8,50,48,OVER,draftkings -114,2026-09-12T05:47:10,17.0,loss,
+2026,1,All 13 Sunday games,Trevor Lawrence,pass TD,1.5,2.2,strong,0.59,0.7,63,14.4,49,46,OVER,fanduel -106,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,Isaac TeSlaa,rec yds,17.0,30.8,strong,0.63,13.8,64,14.4,50,81,OVER,draftkings -110,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Kalif Raymond,receptions,1.5,2.5,strong,0.61,1.0,64,14.2,50,63,OVER,draftkings -111,2026-09-12T05:47:10,8.0,win,
+2026,1,All 13 Sunday games,Kayshon Boutte,rec yds,26.5,41.8,strong,0.61,15.3,64,13.9,50,58,OVER,draftkings -110,2026-09-12T05:47:10,21.0,loss,
+2026,1,All 13 Sunday games,Stefon Diggs,rec yds,41.5,59.9,strong,0.61,18.4,64,13.9,50,44,OVER,draftkings -111,2026-09-12T05:47:10,55.0,win,
+2026,1,All 13 Sunday games,Tommy Tremble,receptions,1.5,2.3,strong,0.52,0.8,62,13.8,48,54,OVER,draftkings -102,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Sam LaPorta,receptions,4.0,5.4,strong,0.65,1.4,64,13.8,51,34,OVER,draftkings +123,2026-09-12T05:47:10,5.0,win,
+2026,1,All 13 Sunday games,Alec Pierce,rec yds,43.5,62.5,strong,0.62,19.0,64,13.7,50,44,OVER,draftkings -114,2026-09-12T05:47:10,61.0,win,
+2026,1,All 13 Sunday games,Chig Okonkwo,rec yds,25.5,40.7,strong,0.61,15.2,64,13.7,50,59,OVER,draftkings -113,2026-09-12T05:47:10,16.0,loss,
+2026,1,All 13 Sunday games,Brenton Strange,rec yds,35.5,51.8,strong,0.58,16.3,63,13.5,50,46,OVER,draftkings -109,2026-09-12T05:47:10,23.0,loss,
+2026,1,All 13 Sunday games,Cam Ward,pass yds,202.0,248.7,strong,0.6,46.7,63,13.4,50,23,OVER,draftkings -113,2026-09-12T05:47:10,140.0,loss,
+2026,1,All 13 Sunday games,Tre Harris,rec yds,26.5,40.9,strong,0.57,14.4,63,13.3,50,54,OVER,draftkings -109,2026-09-12T05:47:10,20.0,loss,
+2026,1,All 13 Sunday games,Juwan Johnson,rec yds,42.0,59.9,strong,0.59,17.9,63,13.2,50,43,OVER,draftkings -114,2026-09-12T05:47:10,54.0,win,
+2026,1,All 13 Sunday games,Kendrick Bourne,rec yds,18.5,31.1,strong,0.56,12.6,63,13.1,50,68,OVER,draftkings -109,2026-09-12T05:47:10,75.0,win,
+2026,1,All 13 Sunday games,Dalton Schultz,rec yds,34.5,50.2,strong,0.57,15.7,63,13.0,50,46,OVER,draftkings -111,2026-09-12T05:47:10,35.0,win,
+2026,1,All 13 Sunday games,Greg Dulcich,receptions,2.5,3.4,strong,0.52,0.9,62,12.9,49,37,OVER,draftkings -104,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Jack Bech,rec yds,18.0,30.7,strong,0.57,12.7,63,12.6,50,71,OVER,fanduel -114,2026-09-12T05:47:10,23.0,win,
+2026,1,All 13 Sunday games,Jordan Love,pass yds,241.5,199.3,strong,-0.55,-42.2,63,12.4,50,-17,UNDER,draftkings -113,2026-09-12T05:47:10,387.0,loss,
+2026,1,All 13 Sunday games,Matthew Golden,receptions,3.5,2.2,strong,-0.65,-1.3,65,12.4,52,-38,UNDER,draftkings -121,2026-09-12T05:47:10,6.0,loss,
+2026,1,All 13 Sunday games,Tommy Tremble,rec yds,12.5,23.0,strong,0.51,10.5,62,12.1,50,84,OVER,draftkings -109,2026-09-12T05:47:10,25.0,win,
+2026,1,All 13 Sunday games,Brian Thomas Jr,rec yds,38.5,53.9,strong,0.53,15.4,62,12.1,50,40,OVER,draftkings -112,2026-09-12T05:47:10,40.0,win,
+2026,1,All 13 Sunday games,Bhayshul Tuten,rush yds,48.5,23.9,strong,-0.8,-24.6,62,12.1,50,-51,UNDER,draftkings -111,2026-09-12T05:47:10,66.0,loss,
+2026,1,All 13 Sunday games,Dallas Goedert,receptions,3.5,4.6,strong,0.56,1.1,63,12.0,51,32,OVER,draftkings -113,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,Jahmyr Gibbs,rush yds,85.0,52.3,strong,-0.81,-32.7,62,11.9,50,-38,UNDER,fanduel -114,2026-09-12T05:47:10,156.0,loss,
+2026,1,All 13 Sunday games,Zay Flowers,rec yds,65.0,84.6,strong,0.52,19.6,62,11.8,50,30,OVER,draftkings -112,2026-09-12T05:47:10,150.0,win,
+2026,1,All 13 Sunday games,Sam LaPorta,rec yds,43.0,58.7,strong,0.51,15.7,62,11.8,50,37,OVER,draftkings -112,2026-09-12T05:47:10,48.0,win,
+2026,1,All 13 Sunday games,Mason Taylor,rec yds,21.0,32.8,strong,0.51,11.8,62,11.8,50,56,OVER,draftkings -110,2026-09-12T05:47:10,-2.0,loss,
+2026,1,All 13 Sunday games,Jahan Dotson,rec yds,14.5,25.2,strong,0.51,10.7,62,11.2,50,74,OVER,fanduel -114,2026-09-12T05:47:10,19.0,win,
+2026,1,All 13 Sunday games,Xavier Hutchinson,receptions,2.0,2.8,strong,0.5,0.8,62,10.5,51,42,OVER,fanduel +134,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Rico Dowdle,receptions,1.5,2.7,strong,0.79,1.2,67,10.4,57,82,OVER,fanduel -148,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Quinshon Judkins,receptions,1.5,2.4,strong,0.6,0.9,64,9.6,54,62,OVER,fanduel -130,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Jordan Addison,receptions,3.5,2.4,strong,-0.53,-1.1,62,9.6,52,-30,UNDER,draftkings -118,2026-09-12T05:47:10,0.0,win,
+2026,1,All 13 Sunday games,Jalen Nailor,receptions,3.5,2.1,strong,-0.71,-1.4,66,8.7,57,-41,UNDER,draftkings -151,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Khalil Shakir,receptions,3.5,4.5,strong,0.51,1.0,62,8.4,53,29,OVER,fanduel -130,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,Jameson Williams,receptions,3.5,4.8,strong,0.62,1.3,64,8.2,56,36,OVER,draftkings -145,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,De'Von Achane,receptions,4.5,3.0,strong,-0.65,-1.5,65,8.2,56,-33,UNDER,draftkings -140,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,Emeka Egbuka,receptions,4.5,3.3,strong,-0.55,-1.2,62,7.9,55,-27,UNDER,draftkings -130,2026-09-12T05:47:10,5.0,loss,
+2026,1,All 13 Sunday games,Brian Thomas Jr,receptions,2.5,3.8,strong,0.74,1.3,66,7.7,59,53,OVER,draftkings -161,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,DeVonta Smith,receptions,5.5,4.2,strong,-0.53,-1.3,62,7.5,55,-24,UNDER,draftkings -137,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Stefon Diggs,receptions,3.5,4.7,strong,0.6,1.2,63,7.2,56,34,OVER,fanduel -148,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,DK Metcalf,receptions,3.5,4.7,strong,0.57,1.2,63,7.0,56,33,OVER,fanduel -136,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,Jack Bech,receptions,1.5,2.4,strong,0.59,0.9,63,6.8,56,61,OVER,fanduel -148,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Jerry Jeudy,receptions,2.5,3.7,strong,0.67,1.2,65,5.4,59,48,OVER,draftkings -171,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,KaVontae Turpin,receptions,1.5,2.2,solid,0.45,0.7,60,26.7,34,47,OVER,draftkings +183,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Mike Gesicki,receptions,2.5,3.2,solid,0.4,0.7,59,17.6,42,29,OVER,draftkings +125,2026-09-12T05:47:10,5.0,win,
+2026,1,All 13 Sunday games,Omarion Hampton,receptions,2.5,3.4,solid,0.49,0.9,61,17.3,44,35,OVER,fanduel +124,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Jalen Tolbert,receptions,1.5,2.0,solid,0.32,0.5,58,16.6,41,33,OVER,fanduel +130,2026-09-12T05:47:10,,,
+2026,1,All 13 Sunday games,Jalen Hurts,pass TD,1.5,2.0,solid,0.42,0.5,60,15.8,44,33,OVER,fanduel +114,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Isaac TeSlaa,receptions,1.5,2.2,solid,0.47,0.7,61,15.7,45,49,OVER,draftkings +114,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Parker Washington,receptions,4.5,5.2,solid,0.32,0.7,57,14.5,43,16,OVER,draftkings +119,2026-09-12T05:47:10,5.0,win,
+2026,1,All 13 Sunday games,DJ Moore,receptions,3.5,2.9,solid,-0.32,-0.6,58,12.8,45,-19,UNDER,draftkings +111,2026-09-12T05:47:10,5.0,loss,
+2026,1,All 13 Sunday games,Brenton Strange,receptions,3.5,4.2,solid,0.37,0.7,59,12.3,46,21,OVER,draftkings +108,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Breece Hall,receptions,2.5,1.9,solid,-0.35,-0.6,58,11.8,46,-25,UNDER,fanduel +104,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Gunnar Helm,receptions,2.5,3.2,solid,0.4,0.7,59,11.2,48,28,OVER,fanduel -102,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,Kyle Pitts,rec yds,37.5,51.4,solid,0.48,13.9,61,10.9,50,37,OVER,draftkings -114,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Jerry Jeudy,rec yds,31.5,44.5,solid,0.49,13.0,61,10.9,50,41,OVER,fanduel -114,2026-09-12T05:47:10,26.0,loss,
+2026,1,All 13 Sunday games,Jaylin Noel,rec yds,14.0,23.5,solid,0.45,9.5,60,10.5,50,68,OVER,draftkings -111,2026-09-12T05:47:10,53.0,win,
+2026,1,All 13 Sunday games,Jacoby Brissett,pass yds,222.5,257.1,solid,0.45,34.6,60,10.5,50,16,OVER,draftkings -111,2026-09-12T05:47:10,277.0,win,
+2026,1,All 13 Sunday games,Matthew Golden,rec yds,40.5,27.0,solid,-0.45,-13.5,61,10.3,50,-33,UNDER,draftkings -114,2026-09-12T05:47:10,95.0,loss,
+2026,1,All 13 Sunday games,Aaron Jones,receptions,2.5,3.3,solid,0.45,0.8,60,10.2,50,32,OVER,draftkings -111,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Jameson Williams,rec yds,57.5,73.2,solid,0.44,15.7,60,10.1,50,27,OVER,draftkings -114,2026-09-12T05:47:10,45.0,loss,
+2026,1,All 13 Sunday games,Cade Otton,rec yds,32.0,43.3,solid,0.42,11.3,60,10.0,50,35,OVER,draftkings -110,2026-09-12T05:47:10,26.0,loss,
+2026,1,All 13 Sunday games,Jayden Daniels,pass yds,202.5,169.2,solid,-0.43,-33.3,60,9.9,50,-16,UNDER,draftkings -112,2026-09-12T05:47:10,164.0,win,
+2026,1,All 13 Sunday games,Terry McLaurin,rec yds,51.0,65.2,solid,0.43,14.2,60,9.8,50,28,OVER,draftkings -113,2026-09-12T05:47:10,14.0,loss,
+2026,1,All 13 Sunday games,Lamar Jackson,rush yds,40.5,20.2,solid,-0.71,-20.2,60,9.7,50,-50,UNDER,fanduel -114,2026-09-12T05:47:10,40.0,win,
+2026,1,All 13 Sunday games,Trey McBride,rec yds,56.0,70.1,solid,0.4,14.1,59,9.5,50,25,OVER,draftkings -111,2026-09-12T05:47:10,95.0,win,
+2026,1,All 13 Sunday games,Michael Mayer,receptions,4.5,3.7,solid,-0.36,-0.8,58,9.1,49,-18,UNDER,fanduel -108,2026-09-12T05:47:10,6.0,loss,
+2026,1,All 13 Sunday games,Pat Freiermuth,rec yds,26.0,35.2,solid,0.37,9.2,59,9.0,50,36,OVER,draftkings -109,2026-09-12T05:47:10,46.0,win,
+2026,1,All 13 Sunday games,Justin Jefferson,rec yds,74.0,58.6,solid,-0.38,-15.4,59,8.9,50,-21,UNDER,draftkings -111,2026-09-12T05:47:10,92.0,loss,
+2026,1,All 13 Sunday games,Colston Loveland,receptions,4.5,5.5,solid,0.44,1.0,60,8.7,52,22,OVER,draftkings -114,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Xavier Legette,rec yds,18.5,26.3,solid,0.35,7.8,58,8.6,50,42,OVER,draftkings -108,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Ashton Jeanty,rec yds,17.5,25.1,solid,0.34,7.6,58,8.6,49,43,OVER,draftkings -107,2026-09-12T05:47:10,45.0,win,
+2026,1,All 13 Sunday games,Nico Collins,rec yds,69.5,83.7,solid,0.36,14.2,58,8.5,50,20,OVER,draftkings -111,2026-09-12T05:47:10,75.0,win,
+2026,1,All 13 Sunday games,Trevor Lawrence,pass yds,234.5,262.8,solid,0.37,28.3,59,8.5,50,12,OVER,draftkings -113,2026-09-12T05:47:10,245.0,win,
+2026,1,All 13 Sunday games,Breece Hall,rec yds,21.0,12.4,solid,-0.37,-8.6,59,8.5,50,-41,UNDER,draftkings -113,2026-09-12T05:47:10,16.0,win,
+2026,1,All 13 Sunday games,Caleb Williams,pass TD,1.5,1.9,solid,0.35,0.4,58,8.3,50,27,OVER,draftkings -113,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Tyjae Spears,receptions,2.5,3.4,solid,0.5,0.9,61,8.3,53,36,OVER,draftkings -121,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Rachaad White,rush yds,24.0,39.5,solid,0.64,15.5,58,8.3,50,64,OVER,draftkings -113,2026-09-12T05:47:10,22.0,loss,
+2026,1,All 13 Sunday games,James Cook,rec yds,21.0,13.0,solid,-0.34,-8.0,58,8.1,50,-38,UNDER,draftkings -111,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Jared Goff,pass yds,261.0,287.1,solid,0.34,26.1,58,8.1,50,10,OVER,draftkings -111,2026-09-12T05:47:10,206.0,loss,
+2026,1,All 13 Sunday games,Odell Beckham Jr.,rec yds,10.5,17.0,solid,0.33,6.5,58,8.0,50,62,OVER,draftkings -109,2026-09-12T05:47:10,,,
+2026,1,All 13 Sunday games,Kyle Pitts,receptions,4.0,4.8,solid,0.37,0.8,59,7.8,51,20,OVER,fanduel +114,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Chuba Hubbard,rush yds,50.5,31.4,solid,-0.61,-19.1,58,7.8,50,-38,UNDER,draftkings -112,2026-09-12T05:47:10,49.0,win,
+2026,1,All 13 Sunday games,DJ Moore,rec yds,47.5,37.4,solid,-0.32,-10.1,57,7.7,50,-21,UNDER,draftkings -110,2026-09-12T05:47:10,100.0,loss,
+2026,1,All 13 Sunday games,David Montgomery,rush yds,55.5,35.8,solid,-0.61,-19.8,58,7.7,50,-36,UNDER,draftkings -112,2026-09-12T05:47:10,60.0,loss,
+2026,1,All 13 Sunday games,Khalil Shakir,rec yds,36.0,44.6,solid,0.3,8.6,57,7.3,50,24,OVER,draftkings -111,2026-09-12T05:47:10,50.0,win,
+2026,1,All 13 Sunday games,CeeDee Lamb,rec yds,75.0,62.2,solid,-0.31,-12.8,57,7.3,50,-17,UNDER,draftkings -112,2026-09-12T05:47:10,44.0,win,
+2026,1,All 13 Sunday games,Bijan Robinson,rec yds,35.0,26.1,solid,-0.32,-8.9,57,7.2,50,-25,UNDER,fanduel -114,2026-09-12T05:47:10,90.0,loss,
+2026,1,All 13 Sunday games,DK Metcalf,rec yds,50.5,60.6,solid,0.31,10.1,57,7.1,50,20,OVER,draftkings -113,2026-09-12T05:47:10,40.0,loss,
+2026,1,All 13 Sunday games,Jaylen Warren,rec yds,19.0,11.8,solid,-0.32,-7.2,58,7.1,50,-38,UNDER,fanduel -114,2026-09-12T05:47:10,27.0,loss,
+2026,1,All 13 Sunday games,Aaron Jones,rush yds,29.0,43.8,solid,0.58,14.8,57,7.1,50,51,OVER,draftkings -112,2026-09-12T05:47:10,40.0,win,
+2026,1,All 13 Sunday games,Jalen Nailor,rec yds,37.5,28.9,solid,-0.3,-8.6,57,7.1,50,-23,UNDER,draftkings -112,2026-09-12T05:47:10,27.0,win,
+2026,1,All 13 Sunday games,Dallas Goedert,rec yds,36.5,45.4,solid,0.31,8.9,57,7.1,50,24,OVER,draftkings -114,2026-09-12T05:47:10,77.0,win,
+2026,1,All 13 Sunday games,Tetairoa McMillan,receptions,4.5,3.8,solid,-0.32,-0.7,57,7.0,50,-16,UNDER,fanduel -114,2026-09-12T05:47:10,5.0,loss,
+2026,1,All 13 Sunday games,Saquon Barkley,rec yds,16.0,9.3,solid,-0.31,-6.7,57,6.8,51,-42,UNDER,fanduel -114,2026-09-12T05:47:10,-3.0,win,
+2026,1,All 13 Sunday games,Jahan Dotson,receptions,1.5,2.0,solid,0.32,0.5,58,6.6,51,33,OVER,draftkings -115,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Pat Freiermuth,receptions,2.5,3.1,solid,0.36,0.6,59,4.9,54,26,OVER,draftkings -128,2026-09-12T05:47:10,5.0,win,
+2026,1,All 13 Sunday games,Isaiah Likely,receptions,3.5,2.8,solid,-0.35,-0.7,58,4.3,54,-20,UNDER,draftkings -135,2026-09-12T05:47:10,8.0,loss,
+2026,1,All 13 Sunday games,Tre Tucker,receptions,4.5,3.6,solid,-0.41,-0.9,59,3.3,56,-20,UNDER,draftkings -145,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Josh Downs,receptions,4.5,3.5,solid,-0.44,-1.0,60,2.8,57,-22,UNDER,draftkings -148,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Aaron Rodgers,pass TD,1.5,1.1,solid,-0.3,-0.4,57,2.0,55,-23,UNDER,fanduel -136,2026-09-12T05:47:10,1.0,win,
+2026,1,All 13 Sunday games,Terry McLaurin,receptions,3.5,4.3,solid,0.41,0.8,60,1.3,58,24,OVER,draftkings -155,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Nico Collins,receptions,5.5,4.7,solid,-0.32,-0.8,58,0.8,57,-14,UNDER,fanduel -148,2026-09-12T05:47:10,7.0,loss,
+2026,1,All 13 Sunday games,Zay Flowers,receptions,4.5,5.3,solid,0.36,0.8,58,-0.2,59,18,OVER,draftkings -161,2026-09-12T05:47:10,5.0,win,
+2026,1,All 13 Sunday games,Rachaad White,receptions,2.5,1.9,solid,-0.35,-0.6,58,-0.3,58,-25,UNDER,draftkings -163,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Kirk Cousins,pass TD,1.5,1.0,solid,-0.42,-0.5,60,-0.5,60,-33,UNDER,draftkings -173,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Tyler Shough,pass TD,1.5,1.1,solid,-0.32,-0.4,57,-1.5,59,-25,UNDER,draftkings -166,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Javonte Williams,receptions,2.5,1.9,solid,-0.32,-0.6,58,-1.9,59,-23,UNDER,draftkings -165,2026-09-12T05:47:10,5.0,loss,
+2026,1,All 13 Sunday games,Jared Goff,pass TD,1.5,2.0,solid,0.45,0.5,61,-2.0,63,35,OVER,draftkings -198,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Jaxson Dart,pass TD,1.5,1.1,solid,-0.36,-0.4,58,-2.2,61,-28,UNDER,draftkings -176,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Malik Willis,pass TD,0.5,1.0,solid,0.47,0.5,61,-3.0,64,98,OVER,draftkings -201,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Justin Herbert,pass TD,1.5,1.9,solid,0.33,0.4,58,-6.4,64,26,OVER,fanduel -210,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Jayden Daniels,pass TD,0.5,0.9,solid,0.37,0.4,59,-7.6,66,78,OVER,fanduel -230,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Cam Ward,pass TD,1.5,1.0,solid,-0.39,-0.5,59,-8.2,67,-31,UNDER,draftkings -238,2026-09-12T05:47:10,1.0,win,
+2026,1,All 13 Sunday games,Derrick Henry,receptions,1.5,1.0,solid,-0.31,-0.5,57,-9.1,66,-32,UNDER,draftkings -231,2026-09-12T05:47:10,1.0,win,
+2026,1,All 13 Sunday games,Kyle Monangai,receptions,1.5,1.9,lean,0.27,0.4,56,22.9,33,28,OVER,draftkings +184,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Samaje Perine,receptions,1.5,1.8,lean,0.19,0.3,54,16.6,38,19,OVER,draftkings +157,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Bhayshul Tuten,receptions,1.5,1.1,lean,-0.29,-0.4,57,15.4,41,-30,UNDER,fanduel +128,2026-09-12T05:47:10,1.0,win,
+2026,1,All 13 Sunday games,Kenny Gainwell,receptions,3.5,4.1,lean,0.29,0.6,57,13.8,43,17,OVER,draftkings +126,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Charlie Kolar,receptions,1.5,1.2,lean,-0.16,-0.2,54,13.0,41,-17,UNDER,draftkings +132,2026-09-12T05:47:10,0.0,win,
+2026,1,All 13 Sunday games,Harold Fannin Jr.,receptions,4.5,4.9,lean,0.19,0.4,54,12.4,42,9,OVER,fanduel +124,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Trey McBride,receptions,6.5,7.2,lean,0.24,0.7,56,12.1,44,10,OVER,fanduel +120,2026-09-12T05:47:10,9.0,win,
+2026,1,All 13 Sunday games,Jaylen Warren,receptions,2.5,2.0,lean,-0.29,-0.5,57,11.6,45,-21,UNDER,draftkings +113,2026-09-12T05:47:10,5.0,loss,
+2026,1,All 13 Sunday games,James Cook,receptions,2.5,2.0,lean,-0.3,-0.5,57,11.2,46,-21,UNDER,draftkings +106,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Marvin Harrison Jr.,receptions,3.5,3.2,lean,-0.17,-0.3,54,10.5,43,-10,UNDER,draftkings +116,2026-09-12T05:47:10,1.0,win,
+2026,1,All 13 Sunday games,Cam Skattebo,receptions,2.5,2.8,lean,0.16,0.3,54,9.8,44,12,OVER,fanduel +116,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Jaylin Noel,receptions,1.5,2.0,lean,0.3,0.5,57,9.0,48,31,OVER,draftkings -101,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Garrett Wilson,receptions,5.5,4.8,lean,-0.28,-0.7,57,7.3,49,-13,UNDER,draftkings -106,2026-09-12T05:47:10,6.0,loss,
+2026,1,All 13 Sunday games,Tyler Warren,rec yds,46.5,37.3,lean,-0.29,-9.2,57,7.1,50,-20,UNDER,draftkings -110,2026-09-12T05:47:10,13.0,win,
+2026,1,All 13 Sunday games,Devaughn Vele,receptions,3.5,3.8,lean,0.15,0.3,54,7.0,47,9,OVER,draftkings +104,2026-09-12T05:47:10,7.0,win,
+2026,1,All 13 Sunday games,Kyle Monangai,rec yds,6.0,11.4,lean,0.3,5.4,57,6.9,50,90,OVER,draftkings -107,2026-09-12T05:47:10,24.0,win,
+2026,1,All 13 Sunday games,Jake Ferguson,receptions,3.5,3.1,lean,-0.21,-0.4,55,6.8,48,-12,UNDER,fanduel -102,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,De'Von Achane,rec yds,27.5,20.3,lean,-0.28,-7.2,57,6.7,50,-26,UNDER,draftkings -112,2026-09-12T05:47:10,30.0,loss,
+2026,1,All 13 Sunday games,Emeka Egbuka,rec yds,56.0,45.9,lean,-0.29,-10.1,57,6.6,50,-18,UNDER,draftkings -114,2026-09-12T05:47:10,63.0,loss,
+2026,1,All 13 Sunday games,Tee Higgins,rec yds,64.0,74.1,lean,0.27,10.1,56,6.5,50,16,OVER,draftkings -111,2026-09-12T05:47:10,59.0,loss,
+2026,1,All 13 Sunday games,Bhayshul Tuten,rec yds,11.5,5.8,lean,-0.28,-5.7,57,6.5,50,-49,UNDER,draftkings -113,2026-09-12T05:47:10,22.0,loss,
+2026,1,All 13 Sunday games,Rico Dowdle,rec yds,10.5,15.9,lean,0.27,5.4,56,6.4,50,52,OVER,draftkings -113,2026-09-12T05:47:10,6.0,loss,
+2026,1,All 13 Sunday games,Colston Loveland,rec yds,54.5,63.4,lean,0.26,8.9,56,6.4,50,16,OVER,draftkings -110,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Rome Odunze,rec yds,39.5,47.1,lean,0.26,7.6,56,6.4,50,19,OVER,draftkings -109,2026-09-12T05:47:10,52.0,win,
+2026,1,All 13 Sunday games,Gunnar Helm,rec yds,22.0,28.1,lean,0.26,6.1,56,6.3,50,28,OVER,draftkings -110,2026-09-12T05:47:10,28.0,win,
+2026,1,All 13 Sunday games,Jacory Croskey-Merritt,rec yds,6.5,2.8,lean,-0.2,-3.7,55,6.1,49,-57,UNDER,draftkings -106,2026-09-12T05:47:10,-7.0,win,
+2026,1,All 13 Sunday games,Justin Herbert,rush yds,20.0,32.9,lean,0.56,12.9,57,6.0,51,64,OVER,fanduel -114,2026-09-12T05:47:10,29.0,win,
+2026,1,All 13 Sunday games,Chase Brown,receptions,3.5,3.9,lean,0.2,0.4,55,5.9,49,12,OVER,fanduel -108,2026-09-12T05:47:10,5.0,win,
+2026,1,All 13 Sunday games,Javonte Williams,rush yds,75.0,55.3,lean,-0.52,-19.7,56,5.8,50,-26,UNDER,draftkings -112,2026-09-12T05:47:10,41.0,win,
+2026,1,All 13 Sunday games,Rashod Bateman,rec yds,26.5,20.2,lean,-0.25,-6.3,56,5.7,50,-24,UNDER,fanduel -114,2026-09-12T05:47:10,0.0,win,
+2026,1,All 13 Sunday games,Bryce Young,pass yds,209.0,190.5,lean,-0.24,-18.5,56,5.6,50,-9,UNDER,draftkings -112,2026-09-12T05:47:10,361.0,loss,
+2026,1,All 13 Sunday games,Baker Mayfield,pass yds,232.0,213.8,lean,-0.24,-18.2,56,5.5,50,-8,UNDER,draftkings -113,2026-09-12T05:47:10,216.0,win,
+2026,1,All 13 Sunday games,Malik Washington,rec yds,27.0,32.4,lean,0.21,5.4,55,5.4,50,20,OVER,draftkings -109,2026-09-12T05:47:10,53.0,win,
+2026,1,All 13 Sunday games,Jalen Coker,rec yds,40.0,47.0,lean,0.24,7.0,56,5.3,50,18,OVER,fanduel -114,2026-09-12T05:47:10,138.0,win,
+2026,1,All 13 Sunday games,Kirk Cousins,pass yds,207.0,189.2,lean,-0.23,-17.8,55,5.3,50,-9,UNDER,draftkings -113,2026-09-12T05:47:10,160.0,win,
+2026,1,All 13 Sunday games,Xavier Legette,receptions,2.0,2.5,lean,0.29,0.5,57,5.1,52,25,OVER,draftkings +132,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Tyler Shough,pass yds,245.5,261.7,lean,0.21,16.2,55,5.0,50,7,OVER,draftkings -112,2026-09-12T05:47:10,410.0,win,
+2026,1,All 13 Sunday games,Garrett Wilson,rec yds,62.5,54.3,lean,-0.22,-8.2,55,5.0,50,-13,UNDER,draftkings -114,2026-09-12T05:47:10,79.0,loss,
+2026,1,All 13 Sunday games,Jaxson Dart,pass yds,212.5,195.8,lean,-0.22,-16.8,55,5.0,50,-8,UNDER,draftkings -113,2026-09-12T05:47:10,230.0,loss,
+2026,1,All 13 Sunday games,Alec Pierce,receptions,3.0,3.3,lean,0.15,0.3,54,4.9,49,10,OVER,draftkings +137,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,Samaje Perine,rec yds,6.5,9.9,lean,0.18,3.4,54,4.9,49,52,OVER,draftkings -107,2026-09-12T05:47:10,30.0,win,
+2026,1,All 13 Sunday games,Omarion Hampton,rec yds,13.0,17.8,lean,0.23,4.8,56,4.9,51,37,OVER,fanduel -114,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Woody Marks,receptions,1.5,1.9,lean,0.26,0.4,56,4.8,51,27,OVER,draftkings -112,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Omarion Hampton,rush yds,68.0,51.2,lean,-0.47,-16.8,55,4.7,50,-25,UNDER,draftkings -110,2026-09-12T05:47:10,43.0,win,
+2026,1,All 13 Sunday games,DeVonta Smith,rec yds,67.0,59.4,lean,-0.2,-7.6,55,4.7,50,-11,UNDER,draftkings -112,2026-09-12T05:47:10,53.0,win,
+2026,1,All 13 Sunday games,Malik Nabers,rec yds,58.5,65.4,lean,0.19,6.9,55,4.7,50,12,OVER,draftkings -111,2026-09-12T05:47:10,69.0,win,
+2026,1,All 13 Sunday games,Kyle Monangai,rush yds,31.0,43.4,lean,0.48,12.4,55,4.6,50,40,OVER,draftkings -113,2026-09-12T05:47:10,100.0,win,
+2026,1,All 13 Sunday games,Rachaad White,rec yds,14.5,10.9,lean,-0.17,-3.6,54,4.5,49,-24,UNDER,draftkings -107,2026-09-12T05:47:10,5.0,win,
+2026,1,All 13 Sunday games,Rome Odunze,receptions,3.0,3.4,lean,0.19,0.4,55,4.3,50,12,OVER,fanduel +124,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Tucker Kraft,rec yds,45.5,51.6,lean,0.19,6.1,55,4.3,50,13,OVER,fanduel -114,2026-09-12T05:47:10,65.0,win,
+2026,1,All 13 Sunday games,Devaughn Vele,rec yds,40.0,45.1,lean,0.17,5.1,54,4.2,50,13,OVER,draftkings -111,2026-09-12T05:47:10,69.0,win,
+2026,1,All 13 Sunday games,Mark Andrews,rec yds,35.5,30.3,lean,-0.18,-5.2,54,4.1,50,-15,UNDER,fanduel -114,2026-09-12T05:47:10,49.0,loss,
+2026,1,All 13 Sunday games,Brian Robinson Jr.,rush yds,19.5,29.7,lean,0.45,10.2,54,4.0,50,53,OVER,draftkings -112,2026-09-12T05:47:10,31.0,win,
+2026,1,All 13 Sunday games,CeeDee Lamb,receptions,6.0,5.5,lean,-0.2,-0.5,55,4.0,51,-8,UNDER,draftkings +120,2026-09-12T05:47:10,5.0,win,
+2026,1,All 13 Sunday games,Quinshon Judkins,rush yds,58.0,43.4,lean,-0.44,-14.6,54,3.9,50,-25,UNDER,draftkings -111,2026-09-12T05:47:10,33.0,win,
+2026,1,All 13 Sunday games,Jordan Addison,rec yds,43.0,37.9,lean,-0.17,-5.1,54,3.9,50,-12,UNDER,draftkings -113,2026-09-12T05:47:10,0.0,win,
+2026,1,All 13 Sunday games,Christian Watson,rec yds,57.5,62.9,lean,0.15,5.4,54,3.7,50,9,OVER,draftkings -111,2026-09-12T05:47:10,147.0,win,
+2026,1,All 13 Sunday games,T.J. Hockenson,rec yds,27.0,30.8,lean,0.15,3.8,54,3.7,50,14,OVER,draftkings -111,2026-09-12T05:47:10,36.0,win,
+2026,1,All 13 Sunday games,Tre Tucker,rec yds,46.5,41.3,lean,-0.16,-5.2,54,3.7,50,-11,UNDER,draftkings -114,2026-09-12T05:47:10,27.0,win,
+2026,1,All 13 Sunday games,Drake London,rec yds,55.0,60.6,lean,0.16,5.6,54,3.6,50,10,OVER,draftkings -114,2026-09-12T05:47:10,29.0,loss,
+2026,1,All 13 Sunday games,Justice Hill,receptions,2.0,1.7,lean,-0.19,-0.3,54,3.6,51,-16,UNDER,draftkings +137,2026-09-12T05:47:10,1.0,win,
+2026,1,All 13 Sunday games,Dalton Kincaid,receptions,3.5,2.9,lean,-0.29,-0.6,57,3.5,53,-17,UNDER,fanduel -130,2026-09-12T05:47:10,5.0,loss,
+2026,1,All 13 Sunday games,Quinshon Judkins,rec yds,9.5,12.9,lean,0.17,3.4,54,3.5,51,36,OVER,fanduel -114,2026-09-12T05:47:10,17.0,win,
+2026,1,All 13 Sunday games,Chris Olave,rec yds,76.0,82.5,lean,0.16,6.5,54,3.5,50,9,OVER,draftkings -114,2026-09-12T05:47:10,182.0,win,
+2026,1,All 13 Sunday games,Jalen Coker,receptions,3.5,4.0,lean,0.27,0.5,56,3.1,53,15,OVER,fanduel -128,2026-09-12T05:47:10,8.0,win,
+2026,1,All 13 Sunday games,Jordan Love,pass TD,1.5,1.2,lean,-0.21,-0.2,55,3.0,52,-17,UNDER,draftkings -118,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Saquon Barkley,receptions,2.5,2.1,lean,-0.21,-0.4,55,2.8,52,-15,UNDER,draftkings -120,2026-09-12T05:47:10,1.0,win,
+2026,1,All 13 Sunday games,Tony Pollard,receptions,1.5,1.8,lean,0.17,0.3,54,2.5,52,18,OVER,draftkings -115,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Kyler Murray,pass TD,1.5,1.2,lean,-0.27,-0.3,56,-0.2,56,-21,UNDER,draftkings -146,2026-09-12T05:47:10,0.0,win,
+2026,1,All 13 Sunday games,Tee Higgins,receptions,4.5,5.1,lean,0.25,0.6,56,-0.8,57,13,OVER,fanduel -148,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Bryce Young,pass TD,1.5,1.3,lean,-0.18,-0.2,54,-1.0,55,-14,UNDER,draftkings -133,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Chris Olave,receptions,6.5,6.1,lean,-0.16,-0.4,54,-1.2,55,-7,UNDER,fanduel -136,2026-09-12T05:47:10,10.0,loss,
+2026,1,All 13 Sunday games,Chris Godwin,receptions,4.5,4.2,lean,-0.16,-0.3,54,-1.6,55,-8,UNDER,draftkings -140,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,Malik Washington,receptions,2.5,2.9,lean,0.25,0.4,56,-1.6,57,18,OVER,draftkings -157,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,George Pickens,receptions,4.5,4.9,lean,0.19,0.4,54,-2.9,57,9,OVER,draftkings -155,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Daniel Jones,pass TD,1.5,1.3,lean,-0.19,-0.2,54,-3.4,58,-15,UNDER,draftkings -156,2026-09-12T05:47:10,1.0,win,
+2026,1,All 13 Sunday games,D'Andre Swift,receptions,2.5,2.0,lean,-0.25,-0.5,56,-3.7,60,-18,UNDER,draftkings -154,2026-09-12T05:47:10,1.0,win,
+2026,1,All 13 Sunday games,Deshaun Watson,pass TD,0.5,0.7,lean,0.18,0.2,54,-5.5,60,38,OVER,draftkings -169,2026-09-12T05:47:10,1.0,win,
+2026,1,All 13 Sunday games,Kendrick Bourne,receptions,2.5,2.1,lean,-0.21,-0.4,55,-6.9,62,-15,UNDER,draftkings -190,2026-09-12T05:47:10,8.0,loss,
+2026,1,All 13 Sunday games,Josh Allen,pass TD,1.5,1.3,lean,-0.2,-0.2,55,-7.8,62,-15,UNDER,draftkings -191,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Joe Burrow,pass TD,2.5,2.6,—,0.09,0.1,52,16.5,36,4,OVER,draftkings +171,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Jacoby Brissett,pass TD,1.5,1.6,—,0.06,0.1,51,14.2,37,5,OVER,draftkings +157,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Kayshon Boutte,receptions,2.5,2.7,—,0.13,0.2,53,12.0,41,9,OVER,draftkings +133,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Odell Beckham Jr.,receptions,1.5,1.6,—,0.08,0.1,52,11.1,41,9,OVER,draftkings +131,2026-09-12T05:47:10,,,
+2026,1,All 13 Sunday games,Jared Goff,rush yds,0.5,1.9,—,0.08,1.4,50,10.4,40,278,OVER,fanduel +142,2026-09-12T05:47:10,2.0,win,
+2026,1,All 13 Sunday games,Ja'Marr Chase,receptions,7.5,7.7,—,0.05,0.2,51,7.8,43,2,OVER,draftkings +116,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Justin Jefferson,receptions,5.5,5.4,—,-0.05,-0.1,51,7.8,43,-2,UNDER,draftkings +121,2026-09-12T05:47:10,8.0,loss,
+2026,1,All 13 Sunday games,Juwan Johnson,receptions,4.5,4.5,—,0.0,0.0,50,7.7,42,0,OVER,draftkings +128,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Ladd McConkey,receptions,4.5,4.2,—,-0.12,-0.3,53,7.3,45,-6,UNDER,fanduel +110,2026-09-12T05:47:10,5.0,loss,
+2026,1,All 13 Sunday games,Jonathan Taylor,receptions,2.5,2.5,—,-0.02,-0.0,51,7.0,44,-2,UNDER,fanduel +116,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Tyler Warren,receptions,4.5,4.2,—,-0.12,-0.3,53,6.7,46,-6,UNDER,draftkings +110,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Ashton Jeanty,receptions,3.5,3.8,—,0.12,0.2,53,6.7,46,7,OVER,draftkings +103,2026-09-12T05:47:10,6.0,win,
+2026,1,All 13 Sunday games,Dak Prescott,pass TD,1.5,1.4,—,-0.04,-0.1,51,6.7,44,-3,UNDER,fanduel +114,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Luther Burden III,receptions,4.5,4.5,—,0.0,0.0,50,5.6,44,0,UNDER,fanduel +112,2026-09-12T05:47:10,5.0,loss,
+2026,1,All 13 Sunday games,Jayden Reed,receptions,3.5,3.5,—,-0.01,-0.0,50,5.6,45,-1,UNDER,draftkings +125,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Lamar Jackson,pass TD,1.5,1.6,—,0.08,0.1,52,4.8,47,6,OVER,draftkings +105,2026-09-12T05:47:10,1.0,loss,
+2026,1,All 13 Sunday games,Jonathon Brooks,receptions,1.5,1.3,—,-0.14,-0.2,53,4.4,49,-15,UNDER,draftkings -108,2026-09-12T05:47:10,1.0,win,
+2026,1,All 13 Sunday games,Jonathan Taylor,rec yds,18.5,15.2,—,-0.15,-3.3,54,3.8,50,-18,UNDER,draftkings -109,2026-09-12T05:47:10,23.0,loss,
+2026,1,All 13 Sunday games,Tucker Kraft,receptions,4.0,3.8,—,-0.09,-0.2,52,3.7,49,-5,UNDER,fanduel +128,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Aaron Rodgers,pass yds,212.5,223.9,—,0.15,11.4,54,3.5,50,5,OVER,draftkings -112,2026-09-12T05:47:10,221.0,win,
+2026,1,All 13 Sunday games,David Montgomery,receptions,1.5,1.4,—,-0.03,-0.1,51,3.5,47,-3,UNDER,draftkings +105,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,C.J. Stroud,pass yds,221.5,232.4,—,0.14,10.9,53,3.3,50,5,OVER,draftkings -113,2026-09-12T05:47:10,274.0,win,
+2026,1,All 13 Sunday games,Isaiah Likely,rec yds,35.0,31.4,—,-0.13,-3.6,53,3.3,50,-10,UNDER,draftkings -110,2026-09-12T05:47:10,78.0,loss,
+2026,1,All 13 Sunday games,D'Andre Swift,rec yds,14.0,11.4,—,-0.13,-2.6,53,3.2,50,-19,UNDER,draftkings -110,2026-09-12T05:47:10,10.0,win,
+2026,1,All 13 Sunday games,Samaje Perine,rush yds,18.0,26.8,—,0.39,8.8,53,3.2,49,49,OVER,draftkings -107,2026-09-12T05:47:10,20.0,win,
+2026,1,All 13 Sunday games,Jahmyr Gibbs,rec yds,30.5,26.7,—,-0.14,-3.8,53,3.2,50,-13,UNDER,draftkings -114,2026-09-12T05:47:10,30.0,win,
+2026,1,All 13 Sunday games,Caleb Williams,pass yds,228.0,237.9,—,0.13,9.9,53,3.1,50,4,OVER,draftkings -112,2026-09-12T05:47:10,269.0,win,
+2026,1,All 13 Sunday games,Baker Mayfield,rush yds,16.0,25.2,—,0.42,9.2,53,3.1,50,57,OVER,draftkings -114,2026-09-12T05:47:10,30.0,win,
+2026,1,All 13 Sunday games,Michael Pittman Jr.,rec yds,38.5,34.8,—,-0.13,-3.7,53,3.0,50,-10,UNDER,draftkings -112,2026-09-12T05:47:10,58.0,loss,
+2026,1,All 13 Sunday games,Daniel Jones,pass yds,234.0,224.2,—,-0.13,-9.8,53,2.9,50,-4,UNDER,draftkings -113,2026-09-12T05:47:10,166.0,win,
+2026,1,All 13 Sunday games,Justin Herbert,pass yds,237.0,245.9,—,0.12,8.9,53,2.9,50,4,OVER,draftkings -111,2026-09-12T05:47:10,209.0,loss,
+2026,1,All 13 Sunday games,Kyler Murray,pass yds,221.0,230.7,—,0.13,9.7,53,2.9,50,4,OVER,draftkings -113,2026-09-12T05:47:10,18.0,loss,
+2026,1,All 13 Sunday games,Jake Ferguson,rec yds,30.0,26.8,—,-0.12,-3.2,53,2.6,50,-11,UNDER,fanduel -114,2026-09-12T05:47:10,6.0,win,
+2026,1,All 13 Sunday games,Javonte Williams,rec yds,10.5,8.0,—,-0.13,-2.5,53,2.6,51,-24,UNDER,fanduel -114,2026-09-12T05:47:10,31.0,loss,
+2026,1,All 13 Sunday games,Lamar Jackson,pass yds,220.0,212.3,—,-0.1,-7.7,52,2.5,50,-3,UNDER,draftkings -111,2026-09-12T05:47:10,324.0,loss,
+2026,1,All 13 Sunday games,Braelon Allen,rush yds,18.0,26.9,—,0.4,8.9,53,2.5,50,50,OVER,fanduel -114,2026-09-12T05:47:10,40.0,win,
+2026,1,All 13 Sunday games,T.J. Hockenson,receptions,3.5,3.6,—,0.05,0.1,51,2.5,49,3,OVER,draftkings -108,2026-09-12T05:47:10,4.0,win,
+2026,1,All 13 Sunday games,Cam Skattebo,rec yds,15.5,17.4,—,0.09,1.9,52,2.5,50,12,OVER,draftkings -108,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Dontayvion Wicks,rec yds,29.0,26.4,—,-0.1,-2.6,52,2.4,50,-9,UNDER,draftkings -112,2026-09-12T05:47:10,73.0,loss,
+2026,1,All 13 Sunday games,Charlie Kolar,rec yds,17.5,15.0,—,-0.11,-2.5,53,2.3,50,-14,UNDER,fanduel -114,2026-09-12T05:47:10,0.0,win,
+2026,1,All 13 Sunday games,Aaron Rodgers,rush yds,0.5,6.6,—,0.34,6.1,51,2.2,49,1224,OVER,draftkings -105,2026-09-12T05:47:10,-3.0,loss,
+2026,1,All 13 Sunday games,Ja'Marr Chase,rec yds,85.0,89.5,—,0.1,4.5,52,2.2,50,5,OVER,draftkings -114,2026-09-12T05:47:10,12.0,loss,
+2026,1,All 13 Sunday games,Aaron Jones,rec yds,14.5,16.1,—,0.08,1.6,52,2.2,50,11,OVER,draftkings -108,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Kyler Murray,rush yds,24.0,32.7,—,0.36,8.7,52,2.2,50,36,OVER,draftkings -109,2026-09-12T05:47:10,9.0,loss,
+2026,1,All 13 Sunday games,Josh Downs,rec yds,45.5,42.3,—,-0.1,-3.2,52,2.1,50,-7,UNDER,fanduel -114,2026-09-12T05:47:10,37.0,win,
+2026,1,All 13 Sunday games,Chuba Hubbard,receptions,2.0,1.8,—,-0.1,-0.2,52,2.1,50,-8,UNDER,fanduel +140,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Chris Godwin,rec yds,47.5,44.5,—,-0.1,-3.0,52,2.0,50,-6,UNDER,fanduel -114,2026-09-12T05:47:10,40.0,win,
+2026,1,All 13 Sunday games,Amon-Ra St. Brown,rec yds,76.5,80.1,—,0.09,3.6,52,2.0,50,5,OVER,draftkings -113,2026-09-12T05:47:10,67.0,loss,
+2026,1,All 13 Sunday games,Travis Etienne Jr.,receptions,2.5,2.4,—,-0.05,-0.1,51,2.0,49,-4,UNDER,draftkings -106,2026-09-12T05:47:10,7.0,loss,
+2026,1,All 13 Sunday games,Geno Smith,pass yds,210.5,204.1,—,-0.08,-6.4,52,2.0,50,-3,UNDER,draftkings -112,2026-09-12T05:47:10,215.0,loss,
+2026,1,All 13 Sunday games,Marvin Harrison Jr.,rec yds,47.5,45.1,—,-0.08,-2.4,52,2.0,50,-5,UNDER,draftkings -110,2026-09-12T05:47:10,33.0,win,
+2026,1,All 13 Sunday games,Jonathon Brooks,rec yds,9.5,7.7,—,-0.1,-1.8,52,1.9,50,-19,UNDER,draftkings -114,2026-09-12T05:47:10,48.0,loss,
+2026,1,All 13 Sunday games,Jacory Croskey-Merritt,rush yds,40.0,50.4,—,0.37,10.4,52,1.9,50,26,OVER,draftkings -114,2026-09-12T05:47:10,63.0,win,
+2026,1,All 13 Sunday games,Kenny Gainwell,rec yds,23.5,25.6,—,0.09,2.1,52,1.8,50,9,OVER,draftkings -114,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Christian Watson,receptions,4.0,3.9,—,-0.03,-0.1,51,1.5,49,-2,UNDER,fanduel +132,2026-09-12T05:47:10,6.0,loss,
+2026,1,All 13 Sunday games,George Pickens,rec yds,67.5,70.0,—,0.07,2.5,52,1.5,50,4,OVER,draftkings -113,2026-09-12T05:47:10,28.0,loss,
+2026,1,All 13 Sunday games,David Montgomery,rec yds,11.0,9.4,—,-0.08,-1.6,52,1.4,51,-15,UNDER,fanduel -114,2026-09-12T05:47:10,19.0,loss,
+2026,1,All 13 Sunday games,Woody Marks,rec yds,9.5,8.6,—,-0.05,-0.9,51,1.4,50,-9,UNDER,draftkings -109,2026-09-12T05:47:10,-2.0,win,
+2026,1,All 13 Sunday games,Bucky Irving,rec yds,13.5,15.3,—,0.09,1.8,52,1.4,51,13,OVER,fanduel -114,2026-09-12T05:47:10,48.0,win,
+2026,1,All 13 Sunday games,Travis Etienne Jr.,rec yds,14.5,16.0,—,0.07,1.5,52,1.4,50,10,OVER,fanduel -114,2026-09-12T05:47:10,32.0,win,
+2026,1,All 13 Sunday games,Travis Etienne Jr.,rush yds,56.5,45.2,—,-0.35,-11.3,52,1.4,50,-20,UNDER,draftkings -114,2026-09-12T05:47:10,46.0,win,
+2026,1,All 13 Sunday games,Ladd McConkey,rec yds,57.5,59.7,—,0.06,2.2,52,1.4,50,4,OVER,draftkings -113,2026-09-12T05:47:10,82.0,win,
+2026,1,All 13 Sunday games,Jayden Reed,rec yds,45.0,43.4,—,-0.05,-1.6,51,1.3,50,-3,UNDER,draftkings -111,2026-09-12T05:47:10,20.0,win,
+2026,1,All 13 Sunday games,Derrick Henry,rec yds,7.0,7.5,—,0.03,0.5,51,1.2,49,7,OVER,draftkings -107,2026-09-12T05:47:10,19.0,win,
+2026,1,All 13 Sunday games,Justice Hill,rec yds,11.0,9.9,—,-0.05,-1.1,51,1.1,50,-10,UNDER,draftkings -114,2026-09-12T05:47:10,10.0,win,
+2026,1,All 13 Sunday games,Josh Allen,pass yds,223.5,220.1,—,-0.04,-3.4,51,1.1,50,-2,UNDER,draftkings -112,2026-09-12T05:47:10,334.0,loss,
+2026,1,All 13 Sunday games,Dalton Kincaid,rec yds,37.5,38.8,—,0.05,1.3,51,1.1,50,4,OVER,draftkings -112,2026-09-12T05:47:10,130.0,win,
+2026,1,All 13 Sunday games,Justice Hill,rush yds,8.5,15.2,—,0.33,6.7,51,1.0,50,79,OVER,fanduel -114,2026-09-12T05:47:10,18.0,win,
+2026,1,All 13 Sunday games,Chase Brown,rec yds,24.0,25.4,—,0.06,1.4,51,1.0,50,6,OVER,fanduel -114,2026-09-12T05:47:10,22.0,loss,
+2026,1,All 13 Sunday games,Adonai Mitchell,rec yds,31.5,32.9,—,0.05,1.4,51,0.9,50,4,OVER,fanduel -114,2026-09-12T05:47:10,60.0,win,
+2026,1,All 13 Sunday games,Ashton Jeanty,rush yds,59.0,48.6,—,-0.31,-10.4,51,0.9,50,-18,UNDER,draftkings -111,2026-09-12T05:47:10,102.0,loss,
+2026,1,All 13 Sunday games,Malik Nabers,receptions,5.0,4.9,—,-0.05,-0.1,51,0.8,50,-2,UNDER,draftkings +125,2026-09-12T05:47:10,6.0,loss,
+2026,1,All 13 Sunday games,Baker Mayfield,pass TD,1.5,1.4,—,-0.12,-0.1,53,0.7,52,-9,UNDER,draftkings -120,2026-09-12T05:47:10,0.0,win,
+2026,1,All 13 Sunday games,Joe Burrow,pass yds,270.0,267.8,—,-0.03,-2.2,51,0.7,50,-1,UNDER,draftkings -112,2026-09-12T05:47:10,254.0,win,
+2026,1,All 13 Sunday games,Tony Pollard,rec yds,9.5,9.1,—,-0.02,-0.4,51,0.7,50,-5,UNDER,draftkings -111,2026-09-12T05:47:10,-1.0,win,
+2026,1,All 13 Sunday games,Jordan Love,rush yds,10.0,11.2,—,0.06,1.2,50,0.7,49,12,OVER,draftkings -106,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Dontayvion Wicks,receptions,2.5,2.6,—,0.04,0.1,51,0.7,50,3,OVER,draftkings -110,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Deshaun Watson,pass yds,178.0,180.1,—,0.03,2.1,51,0.6,50,1,OVER,draftkings -112,2026-09-12T05:47:10,205.0,win,
+2026,1,All 13 Sunday games,Trevor Lawrence,rush yds,17.0,23.7,—,0.3,6.7,50,0.6,50,39,OVER,draftkings -111,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Amon-Ra St. Brown,receptions,6.5,6.3,—,-0.06,-0.2,51,0.5,51,-2,UNDER,fanduel -114,2026-09-12T05:47:10,10.0,loss,
+2026,1,All 13 Sunday games,Tyjae Spears,rec yds,16.5,16.6,—,0.0,0.1,50,0.5,50,0,OVER,draftkings -108,2026-09-12T05:47:10,12.0,loss,
+2026,1,All 13 Sunday games,Michael Mayer,rec yds,40.0,39.3,—,-0.02,-0.7,51,0.5,50,-2,UNDER,draftkings -113,2026-09-12T05:47:10,32.0,win,
+2026,1,All 13 Sunday games,Chris Rodriguez Jr.,rush yds,36.5,44.8,—,0.3,8.3,51,0.4,50,23,OVER,draftkings -113,2026-09-12T05:47:10,23.0,loss,
+2026,1,All 13 Sunday games,Jalen Hurts,pass yds,213.0,211.7,—,-0.02,-1.3,50,0.4,50,-1,UNDER,draftkings -112,2026-09-12T05:47:10,203.0,win,
+2026,1,All 13 Sunday games,Jalen Hurts,rush yds,29.0,23.7,—,-0.21,-5.3,50,0.4,50,-18,UNDER,draftkings -108,2026-09-12T05:47:10,46.0,loss,
+2026,1,All 13 Sunday games,Luther Burden III,rec yds,58.0,58.6,—,0.02,0.6,50,0.3,50,1,OVER,draftkings -113,2026-09-12T05:47:10,63.0,win,
+2026,1,All 13 Sunday games,Jonathon Brooks,rush yds,32.5,25.5,—,-0.27,-7.0,50,0.3,50,-22,UNDER,draftkings -109,2026-09-12T05:47:10,14.0,win,
+2026,1,All 13 Sunday games,Breece Hall,rush yds,63.5,62.1,—,-0.04,-1.4,50,0.3,50,-2,UNDER,draftkings -109,2026-09-12T05:47:10,102.0,loss,
+2026,1,All 13 Sunday games,Geno Smith,rush yds,6.5,2.9,—,-0.19,-3.6,50,0.3,50,-56,UNDER,draftkings -109,2026-09-12T05:47:10,7.0,loss,
+2026,1,All 13 Sunday games,Jordan Mason,rush yds,44.0,36.2,—,-0.27,-7.8,50,0.3,50,-18,UNDER,draftkings -109,2026-09-12T05:47:10,59.0,loss,
+2026,1,All 13 Sunday games,James Cook,rush yds,75.5,77.9,—,0.06,2.4,50,0.2,50,3,OVER,draftkings -110,2026-09-12T05:47:10,57.0,loss,
+2026,1,All 13 Sunday games,Josh Allen,rush yds,32.0,34.5,—,0.1,2.5,50,0.2,50,8,OVER,draftkings -110,2026-09-12T05:47:10,23.0,loss,
+2026,1,All 13 Sunday games,C.J. Stroud,rush yds,10.0,7.6,—,-0.12,-2.4,50,0.2,50,-24,UNDER,draftkings -111,2026-09-12T05:47:10,15.0,loss,
+2026,1,All 13 Sunday games,Tetairoa McMillan,rec yds,60.5,60.0,—,-0.01,-0.5,50,0.2,50,-1,UNDER,draftkings -113,2026-09-12T05:47:10,75.0,loss,
+2026,1,All 13 Sunday games,Chase Brown,rush yds,57.5,50.8,—,-0.2,-6.7,50,0.2,50,-12,UNDER,draftkings -110,2026-09-12T05:47:10,56.0,win,
+2026,1,All 13 Sunday games,Tony Pollard,rush yds,49.5,54.9,—,0.17,5.4,50,0.2,50,11,OVER,draftkings -110,2026-09-12T05:47:10,35.0,loss,
+2026,1,All 13 Sunday games,Saquon Barkley,rush yds,75.5,66.0,—,-0.25,-9.5,50,0.2,50,-13,UNDER,draftkings -110,2026-09-12T05:47:10,83.0,loss,
+2026,1,All 13 Sunday games,Rico Dowdle,rush yds,45.5,48.6,—,0.1,3.1,50,0.1,50,7,OVER,draftkings -111,2026-09-12T05:47:10,15.0,loss,
+2026,1,All 13 Sunday games,Jonathan Taylor,rush yds,76.5,67.0,—,-0.25,-9.5,50,0.1,50,-12,UNDER,draftkings -111,2026-09-12T05:47:10,98.0,loss,
+2026,1,All 13 Sunday games,Caleb Williams,rush yds,20.0,19.3,—,-0.03,-0.7,50,0.1,50,-3,UNDER,draftkings -111,2026-09-12T05:47:10,65.0,loss,
+2026,1,All 13 Sunday games,Bryce Young,rush yds,14.0,17.1,—,0.15,3.1,50,0.1,50,22,OVER,draftkings -111,2026-09-12T05:47:10,10.0,loss,
+2026,1,All 13 Sunday games,Adonai Mitchell,receptions,2.5,2.7,—,0.11,0.2,53,0.1,52,8,OVER,draftkings -123,2026-09-12T05:47:10,3.0,win,
+2026,1,All 13 Sunday games,Jaxson Dart,rush yds,31.5,37.2,—,0.22,5.7,50,0.1,50,18,OVER,draftkings -111,2026-09-12T05:47:10,54.0,win,
+2026,1,All 13 Sunday games,Bijan Robinson,receptions,4.5,4.2,—,-0.12,-0.3,53,-0.0,53,-6,UNDER,draftkings -127,2026-09-12T05:47:10,8.0,loss,
+2026,1,All 13 Sunday games,Jaylen Warren,rush yds,42.0,49.6,—,0.26,7.6,50,0.0,50,18,OVER,draftkings -112,2026-09-12T05:47:10,46.0,win,
+2026,1,All 13 Sunday games,Derrick Henry,rush yds,80.5,89.8,—,0.24,9.3,50,0.0,50,12,OVER,draftkings -112,2026-09-12T05:47:10,144.0,win,
+2026,1,All 13 Sunday games,Dak Prescott,pass yds,262.0,262.2,—,0.0,0.2,50,-0.0,50,0,OVER,draftkings -113,2026-09-12T05:47:10,175.0,loss,
+2026,1,All 13 Sunday games,Cam Skattebo,rush yds,49.0,47.6,—,-0.05,-1.4,50,0.0,50,-3,UNDER,draftkings -112,2026-09-12T05:47:10,81.0,loss,
+2026,1,All 13 Sunday games,Bijan Robinson,rush yds,78.5,81.9,—,0.09,3.4,50,-0.1,50,4,OVER,draftkings -113,2026-09-12T05:47:10,83.0,win,
+2026,1,All 13 Sunday games,Tyler Shough,rush yds,16.5,21.0,—,0.2,4.5,50,-0.1,50,27,OVER,draftkings -113,2026-09-12T05:47:10,8.0,loss,
+2026,1,All 13 Sunday games,Tyjae Spears,rush yds,25.5,21.0,—,-0.18,-4.5,50,-0.1,50,-18,UNDER,draftkings -113,2026-09-12T05:47:10,12.0,win,
+2026,1,All 13 Sunday games,Tyler Allgeier,rush yds,29.5,35.3,—,0.23,5.8,50,-0.1,50,20,OVER,draftkings -113,2026-09-12T05:47:10,61.0,win,
+2026,1,All 13 Sunday games,D'Andre Swift,rush yds,63.0,59.3,—,-0.11,-3.7,50,-0.2,50,-6,UNDER,draftkings -114,2026-09-12T05:47:10,124.0,loss,
+2026,1,All 13 Sunday games,Joe Burrow,rush yds,8.0,6.8,—,-0.06,-1.2,50,-0.2,50,-15,UNDER,draftkings -114,2026-09-12T05:47:10,20.0,loss,
+2026,1,All 13 Sunday games,Cam Ward,rush yds,9.5,11.0,—,0.08,1.5,50,-0.2,50,16,OVER,draftkings -114,2026-09-12T05:47:10,21.0,win,
+2026,1,All 13 Sunday games,Jacoby Brissett,rush yds,10.5,11.4,—,0.04,0.9,50,-0.2,50,8,OVER,draftkings -114,2026-09-12T05:47:10,14.0,win,
+2026,1,All 13 Sunday games,De'Von Achane,rush yds,69.0,78.9,—,0.27,9.9,50,-0.2,50,14,OVER,draftkings -114,2026-09-12T05:47:10,36.0,loss,
+2026,1,All 13 Sunday games,Daniel Jones,rush yds,11.5,11.5,—,0.0,0.0,50,-0.3,50,0,OVER,fanduel -114,2026-09-12T05:47:10,4.0,loss,
+2026,1,All 13 Sunday games,Chuba Hubbard,rec yds,10.5,10.6,—,0.01,0.1,50,-0.3,50,1,OVER,fanduel -114,2026-09-12T05:47:10,38.0,win,
+2026,1,All 13 Sunday games,Bucky Irving,rush yds,58.5,52.8,—,-0.17,-5.7,50,-0.3,50,-10,UNDER,fanduel -114,2026-09-12T05:47:10,45.0,win,
+2026,1,All 13 Sunday games,Deshaun Watson,rush yds,19.0,18.3,—,-0.03,-0.7,50,-0.3,50,-3,UNDER,fanduel -114,2026-09-12T05:47:10,38.0,loss,
+2026,1,All 13 Sunday games,Kenny Gainwell,rush yds,21.0,26.2,—,0.22,5.2,50,-0.4,50,25,OVER,fanduel -114,2026-09-12T05:47:10,15.0,loss,
+2026,1,All 13 Sunday games,Jayden Daniels,rush yds,36.5,42.9,—,0.23,6.4,50,-0.4,50,18,OVER,fanduel -114,2026-09-12T05:47:10,31.0,loss,
+2026,1,All 13 Sunday games,Dak Prescott,rush yds,8.0,10.3,—,0.12,2.3,50,-1.2,51,29,OVER,draftkings -118,2026-09-12T05:47:10,14.0,win,
+2026,1,All 13 Sunday games,Mark Andrews,receptions,3.5,3.2,—,-0.12,-0.2,53,-3.5,56,-7,UNDER,draftkings -147,2026-09-12T05:47:10,4.0,loss,
+2026,1,All 13 Sunday games,Jahmyr Gibbs,receptions,4.5,4.3,—,-0.09,-0.2,52,-4.2,56,-5,UNDER,draftkings -141,2026-09-12T05:47:10,5.0,loss,
+2026,1,All 13 Sunday games,C.J. Stroud,pass TD,1.5,1.4,—,-0.12,-0.1,53,-4.5,57,-9,UNDER,fanduel -152,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Kirk Cousins,rush yds,0.5,0.3,—,-0.01,-0.2,50,-6.6,57,-38,UNDER,draftkings -144,2026-09-12T05:47:10,-6.0,win,
+2026,1,All 13 Sunday games,Drake London,receptions,4.5,4.5,—,0.01,0.0,50,-6.7,57,0,OVER,draftkings -148,2026-09-12T05:47:10,2.0,loss,
+2026,1,All 13 Sunday games,Michael Pittman Jr.,receptions,3.5,3.6,—,0.06,0.1,51,-7.6,59,3,OVER,draftkings -152,2026-09-12T05:47:10,3.0,loss,
+2026,1,All 13 Sunday games,Rashod Bateman,receptions,1.5,1.7,—,0.14,0.2,53,-8.6,62,15,OVER,draftkings -183,2026-09-12T05:47:10,0.0,loss,
+2026,1,All 13 Sunday games,Bucky Irving,receptions,2.5,2.3,—,-0.1,-0.2,52,-8.9,61,-7,UNDER,draftkings -177,2026-09-12T05:47:10,7.0,loss,
+2026,2,DET @ BUF,Keon Coleman,receptions,1.5,2.7,strong,0.77,1.2,67,27.0,40,80,OVER,fanduel +140,2026-09-18T12:04:54,6.0,win,0.8
+2026,2,DET @ BUF,Dawson Knox,receptions,1.5,2.4,strong,0.59,0.9,63,21.6,42,61,OVER,draftkings +127,2026-09-18T12:04:54,2.0,win,0.67
+2026,2,DET @ BUF,Sione Vaki,rush yds,5.5,22.1,strong,0.86,16.6,63,15.3,48,302,OVER,fanduel -102,2026-09-18T12:04:54,7.0,win,1.43
+2026,2,DET @ BUF,Dawson Knox,rec yds,11.5,24.1,strong,0.63,12.6,64,13.5,51,109,OVER,fanduel -113,2026-09-18T12:04:54,5.0,loss,0.67
+2026,2,DET @ BUF,Keon Coleman,rec yds,14.5,26.6,strong,0.57,12.1,63,13.4,50,84,OVER,draftkings -109,2026-09-18T12:04:54,63.0,win,0.8
+2026,2,DET @ BUF,Brock Wright,receptions,0.5,1.5,strong,0.72,1.0,66,5.1,61,192,OVER,draftkings -179,2026-09-18T12:04:54,0.0,loss,0.38
+2026,2,DET @ BUF,DJ Moore,receptions,4.5,3.5,solid,-0.45,-1.0,60,12.0,48,-22,UNDER,draftkings +105,2026-09-18T12:04:54,0.0,win,1.14
+2026,2,DET @ BUF,DJ Moore,rec yds,64.0,48.8,solid,-0.4,-15.2,59,9.6,50,-24,UNDER,draftkings -110,2026-09-18T12:04:54,0.0,win,1.14
+2026,2,DET @ BUF,Brock Wright,rec yds,6.0,13.3,solid,0.4,7.3,59,8.5,51,121,OVER,fanduel -113,2026-09-18T12:04:54,0.0,loss,0.38
+2026,2,DET @ BUF,Isaac TeSlaa,rec yds,17.0,25.2,solid,0.37,8.2,59,8.3,50,48,OVER,fanduel -113,2026-09-18T12:04:54,26.0,win,0.98
+2026,2,DET @ BUF,Amon-Ra St. Brown,receptions,7.5,6.3,solid,-0.42,-1.2,60,8.0,52,-16,UNDER,draftkings -120,2026-09-18T12:04:54,9.0,loss,1.14
+2026,2,DET @ BUF,Jameson Williams,receptions,3.5,4.4,solid,0.43,0.9,60,2.8,57,25,OVER,fanduel -148,2026-09-18T12:04:54,2.0,loss,0.96
+2026,2,DET @ BUF,Sam LaPorta,receptions,4.5,4.9,lean,0.18,0.4,54,7.5,47,9,OVER,fanduel +102,2026-09-18T12:04:54,6.0,win,1.05
+2026,2,DET @ BUF,James Cook,rush att,17.5,14.8,lean,-0.48,-2.7,55,6.9,48,-16,UNDER,draftkings -103,2026-09-18T12:04:54,21.0,loss,1.16
+2026,2,DET @ BUF,Ray Davis,rush yds,8.0,19.0,lean,0.55,11.0,56,6.9,50,137,OVER,draftkings -108,2026-09-18T12:04:54,0.0,loss,0.78
+2026,2,DET @ BUF,Dalton Kincaid,receptions,4.0,3.4,lean,-0.28,-0.6,57,6.8,50,-15,UNDER,fanduel +122,2026-09-18T12:04:54,7.0,loss,1.05
+2026,2,DET @ BUF,Jahmyr Gibbs,rec yds,31.0,24.6,lean,-0.24,-6.4,56,5.7,50,-21,UNDER,draftkings -112,2026-09-18T12:04:54,61.0,loss,0.98
+2026,2,DET @ BUF,Isaac TeSlaa,receptions,1.5,1.8,lean,0.21,0.3,55,5.6,49,22,OVER,draftkings -108,2026-09-18T12:04:54,2.0,win,0.98
+2026,2,DET @ BUF,Jameson Williams,rec yds,57.5,64.8,lean,0.21,7.3,55,5.0,50,13,OVER,draftkings -111,2026-09-18T12:04:54,33.0,loss,0.96
+2026,2,DET @ BUF,Sam LaPorta,rec yds,46.5,52.9,lean,0.2,6.4,55,4.8,50,14,OVER,draftkings -112,2026-09-18T12:04:54,52.0,win,1.05
+2026,2,DET @ BUF,Amon-Ra St. Brown,rec yds,80.0,72.8,lean,-0.17,-7.2,54,4.0,50,-9,UNDER,draftkings -112,2026-09-18T12:04:54,142.0,loss,1.14
+2026,2,DET @ BUF,Khalil Shakir,rec yds,43.0,47.7,lean,0.15,4.7,54,3.9,50,11,OVER,draftkings -110,2026-09-18T12:04:54,38.0,loss,0.9
+2026,2,DET @ BUF,James Cook,rec yds,18.5,14.9,lean,-0.16,-3.6,54,3.9,50,-19,UNDER,draftkings -111,2026-09-18T12:04:54,4.0,win,1.16
+2026,2,DET @ BUF,Jahmyr Gibbs,receptions,4.5,3.9,lean,-0.27,-0.6,56,0.9,55,-13,UNDER,draftkings -140,2026-09-18T12:04:54,6.0,loss,0.98
+2026,2,DET @ BUF,Jared Goff,pass TD,1.5,1.8,lean,0.22,0.3,55,-0.3,56,17,OVER,draftkings -143,2026-09-18T12:04:54,4.0,win,0.98
+2026,2,DET @ BUF,Josh Allen,pass TD,1.5,1.7,lean,0.17,0.2,54,-5.0,59,13,OVER,draftkings -161,2026-09-18T12:04:54,3.0,win,0.93
+2026,2,DET @ BUF,Khalil Shakir,receptions,4.5,4.7,—,0.08,0.2,52,9.8,42,4,OVER,draftkings +126,2026-09-18T12:04:54,3.0,loss,0.9
+2026,2,DET @ BUF,Jared Goff,rush yds,0.5,2.0,—,0.08,1.5,50,8.1,42,294,OVER,draftkings +127,2026-09-18T12:04:54,7.0,win,0.98
+2026,2,DET @ BUF,Josh Allen,pass yds,252.0,244.1,—,-0.1,-7.9,52,2.4,50,-3,UNDER,draftkings -113,2026-09-18T12:04:54,248.0,win,0.93
+2026,2,DET @ BUF,Jahmyr Gibbs,rush att,18.5,17.4,—,-0.2,-1.1,50,2.3,48,-6,UNDER,draftkings -102,2026-09-18T12:04:54,16.0,win,0.98
+2026,2,DET @ BUF,Jared Goff,pass yds,258.0,264.9,—,0.09,6.9,52,2.2,50,3,OVER,draftkings -112,2026-09-18T12:04:54,327.0,win,0.98
+2026,2,DET @ BUF,Dalton Kincaid,rec yds,53.0,50.4,—,-0.08,-2.6,52,1.7,50,-5,UNDER,draftkings -113,2026-09-18T12:04:54,95.0,loss,1.05
+2026,2,DET @ BUF,Jahmyr Gibbs,rush yds,88.5,74.3,—,-0.34,-14.2,52,1.3,50,-16,UNDER,fanduel -113,2026-09-18T12:04:54,52.0,win,0.98
+2026,2,DET @ BUF,James Cook,receptions,2.5,2.4,—,-0.04,-0.1,51,1.1,50,-3,UNDER,draftkings -111,2026-09-18T12:04:54,1.0,win,1.16
+2026,2,DET @ BUF,Josh Allen,rush yds,32.5,33.2,—,0.03,0.7,50,0.1,50,2,OVER,draftkings -111,2026-09-18T12:04:54,69.0,win,0.93
+2026,2,DET @ BUF,James Cook,rush yds,79.0,75.6,—,-0.09,-3.4,50,0.0,50,-4,UNDER,draftkings -112,2026-09-18T12:04:54,135.0,loss,1.16
+2026,2,DET @ BUF,Jared Goff,pass att,36.5,36.4,—,-0.01,-0.1,50,-1.6,52,0,UNDER,draftkings -121,2026-09-18T12:04:54,38.0,loss,0.98
+2026,2,DET @ BUF,Josh Allen,pass att,31.5,30.2,—,-0.14,-1.3,50,-2.1,52,-4,UNDER,draftkings -123,2026-09-18T12:04:54,31.0,win,0.93
