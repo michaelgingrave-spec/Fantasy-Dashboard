@@ -1244,6 +1244,20 @@ def render(screen: str) -> None:
                    "att need z ≥ 0.60; skip pass att. The backtest is optimistic vs a real "
                    "book line — trust the threshold, not the absolute win%.")
 
+        st.subheader("🔁 Repeat recommendations, week over week")
+        st.caption("Same (player, market) flagged solid+ in more than one week, side by "
+                   "side. A repeated name isn't itself a problem — a genuinely good player "
+                   "can clear the bar most weeks. What matters is whether `our_proj` "
+                   "actually moves with that week's matchup, or sits still — a flat "
+                   "`proj_pct_change` across weeks would mean the projection isn't really "
+                   "reading the opponent.")
+        rpt = _bets.repeat_recommendations(lh, min_conf="solid")
+        if rpt.empty:
+            st.info("No repeats yet — either too early in the season, or nothing's "
+                    "cleared solid+ in more than one week so far.")
+        else:
+            st.dataframe(rpt, hide_index=True, width="stretch")
+
         with st.expander("➕ Add a bet manually"):
             f = st.columns(3)
             p_name = f[0].text_input("Player", key="bl_p")

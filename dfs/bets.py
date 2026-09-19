@@ -299,6 +299,34 @@ def line_history_by_market(df: pd.DataFrame | None = None, min_n: int = 1) -> pd
     return pd.DataFrame(rows).sort_values("ROI@-110%", ascending=False).reset_index(drop=True)
 
 
+def repeat_recommendations(df: pd.DataFrame | None = None, min_conf: str = "solid") -> pd.DataFrame:
+    """(player, market) pairs recommended at >= `min_conf` in more than one week this
+    season, with each week's line / our proj / edge / lean side by side. The question
+    this answers isn't "does the same guy show up twice" (a genuinely good player can
+    legitimately clear the bar most weeks) -- it's whether the NUMBERS actually respond
+    to that week's matchup (different line, different proj, maybe a flipped lean) or sit
+    static, which would mean the projection isn't really re-reading the opponent.
+    Doesn't require grading -- works on lines that haven't been played yet."""
+    df = load_line_history() if df is None else df
+    if df.empty:
+        return pd.DataFrame()
+    order = {t: i for i, t in enumerate(CONF_ORDER)}
+    min_rank = order.get(min_conf, 0)
+    g = df[df["conf"].map(lambda c: order.get(c, -1)) >= min_rank].copy()
+    if g.empty:
+        return pd.DataFrame()
+    counts = g.groupby(["player", "market"])["week"].nunique()
+    repeats = set(counts[counts > 1].index)
+    if not repeats:
+        return pd.DataFrame()
+    g = g[g.set_index(["player", "market"]).index.isin(repeats)]
+    out = g[["player", "market", "week", "line", "our proj", "edge", "conf", "lean"]].copy()
+    out = out.rename(columns={"our proj": "our_proj"}).sort_values(["player", "market", "week"])
+    out["lean_changed"] = out.groupby(["player", "market"])["lean"].transform(lambda s: s.nunique() > 1)
+    out["proj_pct_change"] = out.groupby(["player", "market"])["our_proj"].pct_change().round(3)
+    return out.reset_index(drop=True)
+
+
 def backtest_buckets() -> pd.DataFrame:
     """The 2023-25 trailing-form-proxy calibration (no real lines needed).
     Empty until `python -m matchup_model.opp.edge_calib` has been run."""
