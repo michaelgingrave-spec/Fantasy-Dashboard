@@ -859,7 +859,15 @@ def render(screen: str) -> None:
             st.stop()
 
         ev_labels = {e["label"]: e["id"] for e in events}
-        sunday = [e for e in events if e.get("is_sunday")]
+        # `events` spans a rolling `days_ahead` window (see props.list_events), which can
+        # contain TWO different Sundays once "today" is late enough in the week that the
+        # window reaches past this week's Sunday into next week's -- is_sunday alone
+        # doesn't distinguish them. Scope to the nearest one (each event's own `date`,
+        # already timezone-correct -- see list_events) so "Pull ALL Sunday games" means
+        # this week's slate, not this week's + next week's merged together.
+        _sunday_all = [e for e in events if e.get("is_sunday")]
+        _nearest_sun = min((e["date"] for e in _sunday_all), default=None)
+        sunday = [e for e in _sunday_all if e["date"] == _nearest_sun]
 
         ev_pick = st.selectbox("Game (single-game pull)", list(ev_labels), key="pe_game")
         event_id = ev_labels[ev_pick]

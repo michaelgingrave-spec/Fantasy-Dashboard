@@ -18,6 +18,12 @@ from functools import lru_cache
 import pandas as pd
 import requests
 
+try:
+    from zoneinfo import ZoneInfo
+    _ET = ZoneInfo("America/New_York")
+except Exception:  # pragma: no cover
+    _ET = timezone.utc
+
 from dfs.config import DATA, ODDS_API_KEY
 from dfs.names import normalize_name
 
@@ -186,10 +192,16 @@ def list_events(days_ahead: int = 8) -> tuple[list[dict], str | None]:
         except Exception:
             continue
         if now - timedelta(hours=4) <= ts <= cut:
-            local = ts.astimezone()
+            # Explicit US/Eastern, not bare .astimezone() -- that converts to the
+            # RUNNING PROCESS's local zone, which is UTC on Streamlit Cloud (same bug
+            # already fixed in current_season()/last_completed_week()/week_of_date();
+            # this call site was missed). A Sunday-night game's UTC timestamp can
+            # already read as Monday under naive local time.
+            local = ts.astimezone(_ET)
             out.append({"id": e["id"], "commence_time": e["commence_time"],
                         "away_team": e.get("away_team", ""), "home_team": e.get("home_team", ""),
                         "is_sunday": local.weekday() == 6,
+                        "date": local.date().isoformat(),
                         "label": f"{e['away_team']} @ {e['home_team']}  ·  "
                                  f"{local.strftime('%a %m/%d %I:%M %p')}"})
     return out, rem
