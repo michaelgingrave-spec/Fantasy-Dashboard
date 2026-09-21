@@ -299,6 +299,57 @@ def line_history_by_market(df: pd.DataFrame | None = None, min_n: int = 1) -> pd
     return pd.DataFrame(rows).sort_values("ROI@-110%", ascending=False).reset_index(drop=True)
 
 
+def line_history_by_lean(df: pd.DataFrame | None = None, min_n: int = 1) -> pd.DataFrame:
+    """Win% + notional ROI@-110 by OVER vs UNDER -- checks for a systematic directional
+    bias (the model always leaning one way regardless of market/player) rather than a
+    real, market-specific edge."""
+    df = load_line_history() if df is None else df
+    if df.empty or "lean" not in df.columns:
+        return pd.DataFrame()
+    g = df[df["result"].isin(["win", "loss", "push"])].copy()
+    if g.empty:
+        return pd.DataFrame()
+    rows = []
+    for lean, s in g.groupby("lean"):
+        w, l = int((s.result == "win").sum()), int((s.result == "loss").sum())
+        if w + l < min_n:
+            continue
+        rows.append({"lean": lean, "n": len(s),
+                     "win%": round(100 * w / (w + l), 1) if (w + l) else None,
+                     "ROI@-110%": round(100 * _roi_at(_PRICE, w, l), 1) if (w + l) else None})
+    return pd.DataFrame(rows)
+
+
+def line_history_by_position(df: pd.DataFrame | None = None, min_n: int = 1) -> pd.DataFrame:
+    """Win% + notional ROI@-110 by player position (QB/RB/WR/TE). line_history.csv doesn't
+    store position, so this joins against nflverse's own field by normalized player name
+    (best-effort -- a player never seen in player_weeks() won't match)."""
+    df = load_line_history() if df is None else df
+    if df.empty:
+        return pd.DataFrame()
+    g = df[df["result"].isin(["win", "loss", "push"])].copy()
+    if g.empty:
+        return pd.DataFrame()
+    try:
+        from matchup_model.opp import data as D
+        pw = D.player_weeks()[["player_display_name", "position"]].drop_duplicates()
+        pw["nk"] = pw["player_display_name"].map(normalize_name)
+        pos_map = pw.drop_duplicates(subset=["nk"]).set_index("nk")["position"].to_dict()
+    except Exception:  # noqa: BLE001 -- nflverse cache unavailable
+        return pd.DataFrame()
+    g["pos"] = g["player"].map(normalize_name).map(pos_map)
+    rows = []
+    for pos in ("QB", "RB", "WR", "TE"):
+        s = g[g["pos"] == pos]
+        w, l = int((s.result == "win").sum()), int((s.result == "loss").sum())
+        if w + l < min_n:
+            continue
+        rows.append({"pos": pos, "n": len(s),
+                     "win%": round(100 * w / (w + l), 1) if (w + l) else None,
+                     "ROI@-110%": round(100 * _roi_at(_PRICE, w, l), 1) if (w + l) else None})
+    return pd.DataFrame(rows)
+
+
 def repeat_recommendations(df: pd.DataFrame | None = None, min_conf: str = "solid") -> pd.DataFrame:
     """(player, market) pairs recommended at >= `min_conf` in more than one week this
     season, with each week's line / our proj / edge / lean side by side. The question

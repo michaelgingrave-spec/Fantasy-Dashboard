@@ -1258,6 +1258,26 @@ def render(screen: str) -> None:
         else:
             st.dataframe(rpt, hide_index=True, width="stretch")
 
+        st.subheader("🩺 Model audit — by lean and position")
+        st.caption("Same win% / ROI@-110 read as the tables above, split a different way. "
+                   "Weight these against the **By week** toggle before trusting either one — "
+                   "a split that flips sign week to week is noise, not signal.")
+        wk_choice = st.radio("Window", ["All weeks pooled"] + [f"Week {w}" for w in
+                             sorted(lh["week"].dropna().unique().astype(int))],
+                             horizontal=True, key="bl_audit_wk")
+        audit_df = lh if wk_choice == "All weeks pooled" else lh[lh["week"] == int(wk_choice.split()[-1])]
+        ac1, ac2 = st.columns(2)
+        with ac1:
+            st.markdown("**By lean (OVER vs UNDER)**")
+            lb2 = _bets.line_history_by_lean(audit_df)
+            st.dataframe(lb2 if not lb2.empty else pd.DataFrame({"note": ["no graded rows"]}),
+                         hide_index=True, width="stretch")
+        with ac2:
+            st.markdown("**By position**")
+            pb = _bets.line_history_by_position(audit_df)
+            st.dataframe(pb if not pb.empty else pd.DataFrame({"note": ["no graded rows"]}),
+                         hide_index=True, width="stretch")
+
         with st.expander("➕ Add a bet manually"):
             f = st.columns(3)
             p_name = f[0].text_input("Player", key="bl_p")
