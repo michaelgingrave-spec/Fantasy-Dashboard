@@ -106,9 +106,26 @@ def _payout(odds: float, result: str, stake: float) -> float:
     return 0.0
 
 
+def _dnp_keys(season: int, week: int) -> set[str]:
+    """name_keys confirmed at zero offensive snaps for this game -- genuinely inactive/DNP,
+    not just a quiet stat line. Absence from the snap report (rather than a positive zero)
+    is NOT treated as DNP -- that could just be a name-match gap -- so this only flags
+    players the snap-count data actually confirms sat out."""
+    try:
+        from matchup_model.opp import data as D
+        sn = D.snaps()
+    except Exception:
+        return set()
+    g = sn[(sn.season == season) & (sn.week == week)]
+    return set(g[g["offense_snaps"].fillna(0) <= 0]["name_key"])
+
+
 def grade(force: bool = False) -> tuple[pd.DataFrame, int]:
     """Fill result/actual/payout for bets whose game has box-score data. Returns
-    (updated_log, n_graded)."""
+    (updated_log, n_graded). Players confirmed at 0 offensive snaps (inactive/DNP, via
+    matchup_model.opp.data.snaps()) are tagged result="dnp" instead of win/loss/push --
+    every downstream summary already filters to isin(["win","loss","push"]), so DNP bets
+    drop out of win%/ROI/edge-bucket views without being silently deleted from the log."""
     df = load()
     if df.empty:
         return df, 0
@@ -119,23 +136,32 @@ def grade(force: bool = False) -> tuple[pd.DataFrame, int]:
         return df, 0
     pw = pw.assign(nk=pw["player_display_name"].map(normalize_name))
     n = 0
+    dnp_cache: dict[tuple[int, int], set[str]] = {}
     for i, r in df.iterrows():
         res = "" if pd.isna(r.get("result")) else str(r.get("result")).strip()
-        if not force and res in ("win", "loss", "push"):
+        if not force and res in ("win", "loss", "push", "dnp"):
             continue
         col = _STAT_COL.get(str(r["market"]))
         if col is None or pd.isna(r["season"]) or pd.isna(r["week"]):
             continue
-        hit = pw[(pw.nk == normalize_name(str(r["player"]))) &
-                 (pw.season == int(r["season"])) & (pw.week == int(r["week"]))]
+        season, week = int(r["season"]), int(r["week"])
+        nk = normalize_name(str(r["player"]))
+        hit = pw[(pw.nk == nk) & (pw.season == season) & (pw.week == week)]
         if hit.empty:
             continue
         actual = float(hit[col].sum())
+        df.at[i, "actual"] = round(actual, 1)
+        dnp = dnp_cache.setdefault((season, week), _dnp_keys(season, week))
+        if nk in dnp:
+            df.at[i, "result"] = "dnp"
+            df.at[i, "payout"] = 0.0
+            df.at[i, "graded_at"] = date.today().isoformat()
+            n += 1
+            continue
         line = float(r["line"])
         side = str(r["side"]).upper()
         result = "push" if actual == line else (
             "win" if ((actual > line) == (side == "OVER")) else "loss")
-        df.at[i, "actual"] = round(actual, 1)
         df.at[i, "result"] = result
         df.at[i, "payout"] = round(_payout(float(r["odds"]), result, float(r["stake"])), 3)
         df.at[i, "graded_at"] = date.today().isoformat()
@@ -222,7 +248,9 @@ def load_line_history() -> pd.DataFrame:
 
 def grade_line_history(force: bool = False) -> tuple[pd.DataFrame, int]:
     """Fill actual/result for pulled lines whose game has box-score data, graded vs the
-    real book line (`line` column). Returns (df, n_graded)."""
+    real book line (`line` column). Returns (df, n_graded). Players confirmed at 0
+    offensive snaps (see _dnp_keys) are tagged result="dnp" rather than win/loss/push --
+    downstream summaries filter to isin(["win","loss","push"]) and so exclude them."""
     from dfs.props import LINE_HISTORY_PATH
     df = load_line_history()
     if df.empty:
@@ -233,18 +261,26 @@ def grade_line_history(force: bool = False) -> tuple[pd.DataFrame, int]:
     except Exception:
         return df, 0
     n = 0
+    dnp_cache: dict[tuple[int, int], set[str]] = {}
     for i, r in df.iterrows():
-        if not force and str(r.get("result") or "") in ("win", "loss", "push"):
+        if not force and str(r.get("result") or "") in ("win", "loss", "push", "dnp"):
             continue
         col = _STAT_COL.get(str(r["market"]))
         if col is None or pd.isna(r.get("season")) or pd.isna(r.get("week")):
             continue
-        hit = pw[(pw.nk == normalize_name(str(r["player"]))) &
-                 (pw.season == int(r["season"])) & (pw.week == int(r["week"]))]
+        season, week = int(r["season"]), int(r["week"])
+        nk = normalize_name(str(r["player"]))
+        hit = pw[(pw.nk == nk) & (pw.season == season) & (pw.week == week)]
         if hit.empty:
             continue
-        actual, line, side = float(hit[col].sum()), float(r["line"]), str(r["lean"]).upper()
+        actual = float(hit[col].sum())
         df.at[i, "actual"] = round(actual, 1)
+        dnp = dnp_cache.setdefault((season, week), _dnp_keys(season, week))
+        if nk in dnp:
+            df.at[i, "result"] = "dnp"
+            n += 1
+            continue
+        line, side = float(r["line"]), str(r["lean"]).upper()
         df.at[i, "result"] = ("push" if actual == line else
                               "win" if ((actual > line) == (side == "OVER")) else "loss")
         n += 1

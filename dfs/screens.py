@@ -1221,10 +1221,12 @@ def render(screen: str) -> None:
                    "fills them after games.")
         lh = _bets.load_line_history()
         graded_lh = int(lh["result"].isin(["win", "loss", "push"]).sum()) if not lh.empty else 0
+        dnp_lh = int((lh["result"] == "dnp").sum()) if not lh.empty else 0
         cc1, cc2 = st.columns(2)
         with cc1:
+            dnp_note = f" · {dnp_lh} excluded (inactive/DNP)" if dnp_lh else ""
             st.markdown(f"**From your pulled lines** — real book lines · {graded_lh} graded "
-                        f"of {len(lh)}")
+                        f"of {len(lh)}{dnp_note}")
             lb = _bets.line_history_buckets(lh)
             if lb.empty:
                 st.info("No graded pulled lines yet. Pull odds on **Prop Edges**, then grade "
