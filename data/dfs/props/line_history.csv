@@ -909,3 +909,40 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,2,NYG @ LAR (MNF),Devin Singletary,receptions,1.5,1.4,—,-0.07,-0.1,52,-4.1,56,-7,UNDER,draftkings -139,2026-09-22T22:30:37,0.0,win,0.73
 2026,2,NYG @ LAR (MNF),Colby Parkinson,receptions,3.5,3.4,—,-0.05,-0.1,51,-4.3,56,-3,UNDER,draftkings -138,2026-09-22T22:30:37,2.0,win,0.82
 2026,2,NYG @ LAR (MNF),Xavier Smith,receptions,1.5,1.4,—,-0.1,-0.1,52,-5.1,57,-10,UNDER,draftkings -150,2026-09-22T22:30:37,0.0,win,0.31
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,MarShawn Lloyd,receptions,1.5,2.4,strong,0.55,0.9,63,26.4,36,57,OVER,draftkings +166,2026-09-24T10:21:51,,,1.21
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Drake London,receptions,5.5,4.2,strong,-0.52,-1.3,62,8.9,53,-23,UNDER,draftkings -120,2026-09-24T10:21:51,,,1.15
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Austin Hooper,receptions,0.5,1.4,strong,0.72,0.9,66,6.8,59,190,OVER,fanduel -172,2026-09-24T10:21:51,,,0.54
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Bijan Robinson,rec yds,40.5,28.2,solid,-0.41,-12.3,60,9.3,50,-30,UNDER,fanduel -113,2026-09-24T10:21:51,,,0.97
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Olamide Zaccheaus,rec yds,10.0,17.5,solid,0.38,7.5,59,9.2,50,75,OVER,draftkings -110,2026-09-24T10:21:51,,,0.81
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Austin Hooper,rec yds,7.5,14.8,solid,0.39,7.3,59,9.1,50,97,OVER,fanduel -113,2026-09-24T10:21:51,,,0.54
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Skyy Moore,rec yds,10.0,18.5,solid,0.43,8.5,60,8.9,51,85,OVER,draftkings -117,2026-09-24T10:21:51,,,0.89
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,MarShawn Lloyd,rec yds,5.5,12.6,solid,0.39,7.1,59,8.5,51,129,OVER,fanduel -113,2026-09-24T10:21:51,,,1.21
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jonnu Smith,rec yds,8.0,13.8,solid,0.3,5.8,57,7.9,49,72,OVER,draftkings -105,2026-09-24T10:21:51,,,0.55
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,MarShawn Lloyd,rush yds,24.5,39.0,solid,0.6,14.5,57,7.3,50,59,OVER,draftkings -113,2026-09-24T10:21:51,,,1.21
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Brian Robinson Jr.,rush yds,22.0,35.8,solid,0.58,13.8,57,6.7,50,62,OVER,fanduel -113,2026-09-24T10:21:51,,,1.0
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jahan Dotson,receptions,1.5,2.1,solid,0.38,0.6,59,1.2,58,39,OVER,draftkings -156,2026-09-24T10:21:51,,,1.15
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Olamide Zaccheaus,receptions,1.5,1.9,lean,0.24,0.4,56,15.4,40,25,OVER,fanduel +136,2026-09-24T10:21:51,,,0.81
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Drake London,rec yds,66.0,56.4,lean,-0.25,-9.6,56,6.1,50,-15,UNDER,draftkings -111,2026-09-24T10:21:51,,,1.15
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Christian Watson,rec yds,71.0,80.6,lean,0.24,9.6,56,5.8,50,14,OVER,draftkings -111,2026-09-24T10:21:51,,,0.94
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Kyle Pitts,receptions,3.5,3.1,lean,-0.21,-0.4,55,5.4,50,-12,UNDER,draftkings -110,2026-09-24T10:21:51,,,0.99
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Michael Penix Jr.,pass yds,206.0,222.9,lean,0.22,16.9,55,5.2,50,8,OVER,draftkings -111,2026-09-24T10:21:51,,,0.96
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jahan Dotson,rec yds,19.5,24.6,lean,0.22,5.1,55,5.1,50,26,OVER,fanduel -113,2026-09-24T10:21:51,,,1.15
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Matthew Golden,receptions,4.5,4.1,lean,-0.16,-0.4,54,0.3,54,-8,UNDER,draftkings -131,2026-09-24T10:21:51,,,1.24
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Tucker Kraft,receptions,3.5,3.9,lean,0.2,0.4,55,-2.9,58,11,OVER,fanduel -154,2026-09-24T10:21:51,,,1.06
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Tucker Kraft,rec yds,46.0,50.6,—,0.15,4.6,53,3.6,50,10,OVER,draftkings -111,2026-09-24T10:21:51,,,1.06
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Michael Penix Jr.,rush yds,4.5,7.4,—,0.15,2.9,50,2.5,47,64,OVER,fanduel +108,2026-09-24T10:21:51,,,0.96
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Michael Penix Jr.,pass TD,1.0,0.9,—,-0.1,-0.1,52,2.1,50,-11,UNDER,fanduel +195,2026-09-24T10:21:51,,,0.96
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Kyle Pitts,rec yds,36.0,33.6,—,-0.08,-2.4,52,2.0,50,-7,UNDER,draftkings -112,2026-09-24T10:21:51,,,0.99
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jordan Love,pass TD,1.5,1.6,—,0.09,0.1,52,1.7,51,7,OVER,fanduel -114,2026-09-24T10:21:51,,,1.14
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jordan Love,pass yds,227.5,225.6,—,-0.02,-1.9,51,0.7,50,-1,UNDER,draftkings -111,2026-09-24T10:21:51,,,1.14
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Matthew Golden,rec yds,53.5,53.0,—,-0.02,-0.5,50,0.4,50,-1,UNDER,draftkings -112,2026-09-24T10:21:51,,,1.24
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Bijan Robinson,receptions,4.5,4.7,—,0.08,0.2,52,-0.0,52,4,OVER,draftkings -117,2026-09-24T10:21:51,,,0.97
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Kaleb Johnson,rush yds,36.0,31.8,—,-0.15,-4.2,50,0.0,50,-12,UNDER,draftkings -112,2026-09-24T10:21:51,,,1.49
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Bijan Robinson,rush yds,77.5,80.8,—,0.09,3.3,50,-0.1,50,4,OVER,draftkings -113,2026-09-24T10:21:51,,,0.97
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Chris Brooks,rush yds,14.5,20.4,—,0.27,5.9,50,-0.3,50,41,OVER,fanduel -113,2026-09-24T10:21:51,,,1.05
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jordan Love,rush yds,8.0,7.4,—,-0.03,-0.6,50,-0.4,50,-7,UNDER,fanduel -113,2026-09-24T10:21:51,,,1.14
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Chris Brooks,rec yds,7.5,7.1,—,-0.02,-0.4,50,-1.3,52,-5,UNDER,draftkings -120,2026-09-24T10:21:51,,,1.05
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Christian Watson,receptions,5.0,5.0,—,-0.0,-0.0,50,-1.5,52,0,UNDER,fanduel +104,2026-09-24T10:21:51,,,0.94
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Chris Brooks,receptions,1.5,1.3,—,-0.12,-0.2,53,-6.9,60,-13,UNDER,fanduel -174,2026-09-24T10:21:51,,,1.05
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jonnu Smith,receptions,1.5,1.4,—,-0.08,-0.1,52,-8.7,61,-8,UNDER,draftkings -170,2026-09-24T10:21:51,,,0.55
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Skyy Moore,receptions,1.5,1.4,—,-0.05,-0.1,51,-8.8,60,-5,UNDER,fanduel -174,2026-09-24T10:21:51,,,0.89
