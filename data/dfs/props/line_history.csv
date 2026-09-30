@@ -909,40 +909,515 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,2,NYG @ LAR (MNF),Devin Singletary,receptions,1.5,1.4,—,-0.07,-0.1,52,-4.1,56,-7,UNDER,draftkings -139,2026-09-22T22:30:37,0.0,win,0.73
 2026,2,NYG @ LAR (MNF),Colby Parkinson,receptions,3.5,3.4,—,-0.05,-0.1,51,-4.3,56,-3,UNDER,draftkings -138,2026-09-22T22:30:37,2.0,win,0.82
 2026,2,NYG @ LAR (MNF),Xavier Smith,receptions,1.5,1.4,—,-0.1,-0.1,52,-5.1,57,-10,UNDER,draftkings -150,2026-09-22T22:30:37,0.0,win,0.31
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,MarShawn Lloyd,receptions,1.5,2.4,strong,0.55,0.9,63,26.4,36,57,OVER,draftkings +166,2026-09-24T10:21:51,,,1.21
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Drake London,receptions,5.5,4.2,strong,-0.52,-1.3,62,8.9,53,-23,UNDER,draftkings -120,2026-09-24T10:21:51,,,1.15
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Austin Hooper,receptions,0.5,1.4,strong,0.72,0.9,66,6.8,59,190,OVER,fanduel -172,2026-09-24T10:21:51,,,0.54
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Bijan Robinson,rec yds,40.5,28.2,solid,-0.41,-12.3,60,9.3,50,-30,UNDER,fanduel -113,2026-09-24T10:21:51,,,0.97
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Olamide Zaccheaus,rec yds,10.0,17.5,solid,0.38,7.5,59,9.2,50,75,OVER,draftkings -110,2026-09-24T10:21:51,,,0.81
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Austin Hooper,rec yds,7.5,14.8,solid,0.39,7.3,59,9.1,50,97,OVER,fanduel -113,2026-09-24T10:21:51,,,0.54
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Skyy Moore,rec yds,10.0,18.5,solid,0.43,8.5,60,8.9,51,85,OVER,draftkings -117,2026-09-24T10:21:51,,,0.89
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,MarShawn Lloyd,rec yds,5.5,12.6,solid,0.39,7.1,59,8.5,51,129,OVER,fanduel -113,2026-09-24T10:21:51,,,1.21
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jonnu Smith,rec yds,8.0,13.8,solid,0.3,5.8,57,7.9,49,72,OVER,draftkings -105,2026-09-24T10:21:51,,,0.55
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,MarShawn Lloyd,rush yds,24.5,39.0,solid,0.6,14.5,57,7.3,50,59,OVER,draftkings -113,2026-09-24T10:21:51,,,1.21
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Brian Robinson Jr.,rush yds,22.0,35.8,solid,0.58,13.8,57,6.7,50,62,OVER,fanduel -113,2026-09-24T10:21:51,,,1.0
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jahan Dotson,receptions,1.5,2.1,solid,0.38,0.6,59,1.2,58,39,OVER,draftkings -156,2026-09-24T10:21:51,,,1.15
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Olamide Zaccheaus,receptions,1.5,1.9,lean,0.24,0.4,56,15.4,40,25,OVER,fanduel +136,2026-09-24T10:21:51,,,0.81
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Drake London,rec yds,66.0,56.4,lean,-0.25,-9.6,56,6.1,50,-15,UNDER,draftkings -111,2026-09-24T10:21:51,,,1.15
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Christian Watson,rec yds,71.0,80.6,lean,0.24,9.6,56,5.8,50,14,OVER,draftkings -111,2026-09-24T10:21:51,,,0.94
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Kyle Pitts,receptions,3.5,3.1,lean,-0.21,-0.4,55,5.4,50,-12,UNDER,draftkings -110,2026-09-24T10:21:51,,,0.99
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Michael Penix Jr.,pass yds,206.0,222.9,lean,0.22,16.9,55,5.2,50,8,OVER,draftkings -111,2026-09-24T10:21:51,,,0.96
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jahan Dotson,rec yds,19.5,24.6,lean,0.22,5.1,55,5.1,50,26,OVER,fanduel -113,2026-09-24T10:21:51,,,1.15
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Matthew Golden,receptions,4.5,4.1,lean,-0.16,-0.4,54,0.3,54,-8,UNDER,draftkings -131,2026-09-24T10:21:51,,,1.24
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Tucker Kraft,receptions,3.5,3.9,lean,0.2,0.4,55,-2.9,58,11,OVER,fanduel -154,2026-09-24T10:21:51,,,1.06
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Tucker Kraft,rec yds,46.0,50.6,—,0.15,4.6,53,3.6,50,10,OVER,draftkings -111,2026-09-24T10:21:51,,,1.06
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Michael Penix Jr.,rush yds,4.5,7.4,—,0.15,2.9,50,2.5,47,64,OVER,fanduel +108,2026-09-24T10:21:51,,,0.96
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Michael Penix Jr.,pass TD,1.0,0.9,—,-0.1,-0.1,52,2.1,50,-11,UNDER,fanduel +195,2026-09-24T10:21:51,,,0.96
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Kyle Pitts,rec yds,36.0,33.6,—,-0.08,-2.4,52,2.0,50,-7,UNDER,draftkings -112,2026-09-24T10:21:51,,,0.99
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jordan Love,pass TD,1.5,1.6,—,0.09,0.1,52,1.7,51,7,OVER,fanduel -114,2026-09-24T10:21:51,,,1.14
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jordan Love,pass yds,227.5,225.6,—,-0.02,-1.9,51,0.7,50,-1,UNDER,draftkings -111,2026-09-24T10:21:51,,,1.14
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Matthew Golden,rec yds,53.5,53.0,—,-0.02,-0.5,50,0.4,50,-1,UNDER,draftkings -112,2026-09-24T10:21:51,,,1.24
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Bijan Robinson,receptions,4.5,4.7,—,0.08,0.2,52,-0.0,52,4,OVER,draftkings -117,2026-09-24T10:21:51,,,0.97
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Kaleb Johnson,rush yds,36.0,31.8,—,-0.15,-4.2,50,0.0,50,-12,UNDER,draftkings -112,2026-09-24T10:21:51,,,1.49
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Bijan Robinson,rush yds,77.5,80.8,—,0.09,3.3,50,-0.1,50,4,OVER,draftkings -113,2026-09-24T10:21:51,,,0.97
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Chris Brooks,rush yds,14.5,20.4,—,0.27,5.9,50,-0.3,50,41,OVER,fanduel -113,2026-09-24T10:21:51,,,1.05
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jordan Love,rush yds,8.0,7.4,—,-0.03,-0.6,50,-0.4,50,-7,UNDER,fanduel -113,2026-09-24T10:21:51,,,1.14
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Chris Brooks,rec yds,7.5,7.1,—,-0.02,-0.4,50,-1.3,52,-5,UNDER,draftkings -120,2026-09-24T10:21:51,,,1.05
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Christian Watson,receptions,5.0,5.0,—,-0.0,-0.0,50,-1.5,52,0,UNDER,fanduel +104,2026-09-24T10:21:51,,,0.94
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Chris Brooks,receptions,1.5,1.3,—,-0.12,-0.2,53,-6.9,60,-13,UNDER,fanduel -174,2026-09-24T10:21:51,,,1.05
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jonnu Smith,receptions,1.5,1.4,—,-0.08,-0.1,52,-8.7,61,-8,UNDER,draftkings -170,2026-09-24T10:21:51,,,0.55
-2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Skyy Moore,receptions,1.5,1.4,—,-0.05,-0.1,51,-8.8,60,-5,UNDER,fanduel -174,2026-09-24T10:21:51,,,0.89
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,MarShawn Lloyd,receptions,1.5,2.4,strong,0.55,0.9,63,26.4,36,57,OVER,draftkings +166,2026-09-24T10:21:51,2.0,win,1.21
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Drake London,receptions,5.5,4.2,strong,-0.52,-1.3,62,8.9,53,-23,UNDER,draftkings -120,2026-09-24T10:21:51,9.0,loss,1.15
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Austin Hooper,receptions,0.5,1.4,strong,0.72,0.9,66,6.8,59,190,OVER,fanduel -172,2026-09-24T10:21:51,2.0,win,0.54
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Bijan Robinson,rec yds,40.5,28.2,solid,-0.41,-12.3,60,9.3,50,-30,UNDER,fanduel -113,2026-09-24T10:21:51,19.0,win,0.97
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Olamide Zaccheaus,rec yds,10.0,17.5,solid,0.38,7.5,59,9.2,50,75,OVER,draftkings -110,2026-09-24T10:21:51,9.0,loss,0.81
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Austin Hooper,rec yds,7.5,14.8,solid,0.39,7.3,59,9.1,50,97,OVER,fanduel -113,2026-09-24T10:21:51,11.0,win,0.54
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Skyy Moore,rec yds,10.0,18.5,solid,0.43,8.5,60,8.9,51,85,OVER,draftkings -117,2026-09-24T10:21:51,31.0,win,0.89
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,MarShawn Lloyd,rec yds,5.5,12.6,solid,0.39,7.1,59,8.5,51,129,OVER,fanduel -113,2026-09-24T10:21:51,7.0,win,1.21
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jonnu Smith,rec yds,8.0,13.8,solid,0.3,5.8,57,7.9,49,72,OVER,draftkings -105,2026-09-24T10:21:51,16.0,win,0.55
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,MarShawn Lloyd,rush yds,24.5,39.0,solid,0.6,14.5,57,7.3,50,59,OVER,draftkings -113,2026-09-24T10:21:51,11.0,loss,1.21
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Brian Robinson Jr.,rush yds,22.0,35.8,solid,0.58,13.8,57,6.7,50,62,OVER,fanduel -113,2026-09-24T10:21:51,50.0,win,1.0
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jahan Dotson,receptions,1.5,2.1,solid,0.38,0.6,59,1.2,58,39,OVER,draftkings -156,2026-09-24T10:21:51,1.0,loss,1.15
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Olamide Zaccheaus,receptions,1.5,1.9,lean,0.24,0.4,56,15.4,40,25,OVER,fanduel +136,2026-09-24T10:21:51,2.0,win,0.81
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Drake London,rec yds,66.0,56.4,lean,-0.25,-9.6,56,6.1,50,-15,UNDER,draftkings -111,2026-09-24T10:21:51,194.0,loss,1.15
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Christian Watson,rec yds,71.0,80.6,lean,0.24,9.6,56,5.8,50,14,OVER,draftkings -111,2026-09-24T10:21:51,96.0,win,0.94
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Kyle Pitts,receptions,3.5,3.1,lean,-0.21,-0.4,55,5.4,50,-12,UNDER,draftkings -110,2026-09-24T10:21:51,1.0,win,0.99
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Michael Penix Jr.,pass yds,206.0,222.9,lean,0.22,16.9,55,5.2,50,8,OVER,draftkings -111,2026-09-24T10:21:51,256.0,win,0.96
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jahan Dotson,rec yds,19.5,24.6,lean,0.22,5.1,55,5.1,50,26,OVER,fanduel -113,2026-09-24T10:21:51,11.0,loss,1.15
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Matthew Golden,receptions,4.5,4.1,lean,-0.16,-0.4,54,0.3,54,-8,UNDER,draftkings -131,2026-09-24T10:21:51,5.0,loss,1.24
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Tucker Kraft,receptions,3.5,3.9,lean,0.2,0.4,55,-2.9,58,11,OVER,fanduel -154,2026-09-24T10:21:51,4.0,win,1.06
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Tucker Kraft,rec yds,46.0,50.6,—,0.15,4.6,53,3.6,50,10,OVER,draftkings -111,2026-09-24T10:21:51,26.0,loss,1.06
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Michael Penix Jr.,rush yds,4.5,7.4,—,0.15,2.9,50,2.5,47,64,OVER,fanduel +108,2026-09-24T10:21:51,-2.0,loss,0.96
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Michael Penix Jr.,pass TD,1.0,0.9,—,-0.1,-0.1,52,2.1,50,-11,UNDER,fanduel +195,2026-09-24T10:21:51,1.0,push,0.96
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Kyle Pitts,rec yds,36.0,33.6,—,-0.08,-2.4,52,2.0,50,-7,UNDER,draftkings -112,2026-09-24T10:21:51,5.0,win,0.99
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jordan Love,pass TD,1.5,1.6,—,0.09,0.1,52,1.7,51,7,OVER,fanduel -114,2026-09-24T10:21:51,2.0,win,1.14
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jordan Love,pass yds,227.5,225.6,—,-0.02,-1.9,51,0.7,50,-1,UNDER,draftkings -111,2026-09-24T10:21:51,312.0,loss,1.14
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Matthew Golden,rec yds,53.5,53.0,—,-0.02,-0.5,50,0.4,50,-1,UNDER,draftkings -112,2026-09-24T10:21:51,100.0,loss,1.24
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Bijan Robinson,receptions,4.5,4.7,—,0.08,0.2,52,-0.0,52,4,OVER,draftkings -117,2026-09-24T10:21:51,2.0,loss,0.97
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Kaleb Johnson,rush yds,36.0,31.8,—,-0.15,-4.2,50,0.0,50,-12,UNDER,draftkings -112,2026-09-24T10:21:51,6.0,win,1.49
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Bijan Robinson,rush yds,77.5,80.8,—,0.09,3.3,50,-0.1,50,4,OVER,draftkings -113,2026-09-24T10:21:51,194.0,win,0.97
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Chris Brooks,rush yds,14.5,20.4,—,0.27,5.9,50,-0.3,50,41,OVER,fanduel -113,2026-09-24T10:21:51,0.0,loss,1.05
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jordan Love,rush yds,8.0,7.4,—,-0.03,-0.6,50,-0.4,50,-7,UNDER,fanduel -113,2026-09-24T10:21:51,0.0,win,1.14
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Chris Brooks,rec yds,7.5,7.1,—,-0.02,-0.4,50,-1.3,52,-5,UNDER,draftkings -120,2026-09-24T10:21:51,4.0,win,1.05
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Christian Watson,receptions,5.0,5.0,—,-0.0,-0.0,50,-1.5,52,0,UNDER,fanduel +104,2026-09-24T10:21:51,7.0,loss,0.94
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Chris Brooks,receptions,1.5,1.3,—,-0.12,-0.2,53,-6.9,60,-13,UNDER,fanduel -174,2026-09-24T10:21:51,1.0,win,1.05
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Jonnu Smith,receptions,1.5,1.4,—,-0.08,-0.1,52,-8.7,61,-8,UNDER,draftkings -170,2026-09-24T10:21:51,2.0,loss,0.55
+2026,3,Atlanta Falcons @ Green Bay Packers  ·  Thu 09/24 08:15 PM,Skyy Moore,receptions,1.5,1.4,—,-0.05,-0.1,51,-8.8,60,-5,UNDER,fanduel -174,2026-09-24T10:21:51,3.0,loss,0.89
+2026,3,Week 3 Sun-Mon (15 games),Dawson Knox,receptions,1.5,2.6,strong,0.69,1.1,65,24.8,41,72,OVER,fanduel +134,2026-09-29T22:16:18,1.0,loss,0.71
+2026,3,Week 3 Sun-Mon (15 games),Keon Coleman,receptions,1.5,2.6,strong,0.71,1.1,66,16.9,49,73,OVER,draftkings -108,2026-09-29T22:16:18,1.0,loss,0.84
+2026,3,Week 3 Sun-Mon (15 games),Dawson Knox,rec yds,9.0,23.1,strong,0.73,14.1,66,15.9,50,157,OVER,fanduel -113,2026-09-29T22:16:18,5.0,loss,0.71
+2026,3,Week 3 Sun-Mon (15 games),Keon Coleman,rec yds,14.5,25.9,strong,0.54,11.4,62,12.1,50,79,OVER,fanduel -113,2026-09-29T22:16:18,37.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Omarion Hampton,receptions,1.5,2.5,strong,0.66,1.0,65,8.2,56,68,OVER,fanduel -148,2026-09-29T22:16:18,0.0,loss,0.89
+2026,3,Week 3 Sun-Mon (15 games),James Cook,receptions,1.5,2.5,strong,0.64,1.0,64,7.5,57,67,OVER,draftkings -153,2026-09-29T22:16:18,0.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Tre Harris,rec yds,31.0,43.6,solid,0.47,12.6,61,10.7,50,41,OVER,fanduel -113,2026-09-29T22:16:18,76.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Quentin Johnston,rec yds,36.5,47.0,solid,0.37,10.5,59,8.5,50,29,OVER,draftkings -113,2026-09-29T22:16:18,40.0,win,0.88
+2026,3,Week 3 Sun-Mon (15 games),Keaton Mitchell,rush yds,14.5,28.1,solid,0.63,13.6,58,8.3,50,94,OVER,draftkings -111,2026-09-29T22:16:18,52.0,win,1.09
+2026,3,Week 3 Sun-Mon (15 games),Tre Harris,receptions,2.5,3.1,solid,0.35,0.6,58,5.1,53,25,OVER,draftkings -118,2026-09-29T22:16:18,6.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Khalil Shakir,receptions,3.5,4.4,solid,0.45,0.9,60,1.8,59,26,OVER,draftkings -160,2026-09-29T22:16:18,1.0,loss,0.82
+2026,3,Week 3 Sun-Mon (15 games),Josh Allen,pass TD,1.5,2.0,solid,0.4,0.5,59,1.6,58,31,OVER,draftkings -158,2026-09-29T22:16:18,0.0,loss,0.87
+2026,3,Week 3 Sun-Mon (15 games),Justin Herbert,pass TD,1.5,1.1,solid,-0.3,-0.4,57,-2.6,60,-23,UNDER,draftkings -173,2026-09-29T22:16:18,1.0,win,1.1
+2026,3,Week 3 Sun-Mon (15 games),DJ Moore,receptions,3.5,3.0,lean,-0.26,-0.5,56,11.4,45,-15,UNDER,draftkings +114,2026-09-29T22:16:18,6.0,loss,1.32
+2026,3,Week 3 Sun-Mon (15 games),Justin Herbert,pass yds,227.5,211.0,lean,-0.21,-16.5,55,5.1,50,-7,UNDER,draftkings -112,2026-09-29T22:16:18,226.0,win,1.1
+2026,3,Week 3 Sun-Mon (15 games),DJ Moore,rec yds,48.5,41.5,lean,-0.21,-7.0,55,5.0,50,-14,UNDER,draftkings -113,2026-09-29T22:16:18,67.0,loss,1.32
+2026,3,Week 3 Sun-Mon (15 games),Omarion Hampton,rec yds,11.5,14.8,lean,0.16,3.3,54,4.0,50,29,OVER,draftkings -111,2026-09-29T22:16:18,0.0,loss,0.89
+2026,3,Week 3 Sun-Mon (15 games),Dalton Kincaid,rec yds,56.5,62.0,lean,0.16,5.5,54,3.7,50,10,OVER,draftkings -112,2026-09-29T22:16:18,38.0,loss,1.04
+2026,3,Week 3 Sun-Mon (15 games),Quentin Johnston,receptions,3.5,3.6,—,0.04,0.1,51,10.6,40,3,OVER,draftkings +132,2026-09-29T22:16:18,3.0,loss,0.88
+2026,3,Week 3 Sun-Mon (15 games),Ladd McConkey,receptions,4.5,4.3,—,-0.07,-0.2,52,6.2,45,-3,UNDER,draftkings +108,2026-09-29T22:16:18,4.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),Khalil Shakir,rec yds,43.0,47.1,—,0.13,4.1,53,3.5,50,10,OVER,draftkings -109,2026-09-29T22:16:18,6.0,loss,0.82
+2026,3,Week 3 Sun-Mon (15 games),James Cook,rec yds,12.0,14.1,—,0.1,2.1,52,2.7,50,18,OVER,draftkings -110,2026-09-29T22:16:18,0.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Josh Allen,pass yds,239.5,244.8,—,0.07,5.3,52,1.5,50,2,OVER,draftkings -113,2026-09-29T22:16:18,204.0,loss,0.87
+2026,3,Week 3 Sun-Mon (15 games),Oronde Gadsden II,rec yds,38.0,36.3,—,-0.06,-1.7,51,1.2,50,-4,UNDER,fanduel -113,2026-09-29T22:16:18,0.0,win,1.04
+2026,3,Week 3 Sun-Mon (15 games),Ladd McConkey,rec yds,59.0,59.8,—,0.02,0.8,51,0.7,50,1,OVER,draftkings -110,2026-09-29T22:16:18,66.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),Dalton Kincaid,receptions,4.5,4.3,—,-0.08,-0.2,52,0.6,51,-4,UNDER,draftkings -120,2026-09-29T22:16:18,2.0,win,1.04
+2026,3,Week 3 Sun-Mon (15 games),James Cook,rush yds,80.0,73.6,—,-0.16,-6.4,50,0.2,50,-8,UNDER,draftkings -110,2026-09-29T22:16:18,154.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Omarion Hampton,rush yds,59.0,63.4,—,0.13,4.4,50,0.2,50,7,OVER,draftkings -110,2026-09-29T22:16:18,56.0,loss,0.89
+2026,3,Week 3 Sun-Mon (15 games),Josh Allen,rush yds,33.0,40.5,—,0.28,7.5,50,-0.4,50,23,OVER,fanduel -113,2026-09-29T22:16:18,22.0,loss,0.87
+2026,3,Week 3 Sun-Mon (15 games),Justin Herbert,rush yds,19.5,25.3,—,0.25,5.8,50,-0.4,50,30,OVER,fanduel -113,2026-09-29T22:16:18,17.0,loss,1.1
+2026,3,Week 3 Sun-Mon (15 games),Oronde Gadsden II,receptions,3.5,3.2,—,-0.14,-0.3,53,-0.9,54,-8,UNDER,draftkings -136,2026-09-29T22:16:18,0.0,win,1.04
+2026,3,Week 3 Sun-Mon (15 games),Darren Waller,rec yds,20.0,33.7,strong,0.6,13.7,64,13.4,50,69,OVER,draftkings -113,2026-09-29T22:16:18,51.0,win,0.76
+2026,3,Week 3 Sun-Mon (15 games),Tommy Tremble,rec yds,10.0,21.6,strong,0.59,11.6,63,13.4,50,116,OVER,draftkings -112,2026-09-29T22:16:18,41.0,win,0.75
+2026,3,Week 3 Sun-Mon (15 games),Jerry Jeudy,rec yds,20.5,33.6,strong,0.57,13.1,63,12.8,50,64,OVER,draftkings -113,2026-09-29T22:16:18,,,0.89
+2026,3,Week 3 Sun-Mon (15 games),Jerry Jeudy,receptions,1.5,2.7,strong,0.79,1.2,67,12.7,54,82,OVER,fanduel -132,2026-09-29T22:16:18,,,0.89
+2026,3,Week 3 Sun-Mon (15 games),Mitchell Evans,rec yds,6.5,16.1,strong,0.52,9.6,62,12.0,50,148,OVER,fanduel -113,2026-09-29T22:16:18,36.0,win,0.63
+2026,3,Week 3 Sun-Mon (15 games),Raheim Sanders,receptions,0.5,1.3,strong,0.6,0.8,64,4.8,59,160,OVER,fanduel -160,2026-09-29T22:16:18,4.0,win,0.78
+2026,3,Week 3 Sun-Mon (15 games),Deshaun Watson,pass TD,1.5,0.9,strong,-0.51,-0.6,62,-4.2,66,-39,UNDER,fanduel -230,2026-09-29T22:16:18,2.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Quinshon Judkins,receptions,2.5,3.3,solid,0.43,0.8,60,12.5,47,30,OVER,draftkings -102,2026-09-29T22:16:18,2.0,loss,1.2
+2026,3,Week 3 Sun-Mon (15 games),Harold Fannin Jr.,rec yds,36.0,47.6,solid,0.41,11.6,60,9.5,50,32,OVER,draftkings -113,2026-09-29T22:16:18,51.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Tetairoa McMillan,rec yds,62.5,77.7,solid,0.41,15.2,60,9.4,50,24,OVER,draftkings -113,2026-09-29T22:16:18,17.0,loss,0.92
+2026,3,Week 3 Sun-Mon (15 games),Chuba Hubbard,rush yds,69.0,44.9,solid,-0.67,-24.1,59,9.2,50,-35,UNDER,draftkings -111,2026-09-29T22:16:18,82.0,loss,1.24
+2026,3,Week 3 Sun-Mon (15 games),Blake Whiteheart,rec yds,5.5,11.1,solid,0.31,5.6,57,7.5,50,101,OVER,draftkings -110,2026-09-29T22:16:18,,,0.74
+2026,3,Week 3 Sun-Mon (15 games),Raheim Sanders,rec yds,2.5,7.8,solid,0.31,5.3,57,7.5,50,212,OVER,fanduel -106,2026-09-29T22:16:18,34.0,win,0.78
+2026,3,Week 3 Sun-Mon (15 games),Tommy Tremble,receptions,1.5,2.2,solid,0.46,0.7,61,7.4,53,48,OVER,draftkings -125,2026-09-29T22:16:18,3.0,win,0.75
+2026,3,Week 3 Sun-Mon (15 games),Harold Fannin Jr.,receptions,3.5,4.2,solid,0.37,0.8,59,5.8,53,21,OVER,fanduel -118,2026-09-29T22:16:18,7.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Jalen Coker,receptions,5.0,4.2,solid,-0.32,-0.8,57,4.7,53,-15,UNDER,draftkings +104,2026-09-29T22:16:18,2.0,win,1.08
+2026,3,Week 3 Sun-Mon (15 games),Blake Whiteheart,receptions,0.5,1.1,solid,0.42,0.6,60,0.4,59,112,OVER,fanduel -172,2026-09-29T22:16:18,,,0.74
+2026,3,Week 3 Sun-Mon (15 games),Darren Waller,receptions,2.5,3.0,lean,0.28,0.5,57,12.7,44,20,OVER,draftkings +118,2026-09-29T22:16:18,5.0,win,0.76
+2026,3,Week 3 Sun-Mon (15 games),Bryce Young,pass TD,1.5,1.7,lean,0.19,0.2,54,12.1,42,15,OVER,draftkings +122,2026-09-29T22:16:18,1.0,loss,0.85
+2026,3,Week 3 Sun-Mon (15 games),Chuba Hubbard,receptions,2.5,3.0,lean,0.29,0.5,57,7.1,50,20,OVER,draftkings -110,2026-09-29T22:16:18,4.0,win,1.24
+2026,3,Week 3 Sun-Mon (15 games),Chuba Hubbard,rec yds,15.0,19.3,lean,0.2,4.3,55,6.1,49,28,OVER,fanduel -102,2026-09-29T22:16:18,28.0,win,1.24
+2026,3,Week 3 Sun-Mon (15 games),Deshaun Watson,pass yds,187.0,206.2,lean,0.24,19.2,56,5.7,50,10,OVER,draftkings -113,2026-09-29T22:16:18,144.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Quinshon Judkins,rec yds,14.0,18.8,lean,0.23,4.8,55,5.6,50,34,OVER,draftkings -110,2026-09-29T22:16:18,9.0,loss,1.2
+2026,3,Week 3 Sun-Mon (15 games),Jalen Coker,rec yds,59.0,50.6,lean,-0.23,-8.4,56,5.3,50,-14,UNDER,fanduel -113,2026-09-29T22:16:18,18.0,win,1.08
+2026,3,Week 3 Sun-Mon (15 games),Quinshon Judkins,rush yds,60.5,43.6,lean,-0.5,-16.9,55,5.3,50,-28,UNDER,draftkings -111,2026-09-29T22:16:18,70.0,loss,1.2
+2026,3,Week 3 Sun-Mon (15 games),Raheim Sanders,rush yds,6.5,16.2,lean,0.5,9.7,55,4.3,51,150,OVER,fanduel -113,2026-09-29T22:16:18,17.0,win,0.78
+2026,3,Week 3 Sun-Mon (15 games),Bryce Young,pass yds,221.0,234.4,lean,0.17,13.4,54,4.1,50,6,OVER,draftkings -112,2026-09-29T22:16:18,291.0,win,0.85
+2026,3,Week 3 Sun-Mon (15 games),Deshaun Watson,rush yds,25.5,23.3,—,-0.09,-2.2,50,-0.1,50,-9,UNDER,draftkings -113,2026-09-29T22:16:18,45.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),AJ Dillon,rush yds,14.0,18.8,—,0.22,4.8,50,-0.2,50,34,OVER,fanduel -113,2026-09-29T22:16:18,16.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Bryce Young,rush yds,14.0,14.1,—,0.0,0.1,50,-0.4,50,0,OVER,fanduel -113,2026-09-29T22:16:18,0.0,loss,0.85
+2026,3,Week 3 Sun-Mon (15 games),Tetairoa McMillan,receptions,4.5,4.8,—,0.13,0.3,53,-0.6,54,7,OVER,draftkings -130,2026-09-29T22:16:18,2.0,loss,0.92
+2026,3,Week 3 Sun-Mon (15 games),Jaylen Warren,receptions,4.0,2.2,high,-0.84,-1.8,68,18.4,50,-45,UNDER,fanduel +118,2026-09-29T22:16:18,3.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Erick All,receptions,0.5,1.7,high,0.92,1.2,69,13.3,56,244,OVER,draftkings -142,2026-09-29T22:16:18,,,0.38
+2026,3,Week 3 Sun-Mon (15 games),Michael Pittman Jr.,receptions,2.5,3.9,high,0.8,1.4,67,10.5,57,57,OVER,fanduel -148,2026-09-29T22:16:18,2.0,loss,1.01
+2026,3,Week 3 Sun-Mon (15 games),Mike Gesicki,rec yds,24.5,42.2,strong,0.73,17.7,66,16.3,50,72,OVER,draftkings -109,2026-09-29T22:16:18,37.0,win,0.82
+2026,3,Week 3 Sun-Mon (15 games),Michael Pittman Jr.,rec yds,27.0,45.6,strong,0.74,18.6,66,15.9,50,69,OVER,fanduel -113,2026-09-29T22:16:18,16.0,loss,1.01
+2026,3,Week 3 Sun-Mon (15 games),Tee Higgins,rec yds,55.0,77.7,strong,0.66,22.7,65,14.4,50,41,OVER,fanduel -113,2026-09-29T22:16:18,90.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Erick All,rec yds,6.0,16.3,strong,0.56,10.3,63,14.3,48,171,OVER,fanduel -102,2026-09-29T22:16:18,,,0.38
+2026,3,Week 3 Sun-Mon (15 games),Mike Gesicki,receptions,2.5,3.5,strong,0.58,1.0,63,13.4,50,41,OVER,draftkings -110,2026-09-29T22:16:18,3.0,win,0.82
+2026,3,Week 3 Sun-Mon (15 games),Drew Sample,rec yds,6.5,16.0,strong,0.51,9.5,62,12.1,50,146,OVER,draftkings -109,2026-09-29T22:16:18,0.0,loss,0.6
+2026,3,Week 3 Sun-Mon (15 games),Jaylen Warren,rec yds,26.0,13.4,strong,-0.5,-12.6,62,11.4,50,-48,UNDER,fanduel -113,2026-09-29T22:16:18,49.0,loss,1.14
+2026,3,Week 3 Sun-Mon (15 games),Aaron Rodgers,pass TD,1.5,0.9,strong,-0.55,-0.6,63,-1.5,64,-43,UNDER,draftkings -208,2026-09-29T22:16:18,3.0,loss,1.1
+2026,3,Week 3 Sun-Mon (15 games),Joe Burrow,pass TD,1.5,2.0,solid,0.4,0.5,59,10.8,49,31,OVER,fanduel +100,2026-09-29T22:16:18,3.0,win,0.95
+2026,3,Week 3 Sun-Mon (15 games),Darnell Washington,rec yds,14.0,23.1,solid,0.44,9.1,60,9.9,50,65,OVER,fanduel -113,2026-09-29T22:16:18,67.0,win,0.69
+2026,3,Week 3 Sun-Mon (15 games),Darnell Washington,receptions,1.5,2.2,solid,0.46,0.7,61,9.3,51,48,OVER,fanduel -114,2026-09-29T22:16:18,3.0,win,0.69
+2026,3,Week 3 Sun-Mon (15 games),Roman Wilson,rec yds,23.0,32.1,solid,0.38,9.1,59,9.1,50,39,OVER,draftkings -110,2026-09-29T22:16:18,60.0,win,0.96
+2026,3,Week 3 Sun-Mon (15 games),Drew Sample,receptions,1.5,1.8,lean,0.21,0.3,55,16.5,38,21,OVER,draftkings +146,2026-09-29T22:16:18,1.0,loss,0.6
+2026,3,Week 3 Sun-Mon (15 games),Tee Higgins,receptions,4.5,5.0,lean,0.24,0.5,56,13.4,42,12,OVER,draftkings +126,2026-09-29T22:16:18,6.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Chase Brown,receptions,3.5,4.0,lean,0.27,0.5,56,10.6,46,15,OVER,fanduel +106,2026-09-29T22:16:18,2.0,loss,0.91
+2026,3,Week 3 Sun-Mon (15 games),DK Metcalf,receptions,4.5,5.0,lean,0.24,0.5,56,9.4,46,12,OVER,draftkings +108,2026-09-29T22:16:18,3.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Roman Wilson,receptions,2.5,2.8,lean,0.16,0.3,54,9.1,45,12,OVER,draftkings +114,2026-09-29T22:16:18,3.0,win,0.96
+2026,3,Week 3 Sun-Mon (15 games),DK Metcalf,rec yds,52.0,60.9,lean,0.26,8.9,56,6.0,50,17,OVER,fanduel -113,2026-09-29T22:16:18,31.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Pat Freiermuth,rec yds,36.5,41.3,lean,0.17,4.8,54,4.2,50,13,OVER,draftkings -110,2026-09-29T22:16:18,30.0,loss,1.04
+2026,3,Week 3 Sun-Mon (15 games),Pat Freiermuth,receptions,3.5,3.9,lean,0.19,0.4,54,-1.5,56,11,OVER,fanduel -144,2026-09-29T22:16:18,2.0,loss,1.04
+2026,3,Week 3 Sun-Mon (15 games),Samaje Perine,receptions,1.5,1.6,—,0.06,0.1,51,6.1,45,6,OVER,fanduel +112,2026-09-29T22:16:18,1.0,loss,0.8
+2026,3,Week 3 Sun-Mon (15 games),Samaje Perine,rec yds,8.5,10.6,—,0.11,2.1,53,3.1,50,24,OVER,draftkings -108,2026-09-29T22:16:18,5.0,loss,0.8
+2026,3,Week 3 Sun-Mon (15 games),Jaylen Warren,rush yds,58.0,70.6,—,0.38,12.6,52,2.4,50,22,OVER,draftkings -112,2026-09-29T22:16:18,127.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Ja'Marr Chase,rec yds,77.0,73.6,—,-0.08,-3.4,52,1.9,50,-4,UNDER,draftkings -113,2026-09-29T22:16:18,98.0,loss,1.02
+2026,3,Week 3 Sun-Mon (15 games),Chase Brown,rec yds,22.5,21.3,—,-0.05,-1.2,51,1.1,50,-5,UNDER,draftkings -113,2026-09-29T22:16:18,8.0,win,0.91
+2026,3,Week 3 Sun-Mon (15 games),Joe Burrow,pass yds,252.5,250.9,—,-0.02,-1.6,50,0.5,50,-1,UNDER,draftkings -112,2026-09-29T22:16:18,282.0,loss,0.95
+2026,3,Week 3 Sun-Mon (15 games),Aaron Rodgers,pass yds,223.0,223.4,—,0.01,0.4,50,0.2,50,0,OVER,draftkings -111,2026-09-29T22:16:18,292.0,win,1.1
+2026,3,Week 3 Sun-Mon (15 games),Aaron Rodgers,rush yds,0.5,5.2,—,0.26,4.7,50,-0.1,50,932,OVER,draftkings -111,2026-09-29T22:16:18,10.0,win,1.1
+2026,3,Week 3 Sun-Mon (15 games),Chase Brown,rush yds,63.5,54.1,—,-0.27,-9.4,50,-0.2,50,-15,UNDER,fanduel -113,2026-09-29T22:16:18,61.0,win,0.91
+2026,3,Week 3 Sun-Mon (15 games),Samaje Perine,rush yds,14.0,19.7,—,0.26,5.7,50,-0.7,51,41,OVER,fanduel -113,2026-09-29T22:16:18,9.0,loss,0.8
+2026,3,Week 3 Sun-Mon (15 games),Joe Burrow,rush yds,5.5,7.2,—,0.09,1.7,50,-0.8,51,31,OVER,fanduel -113,2026-09-29T22:16:18,13.0,win,0.95
+2026,3,Week 3 Sun-Mon (15 games),Ja'Marr Chase,receptions,6.5,6.6,—,0.03,0.1,51,-2.9,54,1,OVER,draftkings -128,2026-09-29T22:16:18,9.0,win,1.02
+2026,3,Week 3 Sun-Mon (15 games),Isaac TeSlaa,rec yds,16.5,28.7,strong,0.56,12.2,63,13.1,50,74,OVER,draftkings -108,2026-09-29T22:16:18,66.0,win,0.82
+2026,3,Week 3 Sun-Mon (15 games),Breece Hall,receptions,3.5,2.4,strong,-0.53,-1.1,62,5.6,56,-30,UNDER,fanduel -148,2026-09-29T22:16:18,3.0,win,1.09
+2026,3,Week 3 Sun-Mon (15 games),Jeremy Ruckert,receptions,1.5,2.2,solid,0.44,0.7,60,26.7,33,45,OVER,fanduel +182,2026-09-29T22:16:18,5.0,win,0.8
+2026,3,Week 3 Sun-Mon (15 games),Isaac TeSlaa,receptions,1.5,2.1,solid,0.37,0.6,59,16.7,42,39,OVER,fanduel +130,2026-09-29T22:16:18,3.0,win,0.82
+2026,3,Week 3 Sun-Mon (15 games),Jahmyr Gibbs,rush yds,89.5,57.9,solid,-0.76,-31.6,61,11.1,50,-35,UNDER,draftkings -112,2026-09-29T22:16:18,99.0,loss,1.14
+2026,3,Week 3 Sun-Mon (15 games),Braelon Allen,rush yds,17.5,33.8,solid,0.73,16.3,60,11.0,49,93,OVER,draftkings -106,2026-09-29T22:16:18,14.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Jeremy Ruckert,rec yds,8.5,17.3,solid,0.46,8.8,61,10.9,50,104,OVER,draftkings -110,2026-09-29T22:16:18,39.0,win,0.8
+2026,3,Week 3 Sun-Mon (15 games),Sam LaPorta,receptions,4.5,5.6,solid,0.48,1.1,61,10.5,51,24,OVER,fanduel -114,2026-09-29T22:16:18,3.0,loss,0.93
+2026,3,Week 3 Sun-Mon (15 games),Amon-Ra St. Brown,rec yds,76.0,90.5,solid,0.35,14.5,58,8.2,50,19,OVER,draftkings -112,2026-09-29T22:16:18,19.0,loss,0.94
+2026,3,Week 3 Sun-Mon (15 games),Sam LaPorta,rec yds,47.0,58.1,solid,0.35,11.1,58,7.9,50,24,OVER,fanduel -113,2026-09-29T22:16:18,44.0,loss,0.93
+2026,3,Week 3 Sun-Mon (15 games),Jameson Williams,receptions,3.5,4.4,solid,0.46,0.9,61,7.5,53,26,OVER,fanduel -122,2026-09-29T22:16:18,4.0,win,0.91
+2026,3,Week 3 Sun-Mon (15 games),Jared Goff,pass yds,262.0,285.8,solid,0.31,23.8,57,7.4,50,9,OVER,draftkings -112,2026-09-29T22:16:18,269.0,win,0.87
+2026,3,Week 3 Sun-Mon (15 games),Geno Smith,pass TD,1.5,1.1,solid,-0.3,-0.4,57,-0.9,58,-23,UNDER,draftkings -157,2026-09-29T22:16:18,3.0,loss,1.16
+2026,3,Week 3 Sun-Mon (15 games),Isaiah Williams,receptions,3.5,4.0,lean,0.27,0.5,56,8.6,48,15,OVER,draftkings +101,2026-09-29T22:16:18,1.0,loss,1.0
+2026,3,Week 3 Sun-Mon (15 games),Jameson Williams,rec yds,55.0,65.2,lean,0.3,10.2,57,6.9,50,19,OVER,draftkings -113,2026-09-29T22:16:18,49.0,loss,0.91
+2026,3,Week 3 Sun-Mon (15 games),Garrett Wilson,rec yds,79.5,69.7,lean,-0.23,-9.8,55,5.5,50,-12,UNDER,draftkings -112,2026-09-29T22:16:18,107.0,loss,1.12
+2026,3,Week 3 Sun-Mon (15 games),Garrett Wilson,receptions,6.5,5.9,lean,-0.23,-0.6,56,5.5,50,-10,UNDER,draftkings -110,2026-09-29T22:16:18,10.0,loss,1.12
+2026,3,Week 3 Sun-Mon (15 games),Breece Hall,rec yds,22.0,17.5,lean,-0.19,-4.5,54,4.5,50,-20,UNDER,draftkings -112,2026-09-29T22:16:18,23.0,loss,1.09
+2026,3,Week 3 Sun-Mon (15 games),Jahmyr Gibbs,receptions,4.5,4.7,—,0.1,0.2,52,6.2,46,5,OVER,fanduel +112,2026-09-29T22:16:18,7.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Jahmyr Gibbs,rec yds,34.5,30.4,—,-0.15,-4.1,53,3.9,50,-12,UNDER,draftkings -108,2026-09-29T22:16:18,65.0,loss,1.14
+2026,3,Week 3 Sun-Mon (15 games),Breece Hall,rush yds,60.0,74.4,—,0.43,14.4,54,3.5,50,24,OVER,draftkings -112,2026-09-29T22:16:18,32.0,loss,1.09
+2026,3,Week 3 Sun-Mon (15 games),Jared Goff,rush yds,0.5,3.0,—,0.14,2.5,50,3.1,47,498,OVER,fanduel +108,2026-09-29T22:16:18,6.0,win,0.87
+2026,3,Week 3 Sun-Mon (15 games),Geno Smith,pass yds,229.5,221.8,—,-0.1,-7.7,52,2.3,50,-3,UNDER,draftkings -113,2026-09-29T22:16:18,321.0,loss,1.16
+2026,3,Week 3 Sun-Mon (15 games),Sione Vaki,rush yds,10.5,16.8,—,0.31,6.3,51,1.4,49,60,OVER,draftkings -105,2026-09-29T22:16:18,26.0,win,1.35
+2026,3,Week 3 Sun-Mon (15 games),Isaiah Williams,rec yds,34.5,35.7,—,0.04,1.2,51,0.9,50,4,OVER,draftkings -113,2026-09-29T22:16:18,21.0,loss,1.0
+2026,3,Week 3 Sun-Mon (15 games),Geno Smith,rush yds,11.5,6.8,—,-0.22,-4.7,50,0.0,50,-40,UNDER,draftkings -112,2026-09-29T22:16:18,12.0,loss,1.16
+2026,3,Week 3 Sun-Mon (15 games),Amon-Ra St. Brown,receptions,7.5,7.3,—,-0.06,-0.2,51,-5.9,57,-2,UNDER,draftkings -141,2026-09-29T22:16:18,4.0,win,0.94
+2026,3,Week 3 Sun-Mon (15 games),Jared Goff,pass TD,2.5,2.5,—,-0.04,-0.0,51,-11.8,63,-2,UNDER,draftkings -191,2026-09-29T22:16:18,2.0,win,0.87
+2026,3,Week 3 Sun-Mon (15 games),Jared Wayne,receptions,1.5,3.1,high,1.0,1.6,71,23.0,47,104,OVER,draftkings +101,2026-09-29T22:16:18,1.0,loss,0.58
+2026,3,Week 3 Sun-Mon (15 games),Jared Wayne,rec yds,15.5,37.8,high,1.04,22.2,71,21.0,50,144,OVER,draftkings -112,2026-09-29T22:16:18,20.0,win,0.58
+2026,3,Week 3 Sun-Mon (15 games),Woody Marks,receptions,1.5,2.8,high,0.81,1.3,67,11.4,56,84,OVER,draftkings -148,2026-09-29T22:16:18,1.0,loss,1.06
+2026,3,Week 3 Sun-Mon (15 games),David Montgomery,receptions,1.5,2.4,strong,0.59,0.9,63,14.9,48,61,OVER,draftkings -104,2026-09-29T22:16:18,2.0,win,1.15
+2026,3,Week 3 Sun-Mon (15 games),Dalton Schultz,rec yds,49.0,69.0,strong,0.61,20.0,64,13.7,50,41,OVER,draftkings -113,2026-09-29T22:16:18,30.0,loss,0.81
+2026,3,Week 3 Sun-Mon (15 games),Kayshon Boutte,rec yds,37.0,52.0,strong,0.52,15.0,62,12.1,50,40,OVER,draftkings -111,2026-09-29T22:16:18,21.0,loss,0.82
+2026,3,Week 3 Sun-Mon (15 games),Jaylin Noel,rec yds,28.5,41.5,strong,0.5,13.0,62,11.9,50,46,OVER,draftkings -109,2026-09-29T22:16:18,17.0,loss,0.97
+2026,3,Week 3 Sun-Mon (15 games),Kayshon Boutte,receptions,2.5,3.5,strong,0.55,1.0,63,10.0,53,39,OVER,draftkings -126,2026-09-29T22:16:18,2.0,loss,0.82
+2026,3,Week 3 Sun-Mon (15 games),Dalton Schultz,receptions,5.5,6.6,solid,0.45,1.1,60,16.0,44,20,OVER,fanduel +112,2026-09-29T22:16:18,3.0,loss,0.81
+2026,3,Week 3 Sun-Mon (15 games),C.J. Stroud,pass yds,239.5,275.7,solid,0.47,36.2,61,10.9,50,15,OVER,draftkings -112,2026-09-29T22:16:18,167.0,loss,0.94
+2026,3,Week 3 Sun-Mon (15 games),Keenan Allen,receptions,3.5,4.4,solid,0.45,0.9,60,10.8,49,26,OVER,fanduel -108,2026-09-29T22:16:18,6.0,win,0.94
+2026,3,Week 3 Sun-Mon (15 games),Xavier Hutchinson,rec yds,38.5,50.6,solid,0.42,12.1,60,9.5,50,31,OVER,fanduel -113,2026-09-29T22:16:18,51.0,win,0.87
+2026,3,Week 3 Sun-Mon (15 games),David Montgomery,rec yds,9.5,15.7,solid,0.32,6.2,57,8.2,49,65,OVER,draftkings -106,2026-09-29T22:16:18,15.0,win,1.15
+2026,3,Week 3 Sun-Mon (15 games),Tyler Warren,rec yds,47.0,36.8,solid,-0.32,-10.2,58,7.8,50,-22,UNDER,draftkings -109,2026-09-29T22:16:18,55.0,loss,1.14
+2026,3,Week 3 Sun-Mon (15 games),Daniel Jones,pass TD,1.5,1.1,solid,-0.37,-0.4,59,-5.7,64,-29,UNDER,draftkings -214,2026-09-29T22:16:18,1.0,win,1.04
+2026,3,Week 3 Sun-Mon (15 games),Xavier Hutchinson,receptions,3.5,4.0,lean,0.26,0.5,56,10.9,45,15,OVER,draftkings +112,2026-09-29T22:16:18,3.0,loss,0.87
+2026,3,Week 3 Sun-Mon (15 games),Jaylin Noel,receptions,2.5,2.9,lean,0.23,0.4,55,10.6,45,16,OVER,draftkings +113,2026-09-29T22:16:18,2.0,loss,0.97
+2026,3,Week 3 Sun-Mon (15 games),Keenan Allen,rec yds,33.0,40.5,lean,0.28,7.5,57,6.3,50,23,OVER,fanduel -113,2026-09-29T22:16:18,63.0,win,0.94
+2026,3,Week 3 Sun-Mon (15 games),Josh Downs,rec yds,50.5,56.3,lean,0.18,5.8,54,3.9,50,12,OVER,fanduel -113,2026-09-29T22:16:18,77.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),Tyler Warren,receptions,4.5,4.9,lean,0.16,0.4,54,-0.5,54,8,OVER,draftkings -138,2026-09-29T22:16:18,9.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Jonathan Taylor,receptions,2.5,3.0,lean,0.26,0.5,56,-2.5,59,18,OVER,draftkings -161,2026-09-29T22:16:18,2.0,loss,1.05
+2026,3,Week 3 Sun-Mon (15 games),Laquon Treadwell,rec yds,23.0,19.6,—,-0.14,-3.4,53,3.1,50,-15,UNDER,fanduel -113,2026-09-29T22:16:18,20.0,win,1.05
+2026,3,Week 3 Sun-Mon (15 games),Woody Marks,rush yds,30.5,40.2,—,0.38,9.7,52,2.7,50,32,OVER,draftkings -108,2026-09-29T22:16:18,15.0,loss,1.06
+2026,3,Week 3 Sun-Mon (15 games),Jonathan Taylor,rush yds,81.5,67.6,—,-0.35,-13.9,52,1.9,50,-17,UNDER,draftkings -111,2026-09-29T22:16:18,68.0,win,1.05
+2026,3,Week 3 Sun-Mon (15 games),Jonathan Taylor,rec yds,21.0,19.1,—,-0.08,-1.9,52,1.8,50,-9,UNDER,fanduel -113,2026-09-29T22:16:18,4.0,win,1.05
+2026,3,Week 3 Sun-Mon (15 games),Laquon Treadwell,receptions,1.5,1.4,—,-0.05,-0.1,51,1.3,50,-5,UNDER,draftkings -102,2026-09-29T22:16:18,1.0,win,1.05
+2026,3,Week 3 Sun-Mon (15 games),Woody Marks,rec yds,11.5,11.7,—,0.01,0.2,50,0.8,49,2,OVER,draftkings -107,2026-09-29T22:16:18,6.0,loss,1.06
+2026,3,Week 3 Sun-Mon (15 games),Daniel Jones,pass yds,210.5,212.9,—,0.03,2.4,51,0.6,50,1,OVER,draftkings -113,2026-09-29T22:16:18,235.0,win,1.04
+2026,3,Week 3 Sun-Mon (15 games),Daniel Jones,rush yds,9.5,10.7,—,0.06,1.2,50,0.4,50,13,OVER,draftkings -108,2026-09-29T22:16:18,5.0,loss,1.04
+2026,3,Week 3 Sun-Mon (15 games),C.J. Stroud,rush yds,10.5,11.7,—,0.06,1.2,50,-0.1,50,11,OVER,draftkings -113,2026-09-29T22:16:18,10.0,loss,0.94
+2026,3,Week 3 Sun-Mon (15 games),David Montgomery,rush yds,50.5,43.0,—,-0.24,-7.5,50,-0.3,50,-15,UNDER,fanduel -113,2026-09-29T22:16:18,33.0,win,1.15
+2026,3,Week 3 Sun-Mon (15 games),Josh Downs,receptions,4.5,4.5,—,0.02,0.0,50,-4.7,55,1,OVER,draftkings -140,2026-09-29T22:16:18,5.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),C.J. Stroud,pass TD,1.5,1.4,—,-0.09,-0.1,52,-6.7,59,-7,UNDER,draftkings -162,2026-09-29T22:16:18,1.0,win,0.94
+2026,3,Week 3 Sun-Mon (15 games),Travis Hunter,rec yds,5.0,82.0,high,4.29,77.0,80,29.6,50,1540,OVER,fanduel -113,2026-09-29T22:16:18,,,0.07
+2026,3,Week 3 Sun-Mon (15 games),Travis Hunter,receptions,0.5,5.6,high,3.85,5.1,80,20.8,59,1020,OVER,draftkings -170,2026-09-29T22:16:18,,,0.07
+2026,3,Week 3 Sun-Mon (15 games),Jakobi Meyers,rec yds,35.5,63.0,high,0.98,27.5,70,20.2,50,77,OVER,draftkings -112,2026-09-29T22:16:18,64.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Mack Hollins,receptions,2.5,4.0,high,0.83,1.5,68,9.8,58,59,OVER,draftkings -152,2026-09-29T22:16:18,6.0,win,0.91
+2026,3,Week 3 Sun-Mon (15 games),Kyle Williams,rec yds,8.0,20.1,strong,0.64,12.1,64,14.5,50,152,OVER,draftkings -111,2026-09-29T22:16:18,34.0,win,0.68
+2026,3,Week 3 Sun-Mon (15 games),Brian Thomas Jr,rec yds,33.0,48.4,strong,0.57,15.4,63,13.0,50,47,OVER,draftkings -111,2026-09-29T22:16:18,8.0,loss,1.02
+2026,3,Week 3 Sun-Mon (15 games),Rhamondre Stevenson,rush yds,35.5,58.1,strong,0.83,22.6,63,12.9,50,64,OVER,draftkings -109,2026-09-29T22:16:18,22.0,loss,0.81
+2026,3,Week 3 Sun-Mon (15 games),Trevor Lawrence,pass TD,1.5,2.1,strong,0.53,0.6,62,11.5,51,41,OVER,fanduel -114,2026-09-29T22:16:18,3.0,win,0.86
+2026,3,Week 3 Sun-Mon (15 games),Brian Thomas Jr,receptions,2.5,3.5,strong,0.59,1.0,63,7.9,55,42,OVER,fanduel -136,2026-09-29T22:16:18,1.0,loss,1.02
+2026,3,Week 3 Sun-Mon (15 games),Kyle Williams,receptions,0.5,1.2,strong,0.57,0.8,63,2.6,60,150,OVER,fanduel -172,2026-09-29T22:16:18,1.0,win,0.68
+2026,3,Week 3 Sun-Mon (15 games),Mack Hollins,rec yds,34.0,44.7,solid,0.39,10.7,59,8.8,50,31,OVER,fanduel -113,2026-09-29T22:16:18,87.0,win,0.91
+2026,3,Week 3 Sun-Mon (15 games),Romeo Doubs,rec yds,42.5,52.5,solid,0.33,10.0,58,7.6,50,24,OVER,draftkings -113,2026-09-29T22:16:18,49.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Jakobi Meyers,receptions,3.5,4.0,lean,0.26,0.5,56,9.1,47,15,OVER,draftkings +100,2026-09-29T22:16:18,7.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),TreVeyon Henderson,receptions,1.5,1.1,lean,-0.25,-0.4,56,7.3,49,-26,UNDER,draftkings -101,2026-09-29T22:16:18,1.0,win,0.8
+2026,3,Week 3 Sun-Mon (15 games),Brenton Strange,rec yds,31.5,38.0,lean,0.24,6.5,56,5.9,50,21,OVER,draftkings -110,2026-09-29T22:16:18,32.0,win,0.98
+2026,3,Week 3 Sun-Mon (15 games),Parker Washington,rec yds,70.5,80.5,lean,0.25,10.0,56,5.7,50,14,OVER,fanduel -113,2026-09-29T22:16:18,40.0,loss,1.05
+2026,3,Week 3 Sun-Mon (15 games),TreVeyon Henderson,rec yds,9.5,6.3,lean,-0.16,-3.2,54,4.3,50,-34,UNDER,draftkings -109,2026-09-29T22:16:18,6.0,win,0.8
+2026,3,Week 3 Sun-Mon (15 games),Drake Maye,pass yds,223.0,235.6,lean,0.16,12.6,54,4.0,50,6,OVER,draftkings -111,2026-09-29T22:16:18,199.0,loss,1.05
+2026,3,Week 3 Sun-Mon (15 games),Brenton Strange,receptions,3.0,3.3,lean,0.17,0.3,54,3.3,51,11,OVER,draftkings +137,2026-09-29T22:16:18,3.0,push,0.98
+2026,3,Week 3 Sun-Mon (15 games),Hunter Henry,receptions,3.5,3.9,lean,0.18,0.4,54,-0.1,54,11,OVER,draftkings -133,2026-09-29T22:16:18,1.0,loss,1.13
+2026,3,Week 3 Sun-Mon (15 games),Romeo Doubs,receptions,3.5,3.2,lean,-0.16,-0.3,54,-3.7,58,-9,UNDER,draftkings -157,2026-09-29T22:16:18,3.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Bhayshul Tuten,receptions,1.5,1.4,—,-0.1,-0.1,52,4.0,48,-10,UNDER,draftkings -104,2026-09-29T22:16:18,2.0,loss,1.17
+2026,3,Week 3 Sun-Mon (15 games),Trevor Lawrence,pass yds,229.5,238.6,—,0.12,9.1,53,2.8,50,4,OVER,draftkings -112,2026-09-29T22:16:18,182.0,loss,0.86
+2026,3,Week 3 Sun-Mon (15 games),TreVeyon Henderson,rush yds,42.0,53.3,—,0.39,11.3,53,2.5,50,27,OVER,fanduel -113,2026-09-29T22:16:18,23.0,loss,0.8
+2026,3,Week 3 Sun-Mon (15 games),Bhayshul Tuten,rec yds,10.0,8.1,—,-0.09,-1.9,52,2.4,50,-19,UNDER,draftkings -111,2026-09-29T22:16:18,17.0,loss,1.17
+2026,3,Week 3 Sun-Mon (15 games),Hunter Henry,rec yds,41.5,44.5,—,0.1,3.0,52,2.3,50,7,OVER,draftkings -113,2026-09-29T22:16:18,5.0,loss,1.13
+2026,3,Week 3 Sun-Mon (15 games),DeMario Douglas,rec yds,30.0,32.4,—,0.09,2.4,52,2.3,50,8,OVER,draftkings -111,2026-09-29T22:16:18,38.0,win,1.15
+2026,3,Week 3 Sun-Mon (15 games),Chris Rodriguez Jr.,rush yds,20.0,28.1,—,0.35,8.1,52,1.1,51,40,OVER,fanduel -113,2026-09-29T22:16:18,37.0,win,0.74
+2026,3,Week 3 Sun-Mon (15 games),Drake Maye,rush yds,26.5,27.7,—,0.05,1.2,50,0.3,50,4,OVER,draftkings -110,2026-09-29T22:16:18,18.0,loss,1.05
+2026,3,Week 3 Sun-Mon (15 games),Bhayshul Tuten,rush yds,50.5,42.9,—,-0.24,-7.6,50,0.2,50,-15,UNDER,draftkings -110,2026-09-29T22:16:18,73.0,loss,1.17
+2026,3,Week 3 Sun-Mon (15 games),Rhamondre Stevenson,receptions,2.5,2.3,—,-0.13,-0.2,53,0.1,53,-10,UNDER,draftkings -125,2026-09-29T22:16:18,3.0,loss,0.81
+2026,3,Week 3 Sun-Mon (15 games),Rhamondre Stevenson,rec yds,14.5,14.8,—,0.02,0.3,50,-0.2,51,2,OVER,fanduel -113,2026-09-29T22:16:18,16.0,win,0.81
+2026,3,Week 3 Sun-Mon (15 games),Trevor Lawrence,rush yds,16.5,16.3,—,-0.01,-0.2,50,-0.5,51,-1,UNDER,fanduel -113,2026-09-29T22:16:18,25.0,loss,0.86
+2026,3,Week 3 Sun-Mon (15 games),Parker Washington,receptions,5.5,5.3,—,-0.09,-0.2,52,-2.7,55,-4,UNDER,fanduel -140,2026-09-29T22:16:18,3.0,win,1.05
+2026,3,Week 3 Sun-Mon (15 games),Drake Maye,pass TD,1.5,1.3,—,-0.15,-0.2,53,-5.5,59,-11,UNDER,draftkings -158,2026-09-29T22:16:18,0.0,win,1.05
+2026,3,Week 3 Sun-Mon (15 games),DeMario Douglas,receptions,2.5,2.6,—,0.03,0.1,51,-8.3,59,2,OVER,draftkings -168,2026-09-29T22:16:18,1.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Rashee Rice,receptions,4.5,5.8,strong,0.59,1.3,63,18.7,45,29,OVER,draftkings +113,2026-09-29T22:16:18,7.0,win,0.83
+2026,3,Week 3 Sun-Mon (15 games),Tyquan Thornton,rec yds,19.0,36.1,strong,0.76,17.1,67,16.2,50,90,OVER,fanduel -113,2026-09-29T22:16:18,22.0,win,0.86
+2026,3,Week 3 Sun-Mon (15 games),Rashee Rice,rec yds,48.5,71.4,strong,0.71,22.9,66,15.7,50,47,OVER,draftkings -111,2026-09-29T22:16:18,88.0,win,0.83
+2026,3,Week 3 Sun-Mon (15 games),De'Von Achane,rush yds,60.5,87.8,strong,0.81,27.3,62,12.4,50,45,OVER,draftkings -109,2026-09-29T22:16:18,17.0,loss,1.05
+2026,3,Week 3 Sun-Mon (15 games),Malik Willis,pass TD,0.5,1.1,strong,0.54,0.6,62,-3.1,65,112,OVER,fanduel -225,2026-09-29T22:16:18,0.0,loss,1.04
+2026,3,Week 3 Sun-Mon (15 games),Tyquan Thornton,receptions,1.5,2.1,solid,0.38,0.6,59,15.9,43,39,OVER,draftkings +121,2026-09-29T22:16:18,2.0,win,0.86
+2026,3,Week 3 Sun-Mon (15 games),Greg Dulcich,rec yds,23.0,33.4,solid,0.43,10.4,60,10.2,50,45,OVER,draftkings -111,2026-09-29T22:16:18,55.0,win,0.81
+2026,3,Week 3 Sun-Mon (15 games),Patrick Mahomes,pass yds,236.0,268.7,solid,0.42,32.7,60,9.9,50,14,OVER,draftkings -112,2026-09-29T22:16:18,246.0,win,0.94
+2026,3,Week 3 Sun-Mon (15 games),Travis Kelce,receptions,4.5,5.5,solid,0.43,1.0,60,9.8,50,21,OVER,draftkings -114,2026-09-29T22:16:18,2.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Patrick Mahomes,pass TD,1.5,2.0,solid,0.42,0.5,60,-1.4,61,33,OVER,fanduel -174,2026-09-29T22:16:18,2.0,win,0.94
+2026,3,Week 3 Sun-Mon (15 games),Kenneth Walker III,receptions,3.5,4.1,lean,0.29,0.6,57,13.8,43,17,OVER,fanduel +120,2026-09-29T22:16:18,2.0,loss,1.1
+2026,3,Week 3 Sun-Mon (15 games),Greg Dulcich,receptions,2.5,2.9,lean,0.24,0.4,56,12.5,43,17,OVER,fanduel +122,2026-09-29T22:16:18,5.0,win,0.81
+2026,3,Week 3 Sun-Mon (15 games),Xavier Worthy,rec yds,38.5,47.1,lean,0.3,8.6,57,6.8,50,22,OVER,fanduel -113,2026-09-29T22:16:18,20.0,loss,1.08
+2026,3,Week 3 Sun-Mon (15 games),Xavier Worthy,receptions,3.5,3.9,lean,0.19,0.4,54,5.7,49,11,OVER,draftkings -108,2026-09-29T22:16:18,2.0,loss,1.08
+2026,3,Week 3 Sun-Mon (15 games),De'Von Achane,rec yds,27.5,21.9,lean,-0.22,-5.6,55,5.5,50,-20,UNDER,draftkings -110,2026-09-29T22:16:18,0.0,win,1.05
+2026,3,Week 3 Sun-Mon (15 games),Travis Kelce,rec yds,52.0,59.5,lean,0.22,7.5,55,5.4,50,14,OVER,draftkings -111,2026-09-29T22:16:18,59.0,win,0.99
+2026,3,Week 3 Sun-Mon (15 games),Kenneth Walker III,rush yds,85.0,64.8,lean,-0.5,-20.2,55,5.0,50,-24,UNDER,fanduel -113,2026-09-29T22:16:18,70.0,win,1.1
+2026,3,Week 3 Sun-Mon (15 games),Kenneth Walker III,rec yds,22.5,25.8,—,0.14,3.3,53,3.2,50,15,OVER,draftkings -113,2026-09-29T22:16:18,3.0,loss,1.1
+2026,3,Week 3 Sun-Mon (15 games),Ollie Gordon II,rush yds,9.0,16.2,—,0.36,7.2,52,2.6,49,80,OVER,draftkings -105,2026-09-29T22:16:18,41.0,win,1.04
+2026,3,Week 3 Sun-Mon (15 games),Patrick Mahomes,rush yds,15.5,24.3,—,0.4,8.8,53,2.5,50,57,OVER,fanduel -113,2026-09-29T22:16:18,1.0,loss,0.94
+2026,3,Week 3 Sun-Mon (15 games),Malik Washington,rec yds,39.5,41.3,—,0.06,1.8,51,1.6,50,5,OVER,draftkings -111,2026-09-29T22:16:18,56.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Malik Willis,pass yds,175.0,178.1,—,0.04,3.1,51,0.8,50,2,OVER,draftkings -113,2026-09-29T22:16:18,210.0,win,1.04
+2026,3,Week 3 Sun-Mon (15 games),Malik Willis,rush yds,32.5,26.5,—,-0.23,-6.0,50,0.0,50,-18,UNDER,draftkings -112,2026-09-29T22:16:18,56.0,loss,1.04
+2026,3,Week 3 Sun-Mon (15 games),De'Von Achane,receptions,3.5,3.5,—,0.01,0.0,50,-2.6,53,1,OVER,draftkings -128,2026-09-29T22:16:18,0.0,loss,1.05
+2026,3,Week 3 Sun-Mon (15 games),Malik Washington,receptions,3.5,3.6,—,0.07,0.1,52,-3.1,55,4,OVER,draftkings -137,2026-09-29T22:16:18,5.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Calvin Ridley,rec yds,14.5,40.0,high,1.21,25.5,73,23.6,50,176,OVER,draftkings -108,2026-09-29T22:16:18,0.0,loss,0.7
+2026,3,Week 3 Sun-Mon (15 games),Elic Ayomanor,rec yds,13.5,36.9,high,1.13,23.4,72,22.4,50,173,OVER,draftkings -110,2026-09-29T22:16:18,11.0,loss,0.66
+2026,3,Week 3 Sun-Mon (15 games),Calvin Ridley,receptions,1.5,2.6,strong,0.68,1.1,65,22.4,43,71,OVER,fanduel +120,2026-09-29T22:16:18,0.0,loss,0.7
+2026,3,Week 3 Sun-Mon (15 games),Darnell Mooney,rec yds,18.0,34.8,strong,0.76,16.8,66,16.9,50,93,OVER,draftkings -108,2026-09-29T22:16:18,20.0,win,0.72
+2026,3,Week 3 Sun-Mon (15 games),Wan'Dale Robinson,receptions,3.5,5.0,strong,0.73,1.5,66,16.9,49,42,OVER,fanduel -106,2026-09-29T22:16:18,7.0,win,0.79
+2026,3,Week 3 Sun-Mon (15 games),Darnell Mooney,receptions,1.5,2.4,strong,0.59,0.9,63,16.6,47,61,OVER,fanduel +110,2026-09-29T22:16:18,2.0,win,0.72
+2026,3,Week 3 Sun-Mon (15 games),Wan'Dale Robinson,rec yds,30.5,47.6,strong,0.65,17.1,64,14.2,50,56,OVER,fanduel -113,2026-09-29T22:16:18,57.0,win,0.79
+2026,3,Week 3 Sun-Mon (15 games),Elic Ayomanor,receptions,1.5,2.2,solid,0.47,0.7,61,18.1,43,49,OVER,fanduel +120,2026-09-29T22:16:18,1.0,loss,0.66
+2026,3,Week 3 Sun-Mon (15 games),Cam Ward,pass yds,177.5,207.8,solid,0.38,30.3,59,9.0,50,17,OVER,draftkings -112,2026-09-29T22:16:18,181.0,win,0.83
+2026,3,Week 3 Sun-Mon (15 games),Isaiah Likely,receptions,3.5,4.3,solid,0.41,0.8,59,5.4,54,23,OVER,fanduel -128,2026-09-29T22:16:18,2.0,loss,0.98
+2026,3,Week 3 Sun-Mon (15 games),Gunnar Helm,receptions,2.5,3.1,solid,0.36,0.6,58,5.1,53,26,OVER,fanduel -130,2026-09-29T22:16:18,2.0,loss,0.93
+2026,3,Week 3 Sun-Mon (15 games),Isaiah Likely,rec yds,38.5,45.9,lean,0.25,7.4,56,6.0,50,19,OVER,draftkings -112,2026-09-29T22:16:18,13.0,loss,0.98
+2026,3,Week 3 Sun-Mon (15 games),Gunnar Helm,rec yds,21.0,26.3,lean,0.23,5.3,55,5.8,50,25,OVER,draftkings -109,2026-09-29T22:16:18,14.0,loss,0.93
+2026,3,Week 3 Sun-Mon (15 games),Jameis Winston,pass yds,200.0,181.2,lean,-0.24,-18.8,56,5.7,50,-9,UNDER,draftkings -112,2026-09-29T22:16:18,118.0,win,1.11
+2026,3,Week 3 Sun-Mon (15 games),Cam Ward,pass TD,0.5,0.8,lean,0.29,0.3,57,-5.2,62,60,OVER,fanduel -188,2026-09-29T22:16:18,1.0,win,0.83
+2026,3,Week 3 Sun-Mon (15 games),Jameis Winston,pass TD,0.5,0.7,lean,0.17,0.2,54,-13.1,67,36,OVER,draftkings -243,2026-09-29T22:16:18,0.0,loss,1.11
+2026,3,Week 3 Sun-Mon (15 games),Tony Pollard,receptions,1.5,1.6,—,0.03,0.1,51,11.7,39,3,OVER,fanduel +144,2026-09-29T22:16:18,4.0,win,1.02
+2026,3,Week 3 Sun-Mon (15 games),Cam Skattebo,rush yds,59.5,45.4,—,-0.42,-14.1,53,3.4,50,-24,UNDER,draftkings -112,2026-09-29T22:16:18,60.0,loss,1.04
+2026,3,Week 3 Sun-Mon (15 games),Cam Skattebo,rec yds,14.5,15.1,—,0.03,0.6,51,0.6,50,4,OVER,draftkings -112,2026-09-29T22:16:18,40.0,win,1.04
+2026,3,Week 3 Sun-Mon (15 games),Najee Harris,rush yds,22.0,25.6,—,0.15,3.6,50,0.5,49,16,OVER,draftkings -107,2026-09-29T22:16:18,52.0,win,0.72
+2026,3,Week 3 Sun-Mon (15 games),Malik Nabers,rec yds,53.5,52.9,—,-0.02,-0.6,50,0.2,50,-1,UNDER,fanduel -113,2026-09-29T22:16:18,26.0,win,1.07
+2026,3,Week 3 Sun-Mon (15 games),Tyjae Spears,rec yds,11.5,11.7,—,0.01,0.2,50,0.2,50,2,OVER,draftkings -112,2026-09-29T22:16:18,0.0,loss,0.97
+2026,3,Week 3 Sun-Mon (15 games),Malik Nabers,receptions,4.5,4.3,—,-0.08,-0.2,52,0.2,52,-4,UNDER,draftkings -117,2026-09-29T22:16:18,5.0,loss,1.07
+2026,3,Week 3 Sun-Mon (15 games),Tony Pollard,rec yds,6.5,6.9,—,0.02,0.4,51,-0.1,51,6,OVER,fanduel -113,2026-09-29T22:16:18,22.0,win,1.02
+2026,3,Week 3 Sun-Mon (15 games),Tony Pollard,rush yds,59.5,58.8,—,-0.02,-0.7,50,-0.2,50,-1,UNDER,fanduel -113,2026-09-29T22:16:18,74.0,loss,1.02
+2026,3,Week 3 Sun-Mon (15 games),Tyjae Spears,rush yds,16.5,17.4,—,0.04,0.9,50,-0.2,50,6,OVER,fanduel -113,2026-09-29T22:16:18,5.0,loss,0.97
+2026,3,Week 3 Sun-Mon (15 games),Cam Ward,rush yds,13.5,11.8,—,-0.08,-1.7,50,-0.3,50,-13,UNDER,fanduel -113,2026-09-29T22:16:18,2.0,win,0.83
+2026,3,Week 3 Sun-Mon (15 games),Jameis Winston,rush yds,5.5,7.8,—,0.12,2.3,50,-1.6,52,43,OVER,draftkings -120,2026-09-29T22:16:18,14.0,win,1.11
+2026,3,Week 3 Sun-Mon (15 games),Cam Skattebo,receptions,2.5,2.5,—,-0.01,-0.0,50,-8.9,59,0,UNDER,draftkings -165,2026-09-29T22:16:18,3.0,loss,1.04
+2026,3,Week 3 Sun-Mon (15 games),Rachaad White,rush yds,19.5,40.8,strong,0.93,21.3,65,14.7,50,109,OVER,draftkings -110,2026-09-29T22:16:18,35.0,win,1.05
+2026,3,Week 3 Sun-Mon (15 games),Terry McLaurin,rec yds,42.0,61.4,strong,0.64,19.4,64,14.3,50,46,OVER,draftkings -112,2026-09-29T22:16:18,77.0,win,1.02
+2026,3,Week 3 Sun-Mon (15 games),Stefon Diggs,rec yds,35.0,52.3,strong,0.62,17.3,64,13.6,50,49,OVER,fanduel -113,2026-09-29T22:16:18,33.0,loss,0.81
+2026,3,Week 3 Sun-Mon (15 games),Elijah Arroyo,rec yds,5.0,15.1,strong,0.56,10.1,63,13.1,50,203,OVER,draftkings -110,2026-09-29T22:16:18,,,0.81
+2026,3,Week 3 Sun-Mon (15 games),Dyami Brown,rec yds,9.0,19.0,strong,0.52,10.0,62,12.4,49,111,OVER,draftkings -107,2026-09-29T22:16:18,0.0,loss,0.88
+2026,3,Week 3 Sun-Mon (15 games),Elijah Arroyo,receptions,0.5,1.4,strong,0.69,0.9,65,8.1,57,184,OVER,fanduel -154,2026-09-29T22:16:18,,,0.81
+2026,3,Week 3 Sun-Mon (15 games),Terry McLaurin,receptions,3.5,4.2,solid,0.33,0.7,58,9.8,48,19,OVER,fanduel +100,2026-09-29T22:16:18,6.0,win,1.02
+2026,3,Week 3 Sun-Mon (15 games),Cooper Kupp,rec yds,20.0,28.4,solid,0.37,8.4,59,9.0,50,42,OVER,draftkings -108,2026-09-29T22:16:18,46.0,win,0.81
+2026,3,Week 3 Sun-Mon (15 games),AJ Barner,rec yds,20.0,28.4,solid,0.37,8.4,59,8.8,50,42,OVER,draftkings -110,2026-09-29T22:16:18,69.0,win,0.93
+2026,3,Week 3 Sun-Mon (15 games),Sam Darnold,pass TD,1.5,1.1,solid,-0.31,-0.4,57,4.2,53,-24,UNDER,draftkings -129,2026-09-29T22:16:18,4.0,loss,1.2
+2026,3,Week 3 Sun-Mon (15 games),Stefon Diggs,receptions,3.5,4.2,solid,0.35,0.7,58,1.8,56,20,OVER,draftkings -149,2026-09-29T22:16:18,4.0,win,0.81
+2026,3,Week 3 Sun-Mon (15 games),Marcus Mariota,pass TD,0.5,0.9,solid,0.35,0.4,58,-1.3,59,72,OVER,fanduel -164,2026-09-29T22:16:18,3.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),AJ Barner,receptions,2.5,3.0,lean,0.29,0.5,57,7.6,49,21,OVER,draftkings -106,2026-09-29T22:16:18,5.0,win,0.93
+2026,3,Week 3 Sun-Mon (15 games),Rashid Shaheed,receptions,2.5,2.9,lean,0.24,0.4,56,7.6,48,17,OVER,draftkings -102,2026-09-29T22:16:18,2.0,loss,1.2
+2026,3,Week 3 Sun-Mon (15 games),Rachaad White,receptions,2.5,2.0,lean,-0.26,-0.5,56,6.5,50,-18,UNDER,draftkings -107,2026-09-29T22:16:18,1.0,win,1.05
+2026,3,Week 3 Sun-Mon (15 games),Jacory Croskey-Merritt,rush yds,38.0,53.2,lean,0.55,15.2,56,6.3,50,40,OVER,draftkings -112,2026-09-29T22:16:18,36.0,loss,0.84
+2026,3,Week 3 Sun-Mon (15 games),Sam Darnold,pass yds,223.0,241.4,lean,0.24,18.4,56,5.7,50,8,OVER,draftkings -111,2026-09-29T22:16:18,379.0,win,1.2
+2026,3,Week 3 Sun-Mon (15 games),Marcus Mariota,pass yds,172.0,189.6,lean,0.22,17.6,55,5.4,50,10,OVER,draftkings -111,2026-09-29T22:16:18,183.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),Rachaad White,rec yds,16.0,11.4,lean,-0.21,-4.6,55,5.1,50,-29,UNDER,draftkings -111,2026-09-29T22:16:18,6.0,win,1.05
+2026,3,Week 3 Sun-Mon (15 games),Jaxon Smith-Njigba,receptions,6.5,6.9,lean,0.16,0.4,54,2.7,51,7,OVER,fanduel -112,2026-09-29T22:16:18,10.0,win,0.95
+2026,3,Week 3 Sun-Mon (15 games),Dyami Brown,receptions,1.5,1.7,—,0.14,0.2,53,12.6,41,15,OVER,draftkings +137,2026-09-29T22:16:18,0.0,loss,0.88
+2026,3,Week 3 Sun-Mon (15 games),Jaxon Smith-Njigba,rec yds,92.5,96.8,—,0.09,4.3,52,2.3,50,5,OVER,draftkings -111,2026-09-29T22:16:18,128.0,win,0.95
+2026,3,Week 3 Sun-Mon (15 games),Rashid Shaheed,rec yds,29.0,30.8,—,0.07,1.8,52,1.9,50,6,OVER,draftkings -109,2026-09-29T22:16:18,14.0,loss,1.2
+2026,3,Week 3 Sun-Mon (15 games),Emanuel Wilson,rush yds,30.0,33.6,—,0.14,3.6,50,0.1,50,12,OVER,draftkings -111,2026-09-29T22:16:18,14.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Sam Darnold,rush yds,6.5,6.6,—,0.01,0.1,50,-0.1,50,2,OVER,draftkings -113,2026-09-29T22:16:18,5.0,loss,1.2
+2026,3,Week 3 Sun-Mon (15 games),Marcus Mariota,rush yds,24.0,23.0,—,-0.04,-1.0,50,-0.5,51,-4,UNDER,fanduel -113,2026-09-29T22:16:18,11.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),Cooper Kupp,receptions,2.5,2.3,—,-0.11,-0.2,53,-8.6,61,-8,UNDER,draftkings -180,2026-09-29T22:16:18,4.0,loss,0.81
+2026,3,Week 3 Sun-Mon (15 games),Jalen McMillan,rec yds,14.0,34.6,high,0.98,20.6,70,20.1,50,147,OVER,draftkings -113,2026-09-29T22:16:18,0.0,loss,0.59
+2026,3,Week 3 Sun-Mon (15 games),Kenny Gainwell,receptions,1.5,2.8,high,0.8,1.2,67,9.0,58,83,OVER,fanduel -160,2026-09-29T22:16:18,2.0,win,0.78
+2026,3,Week 3 Sun-Mon (15 games),Jalen McMillan,receptions,1.5,2.7,strong,0.75,1.2,66,25.1,41,78,OVER,fanduel +130,2026-09-29T22:16:18,0.0,loss,0.59
+2026,3,Week 3 Sun-Mon (15 games),Cade Otton,receptions,3.5,4.5,strong,0.52,1.0,62,21.2,41,30,OVER,fanduel +134,2026-09-29T22:16:18,3.0,loss,0.87
+2026,3,Week 3 Sun-Mon (15 games),Jauan Jennings,rec yds,14.5,26.5,strong,0.57,12.0,63,12.8,50,83,OVER,draftkings -113,2026-09-29T22:16:18,1.0,loss,0.73
+2026,3,Week 3 Sun-Mon (15 games),Cade Otton,rec yds,27.5,40.8,strong,0.52,13.3,62,12.2,50,48,OVER,draftkings -110,2026-09-29T22:16:18,56.0,win,0.87
+2026,3,Week 3 Sun-Mon (15 games),Aaron Jones,receptions,1.5,2.5,strong,0.68,1.0,65,5.8,59,70,OVER,fanduel -166,2026-09-29T22:16:18,5.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Jauan Jennings,receptions,1.5,2.1,solid,0.41,0.6,59,12.0,47,42,OVER,draftkings -102,2026-09-29T22:16:18,1.0,loss,0.73
+2026,3,Week 3 Sun-Mon (15 games),Chris Godwin,rec yds,36.0,46.9,solid,0.39,10.9,59,9.0,50,30,OVER,draftkings -112,2026-09-29T22:16:18,25.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Josh Oliver,rec yds,11.0,18.6,solid,0.38,7.6,59,8.6,50,69,OVER,fanduel -113,2026-09-29T22:16:18,0.0,loss,0.59
+2026,3,Week 3 Sun-Mon (15 games),Kyler Murray,pass yds,215.5,187.6,solid,-0.36,-27.9,58,8.5,50,-13,UNDER,draftkings -111,2026-09-29T22:16:18,168.0,win,1.15
+2026,3,Week 3 Sun-Mon (15 games),Emeka Egbuka,receptions,4.5,3.7,solid,-0.34,-0.8,58,1.4,57,-17,UNDER,draftkings -147,2026-09-29T22:16:18,5.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Kyler Murray,pass TD,1.5,1.0,solid,-0.45,-0.5,60,1.1,59,-35,UNDER,draftkings -163,2026-09-29T22:16:18,1.0,win,1.15
+2026,3,Week 3 Sun-Mon (15 games),Baker Mayfield,pass TD,1.5,1.0,solid,-0.42,-0.5,60,0.2,60,-33,UNDER,draftkings -166,2026-09-29T22:16:18,1.0,win,1.03
+2026,3,Week 3 Sun-Mon (15 games),Chris Godwin,receptions,3.5,4.0,lean,0.27,0.5,56,12.7,44,16,OVER,fanduel +120,2026-09-29T22:16:18,3.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Kenny Gainwell,rec yds,9.5,14.6,lean,0.26,5.1,56,6.1,50,53,OVER,draftkings -113,2026-09-29T22:16:18,14.0,win,0.78
+2026,3,Week 3 Sun-Mon (15 games),Justin Jefferson,rec yds,76.0,67.5,lean,-0.2,-8.5,55,4.9,50,-11,UNDER,draftkings -112,2026-09-29T22:16:18,32.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),Kyler Murray,rush yds,20.5,31.9,lean,0.49,11.4,55,4.6,50,55,OVER,fanduel -113,2026-09-29T22:16:18,17.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Baker Mayfield,rush yds,18.5,28.3,lean,0.43,9.8,54,3.4,50,53,OVER,fanduel -113,2026-09-29T22:16:18,6.0,loss,1.03
+2026,3,Week 3 Sun-Mon (15 games),Bucky Irving,receptions,2.5,2.9,lean,0.23,0.4,55,1.5,54,16,OVER,fanduel -130,2026-09-29T22:16:18,2.0,loss,1.14
+2026,3,Week 3 Sun-Mon (15 games),Josh Oliver,receptions,1.5,1.6,—,0.05,0.1,51,7.6,44,5,OVER,draftkings +118,2026-09-29T22:16:18,0.0,loss,0.59
+2026,3,Week 3 Sun-Mon (15 games),Jordan Addison,receptions,3.0,2.7,—,-0.14,-0.3,53,4.6,49,-9,UNDER,fanduel +142,2026-09-29T22:16:18,5.0,loss,1.24
+2026,3,Week 3 Sun-Mon (15 games),Emeka Egbuka,rec yds,49.0,45.8,—,-0.1,-3.2,52,2.2,50,-6,UNDER,draftkings -113,2026-09-29T22:16:18,62.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Jordan Addison,rec yds,37.0,39.2,—,0.08,2.2,52,2.2,50,6,OVER,draftkings -109,2026-09-29T22:16:18,90.0,win,1.24
+2026,3,Week 3 Sun-Mon (15 games),T.J. Hockenson,receptions,3.5,3.7,—,0.08,0.2,52,2.2,50,5,OVER,fanduel -112,2026-09-29T22:16:18,2.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),T.J. Hockenson,rec yds,30.5,32.6,—,0.08,2.1,52,2.0,50,7,OVER,draftkings -111,2026-09-29T22:16:18,11.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Aaron Jones,rec yds,13.0,11.1,—,-0.09,-1.9,52,1.6,51,-14,UNDER,fanduel -113,2026-09-29T22:16:18,34.0,loss,1.14
+2026,3,Week 3 Sun-Mon (15 games),Baker Mayfield,pass yds,217.0,212.6,—,-0.06,-4.4,51,1.3,50,-2,UNDER,draftkings -113,2026-09-29T22:16:18,217.0,push,1.03
+2026,3,Week 3 Sun-Mon (15 games),Bucky Irving,rec yds,16.0,17.0,—,0.05,1.0,51,1.0,50,6,OVER,draftkings -113,2026-09-29T22:16:18,12.0,loss,1.14
+2026,3,Week 3 Sun-Mon (15 games),Kenny Gainwell,rush yds,19.0,23.7,—,0.21,4.7,50,0.4,50,25,OVER,draftkings -108,2026-09-29T22:16:18,-4.0,loss,0.78
+2026,3,Week 3 Sun-Mon (15 games),Aaron Jones,rush yds,53.0,60.2,—,0.23,7.2,50,0.3,50,14,OVER,draftkings -109,2026-09-29T22:16:18,58.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Bucky Irving,rush yds,58.0,54.6,—,-0.1,-3.4,50,-0.2,50,-6,UNDER,fanduel -113,2026-09-29T22:16:18,46.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Justin Jefferson,receptions,5.5,5.6,—,0.04,0.1,51,-5.2,56,2,OVER,draftkings -139,2026-09-29T22:16:18,2.0,loss,1.16
+2026,3,Week 3 Sun-Mon (15 games),Deebo Samuel,rec yds,41.0,60.8,strong,0.66,19.8,65,15.0,50,48,OVER,draftkings -110,2026-09-29T22:16:18,80.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),George Kittle,rec yds,46.0,66.5,strong,0.65,20.5,65,14.5,50,45,OVER,draftkings -112,2026-09-29T22:16:18,82.0,win,0.82
+2026,3,Week 3 Sun-Mon (15 games),George Kittle,receptions,4.0,5.4,strong,0.64,1.4,64,13.3,51,34,OVER,draftkings +130,2026-09-29T22:16:18,6.0,win,0.82
+2026,3,Week 3 Sun-Mon (15 games),Michael Wilson,rec yds,45.5,62.5,strong,0.54,17.0,62,12.3,50,37,OVER,draftkings -113,2026-09-29T22:16:18,89.0,win,0.82
+2026,3,Week 3 Sun-Mon (15 games),Deebo Samuel,receptions,3.5,5.0,strong,0.73,1.5,66,7.8,58,42,OVER,draftkings -162,2026-09-29T22:16:18,0.0,loss,0.84
+2026,3,Week 3 Sun-Mon (15 games),Brock Purdy,pass TD,1.5,2.4,strong,0.77,0.9,67,7.7,59,60,OVER,fanduel -160,2026-09-29T22:16:18,4.0,win,0.86
+2026,3,Week 3 Sun-Mon (15 games),Kendrick Bourne,rec yds,24.5,34.8,solid,0.42,10.3,60,10.1,50,42,OVER,draftkings -109,2026-09-29T22:16:18,22.0,loss,1.03
+2026,3,Week 3 Sun-Mon (15 games),Michael Wilson,receptions,3.5,4.3,solid,0.41,0.8,60,2.5,57,24,OVER,fanduel -148,2026-09-29T22:16:18,11.0,win,0.82
+2026,3,Week 3 Sun-Mon (15 games),Christian McCaffrey,rec yds,38.5,30.5,lean,-0.27,-8.0,56,6.3,50,-21,UNDER,fanduel -113,2026-09-29T22:16:18,41.0,loss,1.05
+2026,3,Week 3 Sun-Mon (15 games),Marvin Harrison Jr.,receptions,2.5,2.1,lean,-0.24,-0.4,56,0.0,56,-17,UNDER,draftkings -135,2026-09-29T22:16:18,3.0,loss,1.08
+2026,3,Week 3 Sun-Mon (15 games),Mike Evans,receptions,4.5,4.0,lean,-0.22,-0.5,55,-1.7,57,-11,UNDER,draftkings -149,2026-09-29T22:16:18,3.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),Kendrick Bourne,receptions,2.5,2.7,—,0.13,0.2,53,3.1,50,9,OVER,fanduel -112,2026-09-29T22:16:18,2.0,loss,1.03
+2026,3,Week 3 Sun-Mon (15 games),Brock Purdy,pass yds,237.0,244.0,—,0.09,7.0,52,2.2,50,3,OVER,draftkings -112,2026-09-29T22:16:18,297.0,win,0.86
+2026,3,Week 3 Sun-Mon (15 games),Tyler Allgeier,rec yds,7.5,9.1,—,0.09,1.6,52,2.0,50,22,OVER,draftkings -113,2026-09-29T22:16:18,10.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),Trey McBride,rec yds,68.5,65.1,—,-0.09,-3.4,52,1.9,50,-5,UNDER,fanduel -113,2026-09-29T22:16:18,75.0,loss,1.02
+2026,3,Week 3 Sun-Mon (15 games),Jacoby Brissett,pass yds,228.5,224.1,—,-0.06,-4.4,51,1.5,50,-2,UNDER,draftkings -111,2026-09-29T22:16:18,280.0,loss,0.98
+2026,3,Week 3 Sun-Mon (15 games),Marvin Harrison Jr.,rec yds,33.5,32.2,—,-0.05,-1.3,51,0.9,50,-4,UNDER,fanduel -113,2026-09-29T22:16:18,40.0,loss,1.08
+2026,3,Week 3 Sun-Mon (15 games),Mike Evans,rec yds,54.0,53.6,—,-0.01,-0.4,50,0.4,50,-1,UNDER,draftkings -111,2026-09-29T22:16:18,34.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),Christian McCaffrey,rush yds,56.5,54.0,—,-0.08,-2.5,50,0.1,50,-4,UNDER,draftkings -111,2026-09-29T22:16:18,75.0,loss,1.05
+2026,3,Week 3 Sun-Mon (15 games),Jacoby Brissett,rush yds,7.5,10.5,—,0.15,3.0,50,-0.1,50,40,OVER,draftkings -113,2026-09-29T22:16:18,4.0,loss,0.98
+2026,3,Week 3 Sun-Mon (15 games),Tyler Allgeier,rush yds,34.0,32.5,—,-0.06,-1.5,50,-0.3,50,-4,UNDER,fanduel -113,2026-09-29T22:16:18,-1.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),Brock Purdy,rush yds,16.5,22.5,—,0.27,6.0,50,-0.5,51,36,OVER,fanduel -113,2026-09-29T22:16:18,34.0,win,0.86
+2026,3,Week 3 Sun-Mon (15 games),Christian McCaffrey,receptions,4.5,4.7,—,0.09,0.2,52,-0.8,53,4,OVER,draftkings -129,2026-09-29T22:16:18,4.0,loss,1.05
+2026,3,Week 3 Sun-Mon (15 games),Trey McBride,receptions,7.5,7.2,—,-0.1,-0.3,52,-2.0,54,-4,UNDER,draftkings -129,2026-09-29T22:16:18,9.0,loss,1.02
+2026,3,Week 3 Sun-Mon (15 games),Jacoby Brissett,pass TD,1.5,1.3,—,-0.14,-0.2,53,-8.3,62,-11,UNDER,draftkings -182,2026-09-29T22:16:18,2.0,loss,0.98
+2026,3,Week 3 Sun-Mon (15 games),Chris Moore,rec yds,16.5,29.9,strong,0.61,13.4,64,14.1,50,81,OVER,draftkings -109,2026-09-29T22:16:18,4.0,loss,0.84
+2026,3,Week 3 Sun-Mon (15 games),Zay Flowers,receptions,3.5,2.1,strong,-0.69,-1.4,65,10.7,55,-40,UNDER,draftkings -127,2026-09-29T22:16:18,5.0,loss,
+2026,3,Week 3 Sun-Mon (15 games),Emari Demercado,rush yds,7.5,21.1,solid,0.69,13.6,60,11.9,48,182,OVER,fanduel -102,2026-09-29T22:16:18,,,0.68
+2026,3,Week 3 Sun-Mon (15 games),CeeDee Lamb,receptions,6.5,5.5,solid,-0.35,-1.0,58,8.7,49,-15,UNDER,draftkings -108,2026-09-29T22:16:18,7.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Ryan Flournoy,rec yds,30.5,39.6,solid,0.35,9.1,58,8.4,50,30,OVER,draftkings -109,2026-09-29T22:16:18,22.0,loss,0.92
+2026,3,Week 3 Sun-Mon (15 games),LaJohntay Wester,rec yds,12.0,19.3,solid,0.36,7.3,58,8.4,50,61,OVER,draftkings -113,2026-09-29T22:16:18,0.0,loss,1.23
+2026,3,Week 3 Sun-Mon (15 games),CeeDee Lamb,rec yds,84.0,69.7,solid,-0.32,-14.3,58,7.6,50,-17,UNDER,draftkings -112,2026-09-29T22:16:18,112.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Dak Prescott,pass TD,1.5,1.9,solid,0.37,0.4,59,-0.0,59,29,OVER,fanduel -160,2026-09-29T22:16:18,1.0,loss,1.03
+2026,3,Week 3 Sun-Mon (15 games),Justice Hill,receptions,2.5,1.9,solid,-0.31,-0.6,57,-2.9,60,-22,UNDER,draftkings -169,2026-09-29T22:16:18,0.0,win,1.15
+2026,3,Week 3 Sun-Mon (15 games),Chris Moore,receptions,1.5,1.8,lean,0.2,0.3,55,16.6,38,21,OVER,draftkings +149,2026-09-29T22:16:18,1.0,loss,0.84
+2026,3,Week 3 Sun-Mon (15 games),Ryan Flournoy,receptions,3.5,3.9,lean,0.2,0.4,55,11.4,43,12,OVER,fanduel +118,2026-09-29T22:16:18,2.0,loss,0.92
+2026,3,Week 3 Sun-Mon (15 games),Mark Andrews,receptions,4.5,5.0,lean,0.22,0.5,55,10.0,45,11,OVER,fanduel +116,2026-09-29T22:16:18,3.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Jake Ferguson,receptions,3.5,3.1,lean,-0.21,-0.4,55,8.0,47,-12,UNDER,draftkings +109,2026-09-29T22:16:18,3.0,win,1.07
+2026,3,Week 3 Sun-Mon (15 games),Zay Flowers,rec yds,46.5,38.1,lean,-0.26,-8.4,56,6.3,50,-18,UNDER,draftkings -111,2026-09-29T22:16:18,84.0,loss,
+2026,3,Week 3 Sun-Mon (15 games),Dak Prescott,pass yds,266.0,246.5,lean,-0.26,-19.5,56,6.0,50,-7,UNDER,draftkings -113,2026-09-29T22:16:18,276.0,loss,1.03
+2026,3,Week 3 Sun-Mon (15 games),George Pickens,rec yds,66.0,59.4,lean,-0.17,-6.6,54,4.2,50,-10,UNDER,draftkings -111,2026-09-29T22:16:18,82.0,loss,1.16
+2026,3,Week 3 Sun-Mon (15 games),Lamar Jackson,rush yds,38.0,25.8,lean,-0.44,-12.2,54,4.1,50,-32,UNDER,draftkings -109,2026-09-29T22:16:18,50.0,loss,1.14
+2026,3,Week 3 Sun-Mon (15 games),Mark Andrews,rec yds,43.0,47.9,lean,0.16,4.9,54,3.6,50,11,OVER,fanduel -113,2026-09-29T22:16:18,24.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),George Pickens,receptions,5.5,4.8,lean,-0.29,-0.7,57,3.3,54,-13,UNDER,draftkings -121,2026-09-29T22:16:18,7.0,loss,1.16
+2026,3,Week 3 Sun-Mon (15 games),LaJohntay Wester,receptions,1.5,1.6,—,0.05,0.1,51,8.4,43,5,OVER,fanduel +120,2026-09-29T22:16:18,0.0,loss,1.23
+2026,3,Week 3 Sun-Mon (15 games),Rashod Bateman,receptions,3.5,3.6,—,0.04,0.1,51,8.2,43,2,OVER,fanduel +130,2026-09-29T22:16:18,2.0,loss,1.34
+2026,3,Week 3 Sun-Mon (15 games),Javonte Williams,rec yds,14.0,11.6,—,-0.12,-2.4,53,2.6,50,-17,UNDER,fanduel -113,2026-09-29T22:16:18,5.0,win,1.15
+2026,3,Week 3 Sun-Mon (15 games),Justice Hill,rec yds,14.0,12.3,—,-0.08,-1.7,52,2.2,50,-12,UNDER,draftkings -109,2026-09-29T22:16:18,0.0,win,1.15
+2026,3,Week 3 Sun-Mon (15 games),Jake Ferguson,rec yds,28.0,26.0,—,-0.08,-2.0,52,1.7,50,-7,UNDER,fanduel -113,2026-09-29T22:16:18,23.0,win,1.07
+2026,3,Week 3 Sun-Mon (15 games),Rashod Bateman,rec yds,41.5,42.1,—,0.02,0.6,50,0.6,50,1,OVER,draftkings -111,2026-09-29T22:16:18,37.0,loss,1.34
+2026,3,Week 3 Sun-Mon (15 games),Lamar Jackson,pass yds,241.5,240.0,—,-0.02,-1.5,50,0.5,50,-1,UNDER,draftkings -112,2026-09-29T22:16:18,186.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Dak Prescott,rush yds,12.0,12.6,—,0.03,0.6,50,0.4,50,5,OVER,draftkings -108,2026-09-29T22:16:18,19.0,win,1.03
+2026,3,Week 3 Sun-Mon (15 games),Justice Hill,rush yds,14.0,19.3,—,0.25,5.3,50,0.3,50,38,OVER,draftkings -109,2026-09-29T22:16:18,33.0,win,1.15
+2026,3,Week 3 Sun-Mon (15 games),Derrick Henry,rush yds,92.0,89.1,—,-0.07,-2.9,50,0.0,50,-3,UNDER,draftkings -112,2026-09-29T22:16:18,89.0,win,0.91
+2026,3,Week 3 Sun-Mon (15 games),Javonte Williams,rush yds,55.5,52.2,—,-0.1,-3.3,50,-0.2,50,-6,UNDER,fanduel -113,2026-09-29T22:16:18,98.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Derrick Henry,rec yds,10.5,10.6,—,0.0,0.1,50,-0.3,50,1,OVER,fanduel -113,2026-09-29T22:16:18,0.0,loss,0.91
+2026,3,Week 3 Sun-Mon (15 games),Derrick Henry,receptions,1.5,1.4,—,-0.09,-0.1,52,-2.8,55,-9,UNDER,draftkings -129,2026-09-29T22:16:18,1.0,win,0.91
+2026,3,Week 3 Sun-Mon (15 games),Javonte Williams,receptions,2.5,2.5,—,0.01,0.0,50,-4.7,55,0,OVER,fanduel -138,2026-09-29T22:16:18,2.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Lamar Jackson,pass TD,1.5,1.6,—,0.09,0.1,52,-6.0,58,7,OVER,fanduel -154,2026-09-29T22:16:18,2.0,win,1.14
+2026,3,Week 3 Sun-Mon (15 games),Juwan Johnson,rec yds,36.0,63.5,high,0.98,27.5,70,20.4,50,77,OVER,draftkings -109,2026-09-29T22:16:18,53.0,win,0.81
+2026,3,Week 3 Sun-Mon (15 games),Travis Etienne Jr.,receptions,1.5,2.9,high,0.87,1.4,68,11.6,57,90,OVER,fanduel -148,2026-09-29T22:16:18,2.0,win,0.9
+2026,3,Week 3 Sun-Mon (15 games),Juwan Johnson,receptions,3.5,4.6,strong,0.53,1.1,62,14.7,47,30,OVER,draftkings -101,2026-09-29T22:16:18,8.0,win,0.81
+2026,3,Week 3 Sun-Mon (15 games),Tyler Shough,pass yds,254.0,296.6,strong,0.56,42.6,63,12.8,50,17,OVER,draftkings -111,2026-09-29T22:16:18,255.0,win,0.85
+2026,3,Week 3 Sun-Mon (15 games),Jack Bech,rec yds,14.5,26.4,strong,0.57,11.9,63,12.8,50,82,OVER,draftkings -113,2026-09-29T22:16:18,,,0.8
+2026,3,Week 3 Sun-Mon (15 games),Alvin Kamara,receptions,2.5,3.5,strong,0.56,1.0,63,10.5,52,40,OVER,fanduel -122,2026-09-29T22:16:18,1.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Jack Bech,receptions,1.5,2.1,solid,0.41,0.6,59,9.1,50,42,OVER,fanduel -114,2026-09-29T22:16:18,,,0.8
+2026,3,Week 3 Sun-Mon (15 games),Travis Etienne Jr.,rec yds,10.0,16.9,solid,0.35,6.9,58,8.3,50,69,OVER,draftkings -111,2026-09-29T22:16:18,13.0,win,0.9
+2026,3,Week 3 Sun-Mon (15 games),Tre Tucker,rec yds,39.5,49.2,solid,0.33,9.7,58,8.0,50,25,OVER,draftkings -110,2026-09-29T22:16:18,43.0,win,0.98
+2026,3,Week 3 Sun-Mon (15 games),Devaughn Vele,rec yds,49.5,59.4,solid,0.3,9.9,57,7.1,50,20,OVER,draftkings -112,2026-09-29T22:16:18,39.0,loss,0.87
+2026,3,Week 3 Sun-Mon (15 games),Devaughn Vele,receptions,4.5,5.1,lean,0.25,0.6,56,13.2,43,13,OVER,fanduel +120,2026-09-29T22:16:18,3.0,loss,0.87
+2026,3,Week 3 Sun-Mon (15 games),Michael Mayer,receptions,2.5,2.9,lean,0.24,0.4,56,11.2,44,17,OVER,draftkings +122,2026-09-29T22:16:18,3.0,win,0.69
+2026,3,Week 3 Sun-Mon (15 games),Noah Fant,receptions,1.5,1.9,lean,0.23,0.4,55,9.7,46,24,OVER,fanduel +112,2026-09-29T22:16:18,4.0,win,0.79
+2026,3,Week 3 Sun-Mon (15 games),Noah Fant,rec yds,12.0,17.6,lean,0.28,5.6,57,7.5,49,47,OVER,fanduel -106,2026-09-29T22:16:18,33.0,win,0.79
+2026,3,Week 3 Sun-Mon (15 games),Michael Mayer,rec yds,21.0,27.9,lean,0.3,6.9,57,7.3,50,33,OVER,draftkings -109,2026-09-29T22:16:18,32.0,win,0.69
+2026,3,Week 3 Sun-Mon (15 games),Chris Olave,rec yds,77.5,89.3,lean,0.28,11.8,57,6.5,50,15,OVER,draftkings -113,2026-09-29T22:16:18,107.0,win,0.81
+2026,3,Week 3 Sun-Mon (15 games),Alvin Kamara,rec yds,13.0,17.7,lean,0.23,4.7,55,4.9,51,36,OVER,fanduel -113,2026-09-29T22:16:18,5.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Jalen Nailor,rec yds,24.5,28.8,lean,0.18,4.3,54,4.4,50,18,OVER,draftkings -110,2026-09-29T22:16:18,16.0,loss,1.13
+2026,3,Week 3 Sun-Mon (15 games),Chris Olave,receptions,6.0,6.5,lean,0.2,0.5,55,2.5,52,9,OVER,draftkings +108,2026-09-29T22:16:18,9.0,win,0.81
+2026,3,Week 3 Sun-Mon (15 games),Ashton Jeanty,receptions,3.5,4.0,lean,0.23,0.5,56,-0.3,56,13,OVER,fanduel -144,2026-09-29T22:16:18,3.0,loss,1.12
+2026,3,Week 3 Sun-Mon (15 games),Tre Tucker,receptions,3.5,3.6,—,0.05,0.1,51,7.6,44,3,OVER,fanduel +116,2026-09-29T22:16:18,4.0,win,0.98
+2026,3,Week 3 Sun-Mon (15 games),Kirk Cousins,pass yds,210.5,200.3,—,-0.13,-10.2,53,3.2,50,-5,UNDER,draftkings -111,2026-09-29T22:16:18,248.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Ashton Jeanty,rec yds,22.0,24.6,—,0.11,2.6,53,2.4,50,12,OVER,fanduel -113,2026-09-29T22:16:18,37.0,win,1.12
+2026,3,Week 3 Sun-Mon (15 games),Brock Bowers,receptions,4.5,4.4,—,-0.04,-0.1,51,2.1,49,-2,UNDER,draftkings -108,2026-09-29T22:16:18,10.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Brock Bowers,rec yds,47.0,44.3,—,-0.08,-2.7,52,2.0,50,-6,UNDER,draftkings -112,2026-09-29T22:16:18,116.0,loss,1.15
+2026,3,Week 3 Sun-Mon (15 games),Alvin Kamara,rush yds,25.5,31.2,—,0.23,5.7,50,1.5,48,22,OVER,fanduel -102,2026-09-29T22:16:18,36.0,win,0.99
+2026,3,Week 3 Sun-Mon (15 games),Ashton Jeanty,rush yds,68.5,62.7,—,-0.16,-5.8,50,0.2,50,-8,UNDER,draftkings -110,2026-09-29T22:16:18,56.0,win,1.12
+2026,3,Week 3 Sun-Mon (15 games),Tyler Shough,rush yds,15.0,19.7,—,0.22,4.7,50,0.2,50,31,OVER,draftkings -110,2026-09-29T22:16:18,36.0,win,0.85
+2026,3,Week 3 Sun-Mon (15 games),Travis Etienne Jr.,rush yds,40.5,40.4,—,-0.0,-0.1,50,-0.3,50,0,UNDER,fanduel -113,2026-09-29T22:16:18,57.0,loss,0.9
+2026,3,Week 3 Sun-Mon (15 games),Kirk Cousins,rush yds,1.5,-0.6,—,-0.12,-2.1,50,-2.2,52,-142,UNDER,draftkings -122,2026-09-29T22:16:18,3.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Tyler Shough,pass TD,1.5,1.5,—,-0.01,-0.0,50,-4.1,54,-1,UNDER,draftkings -128,2026-09-29T22:16:18,4.0,loss,0.85
+2026,3,Week 3 Sun-Mon (15 games),Jalen Nailor,receptions,2.5,2.3,—,-0.13,-0.2,53,-4.4,57,-9,UNDER,fanduel -152,2026-09-29T22:16:18,1.0,win,1.13
+2026,3,Week 3 Sun-Mon (15 games),Kirk Cousins,pass TD,1.5,1.4,—,-0.04,-0.1,51,-11.1,62,-3,UNDER,draftkings -190,2026-09-29T22:16:18,3.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Adam Trautman,receptions,0.5,1.7,high,0.9,1.2,69,6.0,63,238,OVER,draftkings -200,2026-09-29T22:16:18,,,0.59
+2026,3,Week 3 Sun-Mon (15 games),RJ Harvey,rush yds,20.0,41.1,strong,0.92,21.1,64,14.5,50,106,OVER,draftkings -110,2026-09-29T22:16:18,6.0,loss,0.82
+2026,3,Week 3 Sun-Mon (15 games),Konata Mumpfield,rec yds,10.0,21.4,strong,0.58,11.4,63,13.5,50,114,OVER,draftkings -109,2026-09-29T22:16:18,93.0,win,0.96
+2026,3,Week 3 Sun-Mon (15 games),Adam Trautman,rec yds,6.5,16.4,strong,0.54,9.9,62,12.7,50,153,OVER,draftkings -108,2026-09-29T22:16:18,,,0.59
+2026,3,Week 3 Sun-Mon (15 games),Pat Bryant,rec yds,25.5,39.3,strong,0.56,13.8,63,12.5,50,54,OVER,fanduel -113,2026-09-29T22:16:18,44.0,win,0.89
+2026,3,Week 3 Sun-Mon (15 games),Evan Engram,rec yds,21.5,33.9,strong,0.53,12.4,62,11.8,50,58,OVER,fanduel -113,2026-09-29T22:16:18,0.0,loss,0.81
+2026,3,Week 3 Sun-Mon (15 games),Matthew Stafford,pass TD,1.5,1.9,solid,0.32,0.4,57,9.9,48,25,OVER,fanduel +102,2026-09-29T22:16:18,2.0,win,0.86
+2026,3,Week 3 Sun-Mon (15 games),Terrance Ferguson,receptions,4.0,3.2,solid,-0.36,-0.8,58,9.7,49,-19,UNDER,fanduel +128,2026-09-29T22:16:18,1.0,win,1.2
+2026,3,Week 3 Sun-Mon (15 games),Terrance Ferguson,rec yds,49.5,38.9,solid,-0.32,-10.6,58,7.5,50,-21,UNDER,draftkings -113,2026-09-29T22:16:18,9.0,win,1.2
+2026,3,Week 3 Sun-Mon (15 games),J.K. Dobbins,receptions,0.5,1.0,solid,0.38,0.5,59,7.0,52,102,OVER,draftkings -119,2026-09-29T22:16:18,1.0,win,0.99
+2026,3,Week 3 Sun-Mon (15 games),Pat Bryant,receptions,2.5,3.2,solid,0.39,0.7,59,6.8,52,28,OVER,draftkings -116,2026-09-29T22:16:18,2.0,loss,0.89
+2026,3,Week 3 Sun-Mon (15 games),Bo Nix,pass TD,1.5,1.1,solid,-0.38,-0.4,59,1.7,57,-29,UNDER,draftkings -149,2026-09-29T22:16:18,2.0,loss,1.11
+2026,3,Week 3 Sun-Mon (15 games),Blake Corum,rec yds,1.0,5.1,lean,0.24,4.1,56,12.6,43,407,OVER,draftkings +124,2026-09-29T22:16:18,0.0,loss,0.89
+2026,3,Week 3 Sun-Mon (15 games),Konata Mumpfield,receptions,1.5,1.8,lean,0.2,0.3,55,11.2,44,21,OVER,fanduel +116,2026-09-29T22:16:18,4.0,win,0.96
+2026,3,Week 3 Sun-Mon (15 games),Courtland Sutton,receptions,3.5,4.0,lean,0.27,0.5,56,10.5,46,15,OVER,draftkings +107,2026-09-29T22:16:18,3.0,loss,1.03
+2026,3,Week 3 Sun-Mon (15 games),Blake Corum,receptions,0.5,0.8,lean,0.25,0.3,56,8.8,47,66,OVER,draftkings +100,2026-09-29T22:16:18,2.0,win,0.89
+2026,3,Week 3 Sun-Mon (15 games),J.K. Dobbins,rec yds,1.5,5.0,lean,0.21,3.5,55,6.4,49,233,OVER,fanduel -102,2026-09-29T22:16:18,4.0,win,0.99
+2026,3,Week 3 Sun-Mon (15 games),Davante Adams,rec yds,70.5,80.7,lean,0.26,10.2,56,6.3,50,14,OVER,draftkings -110,2026-09-29T22:16:18,137.0,win,1.11
+2026,3,Week 3 Sun-Mon (15 games),Matthew Stafford,pass yds,236.0,255.3,lean,0.25,19.3,56,5.9,50,8,OVER,draftkings -112,2026-09-29T22:16:18,390.0,win,0.86
+2026,3,Week 3 Sun-Mon (15 games),Courtland Sutton,rec yds,36.5,42.9,lean,0.23,6.4,55,5.6,50,18,OVER,draftkings -110,2026-09-29T22:16:18,46.0,win,1.03
+2026,3,Week 3 Sun-Mon (15 games),Jordan Whittington,rec yds,15.5,20.3,lean,0.23,4.8,55,5.1,50,31,OVER,fanduel -113,2026-09-29T22:16:18,,,1.22
+2026,3,Week 3 Sun-Mon (15 games),Bo Nix,pass yds,212.0,227.7,lean,0.2,15.7,55,4.8,50,7,OVER,draftkings -112,2026-09-29T22:16:18,186.0,loss,1.11
+2026,3,Week 3 Sun-Mon (15 games),Colby Parkinson,rec yds,16.5,20.8,lean,0.2,4.2,55,4.7,50,26,OVER,draftkings -111,2026-09-29T22:16:18,0.0,loss,0.78
+2026,3,Week 3 Sun-Mon (15 games),Evan Engram,receptions,2.5,3.0,lean,0.29,0.5,57,3.9,53,20,OVER,fanduel -128,2026-09-29T22:16:18,0.0,loss,0.81
+2026,3,Week 3 Sun-Mon (15 games),RJ Harvey,receptions,2.5,3.0,lean,0.27,0.5,56,2.2,54,20,OVER,fanduel -130,2026-09-29T22:16:18,6.0,win,0.82
+2026,3,Week 3 Sun-Mon (15 games),Jordan Whittington,receptions,1.5,1.8,lean,0.16,0.2,54,2.0,52,17,OVER,draftkings -117,2026-09-29T22:16:18,,,1.22
+2026,3,Week 3 Sun-Mon (15 games),Colby Parkinson,receptions,2.5,2.2,lean,-0.16,-0.3,54,1.0,53,-11,UNDER,draftkings -126,2026-09-29T22:16:18,0.0,win,0.78
+2026,3,Week 3 Sun-Mon (15 games),Kyren Williams,receptions,2.5,2.5,—,0.01,0.0,50,8.0,42,1,OVER,fanduel +124,2026-09-29T22:16:18,6.0,win,0.9
+2026,3,Week 3 Sun-Mon (15 games),Jaylen Waddle,receptions,4.5,4.5,—,-0.0,-0.0,50,7.3,43,0,UNDER,draftkings +123,2026-09-29T22:16:18,2.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),Matthew Stafford,rush yds,0.5,0.7,—,0.01,0.2,50,6.8,43,46,OVER,draftkings +120,2026-09-29T22:16:18,13.0,win,0.86
+2026,3,Week 3 Sun-Mon (15 games),Kyren Williams,rush yds,53.0,66.1,—,0.41,13.1,53,2.9,50,25,OVER,fanduel -113,2026-09-29T22:16:18,88.0,win,0.9
+2026,3,Week 3 Sun-Mon (15 games),Kyren Williams,rec yds,12.5,15.1,—,0.13,2.6,53,2.8,50,21,OVER,fanduel -113,2026-09-29T22:16:18,70.0,win,0.9
+2026,3,Week 3 Sun-Mon (15 games),J.K. Dobbins,rush yds,51.0,63.2,—,0.39,12.2,53,2.6,50,24,OVER,draftkings -112,2026-09-29T22:16:18,49.0,loss,0.99
+2026,3,Week 3 Sun-Mon (15 games),Jaylen Waddle,rec yds,60.0,59.3,—,-0.02,-0.7,50,0.7,50,-1,UNDER,draftkings -110,2026-09-29T22:16:18,10.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),RJ Harvey,rec yds,17.0,16.7,—,-0.01,-0.3,50,0.3,50,-2,UNDER,draftkings -112,2026-09-29T22:16:18,41.0,loss,0.82
+2026,3,Week 3 Sun-Mon (15 games),Bo Nix,rush yds,16.5,17.1,—,0.03,0.6,50,0.2,50,4,OVER,draftkings -110,2026-09-29T22:16:18,7.0,loss,1.11
+2026,3,Week 3 Sun-Mon (15 games),Davante Adams,receptions,5.5,5.7,—,0.09,0.2,52,-0.1,52,4,OVER,draftkings -121,2026-09-29T22:16:18,7.0,win,1.11
+2026,3,Week 3 Sun-Mon (15 games),Blake Corum,rush yds,49.5,54.4,—,0.16,4.9,50,-0.3,50,10,OVER,fanduel -113,2026-09-29T22:16:18,15.0,loss,0.89
+2026,3,Week 3 Sun-Mon (15 games),Case Keenum,pass yds,165.5,76.4,high,-1.12,-89.1,72,22.1,50,-54,UNDER,draftkings -112,2026-09-29T22:16:18,247.0,loss,
+2026,3,Week 3 Sun-Mon (15 games),Rome Odunze,rec yds,26.0,48.2,high,0.89,22.2,69,18.9,50,85,OVER,draftkings -111,2026-09-29T22:16:18,44.0,win,0.83
+2026,3,Week 3 Sun-Mon (15 games),Zach Ertz,rec yds,10.5,27.9,high,0.88,17.4,69,18.8,50,166,OVER,draftkings -111,2026-09-29T22:16:18,9.0,loss,0.65
+2026,3,Week 3 Sun-Mon (15 games),Darius Cooper,rec yds,5.5,21.0,high,0.86,15.5,68,18.3,50,282,OVER,draftkings -111,2026-09-29T22:16:18,0.0,loss,0.53
+2026,3,Week 3 Sun-Mon (15 games),Luther Burden III,rec yds,34.0,57.2,high,0.84,23.2,68,17.7,50,68,OVER,fanduel -113,2026-09-29T22:16:18,61.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Darius Cooper,receptions,0.5,1.8,high,0.97,1.3,70,14.3,56,256,OVER,draftkings -143,2026-09-29T22:16:18,0.0,loss,0.53
+2026,3,Week 3 Sun-Mon (15 games),Zach Ertz,receptions,1.5,2.7,strong,0.76,1.2,67,17.1,49,79,OVER,draftkings -108,2026-09-29T22:16:18,1.0,loss,0.65
+2026,3,Week 3 Sun-Mon (15 games),Kalif Raymond,rec yds,22.0,38.2,strong,0.68,16.2,65,15.2,50,73,OVER,draftkings -112,2026-09-29T22:16:18,90.0,win,0.81
+2026,3,Week 3 Sun-Mon (15 games),Cole Kmet,rec yds,8.0,21.1,strong,0.69,13.1,65,14.8,50,164,OVER,fanduel -113,2026-09-29T22:16:18,0.0,loss,0.82
+2026,3,Week 3 Sun-Mon (15 games),Jalen Hurts,pass TD,1.5,1.9,solid,0.32,0.4,57,16.3,41,25,OVER,fanduel +134,2026-09-29T22:16:18,0.0,loss,1.01
+2026,3,Week 3 Sun-Mon (15 games),Rome Odunze,receptions,2.5,3.1,solid,0.35,0.6,58,14.5,44,25,OVER,draftkings +117,2026-09-29T22:16:18,3.0,win,0.83
+2026,3,Week 3 Sun-Mon (15 games),Luther Burden III,receptions,3.5,4.4,solid,0.43,0.9,60,13.8,46,25,OVER,draftkings +107,2026-09-29T22:16:18,7.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Johnny Mundt,rec yds,9.5,18.6,solid,0.47,9.1,61,10.5,50,96,OVER,fanduel -113,2026-09-29T22:16:18,4.0,loss,0.83
+2026,3,Week 3 Sun-Mon (15 games),Will Shipley,rec yds,2.5,8.1,solid,0.33,5.6,58,9.1,49,225,OVER,fanduel -102,2026-09-29T22:16:18,11.0,win,0.97
+2026,3,Week 3 Sun-Mon (15 games),Cole Kmet,receptions,1.5,1.9,lean,0.29,0.4,57,15.7,41,30,OVER,draftkings +133,2026-09-29T22:16:18,0.0,loss,0.82
+2026,3,Week 3 Sun-Mon (15 games),Kalif Raymond,receptions,2.5,3.0,lean,0.29,0.5,57,6.6,50,20,OVER,fanduel -108,2026-09-29T22:16:18,6.0,win,0.81
+2026,3,Week 3 Sun-Mon (15 games),Tank Bigsby,rush yds,13.0,24.2,lean,0.53,11.2,56,6.2,50,86,OVER,draftkings -109,2026-09-29T22:16:18,0.0,loss,0.58
+2026,3,Week 3 Sun-Mon (15 games),Dontayvion Wicks,rec yds,42.0,48.7,lean,0.22,6.7,55,5.2,50,16,OVER,draftkings -112,2026-09-29T22:16:18,32.0,loss,0.97
+2026,3,Week 3 Sun-Mon (15 games),D'Andre Swift,receptions,2.5,2.0,lean,-0.29,-0.5,57,-3.0,60,-20,UNDER,draftkings -170,2026-09-29T22:16:18,2.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Case Keenum,pass TD,0.5,0.4,—,-0.1,-0.1,52,16.0,36,-20,UNDER,draftkings +160,2026-09-29T22:16:18,2.0,loss,
+2026,3,Week 3 Sun-Mon (15 games),Saquon Barkley,receptions,2.5,2.7,—,0.12,0.2,53,11.8,41,9,OVER,fanduel +134,2026-09-29T22:16:18,1.0,loss,1.16
+2026,3,Week 3 Sun-Mon (15 games),Dontayvion Wicks,receptions,3.5,3.8,—,0.13,0.3,53,11.6,41,7,OVER,fanduel +130,2026-09-29T22:16:18,2.0,loss,0.97
+2026,3,Week 3 Sun-Mon (15 games),Johnny Mundt,receptions,1.5,1.7,—,0.14,0.2,53,11.0,42,14,OVER,draftkings +129,2026-09-29T22:16:18,1.0,loss,0.83
+2026,3,Week 3 Sun-Mon (15 games),Kyle Monangai,receptions,1.5,1.5,—,0.03,0.0,51,7.1,43,3,OVER,draftkings +116,2026-09-29T22:16:18,0.0,loss,0.81
+2026,3,Week 3 Sun-Mon (15 games),DeVonta Smith,rec yds,71.0,76.5,—,0.14,5.5,53,3.4,50,8,OVER,draftkings -111,2026-09-29T22:16:18,65.0,loss,1.05
+2026,3,Week 3 Sun-Mon (15 games),Colston Loveland,rec yds,33.5,36.2,—,0.1,2.7,52,2.7,50,8,OVER,draftkings -109,2026-09-29T22:16:18,31.0,loss,1.09
+2026,3,Week 3 Sun-Mon (15 games),Kyle Monangai,rec yds,8.5,9.9,—,0.07,1.4,52,2.5,49,17,OVER,draftkings -105,2026-09-29T22:16:18,0.0,loss,0.81
+2026,3,Week 3 Sun-Mon (15 games),Saquon Barkley,rec yds,13.0,11.8,—,-0.06,-1.2,51,1.6,50,-9,UNDER,draftkings -110,2026-09-29T22:16:18,-2.0,win,1.16
+2026,3,Week 3 Sun-Mon (15 games),D'Andre Swift,rec yds,13.5,12.6,—,-0.04,-0.9,51,1.4,50,-7,UNDER,draftkings -109,2026-09-29T22:16:18,4.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Kyle Monangai,rush yds,38.5,48.0,—,0.34,9.5,51,1.1,50,25,OVER,fanduel -113,2026-09-29T22:16:18,31.0,loss,0.81
+2026,3,Week 3 Sun-Mon (15 games),DeVonta Smith,receptions,5.5,5.5,—,0.0,0.0,50,0.6,49,0,UNDER,draftkings -107,2026-09-29T22:16:18,6.0,loss,1.05
+2026,3,Week 3 Sun-Mon (15 games),Jalen Hurts,rush yds,25.5,26.9,—,0.06,1.4,50,0.4,50,5,OVER,draftkings -108,2026-09-29T22:16:18,25.0,loss,1.01
+2026,3,Week 3 Sun-Mon (15 games),D'Andre Swift,rush yds,61.0,66.4,—,0.16,5.4,50,0.2,50,9,OVER,draftkings -110,2026-09-29T22:16:18,84.0,win,0.84
+2026,3,Week 3 Sun-Mon (15 games),Jalen Hurts,pass yds,217.0,217.3,—,0.0,0.3,50,-0.0,50,0,OVER,draftkings -113,2026-09-29T22:16:18,153.0,loss,1.01
+2026,3,Week 3 Sun-Mon (15 games),Saquon Barkley,rush yds,72.5,65.3,—,-0.19,-7.2,50,0.0,50,-10,UNDER,fanduel -113,2026-09-29T22:16:18,82.0,loss,1.16
+2026,3,Week 3 Sun-Mon (15 games),Case Keenum,rush yds,2.5,1.1,—,-0.08,-1.4,50,-1.4,51,-58,UNDER,draftkings -114,2026-09-29T22:16:18,6.0,loss,
+2026,3,Week 3 Sun-Mon (15 games),Colston Loveland,receptions,3.5,3.5,—,-0.02,-0.0,51,-4.1,55,-1,UNDER,fanduel -136,2026-09-29T22:16:18,4.0,loss,1.09
