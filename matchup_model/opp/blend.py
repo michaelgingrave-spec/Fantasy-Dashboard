@@ -46,6 +46,16 @@ FP_DEV_FLOOR = 0.12   # |role_ratio-1| below this: no nudge, trust our own blend
 FP_DEV_SPAN = 0.40    # dev range the nudge ramps over, from 0 to FP_SHIFT_CAP
 FP_SHIFT_CAP = 0.50   # never move more than half the distance to FantasyPoints' number
 
+# a FantasyPoints export showing ~0 for a player our own trailing-usage read has as a real
+# weekly contributor is almost always an unresolved-status placeholder (export pulled early
+# in the week, before their site locks in an injury-uncertain player's number), not a
+# genuine "will score zero" call -- confirmed 2026-09-30 on Puka Nacua (base_fp 23.6,
+# FantasyPoints 0.0, cut his line in half) while he was questionable/doubtful the prior two
+# weeks. Below FP_PROJ_FLOOR with our own read still at FP_PROJ_TRUST_MIN+ is treated as no
+# projection at all rather than let it nuke a real read in half.
+FP_PROJ_FLOOR = 2.0
+FP_PROJ_TRUST_MIN = 8.0
+
 
 def current_season() -> int:
     """NFL season year for 'right now' (season spans Sep-Feb).
@@ -126,6 +136,8 @@ def _fp_shift(base_fp: float, fp_proj: float | None) -> tuple[float, float | Non
     FP_* constants above). Returns (adjusted_fp, role_ratio); role_ratio is None when
     there's no FantasyPoints number for this player to compare against."""
     if fp_proj is None or base_fp < 1.0:
+        return base_fp, None
+    if fp_proj < FP_PROJ_FLOOR and base_fp >= FP_PROJ_TRUST_MIN:
         return base_fp, None
     role_ratio = fp_proj / base_fp
     dev = abs(role_ratio - 1.0)
