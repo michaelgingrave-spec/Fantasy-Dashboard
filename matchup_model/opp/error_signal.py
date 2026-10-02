@@ -2,26 +2,40 @@
 we're more/less accurate on -- not just which market or tier, but which specific
 matchup conditions or player profiles?
 
-Two angles, both walk-forward-safe (only ever uses data for weeks already graded):
+Three angles, ALL walk-forward-safe -- every player-profile feature is built from
+strictly-prior-week per-week exports only, never the season-cumulative files. That
+distinction matters: an earlier version of Part B used the season-cumulative
+receiving-coverage file and found a striking YPRR correlation (r=0.601, p<1e-6) that
+looked like real signal -- it wasn't. Backtesting a shrinkage nudge built on it
+(matchup_model.opp.model.opp_line(..., yprr_adj=True)) made projections WORSE,
+because a season-cumulative stat partly explains a week's error WITH that week's own
+data baked in. Every feature here is now rebuilt from prior-weeks-only aggregates so
+that mistake can't repeat silently.
 
-Part A -- defense-side: for every graded WR/TE/QB prop, pull the OPPONENT defense's
-coverage-scheme stats for that specific week (man%, zone%, blitz/press%, disguise%,
-Cover 0-6 mix, nickel/dime%) from coverage-matrix_2026wkN_week.csv, and correlate
-each stat against our projection error.
+Part A -- defense faced that week: for every graded WR/TE/QB prop, the OPPONENT
+defense's real per-week coverage-scheme stats (man%, zone%, blitz/press%, disguise%,
+Cover 0-6 mix) from coverage-matrix_2026wkN_week.csv.
 
-Part B -- player-side: for every player with enough graded props, pull their season-
-to-date route profile (man-coverage target share, alignment mix, personnel-package
-mix, aDOT, YPRR) from the coverage/personnel Data Suite files, and correlate each
-against that PLAYER's average error across all his graded props.
+Part B -- player's own trailing receiving profile: YPRR, aDOT, and man-coverage
+target share, built from strictly-prior weeks of receiving-advanced /
+receiving-manvszone weekly exports.
+
+Part C -- player's own trailing rushing-efficiency profile: success rate, stuff
+rate, yards-before-contact/att, yards-after-contact/att, EPA/att, missed tackles
+forced/att, from strictly-prior weeks of rushing-advanced weekly exports.
+
+NOT included (would need a new Data Suite pull, not just new analysis code):
+receiver ALIGNMENT (wide/slot/inline) and PLAY-CALLER / coordinator splits -- both
+exist for 2022-2024 (the historical backtest pull) but nothing for 2026 is pulled on
+a per-week basis, only alignment's season-cumulative file, which is exactly the kind
+of leaky source this rewrite is trying to stop using.
 
 Error is expressed in z-units (error / the market's fitted outcome SD, same sigma
 model dfs.props uses for confidence tiers) so results pool cleanly across markets
-with very different natural scales (a 20-yard rec-yds miss and a 1-catch
-receptions miss are not the same size error).
+with very different natural scales.
 
-Every candidate feature is reported, not just the ones that look interesting --
-with n, r, and p-value -- plus an explicit multiple-comparison note, since testing
-many features against a few hundred rows WILL throw up some noise by chance alone.
+Every candidate feature is reported, not just the ones that look interesting -- with
+n, r, and p-value -- plus an explicit multiple-comparison note.
 
     python -m matchup_model.opp.error_signal 2026
 """
@@ -35,14 +49,12 @@ from scipy.stats import pearsonr
 
 from dfs.names import normalize_name
 from dfs.props import _sigma
+from matchup_model.config import DATA
 from matchup_model.opp import data as D
 from matchup_model.scheme import _read
 
 MARKET_TO_STAT = {"rec yds": "rec_yds", "receptions": "rec", "rush yds": "rush_yds",
                   "pass yds": "pass_yds", "pass TD": "pass_td"}
-# which Data Suite position-file each market's player belongs in
-MARKET_POS = {"rec yds": ("WR", "TE"), "receptions": ("WR", "TE"), "pass yds": ("QB",),
-             "pass TD": ("QB",)}
 
 FULL_TO_ABBR = {
     "Arizona Cardinals": "ARI", "Atlanta Falcons": "ATL", "Baltimore Ravens": "BAL",
@@ -63,9 +75,6 @@ DEF_FEATURES = ["MAN %", "ZONE %", "1-HI/MOF C %", "2-HI/MOF O %", "DISGUISE %",
                 "COVER 2 MAN %", "COVER 3 %", "COVER 4 %", "COVER 6 %", "BASE %",
                 "NICKEL %", "DIME %", "PRESS % (ANY)", "PRESS % (TGT)"]
 
-MAN_COVS = {"Cover 0", "Cover 1", "Cover 2 Man", "Bracket"}
-ZONE_COVS = {"Cover 2", "Cover 3", "Cover 4", "Cover 6"}
-
 
 def _z_error(row) -> float:
     stat = MARKET_TO_STAT.get(row["market"])
@@ -76,25 +85,27 @@ def _z_error(row) -> float:
 
 
 def _opponent_map(season: int, week: int) -> dict:
-    """team abbrev -> opponent abbrev, for one week, from nflverse's games.csv."""
     g = D.games()
     wk = g[(g.season == season) & (g.week == week)]
     return dict(zip(wk["team"], wk["opp"]))
 
 
-# ── Part A: defense-side, per-week matchup ──────────────────────────────────────
+def _graded(season: int, weeks: list[int], markets: list[str]) -> pd.DataFrame:
+    from dfs.bets import load_line_history
+    lh = load_line_history()
+    return lh[(lh.season == season) & (lh.week.isin(weeks)) &
+             (lh.result.isin(["win", "loss", "push"])) & (lh.market.isin(markets))].copy()
+
+
+# ── Part A: defense faced that week ──────────────────────────────────────────────
 
 def build_defense_dataset(season: int, weeks: list[int]) -> pd.DataFrame:
     pw = D.player_weeks()
     pos_lookup = (pw.assign(nk=pw["player_display_name"].map(normalize_name))
                     .sort_values(["season", "week"]).groupby("nk")["position"].last())
-    team_lookup = (pw.assign(nk=pw["player_display_name"].map(normalize_name)))
+    team_lookup = pw.assign(nk=pw["player_display_name"].map(normalize_name))
 
-    from dfs.bets import load_line_history
-    lh = load_line_history()
-    lh = lh[(lh.season == season) & (lh.week.isin(weeks)) &
-            (lh.result.isin(["win", "loss", "push"])) &
-            (lh.market.isin(MARKET_TO_STAT))].copy()
+    lh = _graded(season, weeks, list(MARKET_TO_STAT))
     if lh.empty:
         return lh
 
@@ -111,12 +122,11 @@ def build_defense_dataset(season: int, weeks: list[int]) -> pd.DataFrame:
         if trow.empty:
             continue
         team = trow.sort_values("week").iloc[-1]["team"]
-        opp_map = _opponent_map(season, week)
-        opp = opp_map.get(team)
+        opp = _opponent_map(season, week).get(team)
         if not opp or opp not in ABBR_TO_FULL:
             continue
         if week not in cm_cache:
-            cm_cache[week] = _read(f"coverage-matrix_2026wk{week}_week.csv")
+            cm_cache[week] = _read(f"coverage-matrix_{season}wk{week}_week.csv")
         cm = cm_cache[week]
         if cm.empty:
             continue
@@ -134,65 +144,122 @@ def build_defense_dataset(season: int, weeks: list[int]) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-# ── Part B: player-side, season-to-date profile ─────────────────────────────────
+# ── shared: walk-forward trailing weekly aggregation ─────────────────────────────
 
-def _player_profile(name_key: str, pos_files: tuple[str, ...]) -> dict | None:
-    for suffix in pos_files:
-        rc = _read(f"receiving-coverage_{suffix}_2026.csv")
-        if rc.empty:
+def _trailing_weekly(stem: str, season: int, week: int, pos_filter: tuple[str, ...],
+                     rename: dict[str, str] | None = None) -> pd.DataFrame:
+    """Concats `{stem}_{season}wk{w}_week.csv` for every w STRICTLY BEFORE `week`,
+    filtered to `pos_filter`, with a normalized-name `nk` column. Empty if no prior
+    week's file exists yet (week 1, or the Data Suite pull hasn't run for week N-1)."""
+    frames = []
+    for w in range(1, week):
+        p = DATA / f"{stem}_{season}wk{w}_week.csv"
+        if not p.exists():
             continue
-        rows = rc[rc["Name"].map(normalize_name) == name_key]
-        if rows.empty:
-            continue
-        man = rows[rows["COV"].isin(MAN_COVS)]["TGT"].sum()
-        zone = rows[rows["COV"].isin(ZONE_COVS)]["TGT"].sum()
-        tot = man + zone
-        prof = {
-            "man_tgt_share": 100 * man / tot if tot else np.nan,
-            "wide_rte_pct": np.average(rows["WIDE RTE %"], weights=rows["RTE"].clip(lower=0.01)),
-            "slot_rte_pct": np.average(rows["SLOT RTE %"], weights=rows["RTE"].clip(lower=0.01)),
-            "inline_rte_pct": np.average(rows["INLINE RTE %"], weights=rows["RTE"].clip(lower=0.01)),
-            "aDOT": np.average(rows["aDOT"], weights=rows["TGT"].clip(lower=0.01)),
-            "YPRR": np.average(rows["YPRR"], weights=rows["RTE"].clip(lower=0.01)),
-        }
-        rp = _read(f"receiving-personnel_{suffix}_2026.csv")
-        if not rp.empty:
-            prows = rp[rp["Name"].map(normalize_name) == name_key]
-            if not prows.empty:
-                tgt11 = prows[prows["PERS"] == 11.0]["TGT"].sum()
-                tgttot = prows["TGT"].sum()
-                prof["pers11_tgt_share"] = 100 * tgt11 / tgttot if tgttot else np.nan
-        return prof
-    return None
+        d = _read(p.name)
+        if not d.empty:
+            frames.append(d)
+    if not frames:
+        return pd.DataFrame()
+    df = pd.concat(frames, ignore_index=True)
+    df = df[df["POS"].isin(pos_filter)].copy()
+    df["nk"] = df["Name"].map(normalize_name)
+    if rename:
+        df = df.rename(columns=rename)
+    return df
 
 
-def build_player_dataset(season: int, weeks: list[int]) -> pd.DataFrame:
-    from dfs.bets import load_line_history
-    lh = load_line_history()
-    lh = lh[(lh.season == season) & (lh.week.isin(weeks)) &
-            (lh.result.isin(["win", "loss", "push"])) &
-            (lh.market.isin(["rec yds", "receptions"]))].copy()
+def _wavg(df: pd.DataFrame, col: str, weight: pd.Series) -> float:
+    v = pd.to_numeric(df[col], errors="coerce")
+    w = pd.to_numeric(weight, errors="coerce").clip(lower=0.01)
+    m = v.notna() & w.notna()
+    return float(np.average(v[m], weights=w[m])) if m.any() else np.nan
+
+
+# ── Part B: player's own trailing receiving profile ──────────────────────────────
+
+REC_FEATURES = ["YPRR", "aDOT", "man_tgt_share"]
+
+
+def build_receiving_profile_dataset(season: int, weeks: list[int]) -> pd.DataFrame:
+    lh = _graded(season, weeks, ["rec yds", "receptions"])
     if lh.empty:
         return lh
     lh["z_error"] = lh.apply(_z_error, axis=1)
-    lh = lh[np.isfinite(lh.z_error)]
+    lh = lh[np.isfinite(lh.z_error)].copy()
     lh["nk"] = lh["player"].map(normalize_name)
+    lh["week"] = lh["week"].astype(int)
 
     rows = []
-    for nk, g in lh.groupby("nk"):
-        if len(g) < 3:
+    for (nk, week), g in lh.groupby(["nk", "week"]):
+        adv = _trailing_weekly("receiving-advanced", season, week, ("WR", "TE"))
+        mvz = _trailing_weekly("receiving-manvszone", season, week, ("WR", "TE"))
+        if adv.empty:
             continue
-        prof = _player_profile(nk, ("wr", "te"))
-        if prof is None:
+        mine_adv = adv[adv.nk == nk]
+        if mine_adv.empty:
             continue
-        rec = dict(player=g["player"].iloc[0], n=len(g),
-                  mean_z_error=g["z_error"].mean(), mean_abs_z_error=g["z_error"].abs().mean())
-        rec.update(prof)
+        rec = {"nk": nk, "week": week, "z_error": g["z_error"].mean(),
+              "abs_z_error": g["z_error"].abs().mean()}
+        rec["YPRR"] = _wavg(mine_adv, "YPRR", mine_adv["RTE"])
+        rec["aDOT"] = _wavg(mine_adv, "aDOT", mine_adv["TGT"]) if "aDOT" in mine_adv.columns else np.nan
+        if not mvz.empty and "RTE.1" in mvz.columns and "RTE.2" in mvz.columns:
+            mine_mvz = mvz[mvz.nk == nk]
+            if not mine_mvz.empty:
+                man_rte = pd.to_numeric(mine_mvz["RTE.1"], errors="coerce").sum()
+                zone_rte = pd.to_numeric(mine_mvz["RTE.2"], errors="coerce").sum()
+                tot = man_rte + zone_rte
+                rec["man_tgt_share"] = 100 * man_rte / tot if tot else np.nan
         rows.append(rec)
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    if df.empty:
+        return df
+    return df.groupby("nk", as_index=False).agg(
+        n=("z_error", "size"), mean_z_error=("z_error", "mean"),
+        mean_abs_z_error=("abs_z_error", "mean"),
+        YPRR=("YPRR", "mean"), aDOT=("aDOT", "mean"), man_tgt_share=("man_tgt_share", "mean"))
 
 
-# ── correlation + report ─────────────────────────────────────────────────────
+# ── Part C: player's own trailing rushing-efficiency profile ─────────────────────
+
+RUSH_FEATURES = ["SUCC %", "STUFF %", "YBC/ATT", "YACO/ATT", "EPA/A", "MTF/A", "HIT %"]
+
+
+def build_rushing_profile_dataset(season: int, weeks: list[int]) -> pd.DataFrame:
+    lh = _graded(season, weeks, ["rush yds"])
+    if lh.empty:
+        return lh
+    lh["z_error"] = lh.apply(_z_error, axis=1)
+    lh = lh[np.isfinite(lh.z_error)].copy()
+    lh["nk"] = lh["player"].map(normalize_name)
+    lh["week"] = lh["week"].astype(int)
+
+    rows = []
+    for (nk, week), g in lh.groupby(["nk", "week"]):
+        adv = _trailing_weekly("rushing-advanced", season, week, ("RB",))
+        if adv.empty:
+            continue
+        mine = adv[adv.nk == nk]
+        if mine.empty:
+            continue
+        rec = {"nk": nk, "week": week, "z_error": g["z_error"].mean(),
+              "abs_z_error": g["z_error"].abs().mean()}
+        for feat in RUSH_FEATURES:
+            if feat in mine.columns:
+                rec[feat] = _wavg(mine, feat, mine["ATT"])
+        rows.append(rec)
+    df = pd.DataFrame(rows)
+    if df.empty:
+        return df
+    agg = {"n": ("z_error", "size"), "mean_z_error": ("z_error", "mean"),
+          "mean_abs_z_error": ("abs_z_error", "mean")}
+    for feat in RUSH_FEATURES:
+        if feat in df.columns:
+            agg[feat] = (feat, "mean")
+    return df.groupby("nk", as_index=False).agg(**agg)
+
+
+# ── correlation + report ─────────────────────────────────────────────────────────
 
 def correlate(df: pd.DataFrame, features: list[str], targets: list[str]) -> pd.DataFrame:
     rows = []
@@ -209,47 +276,52 @@ def correlate(df: pd.DataFrame, features: list[str], targets: list[str]) -> pd.D
     return pd.DataFrame(rows).sort_values("r", key=lambda s: s.abs(), ascending=False)
 
 
+def _table_block(title: str, df: pd.DataFrame, note: str) -> list[str]:
+    L = [f"## {title}", "", note, ""]
+    if df.empty:
+        L.append("no rows")
+    else:
+        L.append("| feature | vs | n | r | p |")
+        L.append("|---|---|--:|--:|--:|")
+        for _, r in df.iterrows():
+            L.append(f"| {r.feature} | {r.target} | {r.n} | {r.r} | {r.p} |")
+    L.append("")
+    return L
+
+
 def report(season: int, weeks: list[int]) -> str:
-    L = [f"# Error-signal audit — {season} weeks {weeks[0]}-{weeks[-1]}", ""]
+    L = [f"# Error-signal audit — {season} weeks {weeks[0]}-{weeks[-1]}",
+        "(all player-profile features built walk-forward from strictly-prior-week "
+        "exports only -- see module docstring)", ""]
 
-    L.append("## Part A — defense faced that week (per-matchup, rec/receptions/pass props)")
-    L.append("")
     dd = build_defense_dataset(season, weeks)
-    if dd.empty:
-        L.append("no rows")
-    else:
-        n_feat = len(DEF_FEATURES) * 2
-        L.append(f"n={len(dd)} graded props with a confirmed opponent-defense row. "
-                 f"{n_feat} feature x target tests run — at p<0.05 alone, expect "
-                 f"~{n_feat*0.05:.1f} false positives by chance; treat anything "
-                 f"above that bar, or without p<0.01, as a lead to re-check next "
-                 f"week, not a finding.")
-        L.append("")
-        ct = correlate(dd, DEF_FEATURES, ["z_error", "abs_z_error"])
-        L.append("| feature | vs | n | r | p |")
-        L.append("|---|---|--:|--:|--:|")
-        for _, r in ct.iterrows():
-            L.append(f"| {r.feature} | {r.target} | {r.n} | {r.r} | {r.p} |")
-        L.append("")
+    n_feat = len(DEF_FEATURES) * 2
+    ct = correlate(dd, DEF_FEATURES, ["z_error", "abs_z_error"]) if not dd.empty else pd.DataFrame()
+    L += _table_block("Part A — defense faced that week", ct,
+                      f"n={len(dd)} props. {n_feat} tests — expect ~{n_feat*0.05:.1f} "
+                      f"false positives at p<0.05 by chance; treat p<0.01 as a lead, "
+                      f"not a finding.")
 
-    L.append("## Part B — player's own season-to-date profile (rec/receptions props, "
-             "n>=3 graded each)")
+    rd = build_receiving_profile_dataset(season, weeks)
+    ct = correlate(rd, REC_FEATURES, ["mean_z_error", "mean_abs_z_error"]) if not rd.empty else pd.DataFrame()
+    L += _table_block("Part B — trailing receiving profile (YPRR, aDOT, man-coverage share)",
+                      ct, f"n={len(rd)} player-weeks. {len(REC_FEATURES)*2} tests.")
+
+    ru = build_rushing_profile_dataset(season, weeks)
+    ct = correlate(ru, RUSH_FEATURES, ["mean_z_error", "mean_abs_z_error"]) if not ru.empty else pd.DataFrame()
+    L += _table_block("Part C — trailing rushing-efficiency profile (success rate, "
+                      "stuff rate, YBC/att, YACO/att, EPA/att, MTF/att, hit rate)",
+                      ct, f"n={len(ru)} player-weeks. {len(RUSH_FEATURES)*2} tests.")
+
+    L.append("## Not tested — needs a new Data Suite pull, not just new code")
     L.append("")
-    pd_ = build_player_dataset(season, weeks)
-    if pd_.empty:
-        L.append("no rows")
-    else:
-        feats = ["man_tgt_share", "wide_rte_pct", "slot_rte_pct", "inline_rte_pct",
-                "aDOT", "YPRR", "pers11_tgt_share"]
-        n_feat = len(feats) * 2
-        L.append(f"n={len(pd_)} players. {n_feat} feature x target tests — same "
-                 f"chance-noise caveat as Part A.")
-        L.append("")
-        ct = correlate(pd_, feats, ["mean_z_error", "mean_abs_z_error"])
-        L.append("| feature | vs | n | r | p |")
-        L.append("|---|---|--:|--:|--:|")
-        for _, r in ct.iterrows():
-            L.append(f"| {r.feature} | {r.target} | {r.n} | {r.r} | {r.p} |")
+    L.append("- **Receiver alignment** (wide/slot/inline): only a season-cumulative "
+             "2026 file exists (`receiving-alignment_defense_2026.csv`), no per-week "
+             "pull -- same leaky shape that broke the YPRR shrinkage test, so it's "
+             "left out rather than reported on a source already shown unreliable.")
+    L.append("- **Play-callers / coordinators**: zero 2026 data pulled at all -- the "
+             "5 coordinator-split tables (head coach, OC, DC, playcaller) only exist "
+             "for the 2022-2024 historical backtest seasons.")
     return "\n".join(L)
 
 

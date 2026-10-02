@@ -1,8 +1,9 @@
 # Error-signal audit — 2026 weeks 1-3
+(all player-profile features built walk-forward from strictly-prior-week exports only -- see module docstring)
 
-## Part A — defense faced that week (per-matchup, rec/receptions/pass props)
+## Part A — defense faced that week
 
-n=950 graded props with a confirmed opponent-defense row. 38 feature x target tests run — at p<0.05 alone, expect ~1.9 false positives by chance; treat anything above that bar, or without p<0.01, as a lead to re-check next week, not a finding.
+n=950 props. 38 tests — expect ~1.9 false positives at p<0.05 by chance; treat p<0.01 as a lead, not a finding.
 
 | feature | vs | n | r | p |
 |---|---|--:|--:|--:|
@@ -45,21 +46,41 @@ n=950 graded props with a confirmed opponent-defense row. 38 feature x target te
 | COVER 1 % | abs_z_error | 950 | -0.002 | 0.9584 |
 | TO 2-HI % | abs_z_error | 950 | 0.0 | 0.9929 |
 
-## Part B — player's own season-to-date profile (rec/receptions props, n>=3 graded each)
+## Part B — trailing receiving profile (YPRR, aDOT, man-coverage share)
 
-n=122 players. 14 feature x target tests — same chance-noise caveat as Part A.
+n=142 player-weeks. 6 tests.
 
 | feature | vs | n | r | p |
 |---|---|--:|--:|--:|
-| YPRR | mean_z_error | 122 | 0.601 | 0.0 |
-| inline_rte_pct | mean_z_error | 122 | -0.23 | 0.0109 |
-| wide_rte_pct | mean_z_error | 122 | 0.181 | 0.0461 |
-| YPRR | mean_abs_z_error | 122 | 0.141 | 0.1203 |
-| pers11_tgt_share | mean_z_error | 122 | 0.133 | 0.143 |
-| slot_rte_pct | mean_abs_z_error | 122 | -0.096 | 0.2945 |
-| man_tgt_share | mean_z_error | 122 | 0.087 | 0.3415 |
-| wide_rte_pct | mean_abs_z_error | 122 | 0.04 | 0.6595 |
-| inline_rte_pct | mean_abs_z_error | 122 | 0.032 | 0.7262 |
-| slot_rte_pct | mean_z_error | 122 | 0.032 | 0.7297 |
-| man_tgt_share | mean_abs_z_error | 122 | -0.021 | 0.8225 |
-| pers11_tgt_share | mean_abs_z_error | 122 | 0.015 | 0.8671 |
+| YPRR | mean_z_error | 142 | 0.201 | 0.0167 |
+| man_tgt_share | mean_z_error | 142 | 0.193 | 0.0214 |
+| YPRR | mean_abs_z_error | 142 | 0.094 | 0.2655 |
+| man_tgt_share | mean_abs_z_error | 142 | -0.076 | 0.3656 |
+| aDOT | mean_z_error | 140 | 0.048 | 0.5768 |
+| aDOT | mean_abs_z_error | 140 | -0.007 | 0.937 |
+
+## Part C — trailing rushing-efficiency profile (success rate, stuff rate, YBC/att, YACO/att, EPA/att, MTF/att, hit rate)
+
+n=61 player-weeks. 14 tests.
+
+| feature | vs | n | r | p |
+|---|---|--:|--:|--:|
+| HIT % | mean_abs_z_error | 61 | -0.192 | 0.1391 |
+| YACO/ATT | mean_abs_z_error | 61 | -0.147 | 0.2593 |
+| HIT % | mean_z_error | 61 | 0.146 | 0.2606 |
+| YACO/ATT | mean_z_error | 61 | 0.14 | 0.2829 |
+| EPA/A | mean_abs_z_error | 61 | 0.136 | 0.2973 |
+| MTF/A | mean_z_error | 61 | 0.131 | 0.3153 |
+| YBC/ATT | mean_abs_z_error | 61 | 0.126 | 0.3323 |
+| EPA/A | mean_z_error | 61 | 0.099 | 0.4487 |
+| SUCC % | mean_abs_z_error | 61 | 0.074 | 0.5721 |
+| SUCC % | mean_z_error | 61 | 0.05 | 0.7015 |
+| MTF/A | mean_abs_z_error | 61 | 0.032 | 0.8046 |
+| STUFF % | mean_abs_z_error | 61 | -0.028 | 0.8279 |
+| STUFF % | mean_z_error | 61 | -0.027 | 0.836 |
+| YBC/ATT | mean_z_error | 61 | -0.004 | 0.975 |
+
+## Not tested — needs a new Data Suite pull, not just new code
+
+- **Receiver alignment** (wide/slot/inline): only a season-cumulative 2026 file exists (`receiving-alignment_defense_2026.csv`), no per-week pull -- same leaky shape that broke the YPRR shrinkage test, so it's left out rather than reported on a source already shown unreliable.
+- **Play-callers / coordinators**: zero 2026 data pulled at all -- the 5 coordinator-split tables (head coach, OC, DC, playcaller) only exist for the 2022-2024 historical backtest seasons.
