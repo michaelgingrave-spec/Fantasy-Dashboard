@@ -39,6 +39,29 @@ K_YPA = 90.0             # dropbacks, for QB yds/att
 K_PASS_TD = 130.0
 K_INT = 150.0
 
+# error_signal.py (2026-10-02) found our shrunk yards/target correlates with error
+# against trailing YPRR (route-charted yards/route, FantasyPoints Data Suite) at
+# r=0.601 n=122 p<1e-6 -- looked like textbook shrinkage bias (underrating elite
+# route-runners). TESTED walk-forward on held-out weeks 2-3 (opp_line(yprr_adj=True)
+# below, same shape as blend.py's FP_* nudge) and it made rec_yds RMSE WORSE at
+# every parameterization tried, monotonically worse the more aggressive the nudge --
+# "off" was strictly best (29.93 vs 30.0-31.3 RMSE). The original correlation was
+# computed on the post-week-3 SEASON-CUMULATIVE Data Suite file, which includes each
+# week's own data explaining that same week's error -- leakage, not a real
+# walk-forward signal. 1-2 games of trailing routes is just too thin a sample for
+# YPRR to be stable. Kept here, DEFAULTED OFF and not called from blend.py, as
+# tested infrastructure rather than shipped -- worth re-testing once the Data Suite
+# has enough weeks banked that trailing YPRR means more than a couple of games.
+YPRR_DEV_FLOOR = 0.15
+YPRR_DEV_SPAN = 0.50
+YPRR_SHIFT_CAP = 0.35
+YPRR_MIN_ROUTES = 20.0   # player's own trailing route sample needed to trust its YPRR
+# capping shift alone isn't enough -- a 25-route early-season YPRR can itself be a
+# wild outlier (one early read: 9.36 vs a 1.65 league avg, 5.7x), and blending even
+# 35% of the way toward an absurd ratio still gives an absurd result. Clip the RATIO
+# first, then blend -- belt and suspenders.
+YPRR_RATIO_CLIP = (0.5, 2.0)
+
 # team offensive TDs (by unit) per implied point -> distributed by the player's usage share
 TD_FROM_TOTAL_PASS = 0.062   # ~1.5 team passing TDs at a 24-pt implied total
 TD_FROM_TOTAL_RUSH = 0.037   # ~0.9 team rushing TDs
@@ -189,8 +212,46 @@ def _hist(key: str, pos: str, season: int, week: int, by: str = "name") -> pd.Da
 
 
 @lru_cache(maxsize=4096)
+def _trailing_yprr(name_key: str, pos: str, season: int, week: int) -> tuple:
+    """(player_yprr, league_avg_yprr, player_n_routes) from strictly-prior-week Data
+    Suite weekly exports, or (None, None, 0) if unavailable (no 2026 Data Suite file
+    for that week, player not found, or not enough of its own route sample). Matched
+    by name only -- the Data Suite weekly files carry no nflverse player_id."""
+    if season != 2026 or pos not in ("WR", "TE"):
+        return None, None, 0
+    from dfs.names import normalize_name
+    from matchup_model.config import DATA as _SCHEME_DATA
+    from matchup_model.scheme import _read as _scheme_read
+    frames = []
+    for w in range(1, week):
+        p = _SCHEME_DATA / f"receiving-advanced_{season}wk{w}_week.csv"
+        if not p.exists():
+            continue
+        d = _scheme_read(p.name)
+        if not d.empty:
+            frames.append(d)
+    if not frames:
+        return None, None, 0
+    all_wk = pd.concat(frames, ignore_index=True)
+    all_wk = all_wk[all_wk["POS"] == pos].copy()
+    all_wk["nk"] = all_wk["Name"].map(normalize_name)
+    all_wk["RTE"] = pd.to_numeric(all_wk["RTE"], errors="coerce").fillna(0.0)
+    all_wk["YPRR"] = pd.to_numeric(all_wk["YPRR"], errors="coerce")
+    valid = all_wk.dropna(subset=["YPRR"])
+    if valid.empty or valid["RTE"].sum() <= 0:
+        return None, None, 0
+    league_yprr = float(np.average(valid["YPRR"], weights=valid["RTE"].clip(lower=0.01)))
+    mine = valid[valid["nk"] == name_key]
+    n_routes = float(mine["RTE"].sum())
+    if mine.empty or n_routes < YPRR_MIN_ROUTES:
+        return None, league_yprr, n_routes
+    player_yprr = float(np.average(mine["YPRR"], weights=mine["RTE"].clip(lower=0.01)))
+    return player_yprr, league_yprr, n_routes
+
+
+@lru_cache(maxsize=4096)
 def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
-             injury_adj: bool = False) -> dict:
+             injury_adj: bool = False, yprr_adj: bool = False) -> dict:
     pos = (pos or "").upper()
     if pos not in ("WR", "TE", "RB", "QB"):
         return {"dk_fp": None, "reason": f"pos {pos}"}
@@ -216,6 +277,16 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
         n_t = float(h["targets"].sum())
         ypt = _shrink(_ewma((h.receiving_yards / h.targets.replace(0, np.nan)).to_numpy()),
                       n_t, pri["ypt"], K_YDS)
+        yprr_ratio = None
+        if yprr_adj:
+            p_yprr, lg_yprr, _n_rte = _trailing_yprr(key, pos, season, week)
+            if p_yprr is not None and lg_yprr:
+                raw_ratio = p_yprr / lg_yprr
+                yprr_ratio = min(max(raw_ratio, YPRR_RATIO_CLIP[0]), YPRR_RATIO_CLIP[1])
+                dev = abs(yprr_ratio - 1.0)
+                shift = min(max(dev - YPRR_DEV_FLOOR, 0.0) / YPRR_DEV_SPAN, YPRR_SHIFT_CAP)
+                if shift > 0:
+                    ypt = ypt * (1 + shift * (yprr_ratio - 1.0))
         catch = _shrink(_ewma((h.receptions / h.targets.replace(0, np.nan)).to_numpy()),
                         n_t, pri["catch"], K_CATCH)
         catch = min(max(catch, 0.35), 0.95)
@@ -227,6 +298,8 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
         rec_td = _td_blend(tgt * td_rt, vegas_td)
         line = {"tgt": tgt, "rec": tgt * catch, "rec_yds": tgt * ypt, "rec_td": rec_td}
         method = f"{ts:.1%} tgt share x {tv['pass_att']:.0f} att -> {tgt:.1f} tgt; {ypt:.1f} y/t"
+        if yprr_ratio is not None:
+            method += f"  ·  YPRR-adj x{yprr_ratio:.2f}"
 
     elif pos == "RB":
         cs = _shrink(_ewma(h["carry_share"].to_numpy()), n_g, 0.42, K_SHARE) * inj_rush
