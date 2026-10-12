@@ -62,6 +62,15 @@ def _tier_help() -> str:
                 "never shown — it's a coin flip.")
 
 
+@st.cache_data(ttl=600, show_spinner=False)
+def _rule_help() -> str:
+    """Tooltip for the Calibrated-picks toggle, with the rule's record on graded weeks."""
+    try:
+        return _conviction.rule_help_text()
+    except Exception:  # noqa: BLE001 -- a tooltip must never take the screen down
+        return "Keeps rows with `p cal %` of 55 or more and `EV %` above 0."
+
+
 @st.cache_data(show_spinner=False)
 def _slates(_nonce: int):
     return classic_slates()
@@ -1023,6 +1032,7 @@ def render(screen: str) -> None:
                        "game yet, or we have no recent game logs for those players.")
             st.stop()
 
+        cal = _conviction_cal()
         tc1, tc2 = st.columns([3, 2])
         tiers = tc1.multiselect(
             "Show tiers", ["lean", "solid", "strong", "high"], default=["solid", "strong"],
@@ -1037,28 +1047,51 @@ def render(screen: str) -> None:
                  "off shows everything in the selected tier(s), including rows a changed "
                  "2026 role could be inflating.",
         )
+        cal_only = tc2.toggle(
+            "✓ Calibrated picks only", value=cal is not None, key="pe_calibrated",
+            disabled=cal is None,
+            help=(_rule_help() if cal is not None else
+                  "Needs more graded weeks before `p cal %` and `EV %` exist."),
+        )
         show = confident_only(df)
         show = show[show["conf"].isin(tiers)] if tiers else show.iloc[0:0]
         if rec_only:
             show = role_stable(show)
-        hidden = len(df) - len(show)
         if show.empty:
             st.warning("Nothing cleared the filters. Widen the tiers, or turn off "
                        "\"Recommended only\" to see rows with a role-ratio flag.")
             st.stop()
 
-        cal = _conviction_cal()
         if cal is not None:
             show = _conviction.annotate(show, cal)
+            if cal_only:
+                picked = _conviction.calibrated_picks(show)
+                # rows that clear the rule anywhere the screen can show them, minus these
+                outside = len(_conviction.calibrated_picks(
+                    _conviction.annotate(confident_only(df), cal))) - len(picked)
+                if picked.empty:
+                    st.warning("No rows clear `p cal %` ≥ 55 and `EV %` > 0 in this selection."
+                               + (f" {outside} clear it outside your tier / Recommended "
+                                  "selection — widen the tiers or turn off \"Recommended only\"."
+                                  if outside else " Turn off \"Calibrated picks only\" to see "
+                                  "the rest."))
+                    st.stop()
+                show = picked
+                if outside:
+                    st.caption(f"✓ Calibrated picks only — {outside} more row(s) clear the rule "
+                               "outside your tier / Recommended selection; widen the tiers or "
+                               "turn off \"Recommended only\" to see them.")
+        hidden = len(df) - len(show)
         view = show.drop(columns=["role_ratio", "game"])
         if cal is not None:
-            added = ["p cal %", "EV %", "kind record"]
-            order = [c for c in view.columns if c not in added]
-            i = order.index("p(hit)%") + 1 if "p(hit)%" in order else len(order)
-            view = view[order[:i] + added + order[i:]]
+            lead = [c for c in _conviction.LEAD_COLUMNS if c in view.columns]
+            view = view[lead + [c for c in view.columns if c not in lead]]
         try:
-            from dfs import matchup_view as _mvh
-            table = _mvh.heat(view, ["p edge", "z"], good_high=True)
+            if cal is not None:
+                table = _conviction.style_picks(view)
+            else:
+                from dfs import matchup_view as _mvh
+                table = _mvh.heat(view, ["p edge", "z"], good_high=True)
         except Exception:  # noqa: BLE001
             table = view
         st.dataframe(table, hide_index=True, width="stretch")
@@ -1081,8 +1114,10 @@ def render(screen: str) -> None:
                 "evidence behind `p cal %`. Line-size groups: "
                 f"{_conviction.line_groups_text()}. Blank where the books disagree on the "
                 "line by a full catch (the price wouldn't belong to the bet shown), and "
-                "`kind record` is also blank for a kind with no graded history. Display "
-                "only — tiers and filters are unchanged."
+                "`kind record` is also blank for a kind with no graded history. Green / red on "
+                "`p cal %` and `EV %` = clears / misses the cutoff (55 and 0). The columns "
+                "are display only; the one filter built on them is ✓ Calibrated picks only "
+                "(on by default — turn it off to see every row the other filters allow)."
             )
         st.caption(
             "**role_ratio** (hidden from the table, used by the Recommended filter) = this "

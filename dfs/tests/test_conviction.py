@@ -1,5 +1,7 @@
 """Calibrated conviction ranking: bucket/price math, shrinkage, pick rules, and -- the one
 that matters -- that a test week is calibrated only on strictly earlier weeks."""
+import re
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -109,6 +111,89 @@ def test_tier_help_text_has_no_numbers_until_enough_is_graded():
     txt = C.tier_help_text(thin)
     assert "Not enough graded lines yet" in txt and "%" not in txt
     assert "Not enough graded lines yet" in C.tier_help_text(pd.DataFrame())
+
+
+def test_calibrated_picks_reads_the_numbers_as_the_table_shows_them():
+    shown = pd.DataFrame({
+        "player": list("ABCDEF"),
+        "p cal %": [55.0, 55.0, 54.0, np.nan, 70.0, 62.0],
+        "EV %": [1.0, 0.0, 9.0, 12.0, -3.0, np.nan],
+    })
+    out = C.calibrated_picks(shown)
+    # only A clears both: B has no +EV, C is under 55, D/F are blank, E is priced too steeply
+    assert list(out["player"]) == ["A"]
+    assert list(out.index) == [0]
+
+
+def test_annotate_and_the_rule_agree_on_the_rounded_numbers():
+    hist = pd.DataFrame(_rows(60, 1, line=1.5, model_p=0.62, wins=40)
+                        + _rows(60, 2, line=1.5, model_p=0.62, wins=40))     # wins 67%, says 62%
+    cal = C.fit(hist)
+    live = pd.DataFrame(_rows(3, 3, line=1.5, model_p=0.62, prefix="R")).drop(columns=["result"])
+    out = C.annotate(live, cal)
+    assert (out["p cal %"] == out["p cal %"].round(0)).all()          # whole numbers, as displayed
+    assert len(C.calibrated_picks(out)) == int(((out["p cal %"] >= 55) & (out["EV %"] > 0)).sum()) == 3
+
+
+def test_style_picks_colors_only_the_two_columns_the_rule_reads():
+    view = pd.DataFrame({
+        "player": ["A", "B", "C", "D"],
+        "z": [0.5, 0.4, 0.3, 0.2],
+        "p edge": [9.0, 8.0, 7.0, 6.0],
+        "p cal %": [55.0, 54.0, 60.0, np.nan],
+        "EV %": [1.0, 9.0, -2.0, np.nan],
+    })
+    html = C.style_picks(view).to_html()
+    good, bad = "rgba(46, 160, 67, 0.40)", "rgba(220, 70, 70, 0.32)"
+
+    def cells(color):      # pandas groups cells with one style into a single CSS rule
+        rules = re.findall(r"([^{}]+)\{([^{}]*)\}", html)
+        return sorted(s.strip().split("_row")[1] for sel, body in rules if color in body
+                      for s in sel.split(","))
+
+    # columns: player 0, z 1, p edge 2, p cal % 3, EV % 4.  p cal: A and C clear 55, B does not;
+    # EV: A and B are above 0, C is not; D's blanks stay plain
+    assert cells(good) == ["0_col3", "0_col4", "1_col4", "2_col3"]
+    assert cells(bad) == ["1_col3", "2_col4"]
+    assert "+1<" in html and "-2<" in html and ">55<" in html and ">60<" in html   # as the table shows them
+    assert ">0.50<" in html and ">9.00<" in html and "0.500000" not in html        # other columns: 2 decimals
+    # z and p edge carry no color of their own
+    plain = C.style_picks(view[["player", "z", "p edge"]]).to_html()
+    assert good not in plain and bad not in plain
+
+
+def test_lead_columns_put_the_decision_columns_first():
+    assert C.LEAD_COLUMNS[:4] == ("player", "market", "lean", "line")
+    assert C.LEAD_COLUMNS.index("p cal %") < C.LEAD_COLUMNS.index("best") < C.LEAD_COLUMNS.index("kind record")
+
+
+def _rule_history():
+    """Weeks 1-2: this kind of prop beats its stated 52% (70% wins) and pays -120. Week 3: every
+    one loses. 10 more week-3 rows project 2.5x the line, which the screen never shows."""
+    rows = (_rows(40, 1, model_p=0.52, wins=28) + _rows(40, 2, model_p=0.52, wins=28)
+            + _rows(20, 3, model_p=0.52, wins=0, prefix="W3"))
+    hist = pd.DataFrame(rows)
+    blow = pd.DataFrame(_rows(10, 3, model_p=0.52, wins=0, prefix="BLOW"))
+    blow["our proj"] = blow["line"] * 2.5
+    return pd.concat([hist, blow], ignore_index=True)
+
+
+def test_rule_record_calibrates_each_week_only_on_earlier_weeks_and_skips_hidden_rows():
+    rec = C.rule_record(_rule_history())
+    assert [r["week"] for r in rec["by_week"]] == [3]                # weeks 1-2 have no earlier history
+    # corrected UP from weeks 1-2 (52% said, 70% won), so all 20 clear the rule even though they all
+    # lose -- week 3's own losses must not leak into its calibration (they would pull p cal under 55)
+    assert rec["n"] == 20 and rec["win"] == 0.0 and rec["roi"] == -100.0
+    assert rec["base_n"] == 20                                        # the 10 blow-up rows are not shown
+
+
+def test_rule_help_text_quotes_the_live_record_and_admits_when_it_cannot_test():
+    txt = C.rule_help_text(_rule_history())
+    assert "55 or more" in txt and "above 0" in txt
+    assert "week 3" in txt and "20 picks won 0.0%" in txt and "wk 3 0% (n=20)" in txt
+    thin = pd.DataFrame(_rows(30, 1, wins=15))
+    assert "Not enough graded weeks yet" in C.rule_help_text(thin)
+    assert "Not enough graded weeks yet" in C.rule_help_text(pd.DataFrame())
 
 
 def test_line_groups_text_lists_every_market_group_from_the_bins():

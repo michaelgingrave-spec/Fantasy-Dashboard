@@ -184,6 +184,23 @@ def tier_help_text(lh: pd.DataFrame | None = None, min_graded: int = MIN_CAL_ROW
     return out + f"{never}."
 
 
+def rule_help_text(lh: pd.DataFrame | None = None) -> str:
+    """Tooltip for the 'Calibrated picks only' toggle: the rule, and how it has done on graded
+    weeks (live, from `rule_record`), so the tooltip can't promise more than the history shows."""
+    head = (f"Keeps rows with `p cal %` of {100 * P_MIN:.0f} or more and `EV %` above 0, on top of "
+            "the tier and Recommended filters. ")
+    rec = rule_record(lh)
+    if rec is None:
+        return head + "Not enough graded weeks yet to test it."
+    weeks = [r["week"] for r in rec["by_week"]]
+    span = f"week {weeks[0]}" if len(weeks) == 1 else f"weeks {weeks[0]}–{weeks[-1]}"
+    by_week = " · ".join(f"wk {r['week']} {r['win']:.0f}% (n={r['n']})" for r in rec["by_week"] if r["n"])
+    return (head + f"Tested on graded {span}, each week calibrated only on earlier weeks, all four "
+            f"tiers, Recommended off: {rec['n']} picks won {rec['win']:.1f}% ({rec['roi']:+.1f}% ROI "
+            f"at the best price) vs {rec['base_win']:.1f}% ({rec['base_roi']:+.1f}%) for every row "
+            f"the screen can show. By week: {by_week}.")
+
+
 def line_groups_text() -> str:
     """The line-size groups a prop kind is split into, for captions: 'receptions ≤1.5 / 2.5 /
     3.5 / 4.5+, rec yds ≤20 / 20-40 / ...'. Generated from LINE_BINS so it can't drift."""
@@ -201,6 +218,11 @@ def _record_lookup(cal: Calibration) -> dict:
     return out
 
 
+def _pct(x: pd.Series) -> pd.Series:
+    """A probability or EV the way the table shows it: percent, whole numbers."""
+    return (100 * x).round(0)
+
+
 def annotate(edges: pd.DataFrame, cal: Calibration) -> pd.DataFrame:
     """`edges` (live Prop Edges rows) with `p cal %`, `EV %` and `kind record` appended --
     same rows, same order, blank where a row can't be priced cleanly (whole-number count
@@ -209,13 +231,51 @@ def annotate(edges: pd.DataFrame, cal: Calibration) -> pd.DataFrame:
     out = edges.copy()
     out["_k"] = np.arange(len(out))
     sc = score(out, cal).set_index("_k")
-    out["p cal %"] = (100 * sc["p_cal"]).reindex(out["_k"]).to_numpy().round(0)
-    out["EV %"] = (100 * sc["ev"]).reindex(out["_k"]).to_numpy().round(0)
+    out["p cal %"] = _pct(sc["p_cal"]).reindex(out["_k"]).to_numpy()
+    out["EV %"] = _pct(sc["ev"]).reindex(out["_k"]).to_numpy()
     record = _record_lookup(cal)
     kind = pd.Series([record.get(k, "") for k in zip(sc["market"], sc["lean"], sc["bucket"])],
                      index=sc.index, dtype=object)
     out["kind record"] = kind.reindex(out["_k"]).fillna("").to_numpy()
     return out.drop(columns="_k")
+
+
+_GOOD = "background-color: rgba(46, 160, 67, 0.40)"
+_BAD = "background-color: rgba(220, 70, 70, 0.32)"
+# what you act on, left to right: the pick, the verdict, the price, the evidence
+LEAD_COLUMNS = ("player", "market", "lean", "line", "p cal %", "EV %", "best", "kind record")
+
+
+def style_picks(view: pd.DataFrame, p_min: float = P_MIN):
+    """Styler for the Prop Edges table that colors only the two columns the rule reads:
+    `p cal %` green at the cutoff or better and red under it, `EV %` green above 0 and red
+    at or below. Blanks stay plain. This replaces a red-to-green scale on `p edge` and `z`,
+    the raw model's own numbers that the calibrated columns correct. Thresholds match
+    `calibrated_picks`."""
+    cut = round(100 * p_min, 6)
+
+    def paint(col: pd.Series, clears) -> list[str]:
+        return ["" if pd.isna(v) else (_GOOD if clears(v) else _BAD)
+                for v in pd.to_numeric(col, errors="coerce")]
+
+    sty = view.style.format(precision=2)
+    shown = {}
+    if "p cal %" in view.columns:
+        sty = sty.apply(lambda c: paint(c, lambda v: v >= cut), subset=["p cal %"])
+        shown["p cal %"] = "{:.0f}"
+    if "EV %" in view.columns:
+        sty = sty.apply(lambda c: paint(c, lambda v: v > 0), subset=["EV %"])
+        shown["EV %"] = "{:+.0f}"
+    # subset matters: a dict formatter with no subset resets every other column's precision
+    return sty.format(shown, na_rep="", subset=list(shown)) if shown else sty
+
+
+def calibrated_picks(annotated: pd.DataFrame, p_min: float = P_MIN) -> pd.DataFrame:
+    """Rows of `annotate` output that clear the calibrated-pick rule, read off the numbers as
+    the table shows them: `p cal %` at p_min or better and `EV %` above zero. A blank (NaN)
+    clears neither test. A cutoff, not a ranking -- order is left as it was."""
+    keep = (annotated["p cal %"] >= round(100 * p_min, 6)) & (annotated["EV %"] > 0)   # 100*.55 = 55.00000000000001
+    return annotated[keep].reset_index(drop=True)
 
 
 def top_picks(scored: pd.DataFrame, k: int = 8, p_min: float = P_MIN) -> pd.DataFrame:
@@ -290,6 +350,42 @@ def walk_forward(lh: pd.DataFrame, test_weeks: list[int], ks=(8, 16), k_shrink=K
     return dict(grid=pd.DataFrame(rows), brier=pd.DataFrame(brier),
                 reliab=pd.concat(reliab) if reliab else pd.DataFrame(),
                 picks=pd.concat(picks_log) if picks_log else pd.DataFrame())
+
+
+def _pool(rows: list[dict]) -> dict:
+    """n-weighted win% and ROI across weeks (weeks with no picks carry no weight)."""
+    n = sum(r["n"] for r in rows)
+    if not n:
+        return dict(n=0, win=np.nan, roi=np.nan)
+    return dict(n=n, win=sum(r["win"] * r["n"] for r in rows if r["n"]) / n,
+                roi=sum(r["roi"] * r["n"] for r in rows if r["n"]) / n)
+
+
+def rule_record(lh: pd.DataFrame | None = None, first_test_week: int = 3) -> dict | None:
+    """How `calibrated_picks` did on graded history, week by week. Each test week is calibrated
+    only on earlier weeks, picks are read off the rounded numbers the table shows, and only
+    rows the screen can show are counted: props.confident_only is always on there, so a row
+    it hides can never be a pick (all four tiers, Recommended off). None until a graded week
+    can be tested."""
+    from dfs import bets, props
+    lh = bets.load_line_history() if lh is None else lh
+    if lh.empty or not {"season", "week", "result"} <= set(lh.columns):
+        return None
+    lh = lh[lh["season"] == lh["season"].max()]
+    if int(lh["result"].isin(["win", "loss"]).sum()) < MIN_CAL_ROWS:
+        return None
+    picked, shown = [], []
+    for w in sorted(int(x) for x in lh["week"].dropna().unique() if x >= first_test_week):
+        sc = props.confident_only(score(lh[lh["week"] == w], fit(lh[lh["week"] < w])))
+        sc = sc[sc["result"].isin(["win", "loss"])]
+        as_shown = sc.assign(**{"p cal %": _pct(sc["p_cal"]), "EV %": _pct(sc["ev"])})
+        picked.append(dict(week=w, **_grade(calibrated_picks(as_shown))))
+        shown.append(dict(week=w, **_grade(sc)))
+    rule, ref = _pool(picked), _pool(shown)
+    if not rule["n"]:
+        return None
+    return dict(by_week=picked, n=rule["n"], win=rule["win"], roi=rule["roi"],
+                base_n=ref["n"], base_win=ref["win"], base_roi=ref["roi"])
 
 
 def _pooled(grid: pd.DataFrame) -> pd.DataFrame:
