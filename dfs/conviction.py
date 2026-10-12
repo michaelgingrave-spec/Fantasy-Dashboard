@@ -146,15 +146,75 @@ def history_calibration(lh: pd.DataFrame | None = None) -> Calibration | None:
     return cal if (len(cal.table) and cal.table["n"].sum() >= MIN_CAL_ROWS) else None
 
 
+def tier_help_text(lh: pd.DataFrame | None = None, min_graded: int = MIN_CAL_ROWS) -> str:
+    """Tooltip for the Prop Edges tier picker: how each tier has actually done on graded
+    pulled lines -- the same win% and n as the tier table on that screen -- next to the
+    win% the prices on those picks needed to break even, so the screen never quotes a
+    backtest figure the live weeks haven't matched. The table's ROI is at a flat -110,
+    which flatters the higher tiers (they are heavier favourites, so each win pays less);
+    the break-even shows what they really had to clear. No numbers until `min_graded`
+    lines are graded."""
+    from dfs import bets
+    head = "Confidence tier from |z| (standardized edge). "
+    never = "`—` (under ~0.15 SD) is never shown"
+    lh = bets.load_line_history() if lh is None else lh
+    lb = bets.line_history_buckets(lh)
+    if lb.empty or int(lb["n"].sum()) < min_graded:
+        return head + f"Not enough graded lines yet for a live hit rate (see Bet Log). {never}."
+    lb = lb.dropna(subset=["win%"]).set_index("conf")
+    graded = lh[lh["result"].isin(["win", "loss", "push"])]
+    need = pd.Series(dtype=float)
+    if "best" in graded.columns:
+        be = graded["best"].map(parse_price).map(lambda o: breakeven(o) if pd.notna(o) else np.nan)
+        need = 100 * be.groupby(graded["conf"]).mean()
+
+    def cell(tier: str) -> str:
+        vs = f" vs {need[tier]:.1f}%" if tier in need.index and pd.notna(need[tier]) else ""
+        return f"{lb.loc[tier, 'win%']:.1f}%{vs} (n={int(lb.loc[tier, 'n'])})"
+
+    scope = ""
+    if {"season", "week"}.issubset(graded.columns) and graded["season"].notna().any():
+        season = int(graded["season"].max())
+        scope = f", {season} through week {int(graded.loc[graded['season'] == season, 'week'].max())}"
+    shown = " · ".join(f"{t} {cell(t)}" for t in ("lean", "solid", "strong", "high") if t in lb.index)
+    out = (head + f"Live results on graded pulled lines{scope}: win% vs the win% the prices on "
+           f"those picks needed to break even — {shown}. ")
+    if "—" in lb.index:
+        return out + f"{never}: it has gone {cell('—')}."
+    return out + f"{never}."
+
+
+def line_groups_text() -> str:
+    """The line-size groups a prop kind is split into, for captions: 'receptions ≤1.5 / 2.5 /
+    3.5 / 4.5+, rec yds ≤20 / 20-40 / ...'. Generated from LINE_BINS so it can't drift."""
+    return ", ".join(f"{m} {' / '.join(labels)}" for m, (_, labels) in LINE_BINS.items()
+                     ).replace("<=", "≤")
+
+
+def _record_lookup(cal: Calibration) -> dict:
+    """(market, side, line bucket) -> 'W-L (win%)' over the same graded rows the correction
+    for that kind of prop was fit on."""
+    out = {}
+    for r in cal.table.itertuples():
+        wins = int(round(r.win * r.n))
+        out[(r.market, r.lean, r.bucket)] = f"{wins}-{r.n - wins} ({100 * r.win:.0f}%)"
+    return out
+
+
 def annotate(edges: pd.DataFrame, cal: Calibration) -> pd.DataFrame:
-    """`edges` (live Prop Edges rows) with `p cal %` and `EV %` appended -- same rows, same
-    order, NaN where a row can't be priced cleanly (whole-number count line, unknown line
-    bucket, no parsed price). Display only: tiers and filters are untouched."""
+    """`edges` (live Prop Edges rows) with `p cal %`, `EV %` and `kind record` appended --
+    same rows, same order, blank where a row can't be priced cleanly (whole-number count
+    line, unknown line bucket, no parsed price) and `kind record` also blank for a kind of
+    prop with no graded history. Display only: tiers and filters are untouched."""
     out = edges.copy()
     out["_k"] = np.arange(len(out))
     sc = score(out, cal).set_index("_k")
     out["p cal %"] = (100 * sc["p_cal"]).reindex(out["_k"]).to_numpy().round(0)
     out["EV %"] = (100 * sc["ev"]).reindex(out["_k"]).to_numpy().round(0)
+    record = _record_lookup(cal)
+    kind = pd.Series([record.get(k, "") for k in zip(sc["market"], sc["lean"], sc["bucket"])],
+                     index=sc.index, dtype=object)
+    out["kind record"] = kind.reindex(out["_k"]).fillna("").to_numpy()
     return out.drop(columns="_k")
 
 

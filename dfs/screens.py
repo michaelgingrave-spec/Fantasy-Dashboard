@@ -52,6 +52,16 @@ def _conviction_cal():
         return None
 
 
+@st.cache_data(ttl=600, show_spinner=False)
+def _tier_help() -> str:
+    """Tier picker tooltip with how each tier has actually done on graded lines."""
+    try:
+        return _conviction.tier_help_text()
+    except Exception:  # noqa: BLE001 -- a tooltip must never take the screen down
+        return ("Confidence tier from |z| (standardized edge). `—` (under ~0.15 SD) is "
+                "never shown — it's a coin flip.")
+
+
 @st.cache_data(show_spinner=False)
 def _slates(_nonce: int):
     return classic_slates()
@@ -1017,9 +1027,7 @@ def render(screen: str) -> None:
         tiers = tc1.multiselect(
             "Show tiers", ["lean", "solid", "strong", "high"], default=["solid", "strong"],
             key="pe_tiers",
-            help="Confidence tier from |z| (standardized edge). Backtest: lean ~54% hit, "
-                 "solid ~57% / +9% ROI, strong ~57% / +10% ROI, high ~62% / +19% ROI "
-                 "(break-even 52.4%). `—` (under ~0.15 SD) is never shown — it's a coin flip.",
+            help=_tier_help(),
         )
         rec_only = tc2.toggle(
             "✓ Recommended only", value=True, key="pe_recommended",
@@ -1044,9 +1052,10 @@ def render(screen: str) -> None:
             show = _conviction.annotate(show, cal)
         view = show.drop(columns=["role_ratio", "game"])
         if cal is not None:
-            order = [c for c in view.columns if c not in ("p cal %", "EV %")]
+            added = ["p cal %", "EV %", "kind record"]
+            order = [c for c in view.columns if c not in added]
             i = order.index("p(hit)%") + 1 if "p(hit)%" in order else len(order)
-            view = view[order[:i] + ["p cal %", "EV %"] + order[i:]]
+            view = view[order[:i] + added + order[i:]]
         try:
             from dfs import matchup_view as _mvh
             table = _mvh.heat(view, ["p edge", "z"], good_high=True)
@@ -1066,9 +1075,14 @@ def render(screen: str) -> None:
                 "`p cal %` = `p(hit)%` corrected by how this exact kind of prop (market × "
                 "side × line size) has actually done in graded weeks — OVERs have run well "
                 "below the tool's own number, mid-line receptions OVERs most of all · "
-                "`EV %` = expected profit per $1 at the best price using `p cal %`. Blank "
-                "where the books disagree on the line by a full catch (the price wouldn't "
-                "belong to the bet shown). Display only — tiers and filters are unchanged."
+                "`EV %` = expected profit per $1 at the best price using `p cal %` · "
+                "`kind record` = how that exact kind of prop has done in graded weeks "
+                "(wins-losses and win %, lean through high pooled, pushes and DNPs left out) — the "
+                "evidence behind `p cal %`. Line-size groups: "
+                f"{_conviction.line_groups_text()}. Blank where the books disagree on the "
+                "line by a full catch (the price wouldn't belong to the bet shown), and "
+                "`kind record` is also blank for a kind with no graded history. Display "
+                "only — tiers and filters are unchanged."
             )
         st.caption(
             "**role_ratio** (hidden from the table, used by the Recommended filter) = this "

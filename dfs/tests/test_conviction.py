@@ -68,6 +68,56 @@ def test_annotate_keeps_every_row_and_blanks_what_it_cannot_price():
     assert out.loc[2, "p cal %"] < 60                            # unseen bucket inherits global miss
 
 
+def test_annotate_shows_the_graded_record_of_each_kind_of_prop():
+    hist = pd.DataFrame(_rows(60, 1, line=3.5, model_p=0.62, wins=26)
+                        + _rows(60, 2, line=3.5, model_p=0.62, wins=26))     # 52-68 over two weeks
+    cal = C.fit(hist)
+    live = pd.DataFrame(_rows(1, 3, line=3.5, prefix="A")
+                        + _rows(1, 3, line=1.0, price="draftkings +194", prefix="B")   # unpriceable
+                        + _rows(1, 3, market="rec yds", line=40.5, model_p=0.60, prefix="C"))  # no history
+    out = C.annotate(live.drop(columns=["result"]), cal)
+    assert out.loc[0, "kind record"] == "52-68 (43%)"
+    assert out.loc[1, "kind record"] == ""             # whole-number count line: not one bet
+    assert out.loc[2, "kind record"] == ""             # a kind the history has never seen
+    assert list(out["player"]) == list(live["player"])
+
+
+def _tier_history():
+    return pd.DataFrame(
+        _rows(40, 1, conf="lean", price="draftkings -110", wins=20, prefix="L")      # 20-20
+        + _rows(40, 2, conf="solid", price="fanduel -200", wins=28, prefix="S")      # 28-12, pays 0.5
+        + _rows(20, 3, conf="—", price="draftkings -110", wins=8, prefix="N"))       # 8-12
+
+
+def test_tier_help_text_quotes_live_results_against_the_break_even_their_prices_need():
+    from dfs import bets
+    hist = _tier_history()
+    txt = C.tier_help_text(hist)
+    assert "lean 50.0% vs 52.4% (n=40)" in txt                       # 20-20 at -110
+    assert "solid 70.0% vs 66.7% (n=40)" in txt                      # 28-12 at -200: a heavier price
+    assert "2026 through week 3" in txt
+    assert "it has gone 40.0% vs 52.4% (n=20)" in txt                # the never-shown tier
+    assert "strong " not in txt and "high " not in txt               # nothing graded there, nothing quoted
+    assert "57%" not in txt and "62%" not in txt and "+19%" not in txt   # none of the old backtest claims
+    table = bets.line_history_buckets(hist).set_index("conf")        # same win% and n as the screen's table
+    assert all(f"{table.loc[t, 'win%']:.1f}% " in txt and f"(n={table.loc[t, 'n']})" in txt
+               for t in ("lean", "solid"))
+
+
+def test_tier_help_text_has_no_numbers_until_enough_is_graded():
+    thin = pd.DataFrame(_rows(30, 1, conf="solid", wins=15))
+    txt = C.tier_help_text(thin)
+    assert "Not enough graded lines yet" in txt and "%" not in txt
+    assert "Not enough graded lines yet" in C.tier_help_text(pd.DataFrame())
+
+
+def test_line_groups_text_lists_every_market_group_from_the_bins():
+    t = C.line_groups_text()
+    assert "receptions ≤1.5 / 2.5 / 3.5 / 4.5+" in t
+    assert "rec yds ≤20 / 20-40 / 40-60 / 60+" in t
+    assert all(m in t for m in C.LINE_BINS)
+
+
 def test_history_calibration_needs_enough_graded_history():
     small = pd.DataFrame(_rows(40, 1, wins=20))
     assert C.history_calibration(small) is None
