@@ -30,6 +30,7 @@ from dfs.edge import player_boosts, weekly_edges
 from dfs.optimizer import OptimizerError, optimize, to_dk_upload
 from dfs.projections import ProjectionError, load_weekly_projections
 from dfs.slate import build_slate
+from dfs import conviction as _conviction
 from dfs import suggestions as sug
 
 
@@ -39,6 +40,16 @@ def _hash_path(p: Path) -> str:
         return hashlib.md5(p.read_bytes()).hexdigest()
     except Exception:
         return "missing"
+
+
+@st.cache_data(ttl=600, show_spinner=False)
+def _conviction_cal():
+    """Hit-probability calibration from every graded week on file (dfs.conviction);
+    None until there is enough history for it to mean anything."""
+    try:
+        return _conviction.history_calibration()
+    except Exception:  # noqa: BLE001 -- a display extra must never take the screen down
+        return None
 
 
 @st.cache_data(show_spinner=False)
@@ -1028,7 +1039,14 @@ def render(screen: str) -> None:
                        "\"Recommended only\" to see rows with a role-ratio flag.")
             st.stop()
 
+        cal = _conviction_cal()
+        if cal is not None:
+            show = _conviction.annotate(show, cal)
         view = show.drop(columns=["role_ratio", "game"])
+        if cal is not None:
+            order = [c for c in view.columns if c not in ("p cal %", "EV %")]
+            i = order.index("p(hit)%") + 1 if "p(hit)%" in order else len(order)
+            view = view[order[:i] + ["p cal %", "EV %"] + order[i:]]
         try:
             from dfs import matchup_view as _mvh
             table = _mvh.heat(view, ["p edge", "z"], good_high=True)
@@ -1043,6 +1061,15 @@ def render(screen: str) -> None:
             + (f"  ·  {hidden} row(s) hidden (no real edge, a role-ratio red flag, or "
                "outside the selected filters)." if hidden else "")
         )
+        if cal is not None:
+            st.caption(
+                "`p cal %` = `p(hit)%` corrected by how this exact kind of prop (market × "
+                "side × line size) has actually done in graded weeks — OVERs have run well "
+                "below the tool's own number, mid-line receptions OVERs most of all · "
+                "`EV %` = expected profit per $1 at the best price using `p cal %`. Blank "
+                "where the books disagree on the line by a full catch (the price wouldn't "
+                "belong to the bet shown). Display only — tiers and filters are unchanged."
+            )
         st.caption(
             "**role_ratio** (hidden from the table, used by the Recommended filter) = this "
             "week's FantasyPoints projection ÷ our model's own number. Near 1.0 = they agree "
@@ -1067,7 +1094,11 @@ def render(screen: str) -> None:
                 combo = parlay_odds(prices)
                 p_our = 1.0
                 for g in legs:
-                    p_our *= max(min((g.get("p(hit)%") or 55) / 100.0, 0.97), 0.03)
+                    # calibrated probability when we have one -- multiplying the tool's raw
+                    # p(hit)% across legs overstates a parlay badly (OVERs run ~7 pts hot)
+                    pc = g.get("p cal %")
+                    base = pc if pc is not None and pc == pc else (g.get("p(hit)%") or 55)
+                    p_our *= max(min(base / 100.0, 0.97), 0.03)
                 stake = st.number_input("Stake ($)", 0.0, 100000.0, 10.0, 5.0, key="pe_parstake")
                 payout = stake * (combo["decimal"] - 1)
                 ev = p_our * payout - (1 - p_our) * stake
@@ -1088,7 +1119,9 @@ def render(screen: str) -> None:
                                "assumption for the combined probability is reasonable.")
                 st.caption("Uses each leg's best DK/FD price · the parlay itself isn't logged "
                            "to the Bet Log yet — log the individual legs below if you want to "
-                           "track them.")
+                           "track them."
+                           + (" Win prob multiplies each leg's calibrated `p cal %` "
+                              "(falls back to `p(hit)%` for blank rows)." if cal is not None else ""))
             elif legs_pick:
                 st.caption("Pick at least 2 legs to price a parlay.")
 

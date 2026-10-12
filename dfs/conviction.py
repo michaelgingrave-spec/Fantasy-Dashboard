@@ -133,6 +133,31 @@ def score(cands: pd.DataFrame, cal: Calibration) -> pd.DataFrame:
     return d
 
 
+MIN_CAL_ROWS = 100   # under this much graded history a "calibrated" number is just the model's own
+
+
+def history_calibration(lh: pd.DataFrame | None = None) -> Calibration | None:
+    """Calibration from every graded week on file, or None while there isn't enough history
+    for it to mean anything (the screen then shows no calibrated columns at all)."""
+    if lh is None:
+        from dfs import bets
+        lh = bets.load_line_history()
+    cal = fit(lh)
+    return cal if (len(cal.table) and cal.table["n"].sum() >= MIN_CAL_ROWS) else None
+
+
+def annotate(edges: pd.DataFrame, cal: Calibration) -> pd.DataFrame:
+    """`edges` (live Prop Edges rows) with `p cal %` and `EV %` appended -- same rows, same
+    order, NaN where a row can't be priced cleanly (whole-number count line, unknown line
+    bucket, no parsed price). Display only: tiers and filters are untouched."""
+    out = edges.copy()
+    out["_k"] = np.arange(len(out))
+    sc = score(out, cal).set_index("_k")
+    out["p cal %"] = (100 * sc["p_cal"]).reindex(out["_k"]).to_numpy().round(0)
+    out["EV %"] = (100 * sc["ev"]).reindex(out["_k"]).to_numpy().round(0)
+    return out.drop(columns="_k")
+
+
 def top_picks(scored: pd.DataFrame, k: int = 8, p_min: float = P_MIN) -> pd.DataFrame:
     """Best calibrated-EV props, one per player, only if calibrated to p_min+ and +EV.
     Can return fewer than k -- on a thin week that is the honest answer."""

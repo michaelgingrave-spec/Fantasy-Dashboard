@@ -53,6 +53,28 @@ def test_thin_bucket_is_shrunk_toward_the_global_miss_not_its_own_lucky_streak()
     assert abs(t.loc["<=1.5", "delta"] - cal.global_delta) < abs(t.loc["<=1.5", "delta"] - t.loc["<=1.5", "delta_raw"])
 
 
+def test_annotate_keeps_every_row_and_blanks_what_it_cannot_price():
+    hist = pd.DataFrame(_rows(60, 1, line=3.5, model_p=0.62, wins=26)      # says 62%, wins ~43%
+                        + _rows(60, 2, line=3.5, model_p=0.62, wins=26))
+    cal = C.fit(hist)
+    live = pd.DataFrame(_rows(1, 3, line=3.5, model_p=0.62, prefix="A")
+                        + _rows(1, 3, line=1.0, model_p=0.62, price="draftkings +194", prefix="B")
+                        + _rows(1, 3, market="rec yds", line=40.5, model_p=0.60, prefix="C"))
+    live = live.drop(columns=["result"])               # live pulls have no result column
+    out = C.annotate(live, cal)
+    assert len(out) == 3 and list(out["player"]) == list(live["player"])
+    assert out.loc[0, "p cal %"] < out.loc[0, "p(hit)%"]        # overconfident bucket corrected down
+    assert np.isnan(out.loc[1, "p cal %"]) and np.isnan(out.loc[1, "EV %"])   # whole-number count line
+    assert out.loc[2, "p cal %"] < 60                            # unseen bucket inherits global miss
+
+
+def test_history_calibration_needs_enough_graded_history():
+    small = pd.DataFrame(_rows(40, 1, wins=20))
+    assert C.history_calibration(small) is None
+    enough = pd.DataFrame(_rows(60, 1, wins=30) + _rows(60, 2, wins=30))
+    assert C.history_calibration(enough) is not None
+
+
 def test_top_picks_one_per_player_floor_and_positive_ev():
     s = pd.DataFrame({
         "player": ["A", "A", "B", "C", "D"],
