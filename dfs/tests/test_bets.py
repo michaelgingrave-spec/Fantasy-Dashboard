@@ -118,3 +118,24 @@ def test_line_history_by_market(tmp_path, monkeypatch):
     assert bm.loc["pass TD", "win%"] == 100.0
     # sorted best-ROI first
     assert list(B.line_history_by_market()["market"])[0] == "pass TD"
+
+
+def test_dnp_keys_needs_a_positive_zero_for_a_skill_player_on_that_team(monkeypatch):
+    # week 5 2026: the Browns' LB Justin Jefferson (always 0 OFFENSE snaps) once marked the
+    # Vikings' WR of the same name inactive even though he played 63 snaps.
+    import pandas as pd
+
+    snaps = pd.DataFrame([
+        dict(season=2026, week=5, name_key="justin jefferson", team="CLE", position="LB",
+             offense_snaps=0.0),
+        dict(season=2026, week=5, name_key="justin jefferson", team="MIN", position="WR",
+             offense_snaps=63.0),
+        dict(season=2026, week=5, name_key="really inactive", team="KC", position="WR",
+             offense_snaps=0.0),
+        dict(season=2026, week=5, name_key="no snap value", team="KC", position="TE",
+             offense_snaps=np.nan),
+        dict(season=2026, week=4, name_key="other week", team="KC", position="RB",
+             offense_snaps=0.0),
+    ])
+    monkeypatch.setattr("matchup_model.opp.data.snaps", lambda: snaps)
+    assert B._dnp_keys(2026, 5) == {("really inactive", "KC")}
