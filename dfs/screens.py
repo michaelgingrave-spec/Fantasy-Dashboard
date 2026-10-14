@@ -1048,7 +1048,7 @@ def render(screen: str) -> None:
                  "2026 role could be inflating.",
         )
         cal_only = tc2.toggle(
-            "✓ Calibrated picks only", value=cal is not None, key="pe_calibrated",
+            "✓ Calibrated picks only", value=False, key="pe_calibrated",
             disabled=cal is None,
             help=(_rule_help() if cal is not None else
                   "Needs more graded weeks before `p cal %` and `EV %` exist."),
@@ -1117,7 +1117,7 @@ def render(screen: str) -> None:
                 "`kind record` is also blank for a kind with no graded history. Green / red on "
                 "`p cal %` and `EV %` = clears / misses the cutoff (55 and 0). The columns "
                 "are display only; the one filter built on them is ✓ Calibrated picks only "
-                "(on by default — turn it off to see every row the other filters allow)."
+                "(off by default — its tooltip shows how that rule has actually done)."
             )
         st.caption(
             "**role_ratio** (hidden from the table, used by the Recommended filter) = this "

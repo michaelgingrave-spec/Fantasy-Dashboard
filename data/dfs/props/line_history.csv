@@ -45,7 +45,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,1,All 13 Sunday games,Theo Johnson,rec yds,13.5,44.2,high,1.48,30.7,76,25.8,50,227,OVER,draftkings -112,2026-09-12T05:47:10,9.0,loss,
 2026,1,All 13 Sunday games,Keenan Allen,receptions,3.5,5.1,high,0.81,1.6,67,24.1,43,47,OVER,fanduel +120,2026-09-12T05:47:10,6.0,win,
 2026,1,All 13 Sunday games,Jauan Jennings,rec yds,22.5,53.3,high,1.3,30.8,74,24.1,50,137,OVER,draftkings -113,2026-09-12T05:47:10,0.0,loss,
-2026,1,All 13 Sunday games,Calvin Ridley,rec yds,27.5,58.4,high,1.22,30.9,73,23.4,50,113,OVER,draftkings -111,2026-09-12T05:47:10,,,
+2026,1,All 13 Sunday games,Calvin Ridley,rec yds,27.5,58.4,high,1.22,30.9,73,23.4,50,113,OVER,draftkings -111,2026-09-12T05:47:10,0.0,loss,
 2026,1,All 13 Sunday games,Darnell Mooney,receptions,1.5,3.0,high,0.98,1.5,70,23.0,47,101,OVER,draftkings +100,2026-09-12T05:47:10,2.0,win,
 2026,1,All 13 Sunday games,Wan'Dale Robinson,receptions,4.5,6.7,high,0.98,2.2,70,22.5,48,49,OVER,fanduel -102,2026-09-12T05:47:10,5.0,win,
 2026,1,All 13 Sunday games,Dawson Knox,rec yds,13.5,35.5,high,1.06,22.0,71,21.8,50,163,OVER,draftkings -108,2026-09-12T05:47:10,7.0,loss,
@@ -65,7 +65,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,1,All 13 Sunday games,Darnell Washington,receptions,1.5,3.1,high,1.0,1.6,71,11.2,59,104,OVER,draftkings -171,2026-09-12T05:47:10,2.0,win,
 2026,1,All 13 Sunday games,Darren Waller,receptions,1.5,2.9,high,0.92,1.4,69,9.1,60,95,OVER,draftkings -169,2026-09-12T05:47:10,2.0,win,
 2026,1,All 13 Sunday games,Geno Smith,pass TD,0.5,1.3,high,0.81,0.8,67,0.4,67,168,OVER,fanduel -245,2026-09-12T05:47:10,0.0,loss,
-2026,1,All 13 Sunday games,Calvin Ridley,receptions,2.5,3.7,strong,0.68,1.2,65,26.2,39,48,OVER,draftkings +144,2026-09-12T05:47:10,,,
+2026,1,All 13 Sunday games,Calvin Ridley,receptions,2.5,3.7,strong,0.68,1.2,65,26.2,39,48,OVER,draftkings +144,2026-09-12T05:47:10,0.0,loss,
 2026,1,All 13 Sunday games,Mason Taylor,receptions,2.5,3.7,strong,0.69,1.2,65,19.7,46,49,OVER,draftkings +106,2026-09-12T05:47:10,2.0,loss,
 2026,1,All 13 Sunday games,Cade Otton,receptions,3.5,4.8,strong,0.62,1.3,64,18.4,46,36,OVER,draftkings +106,2026-09-12T05:47:10,3.0,loss,
 2026,1,All 13 Sunday games,Xavier Hutchinson,rec yds,18.5,36.1,strong,0.79,17.6,67,17.4,50,95,OVER,draftkings -109,2026-09-12T05:47:10,32.0,win,
@@ -164,7 +164,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,1,All 13 Sunday games,Rachaad White,rush yds,24.0,39.5,solid,0.64,15.5,58,8.3,50,64,OVER,draftkings -113,2026-09-12T05:47:10,22.0,loss,
 2026,1,All 13 Sunday games,James Cook,rec yds,21.0,13.0,solid,-0.34,-8.0,58,8.1,50,-38,UNDER,draftkings -111,2026-09-12T05:47:10,12.0,win,
 2026,1,All 13 Sunday games,Jared Goff,pass yds,261.0,287.1,solid,0.34,26.1,58,8.1,50,10,OVER,draftkings -111,2026-09-12T05:47:10,206.0,loss,
-2026,1,All 13 Sunday games,Odell Beckham Jr.,rec yds,10.5,17.0,solid,0.33,6.5,58,8.0,50,62,OVER,draftkings -109,2026-09-12T05:47:10,,,
+2026,1,All 13 Sunday games,Odell Beckham Jr.,rec yds,10.5,17.0,solid,0.33,6.5,58,8.0,50,62,OVER,draftkings -109,2026-09-12T05:47:10,0.0,loss,
 2026,1,All 13 Sunday games,Kyle Pitts,receptions,4.0,4.8,solid,0.37,0.8,59,7.8,51,20,OVER,fanduel +114,2026-09-12T05:47:10,0.0,loss,
 2026,1,All 13 Sunday games,Chuba Hubbard,rush yds,50.5,31.4,solid,-0.61,-19.1,58,7.8,50,-38,UNDER,draftkings -112,2026-09-12T05:47:10,49.0,win,
 2026,1,All 13 Sunday games,DJ Moore,rec yds,47.5,37.4,solid,-0.32,-10.1,57,7.7,50,-21,UNDER,draftkings -110,2026-09-12T05:47:10,100.0,loss,
@@ -282,7 +282,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,1,All 13 Sunday games,Joe Burrow,pass TD,2.5,2.6,—,0.09,0.1,52,16.5,36,4,OVER,draftkings +171,2026-09-12T05:47:10,1.0,loss,
 2026,1,All 13 Sunday games,Jacoby Brissett,pass TD,1.5,1.6,—,0.06,0.1,51,14.2,37,5,OVER,draftkings +157,2026-09-12T05:47:10,1.0,loss,
 2026,1,All 13 Sunday games,Kayshon Boutte,receptions,2.5,2.7,—,0.13,0.2,53,12.0,41,9,OVER,draftkings +133,2026-09-12T05:47:10,1.0,loss,
-2026,1,All 13 Sunday games,Odell Beckham Jr.,receptions,1.5,1.6,—,0.08,0.1,52,11.1,41,9,OVER,draftkings +131,2026-09-12T05:47:10,,,
+2026,1,All 13 Sunday games,Odell Beckham Jr.,receptions,1.5,1.6,—,0.08,0.1,52,11.1,41,9,OVER,draftkings +131,2026-09-12T05:47:10,0.0,loss,
 2026,1,All 13 Sunday games,Jared Goff,rush yds,0.5,1.9,—,0.08,1.4,50,10.4,40,278,OVER,fanduel +142,2026-09-12T05:47:10,2.0,win,
 2026,1,All 13 Sunday games,Ja'Marr Chase,receptions,7.5,7.7,—,0.05,0.2,51,7.8,43,2,OVER,draftkings +116,2026-09-12T05:47:10,2.0,loss,
 2026,1,All 13 Sunday games,Justin Jefferson,receptions,5.5,5.4,—,-0.05,-0.1,51,7.8,43,-2,UNDER,draftkings +121,2026-09-12T05:47:10,8.0,loss,
@@ -487,17 +487,17 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,2,All 14 Sunday games,Tucker Kraft,rec yds,44.5,57.9,solid,0.43,13.4,60,10.2,50,30,OVER,draftkings -110,2026-09-21T07:05:08,15.0,loss,0.88
 2026,2,All 14 Sunday games,Braelon Allen,rush yds,24.0,41.3,solid,0.72,17.3,60,9.9,50,72,OVER,fanduel -113,2026-09-21T07:05:08,7.0,loss,1.14
 2026,2,All 14 Sunday games,Jayden Reed,rec yds,37.5,49.0,solid,0.4,11.5,59,9.6,50,31,OVER,draftkings -110,2026-09-21T07:05:08,4.0,loss,1.02
-2026,2,All 14 Sunday games,Mason Taylor,receptions,2.5,3.2,solid,0.41,0.7,60,9.4,50,30,OVER,draftkings -112,2026-09-21T07:05:08,,,0.87
-2026,2,All 14 Sunday games,Mason Taylor,rec yds,17.5,24.7,solid,0.32,7.2,58,8.2,49,41,OVER,draftkings -107,2026-09-21T07:05:08,,,0.87
+2026,2,All 14 Sunday games,Mason Taylor,receptions,2.5,3.2,solid,0.41,0.7,60,9.4,50,30,OVER,draftkings -112,2026-09-21T07:05:08,0.0,loss,0.87
+2026,2,All 14 Sunday games,Mason Taylor,rec yds,17.5,24.7,solid,0.32,7.2,58,8.2,49,41,OVER,draftkings -107,2026-09-21T07:05:08,0.0,loss,0.87
 2026,2,All 14 Sunday games,Adonai Mitchell,rec yds,33.0,41.7,solid,0.32,8.7,57,7.8,50,26,OVER,draftkings -109,2026-09-21T07:05:08,63.0,win,0.96
 2026,2,All 14 Sunday games,Breece Hall,rec yds,18.5,11.7,solid,-0.3,-6.8,57,7.3,50,-37,UNDER,draftkings -110,2026-09-21T07:05:08,63.0,loss,1.01
 2026,2,All 14 Sunday games,Tucker Kraft,receptions,3.5,4.2,solid,0.33,0.7,58,3.7,54,19,OVER,fanduel -132,2026-09-21T07:05:08,2.0,loss,0.88
 2026,2,All 14 Sunday games,Geno Smith,pass TD,1.5,1.0,solid,-0.39,-0.5,59,-4.4,64,-31,UNDER,fanduel -198,2026-09-21T07:05:08,1.0,win,1.16
-2026,2,All 14 Sunday games,Jonnu Smith,receptions,1.5,1.8,lean,0.22,0.3,55,10.5,45,23,OVER,draftkings +115,2026-09-21T07:05:08,,,0.82
+2026,2,All 14 Sunday games,Jonnu Smith,receptions,1.5,1.8,lean,0.22,0.3,55,10.5,45,23,OVER,draftkings +115,2026-09-21T07:05:08,0.0,loss,0.82
 2026,2,All 14 Sunday games,Jayden Reed,receptions,3.5,4.1,lean,0.28,0.6,57,9.6,47,16,OVER,draftkings +102,2026-09-21T07:05:08,1.0,loss,1.02
 2026,2,All 14 Sunday games,Garrett Wilson,receptions,5.5,4.8,lean,-0.27,-0.7,56,9.3,47,-12,UNDER,fanduel +100,2026-09-21T07:05:08,5.0,win,1.09
 2026,2,All 14 Sunday games,Garrett Wilson,rec yds,68.0,56.9,lean,-0.28,-11.1,57,6.8,50,-16,UNDER,draftkings -111,2026-09-21T07:05:08,57.0,win,1.09
-2026,2,All 14 Sunday games,Jonnu Smith,rec yds,12.5,18.4,lean,0.29,5.9,57,6.7,50,47,OVER,draftkings -113,2026-09-21T07:05:08,,,0.82
+2026,2,All 14 Sunday games,Jonnu Smith,rec yds,12.5,18.4,lean,0.29,5.9,57,6.7,50,47,OVER,draftkings -113,2026-09-21T07:05:08,0.0,loss,0.82
 2026,2,All 14 Sunday games,Matthew Golden,receptions,4.0,3.5,lean,-0.23,-0.5,56,5.8,50,-12,UNDER,fanduel +128,2026-09-21T07:05:08,4.0,push,1.18
 2026,2,All 14 Sunday games,Breece Hall,rush yds,63.0,81.2,lean,0.53,18.2,56,5.7,50,29,OVER,fanduel -113,2026-09-21T07:05:08,29.0,loss,1.01
 2026,2,All 14 Sunday games,Adonai Mitchell,receptions,2.5,2.9,lean,0.25,0.4,56,5.5,50,18,OVER,fanduel -114,2026-09-21T07:05:08,6.0,win,0.96
@@ -609,7 +609,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,2,All 14 Sunday games,Woody Marks,receptions,1.5,2.3,strong,0.51,0.8,62,18.1,44,53,OVER,fanduel +118,2026-09-21T07:05:08,5.0,win,0.93
 2026,2,All 14 Sunday games,Andrei Iosivas,rec yds,14.0,27.0,strong,0.62,13.0,64,13.7,50,93,OVER,fanduel -113,2026-09-21T07:05:08,7.0,loss,0.81
 2026,2,All 14 Sunday games,Xavier Hutchinson,rec yds,33.0,47.7,strong,0.54,14.7,62,12.3,50,44,OVER,draftkings -111,2026-09-21T07:05:08,37.0,win,0.99
-2026,2,All 14 Sunday games,Mike Gesicki,rec yds,21.5,34.0,strong,0.54,12.5,62,12.2,50,58,OVER,draftkings -112,2026-09-21T07:05:08,,,0.79
+2026,2,All 14 Sunday games,Mike Gesicki,rec yds,21.5,34.0,strong,0.54,12.5,62,12.2,50,58,OVER,draftkings -112,2026-09-21T07:05:08,0.0,loss,0.79
 2026,2,All 14 Sunday games,Dalton Schultz,receptions,4.5,5.7,strong,0.53,1.2,62,8.0,54,26,OVER,fanduel -132,2026-09-21T07:05:08,12.0,win,0.81
 2026,2,All 14 Sunday games,Andrei Iosivas,receptions,1.5,2.3,solid,0.49,0.8,61,14.9,46,51,OVER,draftkings +107,2026-09-21T07:05:08,1.0,loss,0.81
 2026,2,All 14 Sunday games,Dalton Schultz,rec yds,43.0,57.6,solid,0.48,14.6,61,11.3,50,34,OVER,draftkings -109,2026-09-21T07:05:08,140.0,win,0.81
@@ -617,12 +617,12 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,2,All 14 Sunday games,Xavier Hutchinson,receptions,3.0,3.8,solid,0.44,0.8,60,10.9,49,28,OVER,draftkings +129,2026-09-21T07:05:08,3.0,push,0.99
 2026,2,All 14 Sunday games,Foster Moreau,rec yds,7.5,16.0,solid,0.45,8.5,60,10.7,50,113,OVER,draftkings -109,2026-09-21T07:05:08,34.0,win,0.71
 2026,2,All 14 Sunday games,Jaylin Noel,rec yds,26.5,37.9,solid,0.46,11.4,61,10.4,50,43,OVER,draftkings -113,2026-09-21T07:05:08,31.0,win,1.12
-2026,2,All 14 Sunday games,Drew Sample,rec yds,8.0,15.7,solid,0.4,7.7,59,10.3,49,96,OVER,fanduel -106,2026-09-21T07:05:08,,,0.69
+2026,2,All 14 Sunday games,Drew Sample,rec yds,8.0,15.7,solid,0.4,7.7,59,10.3,49,96,OVER,fanduel -106,2026-09-21T07:05:08,0.0,loss,0.69
 2026,2,All 14 Sunday games,Tee Higgins,rec yds,54.0,67.3,solid,0.39,13.3,59,8.9,50,25,OVER,fanduel -113,2026-09-21T07:05:08,95.0,win,0.9
 2026,2,All 14 Sunday games,C.J. Stroud,pass yds,221.0,245.4,solid,0.31,24.4,57,7.5,50,11,OVER,draftkings -111,2026-09-21T07:05:08,353.0,win,1.0
 2026,2,All 14 Sunday games,Tee Higgins,receptions,3.5,4.5,solid,0.48,1.0,61,3.8,57,27,OVER,draftkings -154,2026-09-21T07:05:08,5.0,win,0.9
-2026,2,All 14 Sunday games,Drew Sample,receptions,1.5,1.8,lean,0.19,0.3,54,13.1,41,19,OVER,fanduel +140,2026-09-21T07:05:08,,,0.69
-2026,2,All 14 Sunday games,Mike Gesicki,receptions,2.5,2.8,lean,0.19,0.3,55,11.4,43,14,OVER,fanduel +124,2026-09-21T07:05:08,,,0.79
+2026,2,All 14 Sunday games,Drew Sample,receptions,1.5,1.8,lean,0.19,0.3,54,13.1,41,19,OVER,fanduel +140,2026-09-21T07:05:08,0.0,loss,0.69
+2026,2,All 14 Sunday games,Mike Gesicki,receptions,2.5,2.8,lean,0.19,0.3,55,11.4,43,14,OVER,fanduel +124,2026-09-21T07:05:08,0.0,loss,0.79
 2026,2,All 14 Sunday games,Kayshon Boutte,rec yds,36.5,44.8,lean,0.29,8.3,57,7.2,50,23,OVER,draftkings -109,2026-09-21T07:05:08,37.0,win,1.09
 2026,2,All 14 Sunday games,Jaylin Noel,receptions,2.5,2.8,lean,0.15,0.3,54,6.1,48,11,OVER,fanduel -102,2026-09-21T07:05:08,1.0,loss,1.12
 2026,2,All 14 Sunday games,Ja'Marr Chase,rec yds,76.5,68.1,lean,-0.2,-8.4,55,4.9,50,-11,UNDER,draftkings -111,2026-09-21T07:05:08,75.0,win,1.15
@@ -645,10 +645,10 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,2,All 14 Sunday games,C.J. Stroud,rush yds,11.5,8.2,—,-0.16,-3.3,50,-0.7,51,-28,UNDER,fanduel -113,2026-09-21T07:05:08,29.0,loss,1.0
 2026,2,All 14 Sunday games,Cade Otton,receptions,2.5,4.4,high,1.08,1.9,72,14.2,57,77,OVER,fanduel -154,2026-09-21T07:05:08,5.0,win,0.81
 2026,2,All 14 Sunday games,Kenny Gainwell,receptions,1.5,3.2,high,1.09,1.7,72,10.4,61,113,OVER,draftkings -188,2026-09-21T07:05:08,3.0,win,0.81
-2026,2,All 14 Sunday games,Jalen McMillan,rec yds,20.0,35.4,strong,0.67,15.4,65,14.7,50,77,OVER,fanduel -113,2026-09-21T07:05:08,,,0.83
+2026,2,All 14 Sunday games,Jalen McMillan,rec yds,20.0,35.4,strong,0.67,15.4,65,14.7,50,77,OVER,fanduel -113,2026-09-21T07:05:08,0.0,loss,0.83
 2026,2,All 14 Sunday games,Jerry Jeudy,receptions,2.5,3.5,strong,0.55,1.0,63,13.3,49,40,OVER,draftkings -107,2026-09-21T07:05:08,0.0,loss,0.88
 2026,2,All 14 Sunday games,Jerry Jeudy,rec yds,27.5,42.6,strong,0.59,15.1,63,13.0,50,55,OVER,fanduel -113,2026-09-21T07:05:08,0.0,loss,0.88
-2026,2,All 14 Sunday games,Jalen McMillan,receptions,1.5,2.7,strong,0.79,1.2,67,12.4,55,82,OVER,fanduel -130,2026-09-21T07:05:08,,,0.83
+2026,2,All 14 Sunday games,Jalen McMillan,receptions,1.5,2.7,strong,0.79,1.2,67,12.4,55,82,OVER,fanduel -130,2026-09-21T07:05:08,0.0,loss,0.83
 2026,2,All 14 Sunday games,Chris Godwin,receptions,3.5,4.6,strong,0.55,1.1,63,9.5,53,32,OVER,fanduel -125,2026-09-21T07:05:08,3.0,loss,0.95
 2026,2,All 14 Sunday games,Harold Fannin Jr.,rec yds,33.5,47.2,solid,0.5,13.7,61,11.3,50,41,OVER,fanduel -113,2026-09-21T07:05:08,54.0,win,0.85
 2026,2,All 14 Sunday games,Cade Otton,rec yds,28.5,40.5,solid,0.47,12.0,61,11.0,50,42,OVER,draftkings -110,2026-09-21T07:05:08,38.0,win,0.81
@@ -712,13 +712,13 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,2,All 14 Sunday games,Pat Bryant,receptions,3.5,4.2,solid,0.33,0.7,58,13.5,44,19,OVER,fanduel +118,2026-09-21T07:05:08,0.0,loss,0.83
 2026,2,All 14 Sunday games,Courtland Sutton,receptions,3.5,4.3,solid,0.41,0.8,60,11.5,48,24,OVER,fanduel -102,2026-09-21T07:05:08,3.0,loss,0.97
 2026,2,All 14 Sunday games,Brian Thomas Jr,rec yds,34.0,46.2,solid,0.44,12.2,60,10.2,50,36,OVER,draftkings -113,2026-09-21T07:05:08,40.0,win,1.03
-2026,2,All 14 Sunday games,Adam Trautman,rec yds,9.5,17.8,solid,0.43,8.3,60,10.0,50,87,OVER,draftkings -111,2026-09-21T07:05:08,,,0.57
+2026,2,All 14 Sunday games,Adam Trautman,rec yds,9.5,17.8,solid,0.43,8.3,60,10.0,50,87,OVER,draftkings -111,2026-09-21T07:05:08,0.0,loss,0.57
 2026,2,All 14 Sunday games,Brian Thomas Jr,receptions,2.5,3.4,solid,0.5,0.9,61,10.0,51,36,OVER,draftkings -121,2026-09-21T07:05:08,3.0,win,1.03
 2026,2,All 14 Sunday games,Evan Engram,receptions,3.0,3.8,solid,0.39,0.8,59,9.9,49,25,OVER,draftkings +130,2026-09-21T07:05:08,1.0,loss,0.83
 2026,2,All 14 Sunday games,Parker Washington,rec yds,58.5,73.3,solid,0.41,14.8,60,9.4,50,25,OVER,fanduel -113,2026-09-21T07:05:08,98.0,win,0.9
 2026,2,All 14 Sunday games,Brenton Strange,rec yds,31.5,41.4,solid,0.37,9.9,59,9.0,50,31,OVER,draftkings -109,2026-09-21T07:05:08,17.0,loss,0.94
 2026,2,All 14 Sunday games,Jakobi Meyers,receptions,3.5,4.4,solid,0.46,0.9,61,8.0,53,27,OVER,draftkings -123,2026-09-21T07:05:08,1.0,loss,0.87
-2026,2,All 14 Sunday games,Adam Trautman,receptions,1.5,1.8,lean,0.22,0.3,55,19.0,36,23,OVER,fanduel +168,2026-09-21T07:05:08,,,0.57
+2026,2,All 14 Sunday games,Adam Trautman,receptions,1.5,1.8,lean,0.22,0.3,55,19.0,36,23,OVER,fanduel +168,2026-09-21T07:05:08,0.0,loss,0.57
 2026,2,All 14 Sunday games,Courtland Sutton,rec yds,40.0,48.5,lean,0.29,8.5,57,6.7,50,21,OVER,draftkings -113,2026-09-21T07:05:08,25.0,loss,0.97
 2026,2,All 14 Sunday games,Jaylen Waddle,rec yds,53.5,59.6,lean,0.18,6.1,54,4.5,50,11,OVER,draftkings -110,2026-09-21T07:05:08,138.0,win,1.15
 2026,2,All 14 Sunday games,Bhayshul Tuten,receptions,1.5,1.2,lean,-0.21,-0.3,55,3.2,52,-21,UNDER,draftkings -114,2026-09-21T07:05:08,2.0,loss,1.2
@@ -796,7 +796,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,2,All 14 Sunday games,Javonte Williams,rush yds,76.0,56.0,lean,-0.53,-20.0,56,5.9,50,-26,UNDER,draftkings -112,2026-09-21T07:05:08,30.0,win,1.14
 2026,2,All 14 Sunday games,CeeDee Lamb,rec yds,77.5,68.2,lean,-0.22,-9.3,55,5.3,50,-12,UNDER,draftkings -111,2026-09-21T07:05:08,153.0,loss,1.14
 2026,2,All 14 Sunday games,Dak Prescott,pass yds,267.5,252.5,lean,-0.2,-15.0,55,4.8,50,-6,UNDER,draftkings -111,2026-09-21T07:05:08,279.0,loss,1.14
-2026,2,All 14 Sunday games,John Bates,rec yds,13.5,16.7,lean,0.15,3.2,54,3.3,50,24,OVER,fanduel -113,2026-09-21T07:05:08,,,0.73
+2026,2,All 14 Sunday games,John Bates,rec yds,13.5,16.7,lean,0.15,3.2,54,3.3,50,24,OVER,fanduel -113,2026-09-21T07:05:08,0.0,loss,0.73
 2026,2,All 14 Sunday games,Terry McLaurin,receptions,4.0,4.5,lean,0.25,0.5,56,3.1,53,14,OVER,draftkings +105,2026-09-21T07:05:08,2.0,loss,1.02
 2026,2,All 14 Sunday games,CeeDee Lamb,receptions,5.5,6.2,lean,0.27,0.7,56,1.3,55,12,OVER,fanduel -138,2026-09-21T07:05:08,8.0,win,1.14
 2026,2,All 14 Sunday games,Jayden Daniels,pass TD,1.5,1.2,lean,-0.27,-0.3,56,-1.8,58,-21,UNDER,draftkings -148,2026-09-21T07:05:08,1.0,win,1.15
@@ -813,7 +813,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,2,All 14 Sunday games,Jacory Croskey-Merritt,rush yds,51.5,52.9,—,0.05,1.4,50,0.1,50,3,OVER,draftkings -111,2026-09-21T07:05:08,43.0,loss,1.07
 2026,2,All 14 Sunday games,Dak Prescott,rush yds,8.5,10.4,—,0.1,1.9,50,-0.4,50,23,OVER,fanduel -113,2026-09-21T07:05:08,26.0,win,1.14
 2026,2,All 14 Sunday games,Jake Ferguson,receptions,3.5,3.3,—,-0.09,-0.2,52,-1.2,53,-5,UNDER,draftkings -127,2026-09-21T07:05:08,4.0,loss,1.16
-2026,2,All 14 Sunday games,John Bates,receptions,1.5,1.6,—,0.09,0.1,52,-6.2,58,9,OVER,fanduel -162,2026-09-21T07:05:08,,,0.73
+2026,2,All 14 Sunday games,John Bates,receptions,1.5,1.6,—,0.09,0.1,52,-6.2,58,9,OVER,fanduel -162,2026-09-21T07:05:08,0.0,loss,0.73
 2026,2,All 14 Sunday games,Deebo Samuel,rec yds,35.0,59.5,high,0.88,24.5,69,18.7,50,70,OVER,draftkings -111,2026-09-21T07:05:08,31.0,loss,0.81
 2026,2,All 14 Sunday games,Brock Purdy,pass TD,1.5,2.6,high,0.94,1.1,70,7.9,62,73,OVER,draftkings -188,2026-09-21T07:05:08,2.0,win,0.91
 2026,2,All 14 Sunday games,Deebo Samuel,receptions,3.5,4.8,strong,0.65,1.3,65,19.6,45,37,OVER,draftkings +112,2026-09-21T07:05:08,3.0,loss,0.81
@@ -874,10 +874,10 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,2,NYG @ LAR (MNF),Tutu Atwell,rec yds,6.5,17.6,strong,0.6,11.1,64,14.0,50,171,OVER,draftkings -108,2026-09-22T22:30:37,19.0,win,0.33
 2026,2,NYG @ LAR (MNF),Darnell Mooney,rec yds,20.0,33.6,strong,0.59,13.6,63,13.6,50,68,OVER,draftkings -110,2026-09-22T22:30:37,48.0,win,0.8
 2026,2,NYG @ LAR (MNF),Darnell Mooney,receptions,1.5,2.5,strong,0.67,1.0,65,12.9,52,69,OVER,fanduel -122,2026-09-22T22:30:37,2.0,win,0.8
-2026,2,NYG @ LAR (MNF),Tyler Higbee,rec yds,11.5,22.1,strong,0.53,10.6,62,11.5,51,92,OVER,fanduel -113,2026-09-22T22:30:37,,,0.31
+2026,2,NYG @ LAR (MNF),Tyler Higbee,rec yds,11.5,22.1,strong,0.53,10.6,62,11.5,51,92,OVER,fanduel -113,2026-09-22T22:30:37,0.0,loss,0.31
 2026,2,NYG @ LAR (MNF),Matthew Stafford,pass TD,1.5,2.2,strong,0.64,0.8,64,3.4,61,50,OVER,fanduel -178,2026-09-22T22:30:37,4.0,win,0.95
-2026,2,NYG @ LAR (MNF),Tyler Higbee,receptions,1.5,2.0,solid,0.35,0.5,58,14.4,44,37,OVER,draftkings +120,2026-09-22T22:30:37,,,0.31
-2026,2,NYG @ LAR (MNF),Odell Beckham Jr.,rec yds,4.5,11.0,solid,0.36,6.5,59,11.6,47,144,OVER,fanduel +114,2026-09-22T22:30:37,,,0.54
+2026,2,NYG @ LAR (MNF),Tyler Higbee,receptions,1.5,2.0,solid,0.35,0.5,58,14.4,44,37,OVER,draftkings +120,2026-09-22T22:30:37,0.0,loss,0.31
+2026,2,NYG @ LAR (MNF),Odell Beckham Jr.,rec yds,4.5,11.0,solid,0.36,6.5,59,11.6,47,144,OVER,fanduel +114,2026-09-22T22:30:37,0.0,loss,0.54
 2026,2,NYG @ LAR (MNF),Terrance Ferguson,rec yds,34.0,22.0,solid,-0.44,-12.0,60,10.4,50,-35,UNDER,draftkings -109,2026-09-22T22:30:37,54.0,loss,1.06
 2026,2,NYG @ LAR (MNF),Cam Skattebo,receptions,1.5,2.2,solid,0.47,0.7,61,8.8,52,49,OVER,fanduel -114,2026-09-22T22:30:37,4.0,win,0.89
 2026,2,NYG @ LAR (MNF),Terrance Ferguson,receptions,2.5,1.7,solid,-0.43,-0.8,60,6.5,53,-30,UNDER,draftkings -128,2026-09-22T22:30:37,6.0,loss,1.06
@@ -979,8 +979,8 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,3,Week 3 Sun-Mon (15 games),Oronde Gadsden II,receptions,3.5,3.2,—,-0.14,-0.3,53,-0.9,54,-8,UNDER,draftkings -136,2026-09-29T22:16:18,0.0,win,1.04
 2026,3,Week 3 Sun-Mon (15 games),Darren Waller,rec yds,20.0,33.7,strong,0.6,13.7,64,13.4,50,69,OVER,draftkings -113,2026-09-29T22:16:18,51.0,win,0.76
 2026,3,Week 3 Sun-Mon (15 games),Tommy Tremble,rec yds,10.0,21.6,strong,0.59,11.6,63,13.4,50,116,OVER,draftkings -112,2026-09-29T22:16:18,41.0,win,0.75
-2026,3,Week 3 Sun-Mon (15 games),Jerry Jeudy,rec yds,20.5,33.6,strong,0.57,13.1,63,12.8,50,64,OVER,draftkings -113,2026-09-29T22:16:18,,,0.89
-2026,3,Week 3 Sun-Mon (15 games),Jerry Jeudy,receptions,1.5,2.7,strong,0.79,1.2,67,12.7,54,82,OVER,fanduel -132,2026-09-29T22:16:18,,,0.89
+2026,3,Week 3 Sun-Mon (15 games),Jerry Jeudy,rec yds,20.5,33.6,strong,0.57,13.1,63,12.8,50,64,OVER,draftkings -113,2026-09-29T22:16:18,0.0,loss,0.89
+2026,3,Week 3 Sun-Mon (15 games),Jerry Jeudy,receptions,1.5,2.7,strong,0.79,1.2,67,12.7,54,82,OVER,fanduel -132,2026-09-29T22:16:18,0.0,loss,0.89
 2026,3,Week 3 Sun-Mon (15 games),Mitchell Evans,rec yds,6.5,16.1,strong,0.52,9.6,62,12.0,50,148,OVER,fanduel -113,2026-09-29T22:16:18,36.0,win,0.63
 2026,3,Week 3 Sun-Mon (15 games),Raheim Sanders,receptions,0.5,1.3,strong,0.6,0.8,64,4.8,59,160,OVER,fanduel -160,2026-09-29T22:16:18,4.0,win,0.78
 2026,3,Week 3 Sun-Mon (15 games),Deshaun Watson,pass TD,1.5,0.9,strong,-0.51,-0.6,62,-4.2,66,-39,UNDER,fanduel -230,2026-09-29T22:16:18,2.0,loss,1.15
@@ -988,12 +988,12 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,3,Week 3 Sun-Mon (15 games),Harold Fannin Jr.,rec yds,36.0,47.6,solid,0.41,11.6,60,9.5,50,32,OVER,draftkings -113,2026-09-29T22:16:18,51.0,win,0.84
 2026,3,Week 3 Sun-Mon (15 games),Tetairoa McMillan,rec yds,62.5,77.7,solid,0.41,15.2,60,9.4,50,24,OVER,draftkings -113,2026-09-29T22:16:18,17.0,loss,0.92
 2026,3,Week 3 Sun-Mon (15 games),Chuba Hubbard,rush yds,69.0,44.9,solid,-0.67,-24.1,59,9.2,50,-35,UNDER,draftkings -111,2026-09-29T22:16:18,82.0,loss,1.24
-2026,3,Week 3 Sun-Mon (15 games),Blake Whiteheart,rec yds,5.5,11.1,solid,0.31,5.6,57,7.5,50,101,OVER,draftkings -110,2026-09-29T22:16:18,,,0.74
+2026,3,Week 3 Sun-Mon (15 games),Blake Whiteheart,rec yds,5.5,11.1,solid,0.31,5.6,57,7.5,50,101,OVER,draftkings -110,2026-09-29T22:16:18,0.0,loss,0.74
 2026,3,Week 3 Sun-Mon (15 games),Raheim Sanders,rec yds,2.5,7.8,solid,0.31,5.3,57,7.5,50,212,OVER,fanduel -106,2026-09-29T22:16:18,34.0,win,0.78
 2026,3,Week 3 Sun-Mon (15 games),Tommy Tremble,receptions,1.5,2.2,solid,0.46,0.7,61,7.4,53,48,OVER,draftkings -125,2026-09-29T22:16:18,3.0,win,0.75
 2026,3,Week 3 Sun-Mon (15 games),Harold Fannin Jr.,receptions,3.5,4.2,solid,0.37,0.8,59,5.8,53,21,OVER,fanduel -118,2026-09-29T22:16:18,7.0,win,0.84
 2026,3,Week 3 Sun-Mon (15 games),Jalen Coker,receptions,5.0,4.2,solid,-0.32,-0.8,57,4.7,53,-15,UNDER,draftkings +104,2026-09-29T22:16:18,2.0,win,1.08
-2026,3,Week 3 Sun-Mon (15 games),Blake Whiteheart,receptions,0.5,1.1,solid,0.42,0.6,60,0.4,59,112,OVER,fanduel -172,2026-09-29T22:16:18,,,0.74
+2026,3,Week 3 Sun-Mon (15 games),Blake Whiteheart,receptions,0.5,1.1,solid,0.42,0.6,60,0.4,59,112,OVER,fanduel -172,2026-09-29T22:16:18,0.0,loss,0.74
 2026,3,Week 3 Sun-Mon (15 games),Darren Waller,receptions,2.5,3.0,lean,0.28,0.5,57,12.7,44,20,OVER,draftkings +118,2026-09-29T22:16:18,5.0,win,0.76
 2026,3,Week 3 Sun-Mon (15 games),Bryce Young,pass TD,1.5,1.7,lean,0.19,0.2,54,12.1,42,15,OVER,draftkings +122,2026-09-29T22:16:18,1.0,loss,0.85
 2026,3,Week 3 Sun-Mon (15 games),Chuba Hubbard,receptions,2.5,3.0,lean,0.29,0.5,57,7.1,50,20,OVER,draftkings -110,2026-09-29T22:16:18,4.0,win,1.24
@@ -1009,12 +1009,12 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,3,Week 3 Sun-Mon (15 games),Bryce Young,rush yds,14.0,14.1,—,0.0,0.1,50,-0.4,50,0,OVER,fanduel -113,2026-09-29T22:16:18,0.0,loss,0.85
 2026,3,Week 3 Sun-Mon (15 games),Tetairoa McMillan,receptions,4.5,4.8,—,0.13,0.3,53,-0.6,54,7,OVER,draftkings -130,2026-09-29T22:16:18,2.0,loss,0.92
 2026,3,Week 3 Sun-Mon (15 games),Jaylen Warren,receptions,4.0,2.2,high,-0.84,-1.8,68,18.4,50,-45,UNDER,fanduel +118,2026-09-29T22:16:18,3.0,win,1.14
-2026,3,Week 3 Sun-Mon (15 games),Erick All,receptions,0.5,1.7,high,0.92,1.2,69,13.3,56,244,OVER,draftkings -142,2026-09-29T22:16:18,,,0.38
+2026,3,Week 3 Sun-Mon (15 games),Erick All,receptions,0.5,1.7,high,0.92,1.2,69,13.3,56,244,OVER,draftkings -142,2026-09-29T22:16:18,0.0,loss,0.38
 2026,3,Week 3 Sun-Mon (15 games),Michael Pittman Jr.,receptions,2.5,3.9,high,0.8,1.4,67,10.5,57,57,OVER,fanduel -148,2026-09-29T22:16:18,2.0,loss,1.01
 2026,3,Week 3 Sun-Mon (15 games),Mike Gesicki,rec yds,24.5,42.2,strong,0.73,17.7,66,16.3,50,72,OVER,draftkings -109,2026-09-29T22:16:18,37.0,win,0.82
 2026,3,Week 3 Sun-Mon (15 games),Michael Pittman Jr.,rec yds,27.0,45.6,strong,0.74,18.6,66,15.9,50,69,OVER,fanduel -113,2026-09-29T22:16:18,16.0,loss,1.01
 2026,3,Week 3 Sun-Mon (15 games),Tee Higgins,rec yds,55.0,77.7,strong,0.66,22.7,65,14.4,50,41,OVER,fanduel -113,2026-09-29T22:16:18,90.0,win,0.84
-2026,3,Week 3 Sun-Mon (15 games),Erick All,rec yds,6.0,16.3,strong,0.56,10.3,63,14.3,48,171,OVER,fanduel -102,2026-09-29T22:16:18,,,0.38
+2026,3,Week 3 Sun-Mon (15 games),Erick All,rec yds,6.0,16.3,strong,0.56,10.3,63,14.3,48,171,OVER,fanduel -102,2026-09-29T22:16:18,0.0,loss,0.38
 2026,3,Week 3 Sun-Mon (15 games),Mike Gesicki,receptions,2.5,3.5,strong,0.58,1.0,63,13.4,50,41,OVER,draftkings -110,2026-09-29T22:16:18,3.0,win,0.82
 2026,3,Week 3 Sun-Mon (15 games),Drew Sample,rec yds,6.5,16.0,strong,0.51,9.5,62,12.1,50,146,OVER,draftkings -109,2026-09-29T22:16:18,0.0,loss,0.6
 2026,3,Week 3 Sun-Mon (15 games),Jaylen Warren,rec yds,26.0,13.4,strong,-0.5,-12.6,62,11.4,50,-48,UNDER,fanduel -113,2026-09-29T22:16:18,49.0,loss,1.14
@@ -1104,8 +1104,8 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,3,Week 3 Sun-Mon (15 games),David Montgomery,rush yds,50.5,43.0,—,-0.24,-7.5,50,-0.3,50,-15,UNDER,fanduel -113,2026-09-29T22:16:18,33.0,win,1.15
 2026,3,Week 3 Sun-Mon (15 games),Josh Downs,receptions,4.5,4.5,—,0.02,0.0,50,-4.7,55,1,OVER,draftkings -140,2026-09-29T22:16:18,5.0,win,1.16
 2026,3,Week 3 Sun-Mon (15 games),C.J. Stroud,pass TD,1.5,1.4,—,-0.09,-0.1,52,-6.7,59,-7,UNDER,draftkings -162,2026-09-29T22:16:18,1.0,win,0.94
-2026,3,Week 3 Sun-Mon (15 games),Travis Hunter,rec yds,5.0,82.0,high,4.29,77.0,80,29.6,50,1540,OVER,fanduel -113,2026-09-29T22:16:18,,,0.07
-2026,3,Week 3 Sun-Mon (15 games),Travis Hunter,receptions,0.5,5.6,high,3.85,5.1,80,20.8,59,1020,OVER,draftkings -170,2026-09-29T22:16:18,,,0.07
+2026,3,Week 3 Sun-Mon (15 games),Travis Hunter,rec yds,5.0,82.0,high,4.29,77.0,80,29.6,50,1540,OVER,fanduel -113,2026-09-29T22:16:18,0.0,loss,0.07
+2026,3,Week 3 Sun-Mon (15 games),Travis Hunter,receptions,0.5,5.6,high,3.85,5.1,80,20.8,59,1020,OVER,draftkings -170,2026-09-29T22:16:18,0.0,loss,0.07
 2026,3,Week 3 Sun-Mon (15 games),Jakobi Meyers,rec yds,35.5,63.0,high,0.98,27.5,70,20.2,50,77,OVER,draftkings -112,2026-09-29T22:16:18,64.0,win,0.84
 2026,3,Week 3 Sun-Mon (15 games),Mack Hollins,receptions,2.5,4.0,high,0.83,1.5,68,9.8,58,59,OVER,draftkings -152,2026-09-29T22:16:18,6.0,win,0.91
 2026,3,Week 3 Sun-Mon (15 games),Kyle Williams,rec yds,8.0,20.1,strong,0.64,12.1,64,14.5,50,152,OVER,draftkings -111,2026-09-29T22:16:18,34.0,win,0.68
@@ -1197,9 +1197,9 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,3,Week 3 Sun-Mon (15 games),Rachaad White,rush yds,19.5,40.8,strong,0.93,21.3,65,14.7,50,109,OVER,draftkings -110,2026-09-29T22:16:18,35.0,win,1.05
 2026,3,Week 3 Sun-Mon (15 games),Terry McLaurin,rec yds,42.0,61.4,strong,0.64,19.4,64,14.3,50,46,OVER,draftkings -112,2026-09-29T22:16:18,77.0,win,1.02
 2026,3,Week 3 Sun-Mon (15 games),Stefon Diggs,rec yds,35.0,52.3,strong,0.62,17.3,64,13.6,50,49,OVER,fanduel -113,2026-09-29T22:16:18,33.0,loss,0.81
-2026,3,Week 3 Sun-Mon (15 games),Elijah Arroyo,rec yds,5.0,15.1,strong,0.56,10.1,63,13.1,50,203,OVER,draftkings -110,2026-09-29T22:16:18,,,0.81
+2026,3,Week 3 Sun-Mon (15 games),Elijah Arroyo,rec yds,5.0,15.1,strong,0.56,10.1,63,13.1,50,203,OVER,draftkings -110,2026-09-29T22:16:18,0.0,loss,0.81
 2026,3,Week 3 Sun-Mon (15 games),Dyami Brown,rec yds,9.0,19.0,strong,0.52,10.0,62,12.4,49,111,OVER,draftkings -107,2026-09-29T22:16:18,0.0,loss,0.88
-2026,3,Week 3 Sun-Mon (15 games),Elijah Arroyo,receptions,0.5,1.4,strong,0.69,0.9,65,8.1,57,184,OVER,fanduel -154,2026-09-29T22:16:18,,,0.81
+2026,3,Week 3 Sun-Mon (15 games),Elijah Arroyo,receptions,0.5,1.4,strong,0.69,0.9,65,8.1,57,184,OVER,fanduel -154,2026-09-29T22:16:18,0.0,loss,0.81
 2026,3,Week 3 Sun-Mon (15 games),Terry McLaurin,receptions,3.5,4.2,solid,0.33,0.7,58,9.8,48,19,OVER,fanduel +100,2026-09-29T22:16:18,6.0,win,1.02
 2026,3,Week 3 Sun-Mon (15 games),Cooper Kupp,rec yds,20.0,28.4,solid,0.37,8.4,59,9.0,50,42,OVER,draftkings -108,2026-09-29T22:16:18,46.0,win,0.81
 2026,3,Week 3 Sun-Mon (15 games),AJ Barner,rec yds,20.0,28.4,solid,0.37,8.4,59,8.8,50,42,OVER,draftkings -110,2026-09-29T22:16:18,69.0,win,0.93
@@ -1317,9 +1317,9 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,3,Week 3 Sun-Mon (15 games),Travis Etienne Jr.,receptions,1.5,2.9,high,0.87,1.4,68,11.6,57,90,OVER,fanduel -148,2026-09-29T22:16:18,2.0,win,0.9
 2026,3,Week 3 Sun-Mon (15 games),Juwan Johnson,receptions,3.5,4.6,strong,0.53,1.1,62,14.7,47,30,OVER,draftkings -101,2026-09-29T22:16:18,8.0,win,0.81
 2026,3,Week 3 Sun-Mon (15 games),Tyler Shough,pass yds,254.0,296.6,strong,0.56,42.6,63,12.8,50,17,OVER,draftkings -111,2026-09-29T22:16:18,255.0,win,0.85
-2026,3,Week 3 Sun-Mon (15 games),Jack Bech,rec yds,14.5,26.4,strong,0.57,11.9,63,12.8,50,82,OVER,draftkings -113,2026-09-29T22:16:18,,,0.8
+2026,3,Week 3 Sun-Mon (15 games),Jack Bech,rec yds,14.5,26.4,strong,0.57,11.9,63,12.8,50,82,OVER,draftkings -113,2026-09-29T22:16:18,0.0,loss,0.8
 2026,3,Week 3 Sun-Mon (15 games),Alvin Kamara,receptions,2.5,3.5,strong,0.56,1.0,63,10.5,52,40,OVER,fanduel -122,2026-09-29T22:16:18,1.0,loss,0.99
-2026,3,Week 3 Sun-Mon (15 games),Jack Bech,receptions,1.5,2.1,solid,0.41,0.6,59,9.1,50,42,OVER,fanduel -114,2026-09-29T22:16:18,,,0.8
+2026,3,Week 3 Sun-Mon (15 games),Jack Bech,receptions,1.5,2.1,solid,0.41,0.6,59,9.1,50,42,OVER,fanduel -114,2026-09-29T22:16:18,0.0,loss,0.8
 2026,3,Week 3 Sun-Mon (15 games),Travis Etienne Jr.,rec yds,10.0,16.9,solid,0.35,6.9,58,8.3,50,69,OVER,draftkings -111,2026-09-29T22:16:18,13.0,win,0.9
 2026,3,Week 3 Sun-Mon (15 games),Tre Tucker,rec yds,39.5,49.2,solid,0.33,9.7,58,8.0,50,25,OVER,draftkings -110,2026-09-29T22:16:18,43.0,win,0.98
 2026,3,Week 3 Sun-Mon (15 games),Devaughn Vele,rec yds,49.5,59.4,solid,0.3,9.9,57,7.1,50,20,OVER,draftkings -112,2026-09-29T22:16:18,39.0,loss,0.87
@@ -1346,10 +1346,10 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,3,Week 3 Sun-Mon (15 games),Tyler Shough,pass TD,1.5,1.5,—,-0.01,-0.0,50,-4.1,54,-1,UNDER,draftkings -128,2026-09-29T22:16:18,4.0,loss,0.85
 2026,3,Week 3 Sun-Mon (15 games),Jalen Nailor,receptions,2.5,2.3,—,-0.13,-0.2,53,-4.4,57,-9,UNDER,fanduel -152,2026-09-29T22:16:18,1.0,win,1.13
 2026,3,Week 3 Sun-Mon (15 games),Kirk Cousins,pass TD,1.5,1.4,—,-0.04,-0.1,51,-11.1,62,-3,UNDER,draftkings -190,2026-09-29T22:16:18,3.0,loss,0.99
-2026,3,Week 3 Sun-Mon (15 games),Adam Trautman,receptions,0.5,1.7,high,0.9,1.2,69,6.0,63,238,OVER,draftkings -200,2026-09-29T22:16:18,,,0.59
+2026,3,Week 3 Sun-Mon (15 games),Adam Trautman,receptions,0.5,1.7,high,0.9,1.2,69,6.0,63,238,OVER,draftkings -200,2026-09-29T22:16:18,0.0,loss,0.59
 2026,3,Week 3 Sun-Mon (15 games),RJ Harvey,rush yds,20.0,41.1,strong,0.92,21.1,64,14.5,50,106,OVER,draftkings -110,2026-09-29T22:16:18,6.0,loss,0.82
 2026,3,Week 3 Sun-Mon (15 games),Konata Mumpfield,rec yds,10.0,21.4,strong,0.58,11.4,63,13.5,50,114,OVER,draftkings -109,2026-09-29T22:16:18,93.0,win,0.96
-2026,3,Week 3 Sun-Mon (15 games),Adam Trautman,rec yds,6.5,16.4,strong,0.54,9.9,62,12.7,50,153,OVER,draftkings -108,2026-09-29T22:16:18,,,0.59
+2026,3,Week 3 Sun-Mon (15 games),Adam Trautman,rec yds,6.5,16.4,strong,0.54,9.9,62,12.7,50,153,OVER,draftkings -108,2026-09-29T22:16:18,0.0,loss,0.59
 2026,3,Week 3 Sun-Mon (15 games),Pat Bryant,rec yds,25.5,39.3,strong,0.56,13.8,63,12.5,50,54,OVER,fanduel -113,2026-09-29T22:16:18,44.0,win,0.89
 2026,3,Week 3 Sun-Mon (15 games),Evan Engram,rec yds,21.5,33.9,strong,0.53,12.4,62,11.8,50,58,OVER,fanduel -113,2026-09-29T22:16:18,0.0,loss,0.81
 2026,3,Week 3 Sun-Mon (15 games),Matthew Stafford,pass TD,1.5,1.9,solid,0.32,0.4,57,9.9,48,25,OVER,fanduel +102,2026-09-29T22:16:18,2.0,win,0.86
@@ -1366,12 +1366,12 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,3,Week 3 Sun-Mon (15 games),Davante Adams,rec yds,70.5,80.7,lean,0.26,10.2,56,6.3,50,14,OVER,draftkings -110,2026-09-29T22:16:18,137.0,win,1.11
 2026,3,Week 3 Sun-Mon (15 games),Matthew Stafford,pass yds,236.0,255.3,lean,0.25,19.3,56,5.9,50,8,OVER,draftkings -112,2026-09-29T22:16:18,390.0,win,0.86
 2026,3,Week 3 Sun-Mon (15 games),Courtland Sutton,rec yds,36.5,42.9,lean,0.23,6.4,55,5.6,50,18,OVER,draftkings -110,2026-09-29T22:16:18,46.0,win,1.03
-2026,3,Week 3 Sun-Mon (15 games),Jordan Whittington,rec yds,15.5,20.3,lean,0.23,4.8,55,5.1,50,31,OVER,fanduel -113,2026-09-29T22:16:18,,,1.22
+2026,3,Week 3 Sun-Mon (15 games),Jordan Whittington,rec yds,15.5,20.3,lean,0.23,4.8,55,5.1,50,31,OVER,fanduel -113,2026-09-29T22:16:18,0.0,loss,1.22
 2026,3,Week 3 Sun-Mon (15 games),Bo Nix,pass yds,212.0,227.7,lean,0.2,15.7,55,4.8,50,7,OVER,draftkings -112,2026-09-29T22:16:18,186.0,loss,1.11
 2026,3,Week 3 Sun-Mon (15 games),Colby Parkinson,rec yds,16.5,20.8,lean,0.2,4.2,55,4.7,50,26,OVER,draftkings -111,2026-09-29T22:16:18,0.0,loss,0.78
 2026,3,Week 3 Sun-Mon (15 games),Evan Engram,receptions,2.5,3.0,lean,0.29,0.5,57,3.9,53,20,OVER,fanduel -128,2026-09-29T22:16:18,0.0,loss,0.81
 2026,3,Week 3 Sun-Mon (15 games),RJ Harvey,receptions,2.5,3.0,lean,0.27,0.5,56,2.2,54,20,OVER,fanduel -130,2026-09-29T22:16:18,6.0,win,0.82
-2026,3,Week 3 Sun-Mon (15 games),Jordan Whittington,receptions,1.5,1.8,lean,0.16,0.2,54,2.0,52,17,OVER,draftkings -117,2026-09-29T22:16:18,,,1.22
+2026,3,Week 3 Sun-Mon (15 games),Jordan Whittington,receptions,1.5,1.8,lean,0.16,0.2,54,2.0,52,17,OVER,draftkings -117,2026-09-29T22:16:18,0.0,loss,1.22
 2026,3,Week 3 Sun-Mon (15 games),Colby Parkinson,receptions,2.5,2.2,lean,-0.16,-0.3,54,1.0,53,-11,UNDER,draftkings -126,2026-09-29T22:16:18,0.0,win,0.78
 2026,3,Week 3 Sun-Mon (15 games),Kyren Williams,receptions,2.5,2.5,—,0.01,0.0,50,8.0,42,1,OVER,fanduel +124,2026-09-29T22:16:18,6.0,win,0.9
 2026,3,Week 3 Sun-Mon (15 games),Jaylen Waddle,receptions,4.5,4.5,—,-0.0,-0.0,50,7.3,43,0,UNDER,draftkings +123,2026-09-29T22:16:18,2.0,win,1.16
@@ -1459,7 +1459,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Week 4 through Sunday (15 games),Jaylen Warren,rush yds,76.0,77.5,—,0.04,1.5,50,0.0,50,2,OVER,draftkings -112,2026-10-05T00:47:52,93.0,win,1.15
 2026,4,Week 4 through Sunday (15 games),Deshaun Watson,rush yds,28.0,26.5,—,-0.06,-1.5,50,0.0,50,-5,UNDER,draftkings -112,2026-10-05T00:47:52,22.0,win,1.08
 2026,4,Week 4 through Sunday (15 games),Aaron Rodgers,rush yds,1.0,6.3,—,0.29,5.3,50,-1.6,52,527,OVER,draftkings -106,2026-10-05T00:47:52,0.0,loss,1.03
-2026,4,Week 4 through Sunday (15 games),Mo Alie-Cox,rec yds,3.5,13.9,strong,0.6,10.4,63,16.8,47,297,OVER,fanduel +102,2026-10-05T00:47:52,,,0.36
+2026,4,Week 4 through Sunday (15 games),Mo Alie-Cox,rec yds,3.5,13.9,strong,0.6,10.4,63,16.8,47,297,OVER,fanduel +102,2026-10-05T00:47:52,0.0,loss,0.36
 2026,4,Week 4 through Sunday (15 games),Seth McGowan,rush yds,7.0,23.8,strong,0.86,16.8,63,12.7,50,240,OVER,fanduel -113,2026-10-05T00:47:52,31.0,win,0.88
 2026,4,Week 4 through Sunday (15 games),Josh Downs,receptions,6.5,4.8,strong,-0.62,-1.7,64,10.8,53,-26,UNDER,draftkings -130,2026-10-05T00:47:52,3.0,win,1.14
 2026,4,Week 4 through Sunday (15 games),Tyler Warren,rec yds,58.5,40.9,solid,-0.49,-17.6,61,11.3,50,-30,UNDER,draftkings -112,2026-10-05T00:47:52,41.0,win,1.16
@@ -1491,7 +1491,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Week 4 through Sunday (15 games),Antonio Williams,receptions,2.5,2.5,—,0.03,0.0,51,-5.5,56,2,OVER,draftkings -141,2026-10-05T00:47:52,3.0,win,0.57
 2026,4,Week 4 through Sunday (15 games),Elijah Higgins,receptions,0.5,1.7,high,0.94,1.2,70,12.7,57,248,OVER,draftkings -149,2026-10-05T00:47:52,2.0,win,0.47
 2026,4,Week 4 through Sunday (15 games),Malachi Fields,receptions,1.5,2.9,high,0.91,1.4,69,9.2,60,94,OVER,fanduel -172,2026-10-05T00:47:52,2.0,win,0.84
-2026,4,Week 4 through Sunday (15 games),Kendrick Bourne,rec yds,20.0,37.6,strong,0.77,17.6,67,16.7,50,88,OVER,draftkings -112,2026-10-05T00:47:52,,,0.86
+2026,4,Week 4 through Sunday (15 games),Kendrick Bourne,rec yds,20.0,37.6,strong,0.77,17.6,67,16.7,50,88,OVER,draftkings -112,2026-10-05T00:47:52,0.0,loss,0.86
 2026,4,Week 4 through Sunday (15 games),Theo Johnson,rec yds,8.0,20.9,strong,0.68,12.9,65,15.3,50,161,OVER,draftkings -110,2026-10-05T00:47:52,11.0,win,0.56
 2026,4,Week 4 through Sunday (15 games),Elijah Higgins,rec yds,4.0,15.5,strong,0.65,11.5,65,14.0,51,287,OVER,fanduel -113,2026-10-05T00:47:52,19.0,win,0.47
 2026,4,Week 4 through Sunday (15 games),Darnell Mooney,rec yds,20.5,34.7,strong,0.62,14.2,64,13.7,50,69,OVER,fanduel -113,2026-10-05T00:47:52,0.0,loss,0.82
@@ -1503,7 +1503,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Week 4 through Sunday (15 games),Michael Wilson,rec yds,57.5,73.5,solid,0.45,16.0,60,10.1,50,28,OVER,fanduel -113,2026-10-05T00:47:52,95.0,win,0.83
 2026,4,Week 4 through Sunday (15 games),Jeremiyah Love,rush yds,66.0,44.5,solid,-0.61,-21.5,58,8.0,50,-33,UNDER,draftkings -110,2026-10-05T00:47:52,63.0,win,1.12
 2026,4,Week 4 through Sunday (15 games),Najee Harris,rush yds,23.5,37.5,solid,0.58,14.0,57,7.1,50,59,OVER,draftkings -112,2026-10-05T00:47:52,30.0,win,0.9
-2026,4,Week 4 through Sunday (15 games),Kendrick Bourne,receptions,2.5,3.0,lean,0.28,0.5,57,16.3,40,20,OVER,fanduel +134,2026-10-05T00:47:52,,,0.86
+2026,4,Week 4 through Sunday (15 games),Kendrick Bourne,receptions,2.5,3.0,lean,0.28,0.5,57,16.3,40,20,OVER,fanduel +134,2026-10-05T00:47:52,0.0,loss,0.86
 2026,4,Week 4 through Sunday (15 games),Jacoby Brissett,pass TD,1.5,1.7,lean,0.17,0.2,54,11.2,43,13,OVER,fanduel +125,2026-10-05T00:47:52,2.0,win,0.94
 2026,4,Week 4 through Sunday (15 games),Jameis Winston,pass yds,207.5,186.5,lean,-0.27,-21.0,56,6.5,50,-10,UNDER,draftkings -111,2026-10-05T00:47:52,250.0,loss,1.15
 2026,4,Week 4 through Sunday (15 games),Trey McBride,rec yds,64.0,72.8,lean,0.23,8.8,56,5.6,50,14,OVER,draftkings -112,2026-10-05T00:47:52,31.0,loss,0.91
@@ -1606,10 +1606,10 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Week 4 through Sunday (15 games),Rome Odunze,rec yds,32.5,52.2,strong,0.73,19.7,66,16.0,50,61,OVER,draftkings -112,2026-10-05T00:47:52,94.0,win,0.89
 2026,4,Week 4 through Sunday (15 games),Luther Burden III,rec yds,46.5,63.2,strong,0.53,16.7,62,11.8,50,36,OVER,fanduel -113,2026-10-05T00:47:52,63.0,win,0.86
 2026,4,Week 4 through Sunday (15 games),Rome Odunze,receptions,2.5,3.5,strong,0.54,1.0,62,10.9,51,38,OVER,fanduel -120,2026-10-05T00:47:52,6.0,win,0.89
-2026,4,Week 4 through Sunday (15 games),Jeremy Ruckert,receptions,2.5,3.0,solid,0.31,0.5,57,17.8,39,22,OVER,draftkings +147,2026-10-05T00:47:52,,,0.62
+2026,4,Week 4 through Sunday (15 games),Jeremy Ruckert,receptions,2.5,3.0,solid,0.31,0.5,57,17.8,39,22,OVER,draftkings +147,2026-10-05T00:47:52,0.0,loss,0.62
 2026,4,Week 4 through Sunday (15 games),Garrett Wilson,receptions,6.5,7.7,solid,0.45,1.2,60,12.5,48,19,OVER,fanduel -102,2026-10-05T00:47:52,3.0,loss,0.81
 2026,4,Week 4 through Sunday (15 games),Cole Kmet,rec yds,10.0,19.4,solid,0.48,9.4,61,11.4,50,94,OVER,draftkings -109,2026-10-05T00:47:52,13.0,win,0.83
-2026,4,Week 4 through Sunday (15 games),Jeremy Ruckert,rec yds,15.0,23.1,solid,0.38,8.1,59,8.6,50,54,OVER,fanduel -113,2026-10-05T00:47:52,,,0.62
+2026,4,Week 4 through Sunday (15 games),Jeremy Ruckert,rec yds,15.0,23.1,solid,0.38,8.1,59,8.6,50,54,OVER,fanduel -113,2026-10-05T00:47:52,0.0,loss,0.62
 2026,4,Week 4 through Sunday (15 games),Garrett Wilson,rec yds,76.0,89.7,solid,0.33,13.7,58,7.7,50,18,OVER,draftkings -112,2026-10-05T00:47:52,27.0,loss,0.81
 2026,4,Week 4 through Sunday (15 games),Cole Kmet,receptions,1.5,1.8,lean,0.19,0.3,55,15.0,40,20,OVER,draftkings +145,2026-10-05T00:47:52,2.0,win,0.83
 2026,4,Week 4 through Sunday (15 games),Kalif Raymond,receptions,3.5,4.0,lean,0.24,0.5,56,11.7,44,14,OVER,fanduel +114,2026-10-05T00:47:52,2.0,loss,0.82
@@ -1630,7 +1630,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Week 4 through Sunday (15 games),D'Andre Swift,rush yds,64.0,67.8,—,0.11,3.8,50,0.0,50,6,OVER,draftkings -112,2026-10-05T00:47:52,58.0,loss,0.94
 2026,4,Week 4 through Sunday (15 games),Isaiah Davis,receptions,1.5,1.3,—,-0.13,-0.2,53,-0.3,53,-13,UNDER,fanduel -130,2026-10-05T00:47:52,0.0,win,1.17
 2026,4,Week 4 through Sunday (15 games),Kenyon Sadiq,receptions,4.5,4.2,—,-0.13,-0.3,53,-2.3,55,-6,UNDER,draftkings -139,2026-10-05T00:47:52,0.0,win,0.95
-2026,4,Week 4 through Sunday (15 games),Travis Hunter,rec yds,4.5,60.0,high,3.12,55.5,80,39.9,40,1233,OVER,fanduel +136,2026-10-05T00:47:52,,,0.1
+2026,4,Week 4 through Sunday (15 games),Travis Hunter,rec yds,4.5,60.0,high,3.12,55.5,80,39.9,40,1233,OVER,fanduel +136,2026-10-05T00:47:52,0.0,dnp,0.1
 2026,4,Week 4 through Sunday (15 games),Jakobi Meyers,rec yds,41.5,60.5,strong,0.63,19.0,64,14.4,50,46,OVER,draftkings -110,2026-10-05T00:47:52,33.0,loss,0.85
 2026,4,Week 4 through Sunday (15 games),Josh Cameron,rec yds,9.5,20.9,strong,0.59,11.4,63,13.0,50,120,OVER,fanduel -113,2026-10-05T00:47:52,42.0,win,0.65
 2026,4,Week 4 through Sunday (15 games),Dohnte Meyers,rec yds,20.5,32.9,strong,0.54,12.4,62,12.6,50,60,OVER,draftkings -109,2026-10-05T00:47:52,82.0,win,0.8
@@ -1638,7 +1638,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Week 4 through Sunday (15 games),Brian Thomas Jr,rec yds,27.0,39.6,strong,0.5,12.6,61,11.3,50,47,OVER,fanduel -113,2026-10-05T00:47:52,17.0,loss,0.89
 2026,4,Week 4 through Sunday (15 games),Trevor Lawrence,pass TD,1.5,2.2,strong,0.59,0.7,63,7.6,56,46,OVER,fanduel -138,2026-10-05T00:47:52,1.0,loss,0.88
 2026,4,Week 4 through Sunday (15 games),Brian Thomas Jr,receptions,2.5,3.2,solid,0.37,0.7,59,15.7,43,26,OVER,fanduel +120,2026-10-05T00:47:52,2.0,loss,0.89
-2026,4,Week 4 through Sunday (15 games),Drew Sample,rec yds,7.5,15.5,solid,0.43,8.0,60,10.6,49,107,OVER,draftkings -106,2026-10-05T00:47:52,,,0.72
+2026,4,Week 4 through Sunday (15 games),Drew Sample,rec yds,7.5,15.5,solid,0.43,8.0,60,10.6,49,107,OVER,draftkings -106,2026-10-05T00:47:52,0.0,loss,0.72
 2026,4,Week 4 through Sunday (15 games),Trevor Lawrence,pass yds,258.5,225.3,solid,-0.44,-33.2,60,10.2,50,-13,UNDER,draftkings -111,2026-10-05T00:47:52,227.0,win,0.88
 2026,4,Week 4 through Sunday (15 games),Joe Burrow,pass TD,2.0,2.5,solid,0.38,0.5,59,9.5,49,24,OVER,draftkings +173,2026-10-05T00:47:52,1.0,loss,1.02
 2026,4,Week 4 through Sunday (15 games),Mike Gesicki,receptions,2.5,3.4,solid,0.48,0.9,61,8.4,53,34,OVER,draftkings -125,2026-10-05T00:47:52,3.0,win,0.83
@@ -1646,7 +1646,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Week 4 through Sunday (15 games),Jakobi Meyers,receptions,3.5,4.2,solid,0.32,0.7,58,3.6,54,19,OVER,fanduel -128,2026-10-05T00:47:52,3.0,loss,0.85
 2026,4,Week 4 through Sunday (15 games),Parker Washington,receptions,5.5,4.7,solid,-0.31,-0.8,57,3.4,54,-14,UNDER,draftkings -129,2026-10-05T00:47:52,1.0,win,1.16
 2026,4,Week 4 through Sunday (15 games),Ja'Marr Chase,receptions,7.5,6.5,solid,-0.35,-1.0,58,1.8,56,-14,UNDER,draftkings -142,2026-10-05T00:47:52,3.0,win,1.12
-2026,4,Week 4 through Sunday (15 games),Drew Sample,receptions,1.5,1.8,lean,0.19,0.3,55,12.5,42,20,OVER,fanduel +124,2026-10-05T00:47:52,,,0.72
+2026,4,Week 4 through Sunday (15 games),Drew Sample,receptions,1.5,1.8,lean,0.19,0.3,55,12.5,42,20,OVER,fanduel +124,2026-10-05T00:47:52,0.0,loss,0.72
 2026,4,Week 4 through Sunday (15 games),Bhayshul Tuten,receptions,1.5,1.2,lean,-0.17,-0.3,54,10.4,44,-18,UNDER,draftkings +122,2026-10-05T00:47:52,2.0,loss,1.15
 2026,4,Week 4 through Sunday (15 games),Tee Higgins,receptions,4.5,5.1,lean,0.27,0.6,56,8.0,48,14,OVER,fanduel -106,2026-10-05T00:47:52,11.0,win,1.01
 2026,4,Week 4 through Sunday (15 games),Samaje Perine,receptions,1.5,1.9,lean,0.24,0.4,56,7.8,48,25,OVER,fanduel -102,2026-10-05T00:47:52,0.0,loss,0.94
@@ -1771,8 +1771,8 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Week 4 through Sunday (15 games),Malik Willis,pass TD,0.5,1.1,strong,0.55,0.6,62,9.4,53,114,OVER,draftkings -128,2026-10-05T00:47:52,0.0,loss,0.9
 2026,4,Week 4 through Sunday (15 games),Aaron Jones,receptions,3.5,4.3,solid,0.41,0.8,59,17.4,42,23,OVER,draftkings +131,2026-10-05T00:47:52,4.0,win,1.18
 2026,4,Week 4 through Sunday (15 games),Tai Felton,receptions,1.5,0.9,solid,-0.37,-0.6,59,11.3,47,-39,UNDER,draftkings -102,2026-10-05T00:47:52,1.0,win,0.32
-2026,4,Week 4 through Sunday (15 games),Greg Dulcich,rec yds,30.5,41.1,solid,0.4,10.6,59,9.7,50,35,OVER,draftkings -109,2026-10-05T00:47:52,,,0.87
-2026,4,Week 4 through Sunday (15 games),Greg Dulcich,receptions,3.0,3.6,solid,0.34,0.6,58,8.0,50,21,OVER,draftkings +132,2026-10-05T00:47:52,,,0.87
+2026,4,Week 4 through Sunday (15 games),Greg Dulcich,rec yds,30.5,41.1,solid,0.4,10.6,59,9.7,50,35,OVER,draftkings -109,2026-10-05T00:47:52,0.0,loss,0.87
+2026,4,Week 4 through Sunday (15 games),Greg Dulcich,receptions,3.0,3.6,solid,0.34,0.6,58,8.0,50,21,OVER,draftkings +132,2026-10-05T00:47:52,0.0,loss,0.87
 2026,4,Week 4 through Sunday (15 games),Jordan Addison,receptions,4.5,3.5,solid,-0.42,-1.0,60,6.0,54,-21,UNDER,draftkings -133,2026-10-05T00:47:52,4.0,win,1.05
 2026,4,Week 4 through Sunday (15 games),Kyler Murray,pass TD,1.5,1.1,solid,-0.31,-0.4,57,2.8,54,-24,UNDER,fanduel -132,2026-10-05T00:47:52,0.0,win,1.16
 2026,4,Week 4 through Sunday (15 games),Malik Willis,pass yds,169.5,190.6,lean,0.27,21.1,56,6.2,50,12,OVER,draftkings -113,2026-10-05T00:47:52,85.0,loss,0.9
@@ -1798,14 +1798,14 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Week 4 through Sunday (15 games),Malik Willis,rush yds,31.0,30.6,—,-0.01,-0.4,50,-0.4,50,-1,UNDER,fanduel -113,2026-10-05T00:47:52,11.0,win,0.9
 2026,4,Week 4 through Sunday (15 games),Jaylen Wright,rec yds,5.5,5.8,—,0.02,0.3,50,-1.7,52,6,OVER,draftkings -119,2026-10-05T00:47:52,0.0,loss,1.16
 2026,4,Week 4 through Sunday (15 games),Jauan Jennings,receptions,2.5,2.5,—,-0.01,-0.0,50,-3.4,54,0,UNDER,fanduel -132,2026-10-05T00:47:52,1.0,win,0.64
-2026,4,Week 4 through Sunday (15 games),Troy Franklin,rec yds,5.0,21.9,high,0.94,16.9,70,19.6,50,338,OVER,draftkings -112,2026-10-05T00:47:52,,,0.64
+2026,4,Week 4 through Sunday (15 games),Troy Franklin,rec yds,5.0,21.9,high,0.94,16.9,70,19.6,50,338,OVER,draftkings -112,2026-10-05T00:47:52,0.0,loss,0.64
 2026,4,Week 4 through Sunday (15 games),Pat Bryant,rec yds,22.5,37.6,strong,0.64,15.1,64,13.9,50,67,OVER,fanduel -113,2026-10-05T00:47:52,47.0,win,0.82
 2026,4,Week 4 through Sunday (15 games),Christian McCaffrey,rec yds,43.5,25.9,strong,-0.57,-17.6,63,12.8,50,-40,UNDER,fanduel -113,2026-10-05T00:47:52,18.0,win,1.12
 2026,4,Week 4 through Sunday (15 games),RJ Harvey,rush yds,15.5,33.2,strong,0.81,17.7,62,12.2,50,114,OVER,draftkings -111,2026-10-05T00:47:52,25.0,win,0.85
 2026,4,Week 4 through Sunday (15 games),Evan Engram,rec yds,17.0,28.7,strong,0.53,11.7,62,11.9,50,69,OVER,fanduel -113,2026-10-05T00:47:52,6.0,loss,0.91
 2026,4,Week 4 through Sunday (15 games),Adam Trautman,rec yds,4.5,13.6,strong,0.51,9.1,62,11.6,50,202,OVER,draftkings -113,2026-10-05T00:47:52,0.0,loss,0.47
 2026,4,Week 4 through Sunday (15 games),Brock Purdy,pass TD,1.5,2.2,strong,0.6,0.7,64,10.4,53,47,OVER,draftkings -125,2026-10-05T00:47:52,2.0,win,0.82
-2026,4,Week 4 through Sunday (15 games),Troy Franklin,receptions,0.5,1.5,strong,0.76,1.0,67,7.9,59,202,OVER,fanduel -160,2026-10-05T00:47:52,,,0.64
+2026,4,Week 4 through Sunday (15 games),Troy Franklin,receptions,0.5,1.5,strong,0.76,1.0,67,7.9,59,202,OVER,fanduel -160,2026-10-05T00:47:52,0.0,loss,0.64
 2026,4,Week 4 through Sunday (15 games),Adam Trautman,receptions,0.5,1.4,strong,0.68,0.9,65,4.6,60,180,OVER,draftkings -179,2026-10-05T00:47:52,0.0,loss,0.47
 2026,4,Week 4 through Sunday (15 games),Deebo Samuel,rec yds,34.0,47.5,solid,0.49,13.5,61,11.3,50,40,OVER,draftkings -111,2026-10-05T00:47:52,26.0,loss,1.15
 2026,4,Week 4 through Sunday (15 games),Christian McCaffrey,receptions,5.0,3.9,solid,-0.47,-1.1,61,9.8,51,-22,UNDER,fanduel +104,2026-10-05T00:47:52,3.0,win,1.12
@@ -1832,10 +1832,10 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Week 4 through Sunday (15 games),Christian McCaffrey,rush yds,66.5,57.6,—,-0.25,-8.9,50,-0.2,50,-13,UNDER,fanduel -113,2026-10-05T00:47:52,52.0,win,1.12
 2026,4,Week 4 through Sunday (15 games),Emmett Johnson,rush yds,15.0,32.8,strong,0.82,17.8,62,12.8,49,119,OVER,draftkings -107,2026-10-05T00:47:52,0.0,loss,0.82
 2026,4,Week 4 through Sunday (15 games),Noah Gray,rec yds,8.5,18.2,strong,0.51,9.7,62,11.4,50,114,OVER,fanduel -113,2026-10-05T00:47:52,17.0,win,0.82
-2026,4,Week 4 through Sunday (15 games),Rashee Rice,receptions,4.5,5.8,strong,0.6,1.3,63,8.1,55,30,OVER,draftkings -139,2026-10-05T00:47:52,,,0.89
+2026,4,Week 4 through Sunday (15 games),Rashee Rice,receptions,4.5,5.8,strong,0.6,1.3,63,8.1,55,30,OVER,draftkings -139,2026-10-05T00:47:52,0.0,loss,0.89
 2026,4,Week 4 through Sunday (15 games),Michael Mayer,receptions,2.5,3.5,strong,0.55,1.0,63,6.7,56,40,OVER,draftkings -138,2026-10-05T00:47:52,8.0,win,0.83
 2026,4,Week 4 through Sunday (15 games),Travis Kelce,rec yds,48.5,64.5,solid,0.49,16.0,61,11.1,50,33,OVER,fanduel -113,2026-10-05T00:47:52,15.0,loss,1.0
-2026,4,Week 4 through Sunday (15 games),Rashee Rice,rec yds,57.5,72.9,solid,0.43,15.4,60,10.1,50,27,OVER,draftkings -112,2026-10-05T00:47:52,,,0.89
+2026,4,Week 4 through Sunday (15 games),Rashee Rice,rec yds,57.5,72.9,solid,0.43,15.4,60,10.1,50,27,OVER,draftkings -112,2026-10-05T00:47:52,0.0,loss,0.89
 2026,4,Week 4 through Sunday (15 games),Mike Washington Jr.,rush yds,16.5,31.9,solid,0.7,15.4,60,10.1,50,93,OVER,draftkings -108,2026-10-05T00:47:52,18.0,win,0.7
 2026,4,Week 4 through Sunday (15 games),Xavier Worthy,rec yds,34.5,45.3,solid,0.39,10.8,59,9.4,50,31,OVER,draftkings -109,2026-10-05T00:47:52,70.0,win,1.14
 2026,4,Week 4 through Sunday (15 games),Cody White,rec yds,10.0,17.6,solid,0.39,7.6,59,9.3,50,76,OVER,draftkings -109,2026-10-05T00:47:52,36.0,win,0.8
@@ -1843,11 +1843,11 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Week 4 through Sunday (15 games),Tyquan Thornton,rec yds,22.0,30.7,solid,0.37,8.7,59,8.7,50,39,OVER,draftkings -111,2026-10-05T00:47:52,111.0,win,1.1
 2026,4,Week 4 through Sunday (15 games),Michael Mayer,rec yds,25.5,34.2,solid,0.35,8.7,58,7.8,50,34,OVER,fanduel -113,2026-10-05T00:47:52,82.0,win,0.83
 2026,4,Week 4 through Sunday (15 games),Tre Tucker,rec yds,38.5,47.3,solid,0.3,8.8,57,7.4,50,23,OVER,draftkings -110,2026-10-05T00:47:52,44.0,win,1.0
-2026,4,Week 4 through Sunday (15 games),Jalen Nailor,receptions,1.5,2.1,solid,0.36,0.6,58,-0.2,59,37,OVER,draftkings -161,2026-10-05T00:47:52,,,1.02
+2026,4,Week 4 through Sunday (15 games),Jalen Nailor,receptions,1.5,2.1,solid,0.36,0.6,58,-0.2,59,37,OVER,draftkings -161,2026-10-05T00:47:52,0.0,loss,1.02
 2026,4,Week 4 through Sunday (15 games),Noah Gray,receptions,1.5,1.9,lean,0.26,0.4,56,19.3,37,27,OVER,draftkings +155,2026-10-05T00:47:52,2.0,win,0.82
 2026,4,Week 4 through Sunday (15 games),Kirk Cousins,pass TD,1.5,1.8,lean,0.22,0.3,55,14.1,41,17,OVER,draftkings +129,2026-10-05T00:47:52,2.0,win,0.93
 2026,4,Week 4 through Sunday (15 games),Xavier Worthy,receptions,3.5,3.8,lean,0.17,0.3,54,13.2,41,10,OVER,fanduel +134,2026-10-05T00:47:52,4.0,win,1.14
-2026,4,Week 4 through Sunday (15 games),Jalen Nailor,rec yds,20.0,26.4,lean,0.28,6.4,57,7.1,50,32,OVER,draftkings -108,2026-10-05T00:47:52,,,1.02
+2026,4,Week 4 through Sunday (15 games),Jalen Nailor,rec yds,20.0,26.4,lean,0.28,6.4,57,7.1,50,32,OVER,draftkings -108,2026-10-05T00:47:52,0.0,loss,1.02
 2026,4,Week 4 through Sunday (15 games),Brock Bowers,receptions,6.5,6.0,lean,-0.17,-0.5,54,6.8,47,-7,UNDER,draftkings +106,2026-10-05T00:47:52,6.0,win,1.15
 2026,4,Week 4 through Sunday (15 games),Emmett Johnson,rec yds,7.5,10.8,lean,0.17,3.2,54,6.0,48,43,OVER,fanduel -102,2026-10-05T00:47:52,10.0,win,0.82
 2026,4,Week 4 through Sunday (15 games),Patrick Mahomes,pass yds,239.0,255.4,lean,0.21,16.4,55,5.2,50,7,OVER,draftkings -111,2026-10-05T00:47:52,225.0,loss,1.0
@@ -1973,8 +1973,8 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,4,Atlanta Falcons @ New Orleans Saints (MNF),Michael Penix Jr.,rush yds,4.0,5.7,—,0.09,1.7,50,-1.0,51,42,OVER,fanduel -113,2026-10-07T12:41:59,-2.0,loss,1.13
 2026,4,Atlanta Falcons @ New Orleans Saints (MNF),Kyle Pitts,receptions,2.5,2.7,—,0.13,0.2,53,-5.2,58,9,OVER,fanduel -158,2026-10-07T12:41:59,3.0,win,0.88
 2026,5,Week 5 Thursday (TB @ DAL),KaVontae Turpin,rec yds,2.0,20.3,high,1.08,18.3,72,24.7,47,915,OVER,fanduel +102,2026-10-12T17:02:58,22.0,win,0.45
-2026,5,Week 5 Thursday (TB @ DAL),Ted Hurst III,rec yds,16.5,33.3,strong,0.77,16.8,67,16.6,50,102,OVER,fanduel -113,2026-10-12T17:02:58,,,0.75
-2026,5,Week 5 Thursday (TB @ DAL),Ted Hurst III,receptions,1.5,2.4,strong,0.56,0.9,63,15.4,47,58,OVER,draftkings -101,2026-10-12T17:02:58,,,0.75
+2026,5,Week 5 Thursday (TB @ DAL),Ted Hurst III,rec yds,16.5,33.3,strong,0.77,16.8,67,16.6,50,102,OVER,fanduel -113,2026-10-12T17:02:58,0.0,loss,0.75
+2026,5,Week 5 Thursday (TB @ DAL),Ted Hurst III,receptions,1.5,2.4,strong,0.56,0.9,63,15.4,47,58,OVER,draftkings -101,2026-10-12T17:02:58,0.0,loss,0.75
 2026,5,Week 5 Thursday (TB @ DAL),KaVontae Turpin,receptions,0.5,1.2,strong,0.56,0.7,63,14.6,48,148,OVER,draftkings -102,2026-10-12T17:02:58,2.0,win,0.45
 2026,5,Week 5 Thursday (TB @ DAL),Brevyn Spann-Ford,receptions,0.5,1.2,strong,0.51,0.7,62,7.3,54,136,OVER,draftkings -137,2026-10-12T17:02:58,0.0,loss,0.47
 2026,5,Week 5 Thursday (TB @ DAL),Ryan Flournoy,receptions,3.5,4.2,solid,0.36,0.7,58,15.7,43,21,OVER,draftkings +128,2026-10-12T17:02:58,3.0,loss,0.82
@@ -2006,7 +2006,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,5,Week 5 Thursday (TB @ DAL),Dak Prescott,rush yds,9.5,13.1,—,0.18,3.6,50,0.2,50,38,OVER,draftkings -110,2026-10-12T17:02:58,0.0,loss,1.09
 2026,5,Week 5 Thursday (TB @ DAL),Bucky Irving,rush yds,52.5,56.6,—,0.13,4.1,50,0.1,50,8,OVER,draftkings -111,2026-10-12T17:02:58,165.0,win,1.08
 2026,5,Week 5 Thursday (TB @ DAL),Kenny Gainwell,rush yds,12.0,16.3,—,0.2,4.3,50,0.1,50,36,OVER,draftkings -111,2026-10-12T17:02:58,18.0,win,0.71
-2026,5,Week 5 Thursday (TB @ DAL),Tyler Goodson,rush yds,13.5,16.3,—,0.13,2.8,50,-0.4,50,21,OVER,fanduel -113,2026-10-12T17:02:58,,,1.22
+2026,5,Week 5 Thursday (TB @ DAL),Tyler Goodson,rush yds,13.5,16.3,—,0.13,2.8,50,-0.4,50,21,OVER,fanduel -113,2026-10-12T17:02:58,0.0,loss,1.22
 2026,5,Week 5 Thursday (TB @ DAL),Bucky Irving,receptions,2.5,2.3,—,-0.13,-0.2,53,-5.3,58,-10,UNDER,fanduel -158,2026-10-12T17:02:58,2.0,win,1.08
 2026,5,Week 5 Sunday (13 games),Zach Ertz,receptions,1.5,4.0,high,1.6,2.5,77,41.7,35,166,OVER,fanduel +172,2026-10-12T17:02:58,0.0,loss,0.13
 2026,5,Week 5 Sunday (13 games),Zach Ertz,rec yds,6.0,39.5,high,1.83,33.5,78,28.4,50,558,OVER,draftkings -108,2026-10-12T17:02:58,0.0,loss,0.13
@@ -2050,7 +2050,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,5,Week 5 Sunday (13 games),Kalif Raymond,rec yds,27.0,44.3,strong,0.69,17.3,65,15.6,50,64,OVER,draftkings -108,2026-10-12T17:02:58,6.0,loss,0.82
 2026,5,Week 5 Sunday (13 games),Rome Odunze,rec yds,40.5,60.6,strong,0.68,20.1,65,14.9,50,50,OVER,draftkings -113,2026-10-12T17:02:58,40.0,loss,0.92
 2026,5,Week 5 Sunday (13 games),Luther Burden III,rec yds,46.5,67.2,strong,0.65,20.7,65,14.5,50,45,OVER,draftkings -113,2026-10-12T17:02:58,47.0,win,0.91
-2026,5,Week 5 Sunday (13 games),Jonnu Smith,rec yds,7.5,18.6,strong,0.59,11.1,63,13.3,50,149,OVER,draftkings -113,2026-10-12T17:02:58,,,0.68
+2026,5,Week 5 Sunday (13 games),Jonnu Smith,rec yds,7.5,18.6,strong,0.59,11.1,63,13.3,50,149,OVER,draftkings -113,2026-10-12T17:02:58,0.0,loss,0.68
 2026,5,Week 5 Sunday (13 games),Christian Watson,rec yds,62.5,82.2,strong,0.53,19.7,62,12.3,50,31,OVER,draftkings -110,2026-10-12T17:02:58,143.0,win,0.85
 2026,5,Week 5 Sunday (13 games),Christian Watson,receptions,4.5,5.3,solid,0.35,0.8,58,12.3,46,17,OVER,fanduel +112,2026-10-12T17:02:58,6.0,win,0.85
 2026,5,Week 5 Sunday (13 games),Luther Burden III,receptions,4.5,5.2,solid,0.32,0.7,57,12.1,45,16,OVER,draftkings +108,2026-10-12T17:02:58,4.0,loss,0.91
@@ -2062,7 +2062,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,5,Week 5 Sunday (13 games),D'Andre Swift,rec yds,19.0,13.5,lean,-0.25,-5.5,56,5.9,50,-29,UNDER,draftkings -111,2026-10-12T17:02:58,30.0,loss,0.95
 2026,5,Week 5 Sunday (13 games),Matthew Golden,receptions,4.5,4.1,lean,-0.16,-0.4,54,5.2,49,-8,UNDER,draftkings -108,2026-10-12T17:02:58,6.0,loss,1.14
 2026,5,Week 5 Sunday (13 games),Jordan Love,pass TD,1.5,1.7,lean,0.21,0.2,55,5.0,50,16,OVER,fanduel -108,2026-10-12T17:02:58,2.0,win,1.02
-2026,5,Week 5 Sunday (13 games),Jonnu Smith,receptions,1.5,1.7,—,0.12,0.2,53,17.9,35,12,OVER,draftkings +172,2026-10-12T17:02:58,,,0.68
+2026,5,Week 5 Sunday (13 games),Jonnu Smith,receptions,1.5,1.7,—,0.12,0.2,53,17.9,35,12,OVER,draftkings +172,2026-10-12T17:02:58,0.0,loss,0.68
 2026,5,Week 5 Sunday (13 games),Cole Kmet,receptions,1.5,1.7,—,0.13,0.2,53,12.9,40,13,OVER,fanduel +134,2026-10-12T17:02:58,1.0,loss,0.76
 2026,5,Week 5 Sunday (13 games),MarShawn Lloyd,receptions,2.5,2.6,—,0.03,0.1,51,4.3,47,2,OVER,fanduel +112,2026-10-12T17:02:58,1.0,loss,1.16
 2026,5,Week 5 Sunday (13 games),D'Andre Swift,receptions,2.5,2.2,—,-0.15,-0.3,53,4.1,49,-10,UNDER,draftkings -110,2026-10-12T17:02:58,4.0,loss,0.95
@@ -2221,7 +2221,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,5,Week 5 Sunday (13 games),Romeo Doubs,rec yds,49.0,62.9,solid,0.43,13.9,60,9.8,50,28,OVER,draftkings -113,2026-10-12T17:02:58,16.0,loss,1.05
 2026,5,Week 5 Sunday (13 games),Hunter Henry,rec yds,37.5,47.4,solid,0.34,9.9,58,8.0,50,26,OVER,draftkings -113,2026-10-12T17:02:58,44.0,win,0.82
 2026,5,Week 5 Sunday (13 games),Brock Bowers,receptions,6.5,7.7,solid,0.44,1.2,60,7.5,53,18,OVER,draftkings -125,2026-10-12T17:02:58,8.0,win,0.91
-2026,5,Week 5 Sunday (13 games),Dareke Young,rec yds,5.5,11.4,solid,0.33,5.9,58,7.3,50,108,OVER,draftkings -114,2026-10-12T17:02:58,,,0.33
+2026,5,Week 5 Sunday (13 games),Dareke Young,rec yds,5.5,11.4,solid,0.33,5.9,58,7.3,50,108,OVER,draftkings -114,2026-10-12T17:02:58,0.0,loss,0.33
 2026,5,Week 5 Sunday (13 games),Efton Chism III,receptions,1.5,2.1,solid,0.42,0.6,60,-0.8,60,43,OVER,fanduel -172,2026-10-12T17:02:58,5.0,win,1.05
 2026,5,Week 5 Sunday (13 games),Kirk Cousins,pass TD,1.5,1.8,lean,0.27,0.3,56,10.7,46,21,OVER,fanduel +108,2026-10-12T17:02:58,1.0,loss,0.86
 2026,5,Week 5 Sunday (13 games),Cody White,rec yds,22.5,28.8,lean,0.27,6.3,56,6.7,50,28,OVER,draftkings -109,2026-10-12T17:02:58,44.0,win,1.05
@@ -2373,7 +2373,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,5,Week 5 Sunday (13 games),AJ Barner,receptions,2.5,3.4,strong,0.52,0.9,62,12.2,50,37,OVER,fanduel -108,2026-10-12T17:02:58,3.0,win,0.96
 2026,5,Week 5 Sunday (13 games),AJ Barner,rec yds,22.5,34.6,strong,0.51,12.1,62,11.8,50,54,OVER,draftkings -111,2026-10-12T17:02:58,20.0,loss,0.96
 2026,5,Week 5 Sunday (13 games),Rashid Shaheed,receptions,2.0,2.8,solid,0.46,0.8,61,10.9,50,38,OVER,draftkings +146,2026-10-12T17:02:58,2.0,push,1.03
-2026,5,Week 5 Sunday (13 games),Tory Horton,rec yds,11.0,20.1,solid,0.46,9.1,61,10.8,50,83,OVER,draftkings -110,2026-10-12T17:02:58,,,0.45
+2026,5,Week 5 Sunday (13 games),Tory Horton,rec yds,11.0,20.1,solid,0.46,9.1,61,10.8,50,83,OVER,draftkings -110,2026-10-12T17:02:58,0.0,loss,0.45
 2026,5,Week 5 Sunday (13 games),Rashid Shaheed,rec yds,20.5,30.5,solid,0.43,10.0,60,9.9,50,49,OVER,draftkings -113,2026-10-12T17:02:58,23.0,win,1.03
 2026,5,Week 5 Sunday (13 games),Emanuel Wilson,receptions,1.5,2.2,solid,0.48,0.7,61,2.7,58,49,OVER,draftkings -156,2026-10-12T17:02:58,2.0,win,1.26
 2026,5,Week 5 Sunday (13 games),Cooper Kupp,receptions,2.5,3.0,lean,0.26,0.5,56,11.6,45,19,OVER,fanduel +116,2026-10-12T17:02:58,2.0,loss,0.85
@@ -2384,7 +2384,7 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,5,Week 5 Sunday (13 games),Mike Evans,receptions,4.0,3.6,lean,-0.16,-0.4,54,4.8,49,-9,UNDER,fanduel +134,2026-10-12T17:02:58,7.0,loss,1.14
 2026,5,Week 5 Sunday (13 games),Brock Purdy,pass yds,229.0,214.1,lean,-0.19,-14.9,55,4.5,50,-7,UNDER,draftkings -112,2026-10-12T17:02:58,189.0,win,0.83
 2026,5,Week 5 Sunday (13 games),Jaxon Smith-Njigba,rec yds,96.5,104.5,lean,0.17,8.0,54,4.0,50,8,OVER,draftkings -112,2026-10-12T17:02:58,102.0,win,0.83
-2026,5,Week 5 Sunday (13 games),Tory Horton,receptions,1.5,1.7,—,0.12,0.2,53,15.5,37,13,OVER,draftkings +154,2026-10-12T17:02:58,,,0.45
+2026,5,Week 5 Sunday (13 games),Tory Horton,receptions,1.5,1.7,—,0.12,0.2,53,15.5,37,13,OVER,draftkings +154,2026-10-12T17:02:58,0.0,loss,0.45
 2026,5,Week 5 Sunday (13 games),Deebo Samuel,receptions,3.5,3.3,—,-0.11,-0.2,53,4.8,48,-7,UNDER,fanduel -102,2026-10-12T17:02:58,2.0,win,1.12
 2026,5,Week 5 Sunday (13 games),George Holani,rec yds,8.5,6.6,—,-0.1,-1.9,52,3.8,49,-23,UNDER,draftkings -106,2026-10-12T17:02:58,24.0,loss,1.29
 2026,5,Week 5 Sunday (13 games),George Kittle,receptions,4.5,4.2,—,-0.13,-0.3,53,2.8,50,-6,UNDER,draftkings -106,2026-10-12T17:02:58,5.0,loss,1.06
@@ -2399,19 +2399,19 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,5,Week 5 Sunday (13 games),Emanuel Wilson,rush yds,63.5,67.4,—,0.11,3.9,50,-0.2,50,6,OVER,fanduel -113,2026-10-12T17:02:58,61.0,loss,1.26
 2026,5,Week 5 Sunday (13 games),Sam Darnold,rush yds,4.0,5.5,—,0.08,1.5,50,-1.5,52,38,OVER,draftkings -120,2026-10-12T17:02:58,5.0,win,1.14
 2026,5,Week 5 Sunday (13 games),Olamide Zaccheaus,receptions,0.5,1.6,high,0.86,1.1,68,2.8,65,228,OVER,fanduel -225,2026-10-12T17:02:58,0.0,loss,0.92
-2026,5,Week 5 Sunday (13 games),Matthew Hibner,rec yds,7.0,19.3,strong,0.66,12.3,65,14.1,51,176,OVER,fanduel -113,2026-10-12T17:02:58,,,0.59
+2026,5,Week 5 Sunday (13 games),Matthew Hibner,rec yds,7.0,19.3,strong,0.66,12.3,65,14.1,51,176,OVER,fanduel -113,2026-10-12T17:02:58,0.0,loss,0.59
 2026,5,Week 5 Sunday (13 games),Devontez Walker,rec yds,9.0,21.7,strong,0.66,12.7,65,14.0,51,141,OVER,draftkings -112,2026-10-12T17:02:58,9.0,push,0.82
 2026,5,Week 5 Sunday (13 games),Tyler Huntley,pass yds,179.0,132.0,strong,-0.59,-47.0,63,13.3,50,-26,UNDER,draftkings -113,2026-10-12T17:02:58,201.0,loss,1.22
-2026,5,Week 5 Sunday (13 games),Matthew Hibner,receptions,1.0,1.8,strong,0.52,0.8,62,13.3,49,75,OVER,draftkings +184,2026-10-12T17:02:58,,,0.59
+2026,5,Week 5 Sunday (13 games),Matthew Hibner,receptions,1.0,1.8,strong,0.52,0.8,62,13.3,49,75,OVER,draftkings +184,2026-10-12T17:02:58,0.0,loss,0.59
 2026,5,Week 5 Sunday (13 games),Zay Flowers,receptions,5.5,4.0,strong,-0.59,-1.5,63,11.0,52,-27,UNDER,draftkings -121,2026-10-12T17:02:58,8.0,loss,1.01
 2026,5,Week 5 Sunday (13 games),Tyler Huntley,pass TD,1.5,0.6,strong,-0.78,-0.9,67,1.5,65,-61,UNDER,draftkings -221,2026-10-12T17:02:58,2.0,loss,1.22
-2026,5,Week 5 Sunday (13 games),Austin Hooper,receptions,0.5,1.3,strong,0.63,0.8,64,0.4,64,168,OVER,draftkings -208,2026-10-12T17:02:58,,,0.58
+2026,5,Week 5 Sunday (13 games),Austin Hooper,receptions,0.5,1.3,strong,0.63,0.8,64,0.4,64,168,OVER,draftkings -208,2026-10-12T17:02:58,0.0,loss,0.58
 2026,5,Week 5 Sunday (13 games),Devontez Walker,receptions,0.5,1.3,strong,0.62,0.8,64,-0.9,65,164,OVER,draftkings -215,2026-10-12T17:02:58,2.0,win,0.82
 2026,5,Week 5 Sunday (13 games),Drake London,receptions,6.0,4.8,solid,-0.45,-1.2,60,10.9,49,-19,UNDER,fanduel +116,2026-10-12T17:02:58,7.0,loss,1.16
 2026,5,Week 5 Sunday (13 games),Olamide Zaccheaus,rec yds,8.0,15.9,solid,0.42,7.9,60,10.0,50,99,OVER,draftkings -110,2026-10-12T17:02:58,0.0,loss,0.92
 2026,5,Week 5 Sunday (13 games),Rashod Bateman,rec yds,17.5,26.2,solid,0.4,8.8,59,9.7,50,50,OVER,draftkings -108,2026-10-12T17:02:58,62.0,win,0.77
 2026,5,Week 5 Sunday (13 games),Bijan Robinson,rec yds,27.0,18.4,solid,-0.34,-8.6,58,8.0,50,-32,UNDER,draftkings -112,2026-10-12T17:02:58,32.0,loss,0.88
-2026,5,Week 5 Sunday (13 games),Austin Hooper,rec yds,6.5,13.1,solid,0.36,6.6,58,8.0,50,101,OVER,fanduel -113,2026-10-12T17:02:58,,,0.58
+2026,5,Week 5 Sunday (13 games),Austin Hooper,rec yds,6.5,13.1,solid,0.36,6.6,58,8.0,50,101,OVER,fanduel -113,2026-10-12T17:02:58,0.0,loss,0.58
 2026,5,Week 5 Sunday (13 games),Michael Penix Jr.,pass TD,1.5,1.0,solid,-0.39,-0.5,59,4.8,54,-31,UNDER,fanduel -135,2026-10-12T17:02:58,1.0,win,1.13
 2026,5,Week 5 Sunday (13 games),Kyle Pitts,rec yds,24.5,30.9,lean,0.26,6.4,56,6.1,50,26,OVER,draftkings -113,2026-10-12T17:02:58,42.0,win,0.99
 2026,5,Week 5 Sunday (13 games),Jahan Dotson,rec yds,20.5,26.1,lean,0.24,5.6,56,5.6,50,27,OVER,draftkings -113,2026-10-12T17:02:58,54.0,win,0.98
@@ -2433,46 +2433,46 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,5,Week 5 Sunday (13 games),Zay Flowers,rec yds,68.5,68.2,—,-0.01,-0.2,50,-0.1,50,0,UNDER,fanduel -113,2026-10-12T17:02:58,53.0,win,1.01
 2026,5,Week 5 Sunday (13 games),Derrick Henry,rush yds,80.5,91.2,—,0.27,10.7,50,-0.2,50,13,OVER,fanduel -113,2026-10-12T17:02:58,102.0,win,0.85
 2026,5,Week 5 Sunday (13 games),Michael Penix Jr.,rush yds,0.5,3.7,—,0.18,3.2,50,-1.6,52,634,OVER,fanduel -120,2026-10-12T17:02:58,8.0,win,1.13
-2026,5,Buffalo Bills @ Los Angeles Rams,Colby Parkinson,receptions,1.5,3.0,high,0.97,1.5,70,10.3,60,101,OVER,draftkings -170,2026-10-12T18:19:23,,,0.81
-2026,5,Buffalo Bills @ Los Angeles Rams,Konata Mumpfield,receptions,0.5,1.7,high,0.89,1.2,69,8.8,60,236,OVER,fanduel -172,2026-10-12T18:19:23,,,0.71
-2026,5,Buffalo Bills @ Los Angeles Rams,Konata Mumpfield,rec yds,7.5,21.1,strong,0.73,13.6,66,16.1,50,182,OVER,draftkings -111,2026-10-12T18:19:23,,,0.71
-2026,5,Buffalo Bills @ Los Angeles Rams,Davante Adams,receptions,4.5,5.7,strong,0.54,1.2,62,15.9,46,27,OVER,fanduel +108,2026-10-12T18:19:23,,,0.98
-2026,5,Buffalo Bills @ Los Angeles Rams,Tyler Higbee,receptions,2.5,3.6,strong,0.62,1.1,64,15.2,49,44,OVER,draftkings -108,2026-10-12T18:19:23,,,0.72
-2026,5,Buffalo Bills @ Los Angeles Rams,Tyler Higbee,rec yds,24.5,39.2,strong,0.6,14.7,64,13.9,50,60,OVER,draftkings -109,2026-10-12T18:19:23,,,0.72
-2026,5,Buffalo Bills @ Los Angeles Rams,Jordan Whittington,rec yds,5.5,15.9,strong,0.58,10.4,63,13.5,50,190,OVER,draftkings -108,2026-10-12T18:19:23,,,0.66
-2026,5,Buffalo Bills @ Los Angeles Rams,Davis Allen,rec yds,6.0,15.5,strong,0.52,9.5,62,11.9,50,158,OVER,draftkings -112,2026-10-12T18:19:23,,,0.56
-2026,5,Buffalo Bills @ Los Angeles Rams,Colby Parkinson,rec yds,17.5,28.8,strong,0.51,11.3,62,11.6,50,64,OVER,draftkings -113,2026-10-12T18:19:23,,,0.81
-2026,5,Buffalo Bills @ Los Angeles Rams,Davante Adams,rec yds,62.5,81.2,strong,0.5,18.7,62,11.5,50,30,OVER,draftkings -113,2026-10-12T18:19:23,,,0.98
-2026,5,Buffalo Bills @ Los Angeles Rams,Blake Corum,receptions,0.5,1.4,strong,0.64,0.9,64,7.3,57,170,OVER,fanduel -154,2026-10-12T18:19:23,,,0.82
-2026,5,Buffalo Bills @ Los Angeles Rams,Davis Allen,receptions,0.5,1.6,strong,0.79,1.1,67,6.3,61,210,OVER,fanduel -180,2026-10-12T18:19:23,,,0.56
-2026,5,Buffalo Bills @ Los Angeles Rams,Jordan Whittington,receptions,0.5,1.4,strong,0.66,0.9,65,5.5,59,176,OVER,draftkings -164,2026-10-12T18:19:23,,,0.66
-2026,5,Buffalo Bills @ Los Angeles Rams,Keon Coleman,receptions,2.5,3.5,strong,0.54,1.0,62,3.1,59,38,OVER,draftkings -161,2026-10-12T18:19:23,,,0.81
-2026,5,Buffalo Bills @ Los Angeles Rams,Dawson Knox,receptions,1.5,2.2,solid,0.43,0.7,60,14.6,45,45,OVER,fanduel +110,2026-10-12T18:19:23,,,0.61
-2026,5,Buffalo Bills @ Los Angeles Rams,Matthew Stafford,pass yds,281.5,318.8,solid,0.49,37.3,61,11.4,50,13,OVER,draftkings -112,2026-10-12T18:19:23,,,0.89
-2026,5,Buffalo Bills @ Los Angeles Rams,Ty Johnson,rush yds,4.0,15.8,solid,0.63,11.8,58,8.9,49,296,OVER,draftkings -105,2026-10-12T18:19:23,,,0.73
-2026,5,Buffalo Bills @ Los Angeles Rams,Blake Corum,rec yds,2.5,7.8,solid,0.31,5.3,57,8.7,49,212,OVER,fanduel -102,2026-10-12T18:19:23,,,0.82
-2026,5,Buffalo Bills @ Los Angeles Rams,Puka Nacua,rec yds,95.0,111.4,solid,0.34,16.4,58,8.0,50,17,OVER,draftkings -112,2026-10-12T18:19:23,,,0.86
-2026,5,Buffalo Bills @ Los Angeles Rams,Keon Coleman,rec yds,38.0,47.0,solid,0.31,9.0,57,7.4,50,24,OVER,draftkings -111,2026-10-12T18:19:23,,,0.81
-2026,5,Buffalo Bills @ Los Angeles Rams,James Cook,receptions,1.5,2.2,solid,0.43,0.7,60,7.2,53,45,OVER,fanduel -122,2026-10-12T18:19:23,,,0.9
-2026,5,Buffalo Bills @ Los Angeles Rams,Dawson Knox,rec yds,12.0,18.3,solid,0.31,6.3,57,7.1,50,53,OVER,fanduel -113,2026-10-12T18:19:23,,,0.61
-2026,5,Buffalo Bills @ Los Angeles Rams,Dalton Kincaid,receptions,4.5,3.6,solid,-0.38,-0.9,59,5.6,53,-19,UNDER,draftkings -130,2026-10-12T18:19:23,,,1.15
-2026,5,Buffalo Bills @ Los Angeles Rams,Ty Johnson,receptions,2.5,1.9,solid,-0.31,-0.6,57,-4.4,62,-22,UNDER,draftkings -180,2026-10-12T18:19:23,,,0.73
-2026,5,Buffalo Bills @ Los Angeles Rams,Kyren Williams,receptions,3.5,3.9,lean,0.2,0.4,55,14.3,40,11,OVER,fanduel +134,2026-10-12T18:19:23,,,1.01
-2026,5,Buffalo Bills @ Los Angeles Rams,Puka Nacua,receptions,7.5,8.1,lean,0.21,0.6,55,9.8,45,8,OVER,fanduel +116,2026-10-12T18:19:23,,,0.86
-2026,5,Buffalo Bills @ Los Angeles Rams,Greg Dortch,rec yds,3.5,8.4,lean,0.28,4.9,57,7.5,49,141,OVER,fanduel -104,2026-10-12T18:19:23,,,0.15
-2026,5,Buffalo Bills @ Los Angeles Rams,Josh Allen,pass yds,246.5,231.1,lean,-0.2,-15.4,55,4.9,50,-6,UNDER,draftkings -111,2026-10-12T18:19:23,,,0.94
-2026,5,Buffalo Bills @ Los Angeles Rams,Ray Davis,rush yds,2.5,11.6,lean,0.49,9.1,55,4.9,50,362,OVER,draftkings -113,2026-10-12T18:19:23,,,0.29
-2026,5,Buffalo Bills @ Los Angeles Rams,Dalton Kincaid,rec yds,55.5,49.2,lean,-0.18,-6.3,54,4.4,50,-11,UNDER,draftkings -111,2026-10-12T18:19:23,,,1.15
-2026,5,Buffalo Bills @ Los Angeles Rams,Greg Dortch,receptions,0.5,0.8,lean,0.26,0.3,56,-0.9,57,70,OVER,fanduel -158,2026-10-12T18:19:23,,,0.15
-2026,5,Buffalo Bills @ Los Angeles Rams,Josh Allen,pass TD,1.5,1.4,—,-0.09,-0.1,52,3.0,49,-7,UNDER,draftkings -106,2026-10-12T18:19:23,,,0.94
-2026,5,Buffalo Bills @ Los Angeles Rams,Khalil Shakir,rec yds,47.0,50.8,—,0.12,3.8,53,3.0,50,8,OVER,draftkings -110,2026-10-12T18:19:23,,,0.92
-2026,5,Buffalo Bills @ Los Angeles Rams,Kyren Williams,rec yds,23.0,25.1,—,0.09,2.1,52,2.4,50,9,OVER,draftkings -109,2026-10-12T18:19:23,,,1.01
-2026,5,Buffalo Bills @ Los Angeles Rams,Matthew Stafford,rush yds,1.5,4.6,—,0.17,3.1,50,2.3,48,205,OVER,fanduel +102,2026-10-12T18:19:23,,,0.89
-2026,5,Buffalo Bills @ Los Angeles Rams,Khalil Shakir,receptions,4.5,4.6,—,0.05,0.1,51,1.3,50,2,OVER,draftkings -112,2026-10-12T18:19:23,,,0.92
-2026,5,Buffalo Bills @ Los Angeles Rams,James Cook,rec yds,11.0,10.5,—,-0.02,-0.5,51,0.8,50,-4,UNDER,draftkings -110,2026-10-12T18:19:23,,,0.9
-2026,5,Buffalo Bills @ Los Angeles Rams,Ty Johnson,rec yds,15.0,14.4,—,-0.03,-0.6,51,0.7,50,-4,UNDER,draftkings -111,2026-10-12T18:19:23,,,0.73
-2026,5,Buffalo Bills @ Los Angeles Rams,Kyren Williams,rush yds,69.0,65.5,—,-0.1,-3.5,50,0.1,50,-5,UNDER,draftkings -111,2026-10-12T18:19:23,,,1.01
-2026,5,Buffalo Bills @ Los Angeles Rams,Blake Corum,rush yds,33.0,35.8,—,0.11,2.8,50,0.0,50,8,OVER,draftkings -112,2026-10-12T18:19:23,,,0.82
-2026,5,Buffalo Bills @ Los Angeles Rams,James Cook,rush yds,76.0,80.0,—,0.11,4.0,50,-0.1,50,5,OVER,draftkings -113,2026-10-12T18:19:23,,,0.9
-2026,5,Buffalo Bills @ Los Angeles Rams,Josh Allen,rush yds,36.5,30.8,—,-0.21,-5.7,50,-0.2,50,-16,UNDER,fanduel -113,2026-10-12T18:19:23,,,0.94
-2026,5,Buffalo Bills @ Los Angeles Rams,Matthew Stafford,pass TD,2.5,2.5,—,-0.01,-0.0,50,-6.2,56,0,UNDER,draftkings -147,2026-10-12T18:19:23,,,0.89
+2026,5,Buffalo Bills @ Los Angeles Rams,Colby Parkinson,receptions,1.5,3.0,high,0.97,1.5,70,10.3,60,101,OVER,draftkings -170,2026-10-12T18:19:23,1.0,loss,0.81
+2026,5,Buffalo Bills @ Los Angeles Rams,Konata Mumpfield,receptions,0.5,1.7,high,0.89,1.2,69,8.8,60,236,OVER,fanduel -172,2026-10-12T18:19:23,0.0,loss,0.71
+2026,5,Buffalo Bills @ Los Angeles Rams,Konata Mumpfield,rec yds,7.5,21.1,strong,0.73,13.6,66,16.1,50,182,OVER,draftkings -111,2026-10-12T18:19:23,0.0,loss,0.71
+2026,5,Buffalo Bills @ Los Angeles Rams,Davante Adams,receptions,4.5,5.7,strong,0.54,1.2,62,15.9,46,27,OVER,fanduel +108,2026-10-12T18:19:23,5.0,win,0.98
+2026,5,Buffalo Bills @ Los Angeles Rams,Tyler Higbee,receptions,2.5,3.6,strong,0.62,1.1,64,15.2,49,44,OVER,draftkings -108,2026-10-12T18:19:23,5.0,win,0.72
+2026,5,Buffalo Bills @ Los Angeles Rams,Tyler Higbee,rec yds,24.5,39.2,strong,0.6,14.7,64,13.9,50,60,OVER,draftkings -109,2026-10-12T18:19:23,83.0,win,0.72
+2026,5,Buffalo Bills @ Los Angeles Rams,Jordan Whittington,rec yds,5.5,15.9,strong,0.58,10.4,63,13.5,50,190,OVER,draftkings -108,2026-10-12T18:19:23,0.0,loss,0.66
+2026,5,Buffalo Bills @ Los Angeles Rams,Davis Allen,rec yds,6.0,15.5,strong,0.52,9.5,62,11.9,50,158,OVER,draftkings -112,2026-10-12T18:19:23,24.0,win,0.56
+2026,5,Buffalo Bills @ Los Angeles Rams,Colby Parkinson,rec yds,17.5,28.8,strong,0.51,11.3,62,11.6,50,64,OVER,draftkings -113,2026-10-12T18:19:23,3.0,loss,0.81
+2026,5,Buffalo Bills @ Los Angeles Rams,Davante Adams,rec yds,62.5,81.2,strong,0.5,18.7,62,11.5,50,30,OVER,draftkings -113,2026-10-12T18:19:23,51.0,loss,0.98
+2026,5,Buffalo Bills @ Los Angeles Rams,Blake Corum,receptions,0.5,1.4,strong,0.64,0.9,64,7.3,57,170,OVER,fanduel -154,2026-10-12T18:19:23,3.0,win,0.82
+2026,5,Buffalo Bills @ Los Angeles Rams,Davis Allen,receptions,0.5,1.6,strong,0.79,1.1,67,6.3,61,210,OVER,fanduel -180,2026-10-12T18:19:23,2.0,win,0.56
+2026,5,Buffalo Bills @ Los Angeles Rams,Jordan Whittington,receptions,0.5,1.4,strong,0.66,0.9,65,5.5,59,176,OVER,draftkings -164,2026-10-12T18:19:23,0.0,loss,0.66
+2026,5,Buffalo Bills @ Los Angeles Rams,Keon Coleman,receptions,2.5,3.5,strong,0.54,1.0,62,3.1,59,38,OVER,draftkings -161,2026-10-12T18:19:23,1.0,loss,0.81
+2026,5,Buffalo Bills @ Los Angeles Rams,Dawson Knox,receptions,1.5,2.2,solid,0.43,0.7,60,14.6,45,45,OVER,fanduel +110,2026-10-12T18:19:23,1.0,loss,0.61
+2026,5,Buffalo Bills @ Los Angeles Rams,Matthew Stafford,pass yds,281.5,318.8,solid,0.49,37.3,61,11.4,50,13,OVER,draftkings -112,2026-10-12T18:19:23,383.0,win,0.89
+2026,5,Buffalo Bills @ Los Angeles Rams,Ty Johnson,rush yds,4.0,15.8,solid,0.63,11.8,58,8.9,49,296,OVER,draftkings -105,2026-10-12T18:19:23,0.0,loss,0.73
+2026,5,Buffalo Bills @ Los Angeles Rams,Blake Corum,rec yds,2.5,7.8,solid,0.31,5.3,57,8.7,49,212,OVER,fanduel -102,2026-10-12T18:19:23,53.0,win,0.82
+2026,5,Buffalo Bills @ Los Angeles Rams,Puka Nacua,rec yds,95.0,111.4,solid,0.34,16.4,58,8.0,50,17,OVER,draftkings -112,2026-10-12T18:19:23,138.0,win,0.86
+2026,5,Buffalo Bills @ Los Angeles Rams,Keon Coleman,rec yds,38.0,47.0,solid,0.31,9.0,57,7.4,50,24,OVER,draftkings -111,2026-10-12T18:19:23,7.0,loss,0.81
+2026,5,Buffalo Bills @ Los Angeles Rams,James Cook,receptions,1.5,2.2,solid,0.43,0.7,60,7.2,53,45,OVER,fanduel -122,2026-10-12T18:19:23,1.0,loss,0.9
+2026,5,Buffalo Bills @ Los Angeles Rams,Dawson Knox,rec yds,12.0,18.3,solid,0.31,6.3,57,7.1,50,53,OVER,fanduel -113,2026-10-12T18:19:23,6.0,loss,0.61
+2026,5,Buffalo Bills @ Los Angeles Rams,Dalton Kincaid,receptions,4.5,3.6,solid,-0.38,-0.9,59,5.6,53,-19,UNDER,draftkings -130,2026-10-12T18:19:23,1.0,win,1.15
+2026,5,Buffalo Bills @ Los Angeles Rams,Ty Johnson,receptions,2.5,1.9,solid,-0.31,-0.6,57,-4.4,62,-22,UNDER,draftkings -180,2026-10-12T18:19:23,4.0,loss,0.73
+2026,5,Buffalo Bills @ Los Angeles Rams,Kyren Williams,receptions,3.5,3.9,lean,0.2,0.4,55,14.3,40,11,OVER,fanduel +134,2026-10-12T18:19:23,6.0,win,1.01
+2026,5,Buffalo Bills @ Los Angeles Rams,Puka Nacua,receptions,7.5,8.1,lean,0.21,0.6,55,9.8,45,8,OVER,fanduel +116,2026-10-12T18:19:23,17.0,win,0.86
+2026,5,Buffalo Bills @ Los Angeles Rams,Greg Dortch,rec yds,3.5,8.4,lean,0.28,4.9,57,7.5,49,141,OVER,fanduel -104,2026-10-12T18:19:23,0.0,dnp,0.15
+2026,5,Buffalo Bills @ Los Angeles Rams,Josh Allen,pass yds,246.5,231.1,lean,-0.2,-15.4,55,4.9,50,-6,UNDER,draftkings -111,2026-10-12T18:19:23,210.0,win,0.94
+2026,5,Buffalo Bills @ Los Angeles Rams,Ray Davis,rush yds,2.5,11.6,lean,0.49,9.1,55,4.9,50,362,OVER,draftkings -113,2026-10-12T18:19:23,2.0,loss,0.29
+2026,5,Buffalo Bills @ Los Angeles Rams,Dalton Kincaid,rec yds,55.5,49.2,lean,-0.18,-6.3,54,4.4,50,-11,UNDER,draftkings -111,2026-10-12T18:19:23,7.0,win,1.15
+2026,5,Buffalo Bills @ Los Angeles Rams,Greg Dortch,receptions,0.5,0.8,lean,0.26,0.3,56,-0.9,57,70,OVER,fanduel -158,2026-10-12T18:19:23,0.0,dnp,0.15
+2026,5,Buffalo Bills @ Los Angeles Rams,Josh Allen,pass TD,1.5,1.4,—,-0.09,-0.1,52,3.0,49,-7,UNDER,draftkings -106,2026-10-12T18:19:23,1.0,win,0.94
+2026,5,Buffalo Bills @ Los Angeles Rams,Khalil Shakir,rec yds,47.0,50.8,—,0.12,3.8,53,3.0,50,8,OVER,draftkings -110,2026-10-12T18:19:23,80.0,win,0.92
+2026,5,Buffalo Bills @ Los Angeles Rams,Kyren Williams,rec yds,23.0,25.1,—,0.09,2.1,52,2.4,50,9,OVER,draftkings -109,2026-10-12T18:19:23,27.0,win,1.01
+2026,5,Buffalo Bills @ Los Angeles Rams,Matthew Stafford,rush yds,1.5,4.6,—,0.17,3.1,50,2.3,48,205,OVER,fanduel +102,2026-10-12T18:19:23,0.0,loss,0.89
+2026,5,Buffalo Bills @ Los Angeles Rams,Khalil Shakir,receptions,4.5,4.6,—,0.05,0.1,51,1.3,50,2,OVER,draftkings -112,2026-10-12T18:19:23,3.0,loss,0.92
+2026,5,Buffalo Bills @ Los Angeles Rams,James Cook,rec yds,11.0,10.5,—,-0.02,-0.5,51,0.8,50,-4,UNDER,draftkings -110,2026-10-12T18:19:23,7.0,win,0.9
+2026,5,Buffalo Bills @ Los Angeles Rams,Ty Johnson,rec yds,15.0,14.4,—,-0.03,-0.6,51,0.7,50,-4,UNDER,draftkings -111,2026-10-12T18:19:23,72.0,loss,0.73
+2026,5,Buffalo Bills @ Los Angeles Rams,Kyren Williams,rush yds,69.0,65.5,—,-0.1,-3.5,50,0.1,50,-5,UNDER,draftkings -111,2026-10-12T18:19:23,49.0,win,1.01
+2026,5,Buffalo Bills @ Los Angeles Rams,Blake Corum,rush yds,33.0,35.8,—,0.11,2.8,50,0.0,50,8,OVER,draftkings -112,2026-10-12T18:19:23,19.0,loss,0.82
+2026,5,Buffalo Bills @ Los Angeles Rams,James Cook,rush yds,76.0,80.0,—,0.11,4.0,50,-0.1,50,5,OVER,draftkings -113,2026-10-12T18:19:23,111.0,win,0.9
+2026,5,Buffalo Bills @ Los Angeles Rams,Josh Allen,rush yds,36.5,30.8,—,-0.21,-5.7,50,-0.2,50,-16,UNDER,fanduel -113,2026-10-12T18:19:23,121.0,loss,0.94
+2026,5,Buffalo Bills @ Los Angeles Rams,Matthew Stafford,pass TD,2.5,2.5,—,-0.01,-0.0,50,-6.2,56,0,UNDER,draftkings -147,2026-10-12T18:19:23,3.0,loss,0.89

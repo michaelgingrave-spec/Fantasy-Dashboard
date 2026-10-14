@@ -139,3 +139,61 @@ def test_dnp_keys_needs_a_positive_zero_for_a_skill_player_on_that_team(monkeypa
     ])
     monkeypatch.setattr("matchup_model.opp.data.snaps", lambda: snaps)
     assert B._dnp_keys(2026, 5) == {("really inactive", "KC")}
+
+
+def _quiet_week(monkeypatch):
+    """KC's box score is out (one player has a stat row); BUF's is not. nflverse lists a player
+    only if he recorded a stat, so the quiet ones appear in the snap counts alone."""
+    import pandas as pd
+
+    pw = pd.DataFrame([dict(player_display_name="Stat Guy", nk="stat guy", season=2026, week=5,
+                            team="KC", receiving_yards=48.0, receptions=4.0, rushing_yards=0.0,
+                            passing_yards=0.0, passing_tds=0.0, carries=0.0, attempts=0.0)])
+    snaps = pd.DataFrame([
+        dict(season=2026, week=5, name_key="stat guy", team="KC", position="WR", offense_snaps=50.0),
+        dict(season=2026, week=5, name_key="quiet wr", team="KC", position="WR", offense_snaps=22.0),
+        dict(season=2026, week=5, name_key="inactive rb", team="KC", position="RB", offense_snaps=0.0),
+        dict(season=2026, week=5, name_key="pending wr", team="BUF", position="WR", offense_snaps=30.0),
+        dict(season=2026, week=5, name_key="two teams", team="KC", position="WR", offense_snaps=9.0),
+        dict(season=2026, week=5, name_key="two teams", team="BUF", position="WR", offense_snaps=40.0),
+        dict(season=2026, week=5, name_key="just a lb", team="KC", position="LB", offense_snaps=12.0),
+    ])
+    monkeypatch.setattr("matchup_model.opp.data.snaps", lambda: snaps)
+    monkeypatch.setattr("matchup_model.opp.data.player_weeks", lambda: pw)
+    return pw
+
+
+def test_a_skill_player_on_the_field_with_no_stat_line_really_had_zero(monkeypatch):
+    pw = _quiet_week(monkeypatch)
+    caches = {"dnp": {}, "snaps": {}}
+    get = lambda nk: B._actual_for(pw, nk, 2026, 5, "receiving_yards", caches)    # noqa: E731
+    assert get("stat guy") == (48.0, False)                  # has a stat row: unchanged
+    assert get("quiet wr") == (0.0, False)                   # 22 snaps, no stats: a real zero
+    assert get("inactive rb") == (0.0, True)                 # 0 snaps: inactive, not a loss
+    assert get("nobody") is None                             # no snap row either: can't tell
+    assert get("pending wr") is None                         # his game's player stats aren't out yet
+    assert get("two teams") is None                          # one name on two teams: ambiguous
+    assert get("just a lb") is None                          # not a skill position
+
+
+def test_grade_line_history_counts_the_quiet_players_it_used_to_skip(tmp_path, monkeypatch):
+    import pandas as pd
+    from dfs import props
+
+    _quiet_week(monkeypatch)
+    monkeypatch.setattr(props, "LINE_HISTORY_PATH", tmp_path / "lh.csv")
+    rows = [("Stat Guy", "rec yds", "OVER", 40.5), ("Quiet WR", "rec yds", "OVER", 7.5),
+            ("Quiet WR", "rush yds", "UNDER", 1.5), ("Inactive RB", "rec yds", "OVER", 12.5),
+            ("Pending WR", "rec yds", "OVER", 20.5)]
+    pd.DataFrame([dict(season=2026, week=5, event="X @ Y", player=p, market=m, line=l, lean=s,
+                       conf="solid", actual=np.nan, result="") for p, m, s, l in rows]
+                 ).to_csv(props.LINE_HISTORY_PATH, index=False)
+    _, n = B.grade_line_history()
+    got = B.load_line_history().set_index(["player", "market"])
+    assert n == 4
+    assert got.loc[("Stat Guy", "rec yds"), "result"] == "win"
+    assert got.loc[("Quiet WR", "rec yds"), "result"] == "loss"       # the OVER that was never graded
+    assert got.loc[("Quiet WR", "rec yds"), "actual"] == 0.0
+    assert got.loc[("Quiet WR", "rush yds"), "result"] == "win"       # ...and an UNDER on him wins
+    assert got.loc[("Inactive RB", "rec yds"), "result"] == "dnp"
+    assert got.loc[("Pending WR", "rec yds"), "result"] == ""          # stays pending

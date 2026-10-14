@@ -127,6 +127,44 @@ def _dnp_keys(season: int, week: int) -> set[tuple[str, str]]:
     return set(zip(z["name_key"], z["team"]))
 
 
+def _skill_snaps(season: int, week: int) -> dict[str, tuple[str, float]]:
+    """name_key -> (team, offense snaps) for skill-position snap rows. A name on more than
+    one team that week is left out: can't tell which player a line meant."""
+    try:
+        from matchup_model.opp import data as D
+        sn = D.snaps()
+    except Exception:
+        return {}
+    g = sn[(sn.season == season) & (sn.week == week) & sn["position"].isin(_SKILL_POS)]
+    g = g.dropna(subset=["offense_snaps"])
+    g = g[g.groupby("name_key")["team"].transform("nunique") == 1]
+    top = g.groupby("name_key").agg(team=("team", "first"), snaps=("offense_snaps", "max"))
+    return {k: (r.team, float(r.snaps)) for k, r in top.iterrows()}
+
+
+def _actual_for(pw: pd.DataFrame, nk: str, season: int, week: int, col: str,
+                caches: dict) -> tuple[float, bool] | None:
+    """(actual stat, is_dnp) for one player-week, or None while it can't be graded.
+
+    nflverse lists a player only if he recorded a stat, so a skill player the snap counts
+    show on the field with no stat line has no row at all. His real number is 0: an OVER on
+    him lost, and until this fallback 66 such props (all OVERs, weeks 1-5 2026) sat ungraded
+    forever, flattering every OVER win rate. It applies only once his team's box score is
+    published (otherwise snap counts that land first would grade a pending game as 0s), and
+    no snap row either stays ungraded -- can't tell inactive from an unmatched name."""
+    hit = pw[(pw.nk == nk) & (pw.season == season) & (pw.week == week)]
+    if not hit.empty:
+        dnp = caches["dnp"].setdefault((season, week), _dnp_keys(season, week))
+        return float(hit[col].sum()), (nk, str(hit.iloc[-1]["team"])) in dnp
+    seen = caches["snaps"].setdefault((season, week), _skill_snaps(season, week)).get(nk)
+    if seen is None:
+        return None
+    team, snaps = seen
+    if not ((pw.season == season) & (pw.week == week) & (pw.team == team)).any():
+        return None                       # that game's player stats aren't out yet
+    return 0.0, snaps == 0
+
+
 def grade(force: bool = False) -> tuple[pd.DataFrame, int]:
     """Fill result/actual/payout for bets whose game has box-score data. Returns
     (updated_log, n_graded). Players confirmed at 0 offensive snaps (inactive/DNP, via
@@ -143,7 +181,7 @@ def grade(force: bool = False) -> tuple[pd.DataFrame, int]:
         return df, 0
     pw = pw.assign(nk=pw["player_display_name"].map(normalize_name))
     n = 0
-    dnp_cache: dict[tuple[int, int], set[tuple[str, str]]] = {}
+    caches: dict = {"dnp": {}, "snaps": {}}
     for i, r in df.iterrows():
         res = "" if pd.isna(r.get("result")) else str(r.get("result")).strip()
         if not force and res in ("win", "loss", "push", "dnp"):
@@ -153,13 +191,12 @@ def grade(force: bool = False) -> tuple[pd.DataFrame, int]:
             continue
         season, week = int(r["season"]), int(r["week"])
         nk = normalize_name(str(r["player"]))
-        hit = pw[(pw.nk == nk) & (pw.season == season) & (pw.week == week)]
-        if hit.empty:
+        got = _actual_for(pw, nk, season, week, col, caches)
+        if got is None:
             continue
-        actual = float(hit[col].sum())
+        actual, is_dnp = got
         df.at[i, "actual"] = round(actual, 1)
-        dnp = dnp_cache.setdefault((season, week), _dnp_keys(season, week))
-        if (nk, str(hit.iloc[-1]["team"])) in dnp:
+        if is_dnp:
             df.at[i, "result"] = "dnp"
             df.at[i, "payout"] = 0.0
             df.at[i, "graded_at"] = date.today().isoformat()
@@ -268,7 +305,7 @@ def grade_line_history(force: bool = False) -> tuple[pd.DataFrame, int]:
     except Exception:
         return df, 0
     n = 0
-    dnp_cache: dict[tuple[int, int], set[tuple[str, str]]] = {}
+    caches: dict = {"dnp": {}, "snaps": {}}
     for i, r in df.iterrows():
         if not force and str(r.get("result") or "") in ("win", "loss", "push", "dnp"):
             continue
@@ -277,13 +314,12 @@ def grade_line_history(force: bool = False) -> tuple[pd.DataFrame, int]:
             continue
         season, week = int(r["season"]), int(r["week"])
         nk = normalize_name(str(r["player"]))
-        hit = pw[(pw.nk == nk) & (pw.season == season) & (pw.week == week)]
-        if hit.empty:
+        got = _actual_for(pw, nk, season, week, col, caches)
+        if got is None:
             continue
-        actual = float(hit[col].sum())
+        actual, is_dnp = got
         df.at[i, "actual"] = round(actual, 1)
-        dnp = dnp_cache.setdefault((season, week), _dnp_keys(season, week))
-        if (nk, str(hit.iloc[-1]["team"])) in dnp:
+        if is_dnp:
             df.at[i, "result"] = "dnp"
             n += 1
             continue
