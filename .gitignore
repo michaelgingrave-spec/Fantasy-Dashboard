@@ -34,3 +34,4 @@ matchup_model/__pycache__/
 data/dfs/nflverse/
 matchup_model/opp_edge_calibration.csv
 matchup_model/opp_td_calibration.csv
+matchup_model/matchup_study_report_quick.md

@@ -89,16 +89,16 @@ def project_many(jobs: list[dict], universe: pd.DataFrame) -> list[pd.DataFrame]
         return [pd.concat([f.result() for f in fs], ignore_index=True) for fs in futs]
 
 
-def universe_rows(positions: tuple[str, ...] = ("WR", "TE")) -> pd.DataFrame:
-    """Box-score rows plus the players on the field with no stat line (actual 0), for the given positions."""
+def universe_rows(positions: tuple[str, ...] = ("WR", "TE"), seasons=SEASONS, weeks=WEEKS) -> pd.DataFrame:
+    """Box-score rows plus the players on the field with no stat line (actual 0), for the given positions, seasons and weeks."""
     pw = D.player_weeks()
-    rows = pw[pw.season.isin(SEASONS) & pw.week.isin(WEEKS) & pw.position.isin(list(positions)) & (pw["season_type"] == "REG")]
+    rows = pw[pw.season.isin(seasons) & pw.week.isin(weeks) & pw.position.isin(list(positions)) & (pw["season_type"] == "REG")]
     rows = (rows.rename(columns={"name_key": "nk"})
             .drop_duplicates(KEY)[KEY + ["position", "team", "targets", "receptions", "receiving_yards", "receiving_tds",
                                          "rushing_tds", "rushing_yards", "carries", "attempts", "dk_fp"]])
     have = set(zip(rows.season, rows.week, rows.nk))
     sn = D.snaps()
-    sn = sn[sn.season.isin(SEASONS) & sn.week.isin(WEEKS) & sn.position.isin(list(positions)) & (sn.offense_snaps > 0)]
+    sn = sn[sn.season.isin(seasons) & sn.week.isin(weeks) & sn.position.isin(list(positions)) & (sn.offense_snaps > 0)]
     sn = sn[sn.groupby(["season", "week", "name_key"]).team.transform("nunique") == 1]   # a name on two teams: can't tell who
     sn = sn.drop_duplicates(["season", "week", "name_key"]).rename(columns={"name_key": "nk"})
     sn = sn[[(s, w, n) not in have for s, w, n in zip(sn.season, sn.week, sn.nk)]]
