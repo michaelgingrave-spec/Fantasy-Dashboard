@@ -108,6 +108,7 @@ def test_line_history_buckets_can_be_limited_to_the_recommended_rows():
     rec = B.line_history_buckets(df, recommended_only=True).set_index("conf")
     assert every.loc["solid", "n"] == 8 and every.loc["solid", "win%"] == 37.5
     assert rec.loc["solid", "n"] == 4 and rec.loc["solid", "win%"] == 75.0
+    assert rec.loc["solid", "of all"] == 8 and "of all" not in every.columns   # shows how many were screened out
     assert B.line_history_buckets(df.assign(role_ratio=2.0), recommended_only=True).empty
 
 

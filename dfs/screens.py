@@ -865,9 +865,13 @@ def render(screen: str) -> None:
         all_perf = _bets0.line_history_buckets()
         if not rec_perf.empty:
             st.caption(f"**2026 so far, recommended bets by confidence tier** "
-                       f"({int(rec_perf['n'].sum())} graded bets that pass the ✓ Recommended "
-                       "filter — small samples this early, read directionally; every graded "
-                       "line is in the expander below)")
+                       f"({int(rec_perf['n'].sum())} of {int(rec_perf['of all'].sum())} graded "
+                       "bets pass the ✓ Recommended filter — small samples this early, read "
+                       "directionally). `of all` = every graded bet in that tier. Recommended "
+                       "screens out most strong/high bets by design: a big edge is a big gap "
+                       "between our number and the line, and it caps that gap at 1.4× the line "
+                       "and wants FantasyPoints to agree on the role. Every graded line is in "
+                       "the expander below.")
             _small_col, _ = st.columns([7, 3])   # ~30% narrower than full width
             _small_col.dataframe(rec_perf, hide_index=True, width="content",
                                  height=35 * (len(rec_perf) + 1))

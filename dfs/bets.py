@@ -353,6 +353,7 @@ def line_history_buckets(df: pd.DataFrame | None = None, min_n: int = 0,
     if df.empty or "conf" not in df.columns:
         return pd.DataFrame()
     g = df[df["result"].isin(["win", "loss", "push"])].copy()
+    graded = g
     if recommended_only and not g.empty:
         g = recommended_rows(g)
     if g.empty:
@@ -365,9 +366,12 @@ def line_history_buckets(df: pd.DataFrame | None = None, min_n: int = 0,
         w, l = int((s.result == "win").sum()), int((s.result == "loss").sum())
         if w + l < min_n:
             continue
-        rows.append({"conf": tier, "n": len(s),
-                     "win%": round(100 * w / (w + l), 1) if (w + l) else None,
-                     "ROI@-110%": round(100 * _roi_at(_PRICE, w, l), 1) if (w + l) else None})
+        row = {"conf": tier, "n": len(s)}
+        if recommended_only:      # show the thinning: big-edge bets are mostly screened out of Recommended
+            row["of all"] = int((graded["conf"] == tier).sum())
+        row["win%"] = round(100 * w / (w + l), 1) if (w + l) else None
+        row["ROI@-110%"] = round(100 * _roi_at(_PRICE, w, l), 1) if (w + l) else None
+        rows.append(row)
     return pd.DataFrame(rows)
 
 

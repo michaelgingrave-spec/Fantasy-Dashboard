@@ -97,7 +97,7 @@ def test_tier_help_text_counts_only_recommended_bets_by_default():
     shaky["role_ratio"] = 2.0                      # FantasyPoints disagrees with our role read
     hist = pd.concat([stable, shaky], ignore_index=True)
     txt = C.tier_help_text(hist)
-    assert "recommended bets" in txt and "solid 56.0% vs 52.4% (n=100)" in txt
+    assert "recommended bets" in txt and "solid 56.0% vs 52.4% (n=100 of 160)" in txt
     assert "it has gone" not in txt                # the never-shown tier can't be recommended
     every = C.tier_help_text(hist, recommended_only=False)
     assert "pulled lines" in every and "solid 44.4% vs 52.4% (n=160)" in every

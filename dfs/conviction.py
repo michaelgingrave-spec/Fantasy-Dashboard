@@ -174,7 +174,8 @@ def tier_help_text(lh: pd.DataFrame | None = None, min_graded: int = MIN_CAL_ROW
 
     def cell(tier: str) -> str:
         vs = f" vs {need[tier]:.1f}%" if tier in need.index and pd.notna(need[tier]) else ""
-        return f"{lb.loc[tier, 'win%']:.1f}%{vs} (n={int(lb.loc[tier, 'n'])})"
+        of = f" of {int(lb.loc[tier, 'of all'])}" if "of all" in lb.columns else ""
+        return f"{lb.loc[tier, 'win%']:.1f}%{vs} (n={int(lb.loc[tier, 'n'])}{of})"
 
     scope = ""
     if {"season", "week"}.issubset(graded.columns) and graded["season"].notna().any():
