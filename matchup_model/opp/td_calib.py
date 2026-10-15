@@ -7,6 +7,11 @@ our model's expected-TD-count (already computed inside opp_line's rec_td/rush_td
 P(>=1 TD) via a Poisson approximation, and check whether that forecast matches reality.
 
     python -m matchup_model.opp.td_calib
+
+CAVEAT: only players who ended up with >= 2 targets+carries in the game are scored (and the flat baseline is computed on the
+same filter). That conditions on the outcome, so the actual scoring rate runs above what a pre-game probability should be and
+an over-projecting model looks calibrated here. After the 2026-10 WR/TE receiving recalibration its mean WR/TE probability reads
+~4 points low on this filter while on everyone who played it matches reality (see receiving_calibration.audit).
 """
 from __future__ import annotations
 

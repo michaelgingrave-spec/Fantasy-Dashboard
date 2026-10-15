@@ -871,6 +871,10 @@ def render(screen: str) -> None:
             st.caption("**2026 so far, ROI by confidence tier** — graded bets pulled this "
                        "season, ROI at a flat -110. Small samples this early, read "
                        "directionally.")
+            _vnote = _bets0.version_note()
+            if _vnote:
+                st.caption(f"⚠️ These records pool two projection models ({_vnote}). v2 is the "
+                           "recalibrated WR/TE receiving model; its own record is still small.")
             t_all, t_rec, t_cal = st.columns(3)
             with t_all:
                 st.markdown("**All bets**")

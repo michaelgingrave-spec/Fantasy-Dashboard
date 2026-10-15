@@ -95,6 +95,49 @@ def test_line_history_snapshot_and_buckets(tmp_path, monkeypatch):
     assert bk.loc[lean, "win%"] == 0.0
 
 
+def test_snapshot_stamps_the_model_version_and_leaves_older_rows_unstamped(tmp_path, monkeypatch):
+    import pandas as pd
+    from dfs import props
+
+    monkeypatch.setattr(props, "LINE_HISTORY_PATH", tmp_path / "lh_ver.csv")
+    monkeypatch.setattr(props, "_model_version", lambda: 2)
+    # a history written before the stamp existed: no model_ver column at all
+    pd.DataFrame({"season": [2026], "week": [1], "event": ["old"], "player": ["Old Guy"], "market": ["rec yds"],
+                  "line": [50.0], "our proj": [55.0], "result": ["win"], "actual": [60.0]}
+                 ).to_csv(props.LINE_HISTORY_PATH, index=False)
+    edf = pd.DataFrame({"player": ["New Guy"], "market": ["rec yds"], "line": [40.0], "our proj": [45.0],
+                        "lean": ["OVER"]})
+    props.snapshot_lines(edf, 2026, 6, "X @ Y")
+    lh = pd.read_csv(props.LINE_HISTORY_PATH).set_index("player")
+    assert lh.loc["New Guy", "model_ver"] == 2
+    assert pd.isna(lh.loc["Old Guy", "model_ver"])           # logged before versions existed: that is version 1
+
+
+def test_version_note_names_the_models_only_when_the_history_spans_more_than_one():
+    import pandas as pd
+
+    base = {"season": 2026, "line": 50.0, "market": "rec yds", "our proj": 60.0, "conf": "solid", "role_ratio": 1.0}
+    old = [{**base, "week": w, "result": "win"} for w in (1, 2, 3)]            # logged before the stamp: no model_ver
+    assert B.version_note(pd.DataFrame(old)) == ""
+    new = [{**base, "week": w, "result": "loss", "model_ver": 2} for w in (6, 7)]
+    note = B.version_note(pd.DataFrame(old + new))
+    assert "v1: 3 lines, weeks 1–3" in note and "v2: 2 lines, weeks 6–7" in note
+    one_week = B.version_note(pd.DataFrame(old + new[:1]))
+    assert "v2: 1 lines, week 6" in one_week
+    assert B.version_note(pd.DataFrame(new + [{**base, "week": 8, "result": "", "model_ver": 3}])) == ""   # ungraded: not counted
+    assert B.version_note(pd.DataFrame()) == ""
+
+
+def test_model_version_is_the_opportunity_models_unless_the_blend_is_unavailable(monkeypatch):
+    from dfs import props
+    from matchup_model.opp import blend, model
+
+    monkeypatch.setattr(blend, "available", lambda: True)
+    assert props._model_version() == model.MODEL_VERSION
+    monkeypatch.setattr(blend, "available", lambda: False)
+    assert props._model_version() == 0                       # the project_stats fallback made these projections
+
+
 def test_line_history_buckets_can_be_limited_to_the_recommended_rows():
     import pandas as pd
 

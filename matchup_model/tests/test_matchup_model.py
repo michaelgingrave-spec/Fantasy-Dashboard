@@ -94,8 +94,10 @@ def test_scheme_grids_load():
     assert ytg_rk[softest] == max(ytg_rk.values())
     # 1st-read% was the broken column — must not be in the defense table
     assert "1st-read%" not in d.columns
-    # season blend weight is 0 until 2026 files exist
-    assert scheme.blend_weight() == 0.0
+    # season blend weight: 0.0 until 2026 files exist, then it ramps toward 1.0 with games played
+    w = scheme.blend_weight()
+    has_2026 = not scheme._read("receiving-coverage_wr_2026.csv").empty
+    assert 0.0 <= w <= 1.0 and (w > 0.0) == has_2026
     # run concept grid for a bell-cow RB
     rc = scheme.player_run_by_concept("bijan robinson")
     assert set(rc["concept"]).issubset(set(scheme.CONCEPTS)) and rc["YPC"].max() > 2

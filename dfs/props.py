@@ -540,10 +540,22 @@ def role_stable(df: pd.DataFrame, role_lo: float = 0.85, role_hi: float = 1.20,
 stable_only = confident_only
 
 
+def _model_version() -> int:
+    """Version of the projections behind a pull (matchup_model.opp.model.MODEL_VERSION); 0 if the pull fell back
+    to the older project_stats projections. Rows logged before the stamp existed have no value: they are version 1."""
+    try:
+        from matchup_model.opp import blend
+        from matchup_model.opp.model import MODEL_VERSION
+        return int(MODEL_VERSION) if blend.available() else 0
+    except Exception:  # noqa: BLE001
+        return 0
+
+
 def snapshot_lines(edges: pd.DataFrame, season: int, week: int, event: str) -> int:
     """Append every (player, market) line + our projection from a pull to
     line_history.csv, so the calibration can later grade against the *real* book line
-    (not just hand-logged bets). Deduped on (season, week, player, market), latest kept."""
+    (not just hand-logged bets). Deduped on (season, week, player, market), latest kept.
+    Each row is stamped with the projection model's version (`model_ver`)."""
     if edges is None or edges.empty:
         return 0
     keep = ["player", "market", "line", "our proj", "conf", "z", "edge", "p(hit)%", "p edge",
@@ -553,6 +565,7 @@ def snapshot_lines(edges: pd.DataFrame, season: int, week: int, event: str) -> i
     snap.insert(1, "week", int(week))
     snap.insert(2, "event", event)
     snap["pulled_at"] = datetime.now().isoformat(timespec="seconds")
+    snap["model_ver"] = _model_version()
     snap["actual"] = pd.NA
     snap["result"] = ""
     LINE_HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)

@@ -332,6 +332,25 @@ def grade_line_history(force: bool = False) -> tuple[pd.DataFrame, int]:
     return df, n
 
 
+def version_note(df: pd.DataFrame | None = None) -> str:
+    """Which projection models the graded line history spans, e.g. "v1: 1530 lines, weeks 1–5; v2: 210 lines, week 6" --
+    or "" while it is a single model. Rows logged before the `model_ver` stamp existed are version 1. The tier tables
+    pool every row, so this is what tells a reader that a record mixes the old and recalibrated models."""
+    lh = load_line_history() if df is None else df
+    if lh.empty or "result" not in lh.columns:
+        return ""
+    g = lh[lh["result"].isin(["win", "loss", "push"])]
+    if g.empty:
+        return ""
+    ver = (pd.to_numeric(g["model_ver"], errors="coerce").fillna(1).astype(int)
+           if "model_ver" in g.columns else pd.Series(1, index=g.index))
+    parts = []
+    for v, grp in g.groupby(ver):
+        lo, hi = int(grp["week"].min()), int(grp["week"].max())
+        parts.append(f"v{v}: {len(grp)} lines, " + (f"week {lo}" if lo == hi else f"weeks {lo}–{hi}"))
+    return "; ".join(parts) if len(parts) > 1 else ""
+
+
 def recommended_rows(df: pd.DataFrame) -> pd.DataFrame:
     """The rows the Prop Edges screen calls Recommended: a labeled tier that clears the
     always-on `confident_only` guard AND the `role_stable` filter -- the same two functions

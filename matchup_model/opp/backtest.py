@@ -5,6 +5,12 @@ Same player-weeks for all three, DK scoring throughout. Prior = strictly earlier
 (+ all earlier seasons). Test seasons 2023-2025, weeks 4-18.
 
     python -m matchup_model.opp.backtest
+
+CAVEAT: the scored rows are only players who ended up with >= 3 targets+carries+attempts that game. That filter looks at the
+outcome, which inflates the realised average, so a model that over-projects looks best here and an unbiased one looks worse
+(on everyone who played the order flips). Fine for comparing models with the same level bias; do NOT use it to compare a
+recalibrated model with its predecessor or to re-fit BLEND_W after a level change -- see receiving_calibration.audit, which scores
+everyone who played.
 """
 from __future__ import annotations
 

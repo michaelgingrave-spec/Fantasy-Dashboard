@@ -33,6 +33,29 @@ QB_SCRAMBLE = 1.5          # plays skimmed off team rush att for QB scrambles/kn
 # empirical-Bayes pseudo-counts (event units, not games)
 K_SHARE = 3.0             # games, for target/carry share
 K_YDS = 28.0             # targets or carries, for yds/opportunity
+
+# Stamped on every logged prop line (line_history.csv `model_ver`; rows from before the stamp existed are version 1) so
+# leans made by different versions of the projections stay separable. Bump it whenever a change moves projections.
+#   1 = original opportunity model        2 = 2026-10 WR/TE receiving recalibration (the block just below)
+MODEL_VERSION = 2
+
+# WR/TE receiving recalibration (2023-25 walk-forward; derived by matchup_model.opp.receiving_calibration, which also
+# reports the before/after). The old model gave a team's WR+TE ~28% more targets than they really get (every season),
+# because depth players' shares were shrunk up toward a position-wide prior. Fixes: less share shrinkage, more
+# efficiency shrinkage, a constant volume scale per position/stat, and a small nudge from the opposing defense's trailing
+# targets allowed to the position. The scale is learned on players projected for >= 3 targets (the ones with prop lines
+# and DFS salaries) with players who were on the field but had no stat line counted as zeros; depth players are still
+# over-projected (actual/projected ~0.5-0.7 below 3 targets). Re-run receiving_calibration and paste its block here to
+# re-derive them.
+K_SHARE_REC = 1.0         # games, WR/TE target share (RB share keeps K_SHARE)
+K_YPT = 60.0              # targets, WR/TE yards per target (RB keeps K_YDS)
+REC_SCALE = {
+    "WR": {"tgt": 0.826, "rec": 0.820, "rec_yds": 0.827, "td": 0.922},
+    "TE": {"tgt": 0.844, "rec": 0.860, "rec_yds": 0.869, "td": 0.992},
+}
+DEF_TGT_B = 0.22          # weight on (defense targets-allowed rate to the position / league - 1)
+DEF_TGT_GAMES = 8         # trailing defense games in that rate
+DEF_TGT_CLIP = (0.6, 1.5)
 K_CATCH = 26.0
 K_TD = 55.0
 K_YPA = 90.0             # dropbacks, for QB yds/att
@@ -272,11 +295,14 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
 
     if pos in ("WR", "TE"):
         ts = _shrink(_ewma(h["target_share"].to_numpy()), n_g,
-                     _pos_share_prior(pos), K_SHARE) * inj_rec
-        tgt = max(0.0, ts) * tv["pass_att"]
+                     _pos_share_prior(pos), K_SHARE_REC) * inj_rec
+        def_adj = _def_target_adj(pos, team, season, week)
+        tgt0 = max(0.0, ts) * tv["pass_att"] * def_adj        # before the volume scale (see REC_SCALE)
+        sc = REC_SCALE[pos]
+        tgt = tgt0 * sc["tgt"]
         n_t = float(h["targets"].sum())
         ypt = _shrink(_ewma((h.receiving_yards / h.targets.replace(0, np.nan)).to_numpy()),
-                      n_t, pri["ypt"], K_YDS)
+                      n_t, pri["ypt"], K_YPT)
         yprr_ratio = None
         if yprr_adj:
             p_yprr, lg_yprr, _n_rte = _trailing_yprr(key, pos, season, week)
@@ -295,9 +321,14 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
         # team passing TDs (from the implied total) x this player's target share
         vegas_td = TD_FROM_TOTAL_PASS * tv["team_total"] * max(0.0, ts) \
             if np.isfinite(tv["team_total"]) else np.nan
-        rec_td = _td_blend(tgt * td_rt, vegas_td)
-        line = {"tgt": tgt, "rec": tgt * catch, "rec_yds": tgt * ypt, "rec_td": rec_td}
-        method = f"{ts:.1%} tgt share x {tv['pass_att']:.0f} att -> {tgt:.1f} tgt; {ypt:.1f} y/t"
+        # the TD rate part runs on the UNSCALED targets and gets its own learned multiplier: the volume scale is learned for
+        # receptions/yards and would leave the high-usage players (the ones with anytime-TD lines) ~10% short on TDs
+        rec_td = _td_blend(tgt0 * td_rt, vegas_td) * sc.get("td", 1.0)
+        line = {"tgt": tgt, "rec": tgt0 * catch * sc["rec"], "rec_yds": tgt0 * ypt * sc["rec_yds"], "rec_td": rec_td}
+        method = (f"{ts:.1%} tgt share x {tv['pass_att']:.0f} att x{sc['tgt']:.2f} volume scale "
+                  f"-> {tgt:.1f} tgt; {ypt:.1f} y/t")
+        if abs(def_adj - 1.0) >= 0.005:
+            method += f"  ·  defense targets x{def_adj:.2f}"
         if yprr_ratio is not None:
             method += f"  ·  YPRR-adj x{yprr_ratio:.2f}"
 
@@ -357,6 +388,51 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
     return {"line": line, "dk_fp": D.dk_points_from_line(line), "games": n_g,
             "team": team, "vol": tv, "method": method,
             "inj_mult": round(inj_rec if pos != "RB" else min(inj_rec, inj_rush), 3)}
+
+
+@lru_cache(maxsize=1)
+def _def_target_table() -> pd.DataFrame:
+    """Targets each defense allowed, per game, to WR / TE / RB (nflverse `opponent_team` is the defense)."""
+    pw = D.player_weeks()
+    if "season_type" in pw.columns:
+        pw = pw[pw["season_type"] == "REG"]
+    g = (pw[pw.position.isin(["WR", "TE", "RB"])]
+         .groupby(["season", "week", "opponent_team", "position"]).targets.sum().unstack("position").fillna(0.0))
+    for p in ("WR", "TE", "RB"):
+        if p not in g.columns:
+            g[p] = 0.0
+    g["total"] = g[["WR", "TE", "RB"]].sum(axis=1)
+    g = g.reset_index()
+    g["opp"] = g["opponent_team"].map(D.canon_team)
+    return g.sort_values(["opp", "season", "week"]).reset_index(drop=True)
+
+
+@lru_cache(maxsize=4096)
+def def_target_rel(opp: str, pos: str, season: int, week: int) -> float:
+    """The defense's trailing targets-allowed per game to `pos` (last DEF_TGT_GAMES, reaching back into last
+    season early on) relative to the league over the same stretch -- 1.0 = average, 1.2 = 20% more than the
+    league. Games strictly before (season, week); 1.0 when it has fewer than 3."""
+    t = _def_target_table()
+    g = t[(t.opp == D.canon_team(opp)) & ((t.season < season) | ((t.season == season) & (t.week < week)))]
+    if len(g) < 3:
+        return 1.0
+    g = g.tail(DEF_TGT_GAMES)
+    league = t[((t.season == season) & (t.week < week)) | (t.season == season - 1)][pos].mean()
+    if not np.isfinite(league) or league <= 0:
+        return 1.0
+    return float(np.clip(g[pos].mean() / league, *DEF_TGT_CLIP))
+
+
+def _def_target_adj(pos: str, team: str, season: int, week: int) -> float:
+    """Multiplier on a WR/TE's projected targets from the defense he faces: 1 + DEF_TGT_B x (rate - 1). The
+    opponent comes from the schedule; 1.0 if the game or the weight isn't available."""
+    if DEF_TGT_B == 0.0:
+        return 1.0
+    hit = _games_idx()
+    hit = hit[(hit.season == season) & (hit.week == week) & (hit.team == team)]
+    if hit.empty or not isinstance(hit.iloc[0]["opp"], str):
+        return 1.0
+    return 1.0 + DEF_TGT_B * (def_target_rel(hit.iloc[0]["opp"], pos, season, week) - 1.0)
 
 
 @lru_cache(maxsize=1)
