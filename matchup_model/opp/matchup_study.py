@@ -30,13 +30,14 @@ import sys
 from concurrent.futures import ProcessPoolExecutor
 from math import erfc, sqrt
 from pathlib import Path
-from typing import NamedTuple
+from typing import Callable, NamedTuple
 
 import numpy as np
 import pandas as pd
 
 from dfs.names import normalize_name
 from dfs.props import _sigma
+from dfs import historical_lines as HL
 from matchup_model.config import OUT
 from matchup_model.opp import data as D
 from matchup_model.opp import ds_features as F
@@ -508,16 +509,48 @@ def signal_vs_market(d: pd.DataFrame, signal: str, reps: int) -> dict:
             "corr": float(np.corrcoef(s[signal], (s.line - s.raw) / s.sigma)[0, 1])}
 
 
-def score_2026(hist: pd.DataFrame, compact: list, spec: Target, rows: pd.DataFrame) -> tuple[pd.Series, pd.Series]:
-    """Own-usage-trend score from a compact model trained on all the history, standardised on the history's out-of-fold scores: (2026 rows, history rows)."""
+class Signal(NamedTuple):
+    """One hypothesis: its history (the signal for every row of `hist`, out of fold for the modelled scores) and a way to score new rows."""
+    label: str                      # the row label in the report
+    group: str                      # "wrte" or "rb": which feature frame new rows need
+    market: str                     # the prop market it is tested on
+    hist: pd.DataFrame
+    hist_z: pd.Series
+    rows_z: Callable                # feature frame of new rows -> the signal for them
+    actual: str                     # outcome column in `hist`
+    base: str                       # our raw projection column in `hist`
+    comp: str                       # dfs.props component name (for the stat's SD)
+    needs_history: bool = False     # a modelled score needs >= MIN_PRIOR prior games to be defined
+
+
+def fit_usage(hist: pd.DataFrame, compact: list, spec: Target) -> tuple[pd.Series, Callable]:
+    """Own-usage-trend score: a compact model trained on all the history, standardised on its own out-of-fold scores. Returns (the out-of-fold score of
+    every eligible history row, a function that scores new rows with the model fit on everything)."""
     f = eligible(hist, spec)
     seasons = sorted(f.season.unique())
     y, ytr = centred_labels(f, spec, seasons)
     oof = out_of_fold(f, compact, "xgb", ytr, seasons)
     mm = median_model().fit(f[spec.level].astype(float), f[spec.actual].astype(float))
     clf = xgb_clf().fit(f[compact].astype(float), (f[spec.actual].to_numpy() > mm.predict(f[spec.level].astype(float))).astype(int))
-    p = pd.Series(clf.predict_proba(rows[compact].astype(float))[:, 1], index=rows.index)
-    return (p - oof.mean()) / oof.std(), (oof - oof.mean()) / oof.std()
+    mu, sd = oof.mean(), oof.std()
+
+    def rows_z(rows: pd.DataFrame) -> pd.Series:
+        return pd.Series((clf.predict_proba(rows[compact].astype(float))[:, 1] - mu) / sd, index=rows.index)
+    return (oof - mu) / sd, rows_z
+
+
+def build_signals(wr_df: pd.DataFrame, rb_df: pd.DataFrame, rb_fit: dict, C: pd.DataFrame) -> list[Signal]:
+    """The four hypotheses, five rows (the WR/TE usage score is tested on two markets, each with its own target)."""
+    sigs = []
+    for market, target, actual, base, comp in (("rec yds", "rec yards", "receiving_yards", "b_rec_yds", "rec_yds"), ("receptions", "targets", "receptions", "b_rec", "rec")):
+        z_hist, rows_z = fit_usage(wr_df, WRTE_COMPACT, WRTE_TARGETS[target])
+        sigs.append(Signal(f"WR/TE own-usage-trend score, {market} lines", "wrte", market, wr_df, z_hist, rows_z, actual, base, comp, True))
+    z_hist, rows_z = fit_usage(rb_df, RB_COMPACT, RB_TARGETS["rush yards"])
+    sigs += [Signal("RB run-defense weakness index, rush yds lines", "rb", "rush yds", rb_df, run_index(rb_df, rb_fit), lambda rows: run_index(rows, rb_fit),
+                    "rushing_yards", "b_rush_yds", "rush_yds"),
+             Signal("RB opponent zone rate, receptions lines", "rb", "receptions", rb_df, zone_index(rb_df, C), lambda rows: zone_index(rows, C), "receptions", "b_rec", "rec"),
+             Signal("RB own-usage-trend score, rush yds lines", "rb", "rush yds", rb_df, z_hist, rows_z, "rushing_yards", "b_rush_yds", "rush_yds", True)]
+    return sigs
 
 
 def history_effect(hist: pd.DataFrame, signal: pd.Series, actual: str, base: str, comp: str) -> tuple[float, float, float]:
@@ -529,47 +562,151 @@ def history_effect(hist: pd.DataFrame, signal: pd.Series, actual: str, base: str
     return clustered_slope(signal, (h[actual] - h[base]) / sd, h.nk + "_" + h.season.astype(str), REPS["slope"] // 2)
 
 
-def market_2026(d26: pd.DataFrame, rec: dict, rush: dict, rec_hist: pd.DataFrame, rb_hist: pd.DataFrame, rb_fit: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Every 2026 signal test on the real lines, once on all weeks and once on the forward weeks (>= FORWARD_FROM) nobody had seen; plus each signal's
-    historical worth season by season (is the effect stable, or fading?)."""
+def frames_2026(d26: pd.DataFrame, rec: dict, rush: dict, sigs: list[Signal]) -> dict:
+    """For each signal, the 2026 graded lines of its market with our raw projection and the signal attached (label -> frame)."""
+    feats = {}
+    for group, pos in (("wrte", ["WR", "TE"]), ("rb", ["RB"])):
+        mk = ["rec yds", "receptions"] if group == "wrte" else ["rush yds", "receptions"]
+        r = d26[d26.position.isin(pos) & d26.market.isin(mk) & d26.opp.notna()]
+        rows = r.drop_duplicates(["week", "nk"])[["season", "week", "nk", "position", "team", "opp"]].reset_index(drop=True)
+        if group == "wrte":
+            X = pd.concat([_project_chunk(rows), F.player_features(rec["P"], rows)], axis=1)
+            X["is_te"] = (X.position == "TE").astype(float)
+        else:
+            X = pd.concat([_project_chunk(rows), F.build_rushing(rows, rush["R"], rush["B"]).drop(columns=rows.columns)], axis=1)
+        feats[group] = (r, X)
+    out = {}
+    for sg in sigs:
+        r, X = feats[sg.group]
+        ok = X.p_n_prior >= MIN_PRIOR if sg.needs_history else pd.Series(True, index=X.index)
+        z = pd.Series(np.nan, index=X.index)
+        z[ok] = sg.rows_z(X[ok])
+        out[sg.label] = (r[r.market == sg.market].merge(X[["week", "nk", sg.base]].assign(signal=z), on=["week", "nk"], how="left")
+                         .rename(columns={sg.base: "raw"}))
+    return out
+
+
+def devig(over_price, under_price) -> np.ndarray:
+    """No-vig P(over) from the two American prices."""
+    def imp(a):
+        a = np.asarray(a, float)
+        return np.where(a > 0, 100 / (a + 100), -a / (-a + 100))
+    po, pu = imp(over_price), imp(under_price)
+    return po / (po + pu)
+
+
+def closing_frame(L: pd.DataFrame, hist: pd.DataFrame, market: str, actual: str, base: str, comp: str, book: str, signal: pd.Series | None = None) -> pd.DataFrame:
+    """One book's closing lines in one market, set against our raw projection and the result for every row of `hist` that has a line (one line per
+    player-week: the one nearest a coin flip if a book lists several), with the signal attached when there is one. Keeps both prices for ROI."""
+    cols = ["season", "week", "player", "line", "raw", "actual", "sigma", "z", "p_mkt_over", "over", "signal", "over_price", "under_price"]
+    d = L[(L.market == market) & (L.book == book) & L.over_price.notna() & L.under_price.notna()].copy()
+    if d.empty:
+        return pd.DataFrame(columns=cols)
+    d["nk"] = d.player.map(normalize_name)
+    d["p_mkt_over"] = devig(d.over_price, d.under_price)
+    d = d.assign(dist=(d.p_mkt_over - 0.5).abs()).sort_values("dist").drop_duplicates(["season", "week", "nk"], keep="first")
+    h = hist[["season", "week", "nk", actual, base]].assign(signal=(signal.reindex(hist.index) if signal is not None else 0.0))
+    m = d.merge(h, on=["season", "week", "nk"], how="inner").rename(columns={"point": "line", actual: "actual", base: "raw"})
+    m = m[m.actual.notna() & m.raw.notna() & (m.actual != m.line)].copy()
+    m["sigma"] = [_sigma(comp, x) for x in m.line]
+    m["z"] = (m.raw - m.line) / m.sigma
+    m["over"] = (m.actual > m.line).astype(float)
+    m["player"] = m.nk
+    return m[cols].reset_index(drop=True)
+
+
+def historical_frame(L: pd.DataFrame, sg: Signal, book: str) -> pd.DataFrame:
+    return closing_frame(L, sg.hist, sg.market, sg.actual, sg.base, sg.comp, book, sg.hist_z)
+
+
+def profit(price, won) -> np.ndarray:
+    """Profit on a 1-unit bet at an American price."""
+    price = np.asarray(price, float)
+    return np.where(np.asarray(won, bool), np.where(price < 0, 100 / np.abs(price), price / 100), -1.0)
+
+
+def clustered_mean(x, groups, reps: int, seed: int = 11) -> tuple[float, float, float]:
+    """Mean of x with a 95% interval from a bootstrap over whole clusters."""
+    x = np.asarray(x, float)
+    gid, W = cluster_weights(groups, reps, seed)
+    num, den = np.bincount(gid, weights=x, minlength=W.shape[1]), np.bincount(gid, minlength=W.shape[1]).astype(float)
+    return float(x.mean()), *(float(v) for v in np.percentile((W @ num) / (W @ den), [2.5, 97.5]))
+
+
+def follow_table(L: pd.DataFrame, sg: Signal, ks=(0.5, 1.0, 1.5), books=("draftkings", "fanduel")) -> pd.DataFrame:
+    """The bet-level version: OVER whenever the signal is >= k SDs, UNDER whenever it is <= -k, at the posted closing price (unit stakes, player-clustered 95%
+    intervals), for all of them and for each side. The break-even column is the win rate those prices need."""
+    rows = []
+    for book in books:
+        d = historical_frame(L, sg, book)
+        for k in ks:
+            for side in ("both", "over", "under"):
+                sel = d[(d.signal >= k) | (d.signal <= -k)] if side == "both" else d[d.signal >= k] if side == "over" else d[d.signal <= -k]
+                if len(sel) < 30:
+                    continue
+                over = (sel.signal > 0).to_numpy()
+                won = np.where(over, sel.over == 1, sel.over == 0)
+                price = np.where(over, sel.over_price, sel.under_price)
+                pr = profit(price, won)
+                be = float(np.mean(np.where(price < 0, -price / (-price + 100), 100 / (price + 100))))
+                rows.append({"book": book, "k": k, "side": side, "bets": len(sel), "win": 100 * float(won.mean()), "break-even": 100 * be,
+                             "roi": tuple(100 * v for v in clustered_mean(pr, sel.player, REPS["logit"]))})
+    return pd.DataFrame(rows)
+
+
+# the markets we model, as (label, history frame key, prop market, outcome column, our raw projection column, component for the stat's SD)
+MARKET_SETS = (("WR/TE rec yds", "wr", "rec yds", "receiving_yards", "b_rec_yds", "rec_yds"), ("WR/TE receptions", "wr", "receptions", "receptions", "b_rec", "rec"),
+               ("RB rush yds", "rb", "rush yds", "rushing_yards", "b_rush_yds", "rush_yds"), ("RB receptions", "rb", "receptions", "receptions", "b_rec", "rec"),
+               ("RB rec yds", "rb", "rec yds", "receiving_yards", "b_rec_yds", "rec_yds"))
+
+
+def lean_and_edge(L: pd.DataFrame, wr_df: pd.DataFrame, rb_df: pd.DataFrame, reps: int) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """On a season of closing lines, per market and book: (1) do the lines LEAN -- the share that went over vs what the no-vig price said, and what a blind UNDER
+    (and OVER) bet at the posted price earned; (2) does OUR projection add anything to the closing line -- 'went over' on logit(market) + our edge z."""
+    lean, edge = [], []
+    for label, which, market, actual, base, comp in MARKET_SETS:
+        hist = wr_df if which == "wr" else rb_df
+        for book in ("draftkings", "fanduel"):
+            d = closing_frame(L, hist, market, actual, base, comp, book)
+            if len(d) < 100:
+                continue
+            gap = clustered_mean(d.over - d.p_mkt_over, d.player, reps)
+            under = clustered_mean(profit(d.under_price, d.over == 0), d.player, reps)
+            over = clustered_mean(profit(d.over_price, d.over == 1), d.player, reps)
+            half = d.week <= d.week.median()
+            lean.append({"market": label, "book": book, "n": len(d), "went over": 100 * float(d.over.mean()), "market said": 100 * float(d.p_mkt_over.mean()),
+                         "gap": tuple(100 * v for v in gap), "first half over": 100 * float(d.over[half].mean()), "second half over": 100 * float(d.over[~half].mean()),
+                         "under roi": tuple(100 * v for v in under), "over roi": tuple(100 * v for v in over)})
+            X = np.column_stack([ME.logit(d.p_mkt_over), d.z])
+            b, lo, hi = ME.fit_logit(X, d.over.to_numpy(), d.player.to_numpy(), reps=reps)
+            move = lambda c: 100 * (1 / (1 + np.exp(-c)) - 0.5)  # noqa: E731
+            edge.append({"market": label, "book": book, "n": len(d), "price coef": (b[1], lo[1], hi[1]), "z coef": (b[2], lo[2], hi[2]),
+                         "pts": (move(b[2]), move(lo[2]), move(hi[2])), "price sd": float(np.std(ME.logit(d.p_mkt_over)))})
+    return pd.DataFrame(lean), pd.DataFrame(edge)
+
+
+def market_tables(sigs: list[Signal], f26: dict, L: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Every signal against every set of lines: the 2026 weeks (all, and the forward weeks nobody had seen), a full season of 2025 closing lines at each
+    book, and the two pooled; plus each signal's historical worth season by season (is the effect stable, or fading?)."""
     out, seasons = [], []
-
-    def add(label, d, signal, note, hist, hist_signal, actual, base, comp):
-        history = history_effect(hist, hist_signal, actual, base, comp)
-        for scope, g in (("all weeks", d), (f"forward (week {FORWARD_FROM}+)", d[d.week >= FORWARD_FROM])):
-            r = signal_vs_market(g, signal, REPS["logit"])
-            out.append({"signal": label, "lines": scope, "n": r["n"], "note": note, "history": history, **r})
-        for sn in sorted(hist.season.unique()):
-            idx = hist_signal.dropna().index.intersection(hist.index[hist.season == sn])
+    for sg in sigs:
+        history = history_effect(sg.hist, sg.hist_z, sg.actual, sg.base, sg.comp)
+        sets = []
+        if sg.label in f26:
+            g = f26[sg.label]
+            sets += [("2026 weeks 1-5 (all)", g), (f"2026 forward (week {FORWARD_FROM}+)", g[g.week >= FORWARD_FROM])]
+        if len(L):
+            f25 = {bk: historical_frame(L, sg, bk) for bk in ("draftkings", "fanduel")}
+            sets += [("2025 closing, DraftKings", f25["draftkings"]), ("2025 closing, FanDuel", f25["fanduel"])]
+            if sg.label in f26:
+                sets.append(("2025 DK closing + 2026", pd.concat([f25["draftkings"], f26[sg.label][f25["draftkings"].columns.intersection(f26[sg.label].columns)]], ignore_index=True)))
+        for scope, g in sets:
+            r = signal_vs_market(g, "signal", REPS["logit"])
+            out.append({"signal": sg.label, "lines": scope, "n": r["n"], "history": history, **r})
+        for sn in sorted(sg.hist.season.unique()):
+            idx = sg.hist_z.dropna().index.intersection(sg.hist.index[sg.hist.season == sn])
             if len(idx) >= 100:
-                seasons.append({"signal": label, "season": int(sn), "n": len(idx), "history": history_effect(hist, hist_signal[idx], actual, base, comp)})
-
-    # WR/TE own-usage trend -> receiving yards and receptions lines (the receptions line uses the targets score)
-    r = d26[d26.position.isin(["WR", "TE"]) & d26.market.isin(["rec yds", "receptions"]) & d26.opp.notna()]
-    rows = r.drop_duplicates(["week", "nk"])[["season", "week", "nk", "position", "team", "opp"]].reset_index(drop=True)
-    X = pd.concat([_project_chunk(rows), F.player_features(rec["P"], rows)], axis=1)
-    X["is_te"] = (X.position == "TE").astype(float)
-    ok = X.p_n_prior >= MIN_PRIOR
-    for market, target, actual, base, comp in (("rec yds", "rec yards", "receiving_yards", "b_rec_yds", "rec_yds"), ("receptions", "targets", "receptions", "b_rec", "rec")):
-        z26, z_hist = score_2026(rec_hist, WRTE_COMPACT, WRTE_TARGETS[target], X[ok])
-        sc = pd.Series(np.nan, index=X.index)
-        sc[ok] = z26
-        m = r[r.market == market].merge(X[["week", "nk", base]].assign(score=sc), on=["week", "nk"], how="left").rename(columns={base: "raw"})
-        add(f"WR/TE own-usage-trend score, {market} lines", m, "score", f"score = P(beats his normal {target})", rec_hist, z_hist, actual, base, comp)
-
-    # RB: run-defense index -> rush yards; zone rate -> receptions; own-usage-trend score -> rush yards
-    rb = d26[(d26.position == "RB") & d26.opp.notna()]
-    rows = rb.drop_duplicates(["week", "nk"])[["season", "week", "nk", "position", "team", "opp"]].reset_index(drop=True)
-    X = pd.concat([_project_chunk(rows), F.build_rushing(rows, rush["R"], rush["B"]).drop(columns=rows.columns)], axis=1)
-    X["run_weak"], X["zone_z"] = run_index(X, rb_fit), zone_index(X, rec["C"])
-    z26, z_hist = score_2026(rb_hist, RB_COMPACT, RB_TARGETS["rush yards"], X[X.p_n_prior >= MIN_PRIOR])
-    X["usage"] = z26
-    for market, col, label, hist_signal, actual, base, comp in (
-            ("rush yds", "run_weak", "RB run-defense weakness index, rush yds lines", run_index(rb_hist, rb_fit), "rushing_yards", "b_rush_yds", "rush_yds"),
-            ("receptions", "zone_z", "RB opponent zone rate, receptions lines", zone_index(rb_hist, rec["C"]), "receptions", "b_rec", "rec"),
-            ("rush yds", "usage", "RB own-usage-trend score, rush yds lines", z_hist, "rushing_yards", "b_rush_yds", "rush_yds")):
-        m = rb[rb.market == market].merge(X[["week", "nk", col, base]], on=["week", "nk"], how="left").rename(columns={base: "raw"})
-        add(label, m, col, "", rb_hist, hist_signal, actual, base, comp)
+                seasons.append({"signal": sg.label, "season": int(sn), "n": len(idx), "history": history_effect(sg.hist, sg.hist_z[idx], sg.actual, sg.base, sg.comp)})
     return pd.DataFrame(out), pd.DataFrame(seasons)
 
 
@@ -615,18 +752,45 @@ def _tail_summary(res: dict) -> str:
 
 
 def _market_md(m: pd.DataFrame) -> list[str]:
-    cols = ["signal", "lines", "n", "weeks", "history: result minus OUR projection", "2026: result minus OUR projection", "2026: the book moved its line by",
-            "2026: result minus the LINE (what is left)", "beyond-the-price coefficient (logit)", "moves P(over) by"]
+    cols = ["signal", "lines", "n", "weeks", "history: result minus OUR projection", "on these lines: result minus OUR projection", "on these lines: the book moved its line by",
+            "on these lines: result minus the LINE (what is left)", "beyond-the-price coefficient (logit)", "moves P(over) by"]
     rows = []
     for r in m.itertuples():
         base = {"signal": r.signal, "lines": r.lines, "n": r.n, "history: result minus OUR projection": _ci(*r.history)}
         if "coef" not in m.columns or not isinstance(r.coef, tuple):
-            rows.append({**base, "weeks": "", "2026: result minus the LINE (what is left)": "too few lines"})
+            rows.append({**base, "weeks": "", "on these lines: result minus the LINE (what is left)": "too few lines"})
             continue
-        rows.append({**base, "weeks": r.weeks, "2026: result minus OUR projection": _ci(*r.replication), "2026: the book moved its line by": _ci(*r.book_moves),
-                     "2026: result minus the LINE (what is left)": _ci(*r.result_vs_line), "beyond-the-price coefficient (logit)": _ci(*r.coef),
+        rows.append({**base, "weeks": r.weeks, "on these lines: result minus OUR projection": _ci(*r.replication), "on these lines: the book moved its line by": _ci(*r.book_moves),
+                     "on these lines: result minus the LINE (what is left)": _ci(*r.result_vs_line), "beyond-the-price coefficient (logit)": _ci(*r.coef),
                      "moves P(over) by": f"{r.pts[0]:+.1f} pts [{r.pts[1]:+.1f}, {r.pts[2]:+.1f}]"})
     return _md(pd.DataFrame(rows).reindex(columns=cols))
+
+
+def _lean_md(t: pd.DataFrame | None) -> list[str]:
+    if t is None or t.empty:
+        return ["(no historical lines pulled)"]
+    r = lambda v: f"{v[0]:+.1f}% [{v[1]:+.1f}, {v[2]:+.1f}]"  # noqa: E731
+    out = pd.DataFrame({"market": t.market, "book": t.book, "lines": t.n, "went over": t["went over"].round(1).astype(str) + "%", "market said": t["market said"].round(1).astype(str) + "%",
+                        "gap (pts)": [f"{g[0]:+.1f} [{g[1]:+.1f}, {g[2]:+.1f}]" for g in t.gap], "over, first / second half": t["first half over"].round(1).astype(str) + " / " + t["second half over"].round(1).astype(str),
+                        "blind UNDER roi": [r(v) for v in t["under roi"]], "blind OVER roi": [r(v) for v in t["over roi"]]})
+    return _md(out)
+
+
+def _edge_md(t: pd.DataFrame | None) -> list[str]:
+    if t is None or t.empty:
+        return []
+    out = pd.DataFrame({"market": t.market, "book": t.book, "lines": t.n,
+                        "market-price coefficient": [_ci(*v, 2) if sd >= 0.05 else "n/a: prices are flat (~-110/-110)" for v, sd in zip(t["price coef"], t["price sd"])],
+                        "our edge z coefficient (per SD)": [_ci(*v) for v in t["z coef"]], "+1 SD of edge moves P(over) by": [f"{v[0]:+.1f} pts [{v[1]:+.1f}, {v[2]:+.1f}]" for v in t.pts]})
+    return ["Does our raw projection add anything to the closing line?", ""] + _md(out)
+
+
+def _follow_md(t: pd.DataFrame | None) -> list[str]:
+    if t is None or t.empty:
+        return ["(no historical lines pulled)"]
+    out = pd.DataFrame({"book": t.book, "k (SD)": t.k, "side": t.side, "bets": t.bets, "win": t.win.round(1).astype(str) + "%", "break-even": t["break-even"].round(1).astype(str) + "%",
+                        "roi per bet": [f"{v[0]:+.1f}% [{v[1]:+.1f}, {v[2]:+.1f}]" for v in t.roi]})
+    return _md(out)
 
 
 def _history_md(h: pd.DataFrame) -> list[str]:
@@ -639,26 +803,35 @@ def _history_md(h: pd.DataFrame) -> list[str]:
     return _md(pv)
 
 
+H1_LABEL = "RB own-usage-trend score, rush yds lines"        # the one candidate still alive: the bet-level table is for this signal
+
 REGISTRY = [
-    "## Forward-test registry (frozen 2026-10-15)", "",
+    "## Forward-test registry (frozen 2026-10-15, rule tightened the same day before any forward week was seen)", "",
     f"One test per hypothesis, no re-fitting, on 2026 lines from week {FORWARD_FROM} on. After each week is graded run `python -m matchup_model.opp.matchup_study --forward` "
-    "(a few minutes) and the 'forward' rows above fill in. The column to read is 'result minus the LINE': if the book's number already contains the signal it is 0. A signal "
-    "is acted on only if, with at least 600 forward lines, that interval is entirely above 0 (below 0 for the opposite side). The yes/no 'beyond the price' coefficient "
-    "cannot reach that power inside a season, which is why the continuous version leads. Numbers in the last column are as of 2026-10-15.", "",
+    "(a few minutes) and the 'forward' rows above fill in. 'Result minus the LINE' is 0 when the book already contains the signal, but it is measured in MEAN yards, and rushing "
+    "yards are right-skewed: a mean shift of +0.4 SD can be only +3 points of P(over) (the 2025 RB result: the top score quintile beat the line by +0.45 SD on average but went "
+    "over only 52.9% of the time). So the rule is in bet terms: a signal is acted on only if, over at least 300 forward bets at the posted price following it with k = 1, "
+    "the 95% interval of ROI per bet is entirely above 0 AND the 'beyond-the-price' coefficient moves P(over) by more than the vig (2.4 points per SD). Until then it is tracked, "
+    "not bet. Status as of 2026-10-15:", "",
     "| id | signal | market | where it stands | expectation |", "|---|---|---|---|---|",
-    "| H1 | RB own-usage-trend score | RB rush yds | +0.19 to +0.31 SD of the stat per SD of score in every season 2022-25, and the book does not move its line with it; 2026 weeks 1-5 show about a third of that (+0.08, interval -0.06 to +0.22) | the one candidate still alive; the forward weeks decide |",
-    "| H2 | RB run-defense weakness index | RB rush yds | +0.08 to +0.12 in 2022-24 (also from nflverse alone), +0.01 in 2025, -0.02 in 2026 weeks 1-5; the book already moves its line ~60% of the old effect | expected to fail: the effect looks gone |",
-    "| H3 | RB opponent zone rate | RB receptions | +0.05 per SD in 2022-24, +0.03 in 2025; the book does not price it, but it is worth only ~0.1 receptions per SD | uncertain and tiny: only extreme matchups could clear the vig |",
-    "| H4 | WR/TE own-usage-trend score | rec yds, receptions | replicates in 2026 (+0.12 / +0.18 on ~630 lines each) and the book moved its line by as much (+0.12 / +0.18); nothing left (+0.00 / +0.01, interval about +/-0.1) | expected: priced, no edge |", ""]
+    "| H1 | RB own-usage-trend score | RB rush yds | +0.19 to +0.31 SD of the stat per SD of score in every season 2022-25; on 612 DraftKings closing lines of 2025 the book moved only +0.07 of the +0.21 and +0.14 [+0.07, +0.21] was left (both halves of the season, FanDuel the same), almost all of it on RISING usage; but that is only about +3 points of P(over) per SD, and following the score at the posted price returned +0.5% [-11, +12] per bet at k = 1 (211 bets); 2026 weeks 1-5: +0.06 left (interval -0.07 to +0.19) | real but about the size of the vig: tracked, not bet |",
+    "| H2 | RB run-defense weakness index | RB rush yds | +0.08 to +0.12 in 2022-24, +0.01 in 2025; on the 2025 closing lines the book moved +0.07 of the +0.09 (priced), -0.05 [-0.14, +0.03] left | dead |",
+    "| H3 | RB opponent zone rate | RB receptions | +0.05 per SD in 2022-24; 2025 closing lines: book moved +0.02, about 0 left | dead |",
+    "| H4 | WR/TE own-usage-trend score | rec yds, receptions | 2025 closing lines (1,629 / 1,564 DraftKings lines): the book moved +0.09 / +0.13 of the +0.10 / +0.17, +0.02 / +0.04 left (intervals about +/-0.06); 2026: +0.00 / +0.01 left | priced, no edge |", ""]
 
 CAVEATS = [
     "## Caveats", "",
     "- **The 2025 WR/TE tables were re-pulled on 2026-10-15.** The first export had been cut by the Data Suite's 1,500-row cap to the top rows by receiving yards (no quiet games; it "
     "overstated 2025 YPRR by ~30%). `weekly_pull.backfill_tables` now filters weeks on the server (`regWeeks=`) and `filtered_seasons` would catch a repeat. Every trailing window is "
     "capped at the previous season, so a score needs >= 3 prior games inside that window.",
+    "- **'Our projection beats the close' is not clean for 2025.** The RB and WR/TE constants of the shipped model were fit on 2023-25 box scores, so the 2025 rows of that "
+    "table are partly in-sample (the signal tests are not affected: they compare the result with the LINE, and the scores are out of fold). Treat 2025 there as an upper "
+    "bound; 2026 is the clean test.",
     "- **'Normal' is our own model.** The labels are centred on the shipped projection's level, whose constants were fit on 2023-25: that can tilt levels but cannot create "
     "a label imbalance (the median is re-fit on the other seasons), and B0 sitting at 0.5 checks it.",
-    "- **The 2026 market tests are small** (a few hundred lines, weeks 1-5) and 'beyond the price' uses the book's stored no-vig probability, not each book's own number.",
+    "- **Which lines.** 2025 is DraftKings and FanDuel CLOSING lines (a snapshot 5 minutes before kickoff, weeks 5-18; 205 of 208 games had props) with each book's own two prices; "
+    "2026 is the lines as logged by the app (a few hundred per market, weeks 1-5) with the stored no-vig probability. A bettor who bets earlier than the close faces a softer line, "
+    "so the close is the hardest test.",
     "- **Many tests.** The WR/TE and RB tails alone are several hundred; Benjamini-Hochberg is applied within each group, and the pre-specified RB hypotheses are the only "
     "ones that were fixed before the outcomes were looked at.",
     "- **Not covered:** QBs, anytime-TD and passing markets, injuries/teammate-out usage shifts, game script, and the defender-level (cornerback / safety) Data Suite tables, "
@@ -666,7 +839,8 @@ CAVEATS = [
 
 
 def build_report(rec: dict, rush: dict, wr: dict, rb: dict, gain: pd.DataFrame, usage_wr: pd.DataFrame, usage_rb: pd.DataFrame, slopes: pd.DataFrame,
-                 market: pd.DataFrame, history: pd.DataFrame, n_rows: dict) -> str:
+                 market: pd.DataFrame, history: pd.DataFrame, n_rows: dict, lean: pd.DataFrame | None = None, edge: pd.DataFrame | None = None,
+                 follow: pd.DataFrame | None = None) -> str:
     pres = pd.concat([rec["presence"].assign(table="WR/TE receiving"), rush["presence"].assign(table="RB rushing")]).reset_index().rename(columns={"index": "season"})
     pres = pres.assign(**{"low-usage presence": (100 * pres.low).round(0).astype(int).astype(str) + "%", "high-usage presence": (100 * pres.high).round(0).astype(int).astype(str) + "%",
                           "ratio": pres.ratio.round(2), "verdict": np.where(pres.ratio < 0.4, "FILTERED - dropped", "complete")})
@@ -715,14 +889,25 @@ def build_report(rec: dict, rush: dict, wr: dict, rb: dict, gain: pd.DataFrame, 
     sl = slopes.assign(**{"slope [95% interval]": [_ci(*v, 2) for v in zip(slopes["per +1 SD"], slopes.lo, slopes.hi)]})
     L += _md(sl[["test", "scope", "n", "slope [95% interval]", "unit"]]) + [""]
 
-    L += ["## 2026 lines: does the signal beat the book's own price?", "",
+    L += ["## Is the signal already in the book's line?", "",
           "All effects are per +1 SD of the signal, in SDs of the stat (rush yards, receptions, ...). **History** is what 2022-25 says the signal is worth: the result "
-          "minus OUR projection, out of fold. In 2026 that splits in two: (result minus our projection) = (how far the book moved its line from our projection with the "
-          "signal) + (result minus the line). The last term is what is LEFT for a bettor: 0 if the line already contains the signal, equal to the history if it contains "
-          "none of it. The logistic columns ask the same as a yes/no beyond the book's own no-vig probability and our live v3 edge. "
+          "minus OUR projection, out of fold. On real lines that splits in two: (result minus our projection) = (how far the book moved its line from our projection with "
+          "the signal) + (result minus the line). The last term is what is LEFT for a bettor: 0 if the line already contains the signal, equal to the history if it contains "
+          "none of it. Line sets: the 2026 lines as logged (weeks 1-5, then the forward weeks) and a full season of 2025 DraftKings / FanDuel closing lines (5 minutes before "
+          "kickoff, weeks 5-18, bought from the Odds API's historical snapshots), and the two pooled. The logistic columns ask the same as a yes/no beyond the book's own "
+          "no-vig probability and our edge. "
           f"Weeks before {FORWARD_FROM} were seen while the hypotheses were formed; week {FORWARD_FROM} onward is the forward test. A +1 SD signal has to move a coin-flip "
           f"bet's win probability by about {ME.VIG_POINTS:g} points to pay the vig.", ""]
     L += _market_md(market) + [""]
+    L += ["### Do the closing lines lean, and does our projection beat them? (2025 closing lines, DraftKings and FanDuel)", "",
+          "Not about any signal: just the lines. **Lean**: the share of lines that went over vs what the no-vig price said, and what a blind UNDER / OVER bet earned at the "
+          "posted price (unit stakes, pushes excluded, player-clustered 95% intervals). **Projection**: logistic 'went over' on the book's no-vig probability and our raw "
+          "projection's edge in SDs (z); a z coefficient of 0 means our number adds nothing to the close, and about +0.1 per SD would move a coin-flip bet by the 2.4 points "
+          "the vig costs.", ""] + _lean_md(lean) + [""] + _edge_md(edge) + [""]
+    L += ["### H1 at the posted price: following the RB usage-trend score (2025 closing lines)", "",
+          "OVER when the score is at least k SDs above his norm, UNDER when at least k below, at the book's closing price, one unit per bet. The thresholds are shown "
+          "together, not chosen: bigger k means fewer, stronger-signal bets. `break-even` is the win rate those prices need. In-sample for the rule's existence "
+          "(the 2025 lines are where it was found); the forward weeks are the test.", ""] + _follow_md(follow) + [""]
     L += ["### Is each signal stable across seasons, or fading?", "",
           "The 'history' column above, season by season (result minus OUR projection per SD of signal, out of fold):", ""] + _history_md(history) + [""]
     L += REGISTRY + CAVEATS
@@ -739,11 +924,17 @@ def datasets(refresh: bool = False) -> dict:
             "wr_df": receiving_dataset(rec, wr_seasons, refresh), "rb_df": rushing_dataset(rush, rb_seasons, refresh)}
 
 
-def market_section(ds: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
+def market_section(ds: dict) -> dict:
+    """Everything that needs real lines: each signal against the 2026 and 2025 lines, the season-by-season history, whether the 2025 closing lines lean, and
+    whether our projection adds anything to them."""
+    sigs = build_signals(ds["wr_df"], ds["rb_df"], fit_run_index(ds["rb_df"]), ds["rec"]["C"])
     d26 = lines_2026()
-    if d26.empty:
-        return pd.DataFrame(), pd.DataFrame()
-    return market_2026(d26, ds["rec"], ds["rush"], ds["wr_df"], ds["rb_df"], fit_run_index(ds["rb_df"]))
+    f26 = frames_2026(d26, ds["rec"], ds["rush"], sigs) if not d26.empty else {}
+    L = HL.load(2025)
+    market, history = market_tables(sigs, f26, L) if (f26 or len(L)) else (pd.DataFrame(), pd.DataFrame())
+    lean, edge = lean_and_edge(L, ds["wr_df"], ds["rb_df"], REPS["logit"]) if len(L) else (pd.DataFrame(), pd.DataFrame())
+    h1 = next(sg for sg in sigs if sg.label == H1_LABEL)
+    return {"market": market, "history": history, "lean": lean, "edge": edge, "follow": follow_table(L, h1) if len(L) else pd.DataFrame()}
 
 
 def compute(refresh: bool = False) -> dict:
@@ -764,9 +955,8 @@ def compute(refresh: bool = False) -> dict:
     slopes, _ = rb_slopes(rb_df, rec["C"], rb_seasons)
     print("RB slopes done", flush=True)
     slim = {k: {"presence": v["presence"], "dropped": v["dropped"]} for k, v in (("rec", rec), ("rush", rush))}
-    market, history = market_section(ds)
     return {"rec": slim["rec"], "rush": slim["rush"], "wr": {k: v for k, v in wr.items() if k != "frames"}, "rb": {k: v for k, v in rb.items() if k != "frames"},
-            "gain": gain, "usage_wr": usage_wr, "usage_rb": usage_rb, "slopes": slopes, "market": market, "history": history, "n_rows": n_rows}
+            "gain": gain, "usage_wr": usage_wr, "usage_rb": usage_rb, "slopes": slopes, "n_rows": n_rows, **market_section(ds)}
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -781,7 +971,7 @@ def main(argv: list[str] | None = None) -> None:
             raise SystemExit(f"no cached run at {RESULTS}: run the full study first")
         results = pd.read_pickle(RESULTS)
         if "--forward" in argv:
-            results["market"], results["history"] = market_section(datasets())
+            results.update(market_section(datasets()))
             if "--quick" not in argv:
                 pd.to_pickle(results, RESULTS)
     else:

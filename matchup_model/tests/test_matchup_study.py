@@ -324,7 +324,7 @@ def test_render_forward_and_quick_modes_use_the_cached_run_and_never_overwrite_t
     assert "Forward-test registry" in (tmp_path / "report.md").read_text(encoding="utf-8")
     fresh = pd.DataFrame([{"signal": "fresh signal", "lines": "forward (week 6+)", "n": 5, "note": "", "history": (0.2, 0.1, 0.3)}])
     monkeypatch.setattr(S, "datasets", lambda refresh=False: {})
-    monkeypatch.setattr(S, "market_section", lambda ds: (fresh, pd.DataFrame()))
+    monkeypatch.setattr(S, "market_section", lambda ds: {"market": fresh, "history": pd.DataFrame()})
     S.main(["--forward"])                                                 # only the 2026 section is recomputed, the rest comes from the cache
     assert "fresh signal" in (tmp_path / "report.md").read_text(encoding="utf-8")
     assert pd.read_pickle(S.RESULTS)["market"].signal.tolist() == ["fresh signal"]
@@ -332,3 +332,113 @@ def test_render_forward_and_quick_modes_use_the_cached_run_and_never_overwrite_t
     monkeypatch.setattr(S, "market_section", lambda ds: pytest.fail("a render must not recompute"))
     S.main(["--render", "--quick"])
     assert (tmp_path / "report.md").read_text(encoding="utf-8") == before and (tmp_path / "matchup_study_report_quick.md").exists()
+
+
+# ── a full season of closing lines ──────────────────────────────────────────────────────────────────────
+def test_devig_removes_the_vig_from_two_american_prices():
+    assert S.devig([-110], [-110])[0] == pytest.approx(0.5)
+    p = S.devig([-150, 120], [130, -140])
+    assert p[0] == pytest.approx(0.6 / (0.6 + 100 / 230)) and p[1] == pytest.approx((100 / 220) / (100 / 220 + 140 / 240)) and p[0] > 0.5 > p[1]
+
+
+def _signal_and_lines(n: int = 900, seed: int = 0, effect: float = 0.3, priced: float = 0.0):
+    """A Signal over a synthetic 2025 history in which (result - our projection) = 34 * effect * signal + noise, and DK / FD closing lines that sit
+    `priced` x signal x 34 above our projection (so the book has moved by that much with the signal)."""
+    rng = np.random.default_rng(seed)
+    sig = rng.normal(size=n)
+    hist = pd.DataFrame({"season": 2025, "week": rng.integers(5, 19, n), "nk": [f"player{i}" for i in range(n)], "b_rec_yds": rng.uniform(40, 80, n)})
+    hist["receiving_yards"] = (hist.b_rec_yds + 34.0 * (effect * sig + rng.normal(size=n))).round()
+    z = pd.Series(sig, index=hist.index)
+    sg = S.Signal("test signal", "wrte", "rec yds", hist, z, lambda rows: z, "receiving_yards", "b_rec_yds", "rec_yds")
+    pt = (np.floor(hist.b_rec_yds + 34.0 * priced * sig) + 0.5)
+    rows = []
+    for h, p_ in zip(hist.itertuples(), pt):
+        rows.append(dict(season=2025, week=h.week, player=f"Player{h.nk[6:]}", market="rec yds", book="draftkings", point=float(p_), over_price=-110, under_price=-110))
+        rows.append(dict(season=2025, week=h.week, player=f"Player{h.nk[6:]}", market="rec yds", book="fanduel", point=float(p_) + 1.0, over_price=-115, under_price=-105))
+    return sg, pd.DataFrame(rows)
+
+
+def test_a_historical_frame_takes_one_books_line_per_player_week_and_drops_pushes_and_other_markets():
+    sg, L = _signal_and_lines(200)
+    extra = L.iloc[:4].assign(market="receptions", point=3.5)                                    # another market: ignored
+    dup = L[L.book == "draftkings"].iloc[:3].assign(point=lambda x: x.point + 20, over_price=-250, under_price=190)      # an alternate-looking line far from a coin flip: not chosen
+    d = S.historical_frame(pd.concat([L, extra, dup], ignore_index=True), sg, "draftkings")
+    assert d.groupby(["season", "week", "player"]).size().max() == 1 and len(d) <= 200
+    h = sg.hist.set_index("nk")
+    row = d.iloc[0]
+    assert row.line == L[(L.book == "draftkings") & (L.player == "Player" + row.player[6:]) & (L.week == row.week)].point.iloc[0]       # DraftKings' number, not FanDuel's +1
+    assert row.p_mkt_over == pytest.approx(0.5) and row.over == float(row.actual > row.line) and row.z == pytest.approx((row.raw - row.line) / row.sigma)
+    assert (d.actual != d.line).all()
+    fd = S.historical_frame(L, sg, "fanduel")
+    assert (fd.line.to_numpy() - d.set_index("player").loc[fd.player].line.to_numpy() == 1.0).all() and fd.p_mkt_over.iloc[0] != 0.5     # FanDuel's shaded prices -> a different no-vig probability
+
+
+def test_market_tables_split_a_signal_into_what_the_book_priced_and_what_is_left_on_a_season_of_closing_lines():
+    sg, L = _signal_and_lines(1500, seed=1, effect=0.3, priced=0.0)               # the book ignores the signal
+    t, seasons = S.market_tables([sg], {}, L)
+    dk = t[t.lines == "2025 closing, DraftKings"].iloc[0]
+    assert dk.n > 1000 and dk.replication[0] == pytest.approx(0.3, abs=0.07) and abs(dk.book_moves[0]) < 0.05 and dk.result_vs_line[1] > 0.15
+    sg2, L2 = _signal_and_lines(1500, seed=2, effect=0.3, priced=0.3)             # the book prices all of it
+    dk2 = S.market_tables([sg2], {}, L2)[0].iloc[0]
+    assert dk2.book_moves[0] == pytest.approx(0.3, abs=0.07) and abs(dk2.result_vs_line[0]) < 0.1 and dk2.result_vs_line[1] < 0 < dk2.result_vs_line[2]
+    assert set(t.lines) == {"2025 closing, DraftKings", "2025 closing, FanDuel"} and len(seasons) == 1
+    d25 = S.historical_frame(L, sg, "draftkings")
+    f26 = {sg.label: d25.iloc[:100].assign(season=2026, week=lambda x: x.week % 5 + 1)}          # pretend 2026 lines: weeks 1-5 only
+    t2 = S.market_tables([sg], f26, L)[0].set_index("lines")
+    assert t2.loc["2026 weeks 1-5 (all)", "n"] == 100 and t2.loc["2026 forward (week 6+)", "n"] == 0 and t2.loc["2025 DK closing + 2026", "n"] == len(d25) + 100
+
+
+def _closing_fixture(n: int = 3000, seed: int = 5, shade: float = 0.0, edge: float = 0.0):
+    """DK closing lines for a WR/TE rec-yds history. `shade` pushes the results below the lines (a book that leans OVER); `edge` makes the result follow OUR
+    projection rather than the line (a projection that beats the close)."""
+    rng = np.random.default_rng(seed)
+    b = rng.uniform(35, 85, n)
+    line = np.floor(b + 12 * rng.normal(size=n)) + 0.5                         # the book's number differs from our projection
+    truth = (1 - edge) * line + edge * b                                       # edge = 1: the outcome centres on OUR number
+    hist = pd.DataFrame({"season": 2025, "week": rng.integers(5, 19, n), "nk": [f"player{i}" for i in range(n)], "b_rec_yds": b,
+                         "receiving_yards": np.round(truth - shade * 34 + 34 * rng.normal(size=n)), "receptions": 3.0, "b_rec": 3.0})
+    L = pd.DataFrame({"season": 2025, "week": hist.week, "player": [f"Player{i}" for i in range(n)], "market": "rec yds", "book": "draftkings", "point": line,
+                      "over_price": -110, "under_price": -110})
+    empty_rb = pd.DataFrame({c: [] for c in ("season", "week", "nk", "rushing_yards", "b_rush_yds", "receptions", "b_rec", "receiving_yards", "b_rec_yds")})
+    return L, hist, empty_rb
+
+
+def test_lean_finds_a_book_that_leans_over_and_edge_finds_a_projection_that_beats_the_close():
+    L, hist, rb = _closing_fixture(shade=0.15)
+    lean, edge = S.lean_and_edge(L, hist, rb, reps=120)
+    r = lean.iloc[0]
+    assert r.market == "WR/TE rec yds" and r.book == "draftkings" and r.gap[2] < -3 and r["under roi"][1] > 0 and r["over roi"][2] < 0
+    assert abs(edge.iloc[0]["z coef"][0]) < 0.3                                                   # no projection edge was planted
+    L2, hist2, rb2 = _closing_fixture(seed=6, edge=0.6)
+    lean2, edge2 = S.lean_and_edge(L2, hist2, rb2, reps=120)
+    assert edge2.iloc[0]["z coef"][1] > 0 and edge2.iloc[0].pts[0] > 2.4 and abs(lean2.iloc[0].gap[0]) < 4
+    assert S.lean_and_edge(L.iloc[:0], hist, rb, reps=50)[0].empty and S.lean_and_edge(L.iloc[:50], hist, rb, reps=50)[1].empty            # too few lines: no row
+
+
+def test_profit_and_clustered_mean_are_exact_on_a_hand_example():
+    assert S.profit([-110, 120, -200], [True, True, False]).tolist() == pytest.approx([100 / 110, 1.2, -1.0])
+    x = np.arange(200) / 10.0
+    m, lo, hi = S.clustered_mean(x, np.arange(200) // 4, reps=200)
+    assert m == pytest.approx(x.mean()) and lo < m < hi and hi - lo < 4
+
+
+def test_following_a_signal_the_book_ignores_pays_and_following_one_it_priced_does_not():
+    sg, L = _signal_and_lines(2500, seed=7, effect=0.4, priced=0.0)
+    t = S.follow_table(L, sg, ks=(1.0,), books=("draftkings",)).set_index("side")
+    assert t.loc["both", "bets"] > 600 and t.loc["both", "win"] > t.loc["both", "break-even"] + 3 and t.loc["both", "roi"][1] > 0
+    assert t.loc["over", "bets"] + t.loc["under", "bets"] == t.loc["both", "bets"]
+    sg2, L2 = _signal_and_lines(2500, seed=8, effect=0.4, priced=0.4)                        # the line moved all the way with the signal: nothing to follow
+    t2 = S.follow_table(L2, sg2, ks=(1.0,), books=("draftkings",)).set_index("side")
+    assert t2.loc["both", "roi"][0] < 2 and t2.loc["both", "roi"][1] < 0                      # about -vig, never clearly profitable
+    assert S.follow_table(L.iloc[:40], sg, ks=(1.0,), books=("draftkings",)).empty               # too few bets: no row
+
+
+def test_the_report_shows_the_lean_the_projection_test_and_the_follow_table_when_they_exist(tmp_path, monkeypatch):
+    monkeypatch.setattr(S, "VERDICT", tmp_path / "none.md")
+    sg, L = _signal_and_lines(1500, seed=9, effect=0.3)
+    lean, edge = S.lean_and_edge(L, sg.hist, pd.DataFrame({c: [] for c in ("season", "week", "nk", "rushing_yards", "b_rush_yds", "receptions", "b_rec", "receiving_yards", "b_rec_yds")}), reps=60)
+    res = {**_results(), "lean": lean, "edge": edge, "follow": S.follow_table(L, sg, ks=(1.0,), books=("draftkings",))}
+    txt = S.build_report(**res)
+    for needle in ("Do the closing lines lean", "blind UNDER roi", "Does our raw projection add anything", "n/a: prices are flat", "following the RB usage-trend score", "break-even", "WR/TE rec yds"):
+        assert needle in txt
+    assert "no historical lines pulled" in S.build_report(**_results())                         # absent data degrades to a note, not an error
