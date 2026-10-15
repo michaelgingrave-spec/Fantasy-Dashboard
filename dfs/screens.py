@@ -56,7 +56,7 @@ def _conviction_cal():
 def _tier_help() -> str:
     """Tier picker tooltip with how each tier has actually done on graded lines."""
     try:
-        return _conviction.tier_help_text()
+        return _conviction.tier_help_text(recommended_only=False)
     except Exception:  # noqa: BLE001 -- a tooltip must never take the screen down
         return ("Confidence tier from |z| (standardized edge). `—` (under ~0.15 SD) is "
                 "never shown — it's a coin flip.")
@@ -861,32 +861,45 @@ def render(screen: str) -> None:
             "(on by default) hides the worst of those."
         )
         from dfs import bets as _bets0
-        rec_perf = _bets0.line_history_buckets(recommended_only=True)
         all_perf = _bets0.line_history_buckets()
-        if not rec_perf.empty:
-            st.caption(f"**2026 so far, recommended bets by confidence tier** "
-                       f"({int(rec_perf['n'].sum())} of {int(rec_perf['of all'].sum())} graded "
-                       "bets pass the ✓ Recommended filter — small samples this early, read "
-                       "directionally). `of all` = every graded bet in that tier. Recommended "
-                       "screens out most strong/high bets by design: a big edge is a big gap "
-                       "between our number and the line, and it caps that gap at 1.4× the line "
-                       "and wants FantasyPoints to agree on the role. Every graded line is in "
-                       "the expander below.")
-            _small_col, _ = st.columns([7, 3])   # ~30% narrower than full width
-            _small_col.dataframe(rec_perf, hide_index=True, width="content",
+        if not all_perf.empty:
+            rec_perf = _bets0.line_history_buckets(recommended_only=True)
+            try:
+                cal_perf = _conviction.calibrated_buckets()
+            except Exception:  # noqa: BLE001 -- a display extra must never take the screen down
+                cal_perf = pd.DataFrame()
+            st.caption("**2026 so far, ROI by confidence tier** — graded bets pulled this "
+                       "season, ROI at a flat -110. Small samples this early, read "
+                       "directionally.")
+            t_all, t_rec, t_cal = st.columns(3)
+            with t_all:
+                st.markdown("**All bets**")
+                st.dataframe(all_perf, hide_index=True, width="stretch",
+                             height=35 * (len(all_perf) + 1))
+                st.caption(f"{int(all_perf['n'].sum())} graded lines, every tier.")
+            with t_rec:
+                st.markdown("**Recommended only**")
+                if rec_perf.empty:
+                    st.info("No graded bets pass the Recommended filter yet.")
+                else:
+                    st.dataframe(rec_perf, hide_index=True, width="stretch",
                                  height=35 * (len(rec_perf) + 1))
-            if not all_perf.empty:
-                with st.expander("All graded lines, every tier (including rows the filters hide)"):
-                    st.caption(f"{int(all_perf['n'].sum())} graded props pulled this season")
-                    st.dataframe(all_perf, hide_index=True, width="content",
-                                 height=35 * (len(all_perf) + 1))
-        elif not all_perf.empty:
-            st.caption(f"**2026 so far, by confidence tier** ({int(all_perf['n'].sum())} "
-                       "graded props pulled this season — small samples this early, read "
-                       "directionally)")
-            _small_col, _ = st.columns([7, 3])
-            _small_col.dataframe(all_perf, hide_index=True, width="content",
-                                 height=35 * (len(all_perf) + 1))
+                    st.caption("Bets that pass ✓ Recommended only; `of all` = every graded bet "
+                               "in that tier. It screens out most strong/high bets by design: "
+                               "a big edge is a big gap from the line, and it caps that gap at "
+                               "1.4× the line and wants FantasyPoints to agree on the role.")
+            with t_cal:
+                st.markdown("**Calibrated picks only**")
+                if cal_perf.empty:
+                    st.info("Needs more graded weeks before the calibrated rule can be "
+                            "scored out of sample.")
+                else:
+                    first, last = cal_perf.attrs["weeks"]
+                    st.dataframe(cal_perf, hide_index=True, width="stretch",
+                                 height=35 * (len(cal_perf) + 1))
+                    st.caption(f"Bets with `p cal %` ≥ 55 and `EV %` > 0, weeks {first}–{last}, "
+                               "each week calibrated only on the weeks before it; `of all` = "
+                               "every bet the screen could show in that tier those weeks.")
 
         if not ODDS_API_KEY:
             st.error("No Odds API key. Add a free key from the-odds-api.com as "

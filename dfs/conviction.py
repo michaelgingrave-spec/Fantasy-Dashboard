@@ -276,12 +276,16 @@ def style_picks(view: pd.DataFrame, p_min: float = P_MIN):
     return sty.format(shown, na_rep="", subset=list(shown)) if shown else sty
 
 
+def _clears_rule(annotated: pd.DataFrame, p_min: float = P_MIN) -> pd.Series:
+    """The calibrated-pick rule on `annotate` output, read off the numbers as the table shows
+    them: `p cal %` at p_min or better and `EV %` above zero. A blank (NaN) clears neither."""
+    return (annotated["p cal %"] >= round(100 * p_min, 6)) & (annotated["EV %"] > 0)   # 100*.55 = 55.00000000000001
+
+
 def calibrated_picks(annotated: pd.DataFrame, p_min: float = P_MIN) -> pd.DataFrame:
-    """Rows of `annotate` output that clear the calibrated-pick rule, read off the numbers as
-    the table shows them: `p cal %` at p_min or better and `EV %` above zero. A blank (NaN)
-    clears neither test. A cutoff, not a ranking -- order is left as it was."""
-    keep = (annotated["p cal %"] >= round(100 * p_min, 6)) & (annotated["EV %"] > 0)   # 100*.55 = 55.00000000000001
-    return annotated[keep].reset_index(drop=True)
+    """Rows of `annotate` output that clear the calibrated-pick rule (see `_clears_rule`).
+    A cutoff, not a ranking -- order is left as it was."""
+    return annotated[_clears_rule(annotated, p_min)].reset_index(drop=True)
 
 
 def top_picks(scored: pd.DataFrame, k: int = 8, p_min: float = P_MIN) -> pd.DataFrame:
@@ -367,12 +371,13 @@ def _pool(rows: list[dict]) -> dict:
                 roi=sum(r["roi"] * r["n"] for r in rows if r["n"]) / n)
 
 
-def rule_record(lh: pd.DataFrame | None = None, first_test_week: int = 3) -> dict | None:
-    """How `calibrated_picks` did on graded history, week by week. Each test week is calibrated
-    only on earlier weeks, picks are read off the rounded numbers the table shows, and only
-    rows the screen can show are counted: props.confident_only is always on there, so a row
-    it hides can never be a pick (all four tiers, Recommended off). None until a graded week
-    can be tested."""
+def _walk_forward_rows(lh: pd.DataFrame | None = None, first_test_week: int = 3) -> pd.DataFrame | None:
+    """Every decided row the screen can show in each test week, with `test_week` and a `picked`
+    flag for the ones that clear the calibrated-pick rule. Each test week is calibrated only on
+    earlier weeks (so this is a real out-of-sample record), picks are read off the rounded
+    numbers the table shows, and props.confident_only is applied because it is always on there:
+    a row it hides can never be a pick (all four tiers, Recommended off). None until a graded
+    week can be tested."""
     from dfs import bets, props
     lh = bets.load_line_history() if lh is None else lh
     if lh.empty or not {"season", "week", "result"} <= set(lh.columns):
@@ -380,18 +385,45 @@ def rule_record(lh: pd.DataFrame | None = None, first_test_week: int = 3) -> dic
     lh = lh[lh["season"] == lh["season"].max()]
     if int(lh["result"].isin(["win", "loss"]).sum()) < MIN_CAL_ROWS:
         return None
-    picked, shown = [], []
+    parts = []
     for w in sorted(int(x) for x in lh["week"].dropna().unique() if x >= first_test_week):
         sc = props.confident_only(score(lh[lh["week"] == w], fit(lh[lh["week"] < w])))
         sc = sc[sc["result"].isin(["win", "loss"])]
         as_shown = sc.assign(**{"p cal %": _pct(sc["p_cal"]), "EV %": _pct(sc["ev"])})
-        picked.append(dict(week=w, **_grade(calibrated_picks(as_shown))))
-        shown.append(dict(week=w, **_grade(sc)))
+        parts.append(sc.assign(test_week=w, picked=_clears_rule(as_shown).to_numpy()))
+    return pd.concat(parts, ignore_index=True) if parts else None
+
+
+def rule_record(lh: pd.DataFrame | None = None, first_test_week: int = 3) -> dict | None:
+    """How the calibrated-pick rule did on graded history, week by week (see
+    `_walk_forward_rows` for what is and isn't counted). None until there is something to test."""
+    rows = _walk_forward_rows(lh, first_test_week)
+    if rows is None:
+        return None
+    weeks = sorted(rows["test_week"].unique())
+    picked = [dict(week=int(w), **_grade(rows[(rows["test_week"] == w) & rows["picked"]])) for w in weeks]
+    shown = [dict(week=int(w), **_grade(rows[rows["test_week"] == w])) for w in weeks]
     rule, ref = _pool(picked), _pool(shown)
     if not rule["n"]:
         return None
     return dict(by_week=picked, n=rule["n"], win=rule["win"], roi=rule["roi"],
                 base_n=ref["n"], base_win=ref["win"], base_roi=ref["roi"])
+
+
+def calibrated_buckets(lh: pd.DataFrame | None = None, first_test_week: int = 3) -> pd.DataFrame:
+    """The calibrated-pick rule's record by confidence tier -- same columns as
+    bets.line_history_buckets plus `of all` (every bet the screen can show in that tier over
+    the same test weeks). Out of sample: each week is calibrated only on earlier weeks, so it
+    starts at `first_test_week`; `.attrs['weeks']` holds (first, last). Empty until testable."""
+    from dfs import bets
+    rows = _walk_forward_rows(lh, first_test_week)
+    if rows is None or not rows["picked"].any():
+        return pd.DataFrame()
+    tbl = bets.line_history_buckets(rows[rows["picked"]])
+    shown = rows.groupby("conf").size()
+    tbl.insert(2, "of all", [int(shown.get(c, 0)) for c in tbl["conf"]])
+    tbl.attrs["weeks"] = (int(rows["test_week"].min()), int(rows["test_week"].max()))
+    return tbl
 
 
 def _pooled(grid: pd.DataFrame) -> pd.DataFrame:

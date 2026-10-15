@@ -199,6 +199,18 @@ def test_rule_record_calibrates_each_week_only_on_earlier_weeks_and_skips_hidden
     assert rec["base_n"] == 20                                        # the 10 blow-up rows are not shown
 
 
+def test_calibrated_buckets_scores_the_rule_by_tier_out_of_sample():
+    tbl = C.calibrated_buckets(_rule_history())
+    assert list(tbl.columns) == ["conf", "n", "of all", "win%", "ROI@-110%"]
+    row = tbl.set_index("conf").loc["solid"]
+    # week 3 only (weeks 1-2 have no earlier history); all 20 screen-visible rows clear the rule
+    # and lose, and the 10 blow-up rows the screen never shows are not counted
+    assert (row["n"], row["of all"], row["win%"], row["ROI@-110%"]) == (20, 20, 0.0, -100.0)
+    assert tbl.attrs["weeks"] == (3, 3)
+    assert C.calibrated_buckets(pd.DataFrame()).empty
+    assert C.calibrated_buckets(pd.DataFrame(_rows(30, 1, wins=15))).empty       # too little history
+
+
 def test_rule_help_text_quotes_the_live_record_and_admits_when_it_cannot_test():
     txt = C.rule_help_text(_rule_history())
     assert "55 or more" in txt and "above 0" in txt
