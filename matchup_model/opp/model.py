@@ -18,6 +18,7 @@ import numpy as np
 import pandas as pd
 
 from matchup_model.opp import data as D
+from matchup_model.opp import team_volume as TV
 
 MIN_GAMES = 3
 LOOKBACK = 10
@@ -37,7 +38,10 @@ K_YDS = 28.0             # targets or carries, for yds/opportunity
 # Stamped on every logged prop line (line_history.csv `model_ver`; rows from before the stamp existed are version 1) so
 # leans made by different versions of the projections stay separable. Bump it whenever a change moves projections.
 #   1 = original opportunity model        2 = 2026-10 WR/TE receiving recalibration (the block just below)
-MODEL_VERSION = 2
+#   3 = fitted team-volume model (team_volume.py) replacing the hand-set formula, whose spread term was backwards,
+#       plus the RB recalibration (carry-share shrinkage, scales) and WR/TE constants re-learned on the new volume
+MODEL_VERSION = 3
+TEAM_VOLUME_MODEL = "fitted"   # "legacy" = the pre-v3 hand-set formula with its reversed spread sign, kept only to reproduce old backtests
 
 # WR/TE receiving recalibration (2023-25 walk-forward; derived by matchup_model.opp.receiving_calibration, which also
 # reports the before/after). The old model gave a team's WR+TE ~28% more targets than they really get (every season),
@@ -50,12 +54,27 @@ MODEL_VERSION = 2
 K_SHARE_REC = 1.0         # games, WR/TE target share (RB share keeps K_SHARE)
 K_YPT = 60.0              # targets, WR/TE yards per target (RB keeps K_YDS)
 REC_SCALE = {
-    "WR": {"tgt": 0.826, "rec": 0.820, "rec_yds": 0.827, "td": 0.922},
-    "TE": {"tgt": 0.844, "rec": 0.860, "rec_yds": 0.869, "td": 0.992},
+    "WR": {"tgt": 0.847, "rec": 0.840, "rec_yds": 0.848, "td": 0.933},
+    "TE": {"tgt": 0.867, "rec": 0.883, "rec_yds": 0.893, "td": 1.010},
 }
-DEF_TGT_B = 0.22          # weight on (defense targets-allowed rate to the position / league - 1)
+DEF_TGT_B = 0.09          # weight on (defense targets-allowed rate to the position / league - 1); 0.22 under the old team volume
 DEF_TGT_GAMES = 8         # trailing defense games in that rate
 DEF_TGT_CLIP = (0.6, 1.5)
+
+# RB model (v3; derived by matchup_model.opp.rb_calibration, which also reports the before/after). Same story as WR/TE: depth and
+# committee backs were shrunk up toward a 0.42 carry-share prior and over-projected (actual / projected carries 0.42 at 2-5 projected,
+# 0.65 at 5-8), so carry-share shrinkage is lighter and the prior lower; a constant scale per stat is learned on the backs the model
+# expects to be involved (6+ projected carries, 1.5+ receptions); rec_yds no longer multiplies the catch rate onto a per-TARGET yardage
+# that already includes the incompletions.
+K_CARRY = 1.0             # games, RB carry-share shrinkage (was 3, shared with K_SHARE)
+RB_CARRY_PRIOR = 0.25     # the share a back is shrunk toward (was 0.42)
+K_RB_TGT = 3.0            # games, RB target-share shrinkage
+RB_TGT_PRIOR = 0.09
+K_YPC = 28.0              # carries, yards per carry (was K_YDS)
+K_RB_YPT = 28.0           # targets, RB yards per target (was K_YDS)
+RB_CATCH = 0.75           # receptions per target
+RB_YDS_CATCH_FACTOR = False  # True = the original double count: rec_yds = targets x catch rate x YARDS PER TARGET
+RB_SCALE = {"rush_att": 0.969, "rush_yds": 0.973, "rec": 0.911, "rec_yds": 0.872, "td": 1.017}
 K_CATCH = 26.0
 K_TD = 55.0
 K_YPA = 90.0             # dropbacks, for QB yds/att
@@ -190,9 +209,11 @@ def vegas_row(team: str, season: int, week: int) -> dict:
             "roof": str(r["roof"]) if pd.notna(r["roof"]) else ""}
 
 
-@lru_cache(maxsize=4096)
-def team_volume(team: str, season: int, week: int) -> dict:
-    """Projected team pass attempts / rush attempts / implied points for the game."""
+def _formula_volume(team: str, season: int, week: int, legacy: bool = False) -> dict:
+    """The hand-set team-volume formula (trailing pace x pass rate, nudged by the game total and spread). `legacy=True` is the
+    pre-v3 behaviour with the spread effect REVERSED -- `games()` stores the betting spread (negative = favourite) but this
+    treated positive as favoured; it is kept only to reproduce old backtests. `legacy=False` has the sign right and is the
+    fallback when the fitted model can't run (see team_volume.py for why the formula was replaced)."""
     ctx = team_context(team, season, week)
     v = vegas_row(team, season, week)
     plays = ctx["plays_pg"]
@@ -204,14 +225,27 @@ def team_volume(team: str, season: int, week: int) -> dict:
     if v.get("total_line") and np.isfinite(v["total_line"]):
         plays *= 1.0 + PLAYS_TOTAL_BETA * (v["total_line"] - 44.0) / 44.0
     if v.get("spread") and np.isfinite(v["spread"]):
-        pr = pr + PR_SPREAD_BETA * (-v["spread"])          # spread>0 = favored -> pass less
+        pr = pr + PR_SPREAD_BETA * (-v["spread"] if legacy else v["spread"])      # underdog (spread > 0) passes more
         pr = float(np.clip(pr, ctx["pass_rate"] - PR_CLAMP, ctx["pass_rate"] + PR_CLAMP))
     pr = float(np.clip(pr, 0.30, 0.72))
     dropbacks = plays * pr
-    pass_att = dropbacks * (1.0 - SACK_FRAC)
-    rush_att = max(12.0, plays * (1.0 - pr) - QB_SCRAMBLE)
-    return {"pass_att": pass_att, "rush_att": rush_att,
-            "team_total": v.get("team_total", np.nan), "plays": plays, "pass_rate": pr}
+    return {"pass_att": dropbacks * (1.0 - SACK_FRAC), "rush_att": max(12.0, plays * (1.0 - pr) - QB_SCRAMBLE),
+            "plays": plays, "pass_rate": pr}
+
+
+@lru_cache(maxsize=4096)
+def team_volume(team: str, season: int, week: int) -> dict:
+    """Projected team pass attempts / rush attempts / implied points for the game (fitted model; see team_volume.py)."""
+    v = vegas_row(team, season, week)
+    got = TV.predict(team, season, week) if TEAM_VOLUME_MODEL == "fitted" else None
+    if got is None:
+        return {**_formula_volume(team, season, week, legacy=(TEAM_VOLUME_MODEL == "legacy")),
+                "team_total": v.get("team_total", np.nan)}
+    pass_att, rush_att = got
+    dropbacks = pass_att / (1.0 - SACK_FRAC)
+    plays = dropbacks + rush_att + QB_SCRAMBLE
+    return {"pass_att": pass_att, "rush_att": rush_att, "team_total": v.get("team_total", np.nan),
+            "plays": plays, "pass_rate": dropbacks / plays}
 
 
 # ── per-player line ──────────────────────────────────────────────────────────
@@ -333,11 +367,11 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
             method += f"  ·  YPRR-adj x{yprr_ratio:.2f}"
 
     elif pos == "RB":
-        cs = _shrink(_ewma(h["carry_share"].to_numpy()), n_g, 0.42, K_SHARE) * inj_rush
+        cs = _shrink(_ewma(h["carry_share"].to_numpy()), n_g, RB_CARRY_PRIOR, K_CARRY) * inj_rush
         car = max(0.0, cs) * tv["rush_att"]
         n_c = float(h["carries"].sum())
         ypc = _shrink(_ewma((h.rushing_yards / h.carries.replace(0, np.nan)).to_numpy()),
-                      n_c, pri["ypc"], K_YDS)
+                      n_c, pri["ypc"], K_YPC)
         rtd = _shrink(_ewma((h.rushing_tds / h.carries.replace(0, np.nan)).to_numpy()),
                       n_c, pri["rush_td"], K_TD)
         # team rushing TDs (from the implied total) x this back's carry share (goal-line
@@ -345,15 +379,17 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
         vegas_rtd = TD_FROM_TOTAL_RUSH * tv["team_total"] * max(0.0, cs) \
             if np.isfinite(tv["team_total"]) else np.nan
         rush_td = _td_blend(car * rtd, vegas_rtd)
-        ts = _shrink(_ewma(h["target_share"].to_numpy()), n_g, 0.09, K_SHARE) * inj_rec
+        ts = _shrink(_ewma(h["target_share"].to_numpy()), n_g, RB_TGT_PRIOR, K_RB_TGT) * inj_rec
         tgt = max(0.0, ts) * tv["pass_att"]
         n_t = float(h["targets"].sum())
         rypt = _shrink(_ewma((h.receiving_yards / h.targets.replace(0, np.nan)).to_numpy()),
-                       n_t, pri["ypt"], K_YDS) if n_t else pri["ypt"]
-        rcatch = 0.75
-        line = {"rush_att": car, "rush_yds": car * ypc, "rush_td": rush_td,
-                "rec": tgt * rcatch, "rec_yds": tgt * rcatch * rypt,
-                "rec_td": 0.04 * tgt * rcatch}
+                       n_t, pri["ypt"], K_RB_YPT) if n_t else pri["ypt"]
+        rcatch = RB_CATCH
+        rs = RB_SCALE
+        line = {"rush_att": car * rs["rush_att"], "rush_yds": car * ypc * rs["rush_yds"], "rush_td": rush_td * rs.get("td", 1.0),
+                "rec": tgt * rcatch * rs["rec"],
+                "rec_yds": tgt * (rcatch if RB_YDS_CATCH_FACTOR else 1.0) * rypt * rs["rec_yds"],
+                "rec_td": 0.04 * tgt * rcatch * rs.get("td", 1.0)}
         method = f"{cs:.1%} carry share x {tv['rush_att']:.0f} -> {car:.1f} car; {ypc:.1f} ypc"
 
     else:  # QB

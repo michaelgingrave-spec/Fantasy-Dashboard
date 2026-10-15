@@ -114,9 +114,15 @@ def clear_caches() -> None:
         from matchup_model.opp import model as _m
         for fn in (_m._priors, _m._team_weeks_idx, _m.team_context, _m._games_idx,
                   _m.vegas_row, _m.team_volume, _m._pw_with_team, _m.opp_line,
-                  _m._share_priors):
+                  _m._share_priors, _m._def_target_table, _m.def_target_rel):
             fn.cache_clear()
     except Exception:  # noqa: BLE001 — best-effort, a missing/changed function shouldn't block the rest
+        pass
+    try:
+        from matchup_model.opp import team_volume as _tv
+        for fn in (_tv._tables, _tv.features, _tv._coefs):
+            fn.cache_clear()
+    except Exception:  # noqa: BLE001
         pass
     try:
         from matchup_model.opp import blend as _b
@@ -209,7 +215,8 @@ def games() -> pd.DataFrame:
                      "is_home": 0, "spread": r["spread_line"], "team_total": away_tot,
                      "opp_total": home_tot})
     out = pd.DataFrame(rows)
-    # spread here = points THIS team is favored by (positive = favored)
+    # `spread` here is THIS team's betting spread: NEGATIVE = favourite (e.g. -6.0 = favoured by 6), POSITIVE = underdog.
+    # (The pre-v3 volume model read it the other way round; corr(team_total - opp_total, spread) = -1.0 confirms this.)
     return out.sort_values(["season", "week", "team"]).reset_index(drop=True)
 
 

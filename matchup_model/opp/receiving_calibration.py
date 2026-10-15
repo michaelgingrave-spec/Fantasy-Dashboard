@@ -32,10 +32,17 @@ from matchup_model.opp.blend import INJURY_ADJ
 
 SEASONS = (2023, 2024, 2025)
 WEEKS = range(5, 19)
-NEW = dict(K_SHARE_REC=1.0, K_YPT=60.0)        # chosen by the shrinkage tuning on 2024-25, validated on 2023 (--grid re-checks)
-OLD = dict(K_SHARE_REC=3.0, K_YPT=28.0)
+NEW = dict(K_SHARE_REC=1.0, K_YPT=60.0, TEAM_VOLUME_MODEL="fitted")      # shrinkage chosen on 2024-25, validated on 2023 (--grid re-checks)
+MID = dict(K_SHARE_REC=1.0, K_YPT=60.0, TEAM_VOLUME_MODEL="legacy")      # the v2 shrinkage on the pre-v3 hand-set team volume
+OLD = dict(K_SHARE_REC=3.0, K_YPT=28.0, TEAM_VOLUME_MODEL="legacy")      # the original model (v1)
 UNIT = {"tgt": 1.0, "rec": 1.0, "rec_yds": 1.0, "td": 1.0}
-BEFORE = {**OLD, "DEF_TGT_B": 0.0, "REC_SCALE": {"WR": dict(UNIT), "TE": dict(UNIT)}}   # every constant as it was before the change
+# the RB model as it was before v3 (RB constants did not exist as named constants then: they were K_SHARE / K_YDS and literals)
+RB_ORIGINAL = dict(K_CARRY=3.0, RB_CARRY_PRIOR=0.42, K_RB_TGT=3.0, RB_TGT_PRIOR=0.09, K_YPC=28.0, K_RB_YPT=28.0, RB_CATCH=0.75,
+                   RB_YDS_CATCH_FACTOR=True, RB_SCALE={"rush_att": 1.0, "rush_yds": 1.0, "rec": 1.0, "rec_yds": 1.0, "td": 1.0})
+RB_KEYS = tuple(RB_ORIGINAL)
+BEFORE = {**OLD, **RB_ORIGINAL, "DEF_TGT_B": 0.0, "REC_SCALE": {"WR": dict(UNIT), "TE": dict(UNIT)}}   # every constant as it was before v2 (the original model)
+V2 = {**MID, **RB_ORIGINAL, "DEF_TGT_B": 0.22, "REC_SCALE": {"WR": {"tgt": 0.826, "rec": 0.820, "rec_yds": 0.827, "td": 0.922},
+                                                              "TE": {"tgt": 0.844, "rec": 0.860, "rec_yds": 0.869, "td": 0.992}}}   # as shipped 2026-10-15
 STATS = {"tgt": "targets", "rec": "receptions", "rec_yds": "receiving_yards"}
 MIN_PROJ_TGT = 3.0
 KEY = ["season", "week", "nk"]
@@ -82,21 +89,21 @@ def project_many(jobs: list[dict], universe: pd.DataFrame) -> list[pd.DataFrame]
         return [pd.concat([f.result() for f in fs], ignore_index=True) for fs in futs]
 
 
-def universe_rows() -> pd.DataFrame:
-    """Box-score rows plus the players on the field with no stat line (actual 0)."""
+def universe_rows(positions: tuple[str, ...] = ("WR", "TE")) -> pd.DataFrame:
+    """Box-score rows plus the players on the field with no stat line (actual 0), for the given positions."""
     pw = D.player_weeks()
-    rows = pw[pw.season.isin(SEASONS) & pw.week.isin(WEEKS) & pw.position.isin(["WR", "TE"]) & (pw["season_type"] == "REG")]
+    rows = pw[pw.season.isin(SEASONS) & pw.week.isin(WEEKS) & pw.position.isin(list(positions)) & (pw["season_type"] == "REG")]
     rows = (rows.rename(columns={"name_key": "nk"})
             .drop_duplicates(KEY)[KEY + ["position", "team", "targets", "receptions", "receiving_yards", "receiving_tds",
-                                         "rushing_tds", "carries", "attempts", "dk_fp"]])
+                                         "rushing_tds", "rushing_yards", "carries", "attempts", "dk_fp"]])
     have = set(zip(rows.season, rows.week, rows.nk))
     sn = D.snaps()
-    sn = sn[sn.season.isin(SEASONS) & sn.week.isin(WEEKS) & sn.position.isin(["WR", "TE"]) & (sn.offense_snaps > 0)]
+    sn = sn[sn.season.isin(SEASONS) & sn.week.isin(WEEKS) & sn.position.isin(list(positions)) & (sn.offense_snaps > 0)]
     sn = sn[sn.groupby(["season", "week", "name_key"]).team.transform("nunique") == 1]   # a name on two teams: can't tell who
     sn = sn.drop_duplicates(["season", "week", "name_key"]).rename(columns={"name_key": "nk"})
     sn = sn[[(s, w, n) not in have for s, w, n in zip(sn.season, sn.week, sn.nk)]]
     zeros = sn[KEY + ["position", "team"]].assign(team=lambda x: x.team.map(D.canon_team))
-    for c in ("targets", "receptions", "receiving_yards", "receiving_tds", "rushing_tds", "carries", "attempts", "dk_fp"):
+    for c in ("targets", "receptions", "receiving_yards", "receiving_tds", "rushing_tds", "rushing_yards", "carries", "attempts", "dk_fp"):
         zeros[c] = 0.0
     u = pd.concat([rows.assign(no_row=False), zeros.assign(no_row=True)], ignore_index=True)
     g = M._games_idx()[["season", "week", "team", "opp"]]
@@ -129,9 +136,10 @@ def _rmse(a, b) -> float:
     return float(np.sqrt(np.mean((np.asarray(a) - np.asarray(b)) ** 2)))
 
 
-def _old_view(d: pd.DataFrame) -> pd.DataFrame:
-    """The same rows with the OLD model's projections in the p_* columns (so _scales/_apply can be reused on them)."""
-    return d.assign(p_tgt=d.p_tgt_old, p_rec=d.p_rec_old, p_rec_yds=d.p_rec_yds_old)
+def _view(d: pd.DataFrame, tag: str) -> pd.DataFrame:
+    """The same rows with another model's projections (`old` = v1, `mid` = v2 shrinkage on the old team volume) in the p_* columns,
+    so _scales / _apply can be reused on them."""
+    return d.assign(p_tgt=d[f"p_tgt_{tag}"], p_rec=d[f"p_rec_{tag}"], p_rec_yds=d[f"p_rec_yds_{tag}"])
 
 
 def _apply(d: pd.DataFrame, scales: dict, b: float) -> dict:
@@ -209,7 +217,8 @@ def _grid(u: pd.DataFrame) -> list[str]:
 
 
 def _shipped() -> dict:
-    return dict(K_SHARE_REC=M.K_SHARE_REC, K_YPT=M.K_YPT, DEF_TGT_B=M.DEF_TGT_B, REC_SCALE=M.REC_SCALE)
+    return dict(K_SHARE_REC=M.K_SHARE_REC, K_YPT=M.K_YPT, DEF_TGT_B=M.DEF_TGT_B, REC_SCALE=M.REC_SCALE,
+                TEAM_VOLUME_MODEL=M.TEAM_VOLUME_MODEL, **{k: getattr(M, k) for k in RB_KEYS})
 
 
 def _audit_chunk(params: dict, chunk: pd.DataFrame) -> pd.DataFrame:
@@ -289,23 +298,26 @@ def main(argv: list[str] | None = None) -> None:
     argv = sys.argv[1:] if argv is None else argv
     u = universe_rows()
     print(f"universe: {len(u)} WR/TE player-weeks ({int(u.no_row.sum())} on the field with no stat line)", flush=True)
-    old, new = project_many([OLD, NEW], u)
-    # score both models on identical rows; who counts as 'involved' is the NEW model's call (its projected targets)
+    old, mid, new = project_many([OLD, MID, NEW], u)
+    # score every model on identical rows; who counts as 'involved' is the NEW model's call (its projected targets)
     new = new.merge(old[KEY + ["p_tgt", "p_rec", "p_rec_yds"]], on=KEY, suffixes=("", "_old"))
+    new = new.merge(mid[KEY + ["p_tgt", "p_rec", "p_rec_yds"]].rename(columns={"p_tgt": "p_tgt_mid", "p_rec": "p_rec_mid", "p_rec_yds": "p_rec_yds_mid"}), on=KEY)
     new["involved"] = new.p_tgt >= MIN_PROJ_TGT
     print(f"projected: {len(new)} rows, {int(new.involved.sum())} with >= {MIN_PROJ_TGT:g} projected targets", flush=True)
 
     rows = []
     for test in SEASONS:
         tr = new[(new.season != test) & new.involved]
-        sc, sc_old = _scales(tr), _scales(_old_view(tr))
+        sc, sc_old, sc_mid = _scales(tr), _scales(_view(tr, "old")), _scales(_view(tr, "mid"))
         b = _def_slope(tr, sc)
         for pop in ("involved", "everyone"):
             te = new[(new.season == test) & (new.involved if pop == "involved" else True)]
-            pr_scale, pr_def, pr_old_scaled = _apply(te, sc, 0.0), _apply(te, sc, b), _apply(_old_view(te), sc_old, 0.0)
+            pr_scale, pr_def = _apply(te, sc, 0.0), _apply(te, sc, b)
+            pr_old_scaled, pr_mid_scaled = _apply(_view(te, "old"), sc_old, 0.0), _apply(_view(te, "mid"), sc_mid, 0.0)
             for s, col in STATS.items():
                 rows.append(dict(season=test, pop=pop, stat=s, n=len(te),
                                  old=_rmse(te[f"p_{s}_old"], te[col]), old_scaled=_rmse(pr_old_scaled[s], te[col]),
+                                 mid_scaled=_rmse(pr_mid_scaled[s], te[col]),
                                  scaled=_rmse(pr_scale[s], te[col]), final=_rmse(pr_def[s], te[col]),
                                  old_bias=float(np.mean(te[f"p_{s}_old"] - te[col])), new_bias=float(np.mean(pr_def[s] - te[col]))))
     R = pd.DataFrame(rows)
@@ -320,26 +332,27 @@ def main(argv: list[str] | None = None) -> None:
 
     L = ["# WR/TE receiving recalibration (2023-25; every number scored with constants learned on the other two seasons)", "",
          f"{len(new)} WR/TE player-weeks (weeks 5-18; {int(new.no_row.sum())} are players on the field with no stat line, true zeros). "
-         f"New shrinkage: K_SHARE_REC {NEW['K_SHARE_REC']:g}, K_YPT {NEW['K_YPT']:g} (old 3 / 28). Constants are learned on the "
+         f"Current model: K_SHARE_REC {NEW['K_SHARE_REC']:g}, K_YPT {NEW['K_YPT']:g} (original 3 / 28) on the fitted team-volume model "
+         "(team_volume.py; the original used a hand-set formula). Constants are learned on the "
          f"{len(final_tr)} rows projected for >= {MIN_PROJ_TGT:g} targets (\"involved\"): the players that get prop lines and DFS salaries. "
          "`td` is the multiplier on expected receiving TDs, learned the same way; the TD rate runs on the unscaled targets "
          "(see the downstream check: scaling TDs with the volume scale leaves involved players ~10% short on TDs).", "",
          "## Out-of-season RMSE", "",
-         "| held-out season | players | stat | old | new shrinkage + scale | + defense nudge | old mean error | new mean error |",
+         "| held-out season | players | stat | original | current model (scaled) | + defense nudge | original mean error | current mean error |",
          "|---|---|---|--:|--:|--:|--:|--:|"]
     for r in R.sort_values(["pop", "season", "stat"], ascending=[False, True, True]).itertuples():
         L.append(f"| {r.season} | {r.pop} ({r.n}) | {r.stat} | {r.old:.3f} | {r.scaled:.3f} | {r.final:.3f} | "
                  f"{r.old_bias:+.3f} | {r.new_bias:+.3f} |")
     L += ["", "## Where the gain comes from (pooled over the three held-out seasons)", "",
-          "`old + scale only` re-scales the OLD model's projections by a constant learned the same way, so the step from there "
-          "to `new shrinkage + scale` is the shrinkage change alone, and the last column is the defense nudge.", "",
-          "| players | stat | old | old + scale only | new shrinkage + scale | + defense nudge | total change |",
-          "|---|---|--:|--:|--:|--:|--:|"]
+          "Each column adds one change to the one before it: a constant scale on the original model, then the new shrinkage, then the "
+          "fitted team-volume model (replacing the hand-set formula whose spread term was backwards), then the defense nudge.", "",
+          "| players | stat | original | + scale | + new shrinkage | + fitted team volume | + defense nudge | total change |",
+          "|---|---|--:|--:|--:|--:|--:|--:|"]
     for pop in ("involved", "everyone"):
         for s in STATS:
             g = R[(R["pop"] == pop) & (R.stat == s)]
-            v = {c: pooled(g, c) for c in ("old", "old_scaled", "scaled", "final")}
-            L.append(f"| {pop} | {s} | {v['old']:.3f} | {v['old_scaled']:.3f} | {v['scaled']:.3f} | {v['final']:.3f} | "
+            v = {c: pooled(g, c) for c in ("old", "old_scaled", "mid_scaled", "scaled", "final")}
+            L.append(f"| {pop} | {s} | {v['old']:.3f} | {v['old_scaled']:.3f} | {v['mid_scaled']:.3f} | {v['scaled']:.3f} | {v['final']:.3f} | "
                      f"{100 * (v['final'] / v['old'] - 1):+.1f}% |")
     L += ["", "## Why one constant per position, and why it is learned on the involved players", "",
           "Actual / projected by projected-usage tier under the new shrinkage, before any scale. Over-projection is steepest for "
@@ -352,7 +365,7 @@ def main(argv: list[str] | None = None) -> None:
         L += _grid(u)
     L += audit(u)
     L += ["", "## Constants for model.py (learned on all three seasons)", "", "```python",
-          f"K_SHARE_REC = {NEW['K_SHARE_REC']}", f"K_YPT = {NEW['K_YPT']}", "REC_SCALE = {"]
+          f"K_SHARE_REC = {NEW['K_SHARE_REC']}", f"K_YPT = {NEW['K_YPT']}", "# (learned under TEAM_VOLUME_MODEL = \"fitted\")", "REC_SCALE = {"]
     for pos in ("WR", "TE"):
         s = final_sc[pos]
         L.append(f'    "{pos}": {{"tgt": {s["tgt"]:.3f}, "rec": {s["rec"]:.3f}, "rec_yds": {s["rec_yds"]:.3f}, '

@@ -67,6 +67,8 @@ def play(proj, line, actual):
 def paired_gain(won_a, won_b, push_either, groups, rng, reps: int = B) -> tuple[float, float, float, int]:
     """Mean of (won_a - won_b) over rows where neither pushed, player-clustered 95% CI, n."""
     m = ~np.asarray(push_either)
+    if not m.any():
+        return float("nan"), float("nan"), float("nan"), 0
     diff = (np.asarray(won_a, float) - np.asarray(won_b, float))[m]
     g = pd.DataFrame({"d": diff, "g": np.asarray(groups)[m]}).groupby("g").d.agg(["sum", "count"]).to_numpy(float)
     est = g[:, 0].sum() / g[:, 1].sum()

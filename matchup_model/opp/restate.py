@@ -1,17 +1,19 @@
-"""Production-pipeline exam of a projection change on the real graded lines.
+"""Production-pipeline exam of projection changes on the real graded lines.
 
     python -m matchup_model.opp.restate          # writes matchup_model/restate_2026_report.md
 
 Every graded 2026 line in line_history.csv is pushed through `dfs.props.edges_from_raw` -- the exact code the Prop Edges screen
-runs (blend with the trailing average, FantasyPoints nudge, z, tier, role_ratio) -- twice: with the projection constants from
-BEFORE the WR/TE receiving recalibration and with the ones now in matchup_model/opp/model.py. The leans are then scored against
-the real results and the tier tables rebuilt. The shipped constants were fixed from 2023-25 box scores, so nothing here was
-fitted on 2026; the BEFORE run reproducing what was stored when the lines were pulled is the check that the harness is sound.
-Prices are not stored with each line, so ROI is the flat -110 one the tier tables use.
+runs (blend with the trailing average, FantasyPoints nudge, z, tier, role_ratio) -- once per model version: v1 (the original
+constants and hand-set team volume), v2 (the 2026-10-15 WR/TE recalibration, still on the hand-set volume) and the current model in
+matchup_model/opp/model.py. The leans are then scored against the real results and the tier tables rebuilt. Every constant was fixed
+from 2023-25 box scores before it met a 2026 line, so nothing here was fitted on 2026; v1 reproducing what the screen stored when the
+lines were pulled is the check that the harness is sound. Prices are not stored with each line, so ROI is the flat -110 one the tier
+tables use.
 """
 from __future__ import annotations
 
 import sys
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 import numpy as np
@@ -20,7 +22,7 @@ import pandas as pd
 from dfs import bets, props
 from matchup_model.opp import model as M
 from matchup_model.opp.open_vs_close import paired_gain
-from matchup_model.opp.receiving_calibration import BEFORE      # every constant the recalibration touched, as it was
+from matchup_model.opp.receiving_calibration import BEFORE, RB_KEYS, V2     # the constants of v1 and v2, exactly as they were
 
 REPORT = Path(__file__).resolve().parents[1] / "restate_2026_report.md"
 KEY_OF = {props._NICE[comp]: key for key, comp in props.MARKETS.items()}      # "rec yds" -> "player_reception_yds"
@@ -29,13 +31,14 @@ BE = {"lean": 52.4, "solid": 53.0, "strong": 53.7, "high": 55.4}                
 
 
 def shipped() -> dict:
-    return dict(K_SHARE_REC=M.K_SHARE_REC, K_YPT=M.K_YPT, DEF_TGT_B=M.DEF_TGT_B, REC_SCALE=M.REC_SCALE)
+    return dict(K_SHARE_REC=M.K_SHARE_REC, K_YPT=M.K_YPT, DEF_TGT_B=M.DEF_TGT_B, REC_SCALE=M.REC_SCALE,
+                TEAM_VOLUME_MODEL=M.TEAM_VOLUME_MODEL, **{k: getattr(M, k) for k in RB_KEYS})
 
 
 def _set(params: dict) -> None:
     for k, v in params.items():
         setattr(M, k, v)
-    M.opp_line.cache_clear(); M.def_target_rel.cache_clear()
+    M.opp_line.cache_clear(); M.def_target_rel.cache_clear(); M.team_volume.cache_clear()
 
 
 def graded_lines(season: int = 2026) -> pd.DataFrame:
@@ -73,6 +76,17 @@ def restate(lh: pd.DataFrame, params: dict) -> pd.DataFrame:
     return d
 
 
+def _restate_job(lh: pd.DataFrame, params: dict) -> pd.DataFrame:
+    return restate(lh, params)
+
+
+def restate_versions(lh: pd.DataFrame, versions: dict[str, dict]) -> dict[str, pd.DataFrame]:
+    """`restate` for every version, one worker process each (the model's constants are module-global)."""
+    with ProcessPoolExecutor(max_workers=len(versions)) as ex:
+        futs = {name: ex.submit(_restate_job, lh, p) for name, p in versions.items()}
+        return {name: f.result() for name, f in futs.items()}
+
+
 def _roi(p: float) -> float:
     return 100 * (p * 100 / 110 - (1 - p))
 
@@ -96,15 +110,18 @@ def _summary(d: pd.DataFrame, label: str) -> str:
             f"{ow:.1f}% | {uw:.1f}% |")
 
 
-def build_report(lh: pd.DataFrame, before: pd.DataFrame, after: pd.DataFrame) -> str:
+def build_report(lh: pd.DataFrame, frames: dict[str, pd.DataFrame]) -> str:
+    """`frames` maps a version label to its restated frame, oldest first; the last one is the current model."""
     rng = np.random.default_rng(11)
-    chk = before.merge(lh[["week", "player", "market", "our proj", "lean", "conf", "role_ratio"]],
-                       on=["week", "player", "market"], suffixes=("", "_stored"))
-    L = ["# Production-pipeline exam: previous projection constants vs the recalibrated ones, 2026 graded lines", "",
-         f"{len(lh)} graded lines, weeks {int(lh.week.min())}-{int(lh.week.max())}, run through `dfs.props.edges_from_raw` under each set "
-         "of constants. The recalibrated constants were fixed from 2023-25 box scores; nothing was fitted on 2026. ROI is at a flat "
-         "-110 (prices are not stored per line).", "",
-         "**Harness check** -- the previous constants reproduce what the screen stored when the lines were pulled: "
+    names = list(frames)
+    first, current = names[0], names[-1]
+    chk = frames[first].merge(lh[["week", "player", "market", "our proj", "lean", "conf", "role_ratio"]],
+                              on=["week", "player", "market"], suffixes=("", "_stored"))
+    L = ["# Production-pipeline exam: model versions on the 2026 graded lines", "",
+         f"{len(lh)} graded lines, weeks {int(lh.week.min())}-{int(lh.week.max())}, run through `dfs.props.edges_from_raw` under each version: "
+         + "; ".join(names) + ". Every constant was fixed from 2023-25 box scores; nothing was fitted on 2026. ROI is at a flat -110 "
+         "(prices are not stored per line).", "",
+         f"**Harness check** -- {first} reproduces what the screen stored when the lines were pulled: "
          f"our proj within 0.15 on {100 * ((chk['our proj'] - chk['our proj_stored']).abs() <= 0.15).mean():.0f}% of rows, same lean "
          f"{100 * (chk.lean == chk.lean_stored).mean():.0f}%, same tier {100 * (chk.conf == chk.conf_stored).mean():.0f}%, "
          f"role_ratio within .02 {100 * ((chk.role_ratio - chk.role_ratio_stored).abs().fillna(0) <= 0.02).mean():.0f}% "
@@ -112,49 +129,57 @@ def build_report(lh: pd.DataFrame, before: pd.DataFrame, after: pd.DataFrame) ->
          "## Win rate of the leans", "",
          "| lines | bets | win | ROI at -110 | OVER share | OVER win | UNDER win |", "|---|--:|--:|--:|--:|--:|--:|"]
     for label, mask in (("all markets", slice(None)), ("receiving (rec yds + receptions)", None)):
-        for name, d in (("previous", before), ("recalibrated", after)):
+        for name in names:
+            d = frames[name]
             sub = d if mask is not None else d[d.market.isin(RECEIVING)]
             L.append(_summary(sub, f"{label}, {name}"))
     for mk in ["rec yds", "receptions", "rush yds", "pass yds", "pass TD"]:
-        for name, d in (("previous", before), ("recalibrated", after)):
-            L.append(_summary(d[d.market == mk], f"{mk}, {name}"))
+        for name in names:
+            L.append(_summary(frames[name][frames[name].market == mk], f"{mk}, {name}"))
 
-    m = before.merge(after, on=["week", "player", "market"], suffixes=("_o", "_n"))
-    L += ["", "## Paired difference (recalibrated minus previous), same lines, player-clustered 95% CI", ""]
-    for label, sub in (("all markets", m), ("receiving markets", m[m.market.isin(RECEIVING)])):
-        push = (sub.result_o == "push") | (sub.result_n == "push")
-        est, lo, hi, n = paired_gain(sub.result_n == "win", sub.result_o == "win", push, sub.player, rng)
-        L.append(f"- {label}: **{100 * est:+.2f} pts** (CI {100 * lo:+.2f} to {100 * hi:+.2f}, n={n})")
-    mr = m[m.market.isin(RECEIVING)]
-    L += ["", "| week | receiving: previous | recalibrated | lines |", "|--:|--:|--:|--:|"]
-    for wk, g in mr.groupby("week"):
-        g = g[(g.result_o != "push") & (g.result_n != "push")]
-        L.append(f"| {int(wk)} | {100 * (g.result_o == 'win').mean():.1f}% | {100 * (g.result_n == 'win').mean():.1f}% | {len(g)} |")
+    L += ["", f"## Paired difference ({current} minus each earlier version), same lines, player-clustered 95% CI", ""]
+    for other in names[:-1]:
+        m = frames[other].merge(frames[current], on=["week", "player", "market"], suffixes=("_o", "_n"))
+        for label, sub in (("all markets", m), ("receiving markets", m[m.market.isin(RECEIVING)]),
+                           ("rush yds", m[m.market == "rush yds"])):
+            push = (sub.result_o == "push") | (sub.result_n == "push")
+            est, lo, hi, n = paired_gain(sub.result_n == "win", sub.result_o == "win", push, sub.player, rng)
+            L.append(f"- vs {other}, {label}: " + (f"**{100 * est:+.2f} pts** (CI {100 * lo:+.2f} to {100 * hi:+.2f}, n={n})" if n else "no lines"))
+    L += ["", "Win % on receiving markets by week:", "", "| week | " + " | ".join(names) + " | lines |", "|--:|" + "--:|" * (len(names) + 1)]
+    wk_rows = {n: frames[n][frames[n].market.isin(RECEIVING)] for n in names}
+    for wk in sorted(wk_rows[current].week.unique()):
+        cells = []
+        for n in names:
+            g = wk_rows[n][(wk_rows[n].week == wk) & (wk_rows[n].result != "push")]
+            cells.append(f"{100 * (g.result == 'win').mean():.1f}%")
+        L.append(f"| {int(wk)} | " + " | ".join(cells) + f" | {int((wk_rows[current].week == wk).sum())} |")
 
     L += ["", "## Tier tables (all graded lines, win % and ROI at -110)", "",
-          f"Break-even win % by tier at the usual price: " + ", ".join(f"{k} {v}" for k, v in BE.items()) + ".", ""]
-    for label, d in (("As stored (what the screen showed)", lh), ("Previous constants, restated", before),
-                     ("Recalibrated constants", after)):
+          "Break-even win % by tier at the usual price: " + ", ".join(f"{k} {v}" for k, v in BE.items()) + ".", ""]
+    tables = [("As stored (what the screen showed)", lh)] + [(f"{n}, restated", frames[n]) for n in names[1:]]
+    for label, d in tables:
         L += [f"**{label}**", "", "All bets:", ""] + _md(bets.line_history_buckets(d)) + ["", "Recommended only:", ""]
         L += _md(bets.line_history_buckets(d, recommended_only=True)) + [""]
 
     L += ["## Filters and role agreement", ""]
-    for name, d in (("previous", before), ("recalibrated", after)):
+    for name in names:
+        d = frames[name]
         vis = props.confident_only(d)
         L.append(f"- {name}: {len(d)} rows -> {len(vis)} pass the always-on guard -> {len(props.role_stable(vis))} Recommended; "
                  f"role_ratio median {d.role_ratio.median():.2f}, {100 * d.role_ratio.between(.85, 1.20).mean():.0f}% inside the "
                  "0.85-1.20 band")
     L.append("")
-    for name, d in (("previous", before), ("recalibrated", after)):
+    for name in names:
         L.append(f"- OVER share by market, {name}: " + ", ".join(
-            f"{mk} {100 * (g.lean == 'OVER').mean():.0f}%" for mk, g in d.groupby("market") if not mk.endswith("att")))
+            f"{mk} {100 * (g.lean == 'OVER').mean():.0f}%" for mk, g in frames[name].groupby("market") if not mk.endswith("att")))
     return "\n".join(L) + "\n"
 
 
 def main() -> None:
     lh = graded_lines()
-    before, after = restate(lh, BEFORE), restate(lh, shipped())
-    txt = build_report(lh, before, after)
+    versions = {"v1 (original)": BEFORE, "v2 (WR/TE recalibration)": V2, f"v{M.MODEL_VERSION} (current)": shipped()}
+    frames = restate_versions(lh, versions)
+    txt = build_report(lh, frames)
     REPORT.write_text(txt, encoding="utf-8")
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     print(txt + f"\nwrote {REPORT}")

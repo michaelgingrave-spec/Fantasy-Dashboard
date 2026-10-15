@@ -37,6 +37,13 @@ def test_paired_gain_ignores_pushes_and_clusters_by_player():
     assert lo <= est <= hi
 
 
+def test_paired_gain_with_no_usable_rows_is_nan_not_a_crash():
+    est, lo, hi, n = OC.paired_gain([], [], np.array([], bool), [], np.random.default_rng(0), reps=10)
+    assert n == 0 and np.isnan(est) and np.isnan(lo) and np.isnan(hi)
+    est, lo, hi, n = OC.paired_gain([1.0], [0.0], np.array([True]), ["a"], np.random.default_rng(0), reps=10)    # everything pushed
+    assert n == 0 and np.isnan(est)
+
+
 def test_load_joined_keeps_only_graded_receiving_rows_with_both_lines(tmp_path, monkeypatch):
     pd.DataFrame({
         "season": 2026, "week": [1, 1, 1, 1], "player": ["A A", "B B", "C C", "D D"],
