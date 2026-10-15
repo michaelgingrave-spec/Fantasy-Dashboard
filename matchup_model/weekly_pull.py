@@ -88,9 +88,14 @@ def tables(season: int, week: int) -> list[dict]:
 
 
 # Full-season backfill (e.g. add the 2025 season). Receiving tables are capped at 1500
-# rows for a whole season, so they get week-batched into wk1-6 / wk7-12 / wk13-18 the
-# same way the committed 2022-24 files are; the rest fit in one file. Week filtering is
-# URL-driven: &splitValues=week:1,2,3,4,5,6  (no button clicking).
+# rows per query, so they get week-batched into wk1-6 / wk7-12 / wk13-18 the same way the
+# committed 2022-24 files are; the rest fit in one file. Week filtering is URL-driven and
+# MUST be `&regWeeks=1,2,3,4,5,6`, which the server applies BEFORE the cap. The earlier
+# `&splitValues=week:1,2,...` form filtered the weeks AFTER the site had already cut the
+# season to its top 1,500 rows by yards, so the 2025 receiving files came out with only
+# ~500 rows each and none of the quiet games (0% of 0-target games, 98% of 9+-target
+# games): an export filtered on the outcome. `matchup_model.opp.ds_features.filtered_seasons`
+# detects that, and a page that still shows "Showing the first 1,500 rows" is capped.
 _WEEK_BATCHES = {"wk1-6": "1,2,3,4,5,6", "wk7-12": "7,8,9,10,11,12", "wk13-18": "13,14,15,16,17,18"}
 
 
@@ -105,7 +110,7 @@ def backfill_tables(season: int) -> list[dict]:
                        ("receiving/advanced", "receiving-advanced"),
                        ("receiving/man-vs-zone", "receiving-manvszone")):
         for tag, weeks in _WEEK_BATCHES.items():
-            out.append((page, f"{rec}&splitValues=week:{weeks}", f"{pref}_{season}{tag}_week.csv"))
+            out.append((page, f"{rec}&regWeeks={weeks}", f"{pref}_{season}{tag}_week.csv"))
     for page, pref, q in (("rushing/basic", "rushing-basic", rb),
                           ("rushing/advanced", "rushing-advanced", rb),
                           ("passing/basic", "passing-basic", qb),

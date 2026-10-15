@@ -60,11 +60,14 @@ REPS = {"auc": 300, "tails": 500, "slope": 800, "logit": 800}
 WRTE_BASE = ["b_tgt", "b_rec", "b_rec_yds", "is_te"]
 RB_BASE = ["b_rush_att", "b_rush_yds", "b_rec", "b_rec_yds"]
 SET_LABELS = {"B0": "his projected level only", "B1": "+ his own usage / efficiency profile and trends", "B2": "+ the opposing defense",
-              "B3": "+ the mismatch (his profile x their weakness)", "B4": "+ ONLY a short pre-specified list of mismatch features (so noise cannot drown them)"}
-STEPS = (("B0", "B1"), ("B1", "B2"), ("B1", "B3"), ("B1", "B4"))
+              "B3": "+ the mismatch (his profile x their weakness)", "B4": "+ ONLY a short pre-specified list of mismatch features (so noise cannot drown them)",
+              "B5": "+ ONLY the short route-type mismatch list (his route mix x what the defense allows on each route type)",
+              "B6": "+ every route-type feature (route mix, allowed by route type and depth bucket, mismatch)"}
+STEPS = (("B0", "B1"), ("B1", "B2"), ("B1", "B3"), ("B1", "B4"), ("B1", "B5"), ("B1", "B6"))
 # the handful of features the question is really about, fixed in advance: alignment, man/zone, shell and depth mismatches plus what the defense gives up
 WRTE_CORE = ["mm_align_yprr", "mm_align_tprr", "mm_man_yprr", "mm_zone_yprr", "mm_sh_yprr", "mm_th_yprr", "mm_depth_adot", "d_all_yprr_rel", "d_all_tprr_rel", "d_all_adot_dev"]
 RB_CORE = ["mm_concept_ypc", "mm_run_plus", "mm_box_hit", "d_ypc_rel", "d_succ_dev", "d_stuff_dev", "d_zone_dev"]
+ROUTE_CORE = ["rm_yprr", "rm_tprr", "rm_deep_yprr", "rm_int_yprr", "rm_short_yprr"]          # route-type mismatch, fixed before any outcome was looked at
 WRTE_COMPACT = ["p_last1_rte_part", "p_last1_snap_pct", "p_last3_rte_part", "p_last3_snap_pct", "p_rte_part", "p_snap_pct", "p_trend_rte_part",
                 "p_trend_snap_pct", "p_tgt_share", "p_last1_tgt_share", "p_trend_tgt_share", "p_tprr", "p_yprr", "p_xfp", "p_fp", "p_rte", "p_wide",
                 "p_slot", "p_inline", "p_back"] + WRTE_BASE
@@ -138,11 +141,11 @@ def baselines(group: str, seasons, refresh: bool = False) -> pd.DataFrame:
 # ── data ────────────────────────────────────────────────────────────────────────────────────────────────
 def load_receiving() -> dict:
     """WR/TE Data Suite player-weeks minus any outcome-filtered season, the coverage table, and the evidence for what was dropped."""
-    P, C = F.receiving_players(), F.coverage()
+    P, C, RT = F.receiving_players(), F.coverage(), F.route_players()
     played = RC.universe_rows(("WR", "TE"), seasons=sorted(P.season.unique()), weeks=range(1, 19))
     presence = F.presence_by_usage(P, played, "targets", low=(0, 2), high=(9, 999))
     dropped = F.filtered_seasons(presence)
-    return {"P": P[~P.season.isin(dropped)].reset_index(drop=True), "C": C, "presence": presence, "dropped": dropped}
+    return {"P": P[~P.season.isin(dropped)].reset_index(drop=True), "C": C, "RT": RT[~RT.season.isin(dropped)].reset_index(drop=True), "presence": presence, "dropped": dropped}
 
 
 def load_rushing() -> dict:
@@ -161,7 +164,7 @@ def _now(table: pd.DataFrame, cols: dict) -> pd.DataFrame:
 def receiving_dataset(d: dict, seasons, refresh: bool = False) -> pd.DataFrame:
     u = baselines("receiving", seasons, refresh)
     u = u[u.b_tgt.notna() & u.opp.notna()].reset_index(drop=True)
-    df = F.build_receiving(u, d["P"], d["C"])
+    df = pd.concat([F.build_receiving(u, d["P"], d["C"]), F.build_routes(u, d["RT"])], axis=1)
     df = df.merge(_now(d["P"], {"rte": "now_rte", "rte_part": "now_rte_part", "yprr": "now_yprr", "tprr": "now_tprr"}), on=["season", "week", "nk"], how="left")
     df["is_te"] = (df.position == "TE").astype(float)
     keep = (df.p_n_prior >= MIN_PRIOR) & (df.d_n_prior >= MIN_PRIOR) & (df.week >= FIRST_WEEK) & (df.b_tgt >= 2.0)
@@ -177,9 +180,10 @@ def rushing_dataset(d: dict, seasons, refresh: bool = False) -> pd.DataFrame:
     return df[keep].reset_index(drop=True)
 
 
-def feature_sets(df: pd.DataFrame, level: list, base: list, core: list = ()) -> dict:
+def feature_sets(df: pd.DataFrame, level: list, base: list, core: list = (), route_core: list = ()) -> dict:
     """Nested sets. B0 is exactly what the label's median was conditioned on, so its AUC has to sit at 0.5 -- a check on the labels themselves.
-    B4 (only when `core` is given) is B1 plus just that short list, the fair test for a small real signal that ~100 noise features would bury."""
+    B4 (only when `core` is given) is B1 plus just that short list, the fair test for a small real signal that ~100 noise features would bury.
+    B5 / B6 (only when `route_core` is given) do the same for the route-type features: the short list, and all of them."""
     p = [c for c in df if c.startswith("p_")]
     d = [c for c in df if c.startswith("d_") and c != "d_n_prior"]
     m = [c for c in df if c.startswith("mm_")]
@@ -187,6 +191,9 @@ def feature_sets(df: pd.DataFrame, level: list, base: list, core: list = ()) -> 
     sets = {"B0": list(level), "B1": b1, "B2": b1 + d, "B3": b1 + d + m}
     if core:
         sets["B4"] = b1 + [c for c in core if c in df.columns]
+    if route_core:
+        sets["B5"] = b1 + [c for c in route_core if c in df.columns]
+        sets["B6"] = b1 + [c for c in df if c.startswith(("rp_", "rd_", "rm_")) and not c.endswith("n_prior")]
     return sets
 
 
@@ -316,16 +323,16 @@ def tail_gaps(f: pd.DataFrame, y, features: list, by: str | None, reps: int, see
 
 # ── nested out-of-sample study ──────────────────────────────────────────────────────────────────────────
 def nested_study(df: pd.DataFrame, targets: dict, base: list, seasons, kinds=("xgb", "logit"), tails_by: str | None = None, median=median_model,
-                 core: list = ()) -> dict:
+                 core: list = (), route_core: list = ()) -> dict:
     """Everything for one position group: per target and model the AUC of each feature set, the AUC increments with intervals, and the extreme-decile
     tail tests (run on the same labels) with Benjamini-Hochberg over all of them."""
     auc_rows, step_rows, tail_rows, frames = [], [], [], {}
     # the defense and mismatch features, each once (the raw coverage rate and its deviation from the league would rank alike)
-    mismatch_feats = [c for c in df if (c.startswith("d_") and c.endswith(("_dev", "_rel"))) or c.startswith("mm_")]
+    mismatch_feats = [c for c in df if (c.startswith(("d_", "rd_")) and c.endswith(("_dev", "_rel"))) or c.startswith(("mm_", "rm_"))]
     mismatch_feats = [c for c in mismatch_feats if df[c].notna().mean() > 0.9]
     for name, spec in targets.items():
         f = eligible(df, spec)
-        sets = feature_sets(df, spec.level, base, core)
+        sets = feature_sets(df, spec.level, base, core, route_core)
         y, ytr = centred_labels(f, spec, seasons, median)
         frames[name] = (f, y, ytr)
         groups = f.nk + "_" + f.season.astype(str)
@@ -593,7 +600,7 @@ def _tails_md(res: dict, n: int = 10) -> list[str]:
 def _mismatch_md(res: dict) -> list[str]:
     """Every mismatch feature (his profile x their weakness) against every target: top-decile minus bottom-decile gap in points, with its BH q."""
     t = res["tails"]
-    t = t[t.feature.str.startswith("mm_")]
+    t = t[t.feature.str.startswith(("mm_", "rm_"))]
     if t.empty:
         return ["(none)"]
     cell = t.assign(c=t.gap.round(1).map("{:+.1f}".format) + " (q " + t.q.round(2).astype(str) + ")")
@@ -642,20 +649,20 @@ REGISTRY = [
     "| H1 | RB own-usage-trend score | RB rush yds | +0.19 to +0.31 SD of the stat per SD of score in every season 2022-25, and the book does not move its line with it; 2026 weeks 1-5 show about a third of that (+0.08, interval -0.06 to +0.22) | the one candidate still alive; the forward weeks decide |",
     "| H2 | RB run-defense weakness index | RB rush yds | +0.08 to +0.12 in 2022-24 (also from nflverse alone), +0.01 in 2025, -0.02 in 2026 weeks 1-5; the book already moves its line ~60% of the old effect | expected to fail: the effect looks gone |",
     "| H3 | RB opponent zone rate | RB receptions | +0.05 per SD in 2022-24, +0.03 in 2025; the book does not price it, but it is worth only ~0.1 receptions per SD | uncertain and tiny: only extreme matchups could clear the vig |",
-    "| H4 | WR/TE own-usage-trend score | rec yds, receptions | replicates in 2026 (+0.12 / +0.20) and the book moved its line by as much (+0.16 / +0.23) | expected: priced, no edge |", ""]
+    "| H4 | WR/TE own-usage-trend score | rec yds, receptions | replicates in 2026 (+0.12 / +0.18 on ~630 lines each) and the book moved its line by as much (+0.12 / +0.18); nothing left (+0.00 / +0.01, interval about +/-0.1) | expected: priced, no edge |", ""]
 
 CAVEATS = [
     "## Caveats", "",
-    "- **Three WR/TE seasons.** The 2025 WR/TE weekly export is filtered on the week's outcome and is excluded; a clean re-pull would add a fourth season and let 2026 features "
-    "reach back across the year instead of starting from week 1. Until then 2026 WR/TE scores need >= 3 games of 2026 (weeks 4+), and every trailing window is capped at "
-    "the previous season.",
+    "- **The 2025 WR/TE tables were re-pulled on 2026-10-15.** The first export had been cut by the Data Suite's 1,500-row cap to the top rows by receiving yards (no quiet games; it "
+    "overstated 2025 YPRR by ~30%). `weekly_pull.backfill_tables` now filters weeks on the server (`regWeeks=`) and `filtered_seasons` would catch a repeat. Every trailing window is "
+    "capped at the previous season, so a score needs >= 3 prior games inside that window.",
     "- **'Normal' is our own model.** The labels are centred on the shipped projection's level, whose constants were fit on 2023-25: that can tilt levels but cannot create "
     "a label imbalance (the median is re-fit on the other seasons), and B0 sitting at 0.5 checks it.",
     "- **The 2026 market tests are small** (a few hundred lines, weeks 1-5) and 'beyond the price' uses the book's stored no-vig probability, not each book's own number.",
     "- **Many tests.** The WR/TE and RB tails alone are several hundred; Benjamini-Hochberg is applied within each group, and the pre-specified RB hypotheses are the only "
     "ones that were fixed before the outcomes were looked at.",
-    "- **Not covered:** QBs, anytime-TD and passing markets, injuries/game-script interactions, and anything the Data Suite does not chart (e.g. play-by-play "
-    "coverage matchups by individual defender).", ""]
+    "- **Not covered:** QBs, anytime-TD and passing markets, injuries/teammate-out usage shifts, game script, and the defender-level (cornerback / safety) Data Suite tables, "
+    "which would be needed for receiver-vs-defender matchups.", ""]
 
 
 def build_report(rec: dict, rush: dict, wr: dict, rb: dict, gain: pd.DataFrame, usage_wr: pd.DataFrame, usage_rb: pd.DataFrame, slopes: pd.DataFrame,
@@ -675,7 +682,8 @@ def build_report(rec: dict, rush: dict, wr: dict, rb: dict, gain: pd.DataFrame, 
          + "; ".join(f"**{k}** {v}" for k, v in SET_LABELS.items()) + ". B0 is exactly what the label was centred on, so its AUC should sit at 0.5: that is the "
          "check on the labels. A feature set earns its place only if the AUC increment's interval clears 0. B2 and B3 add ~100 defense features, so they can lose to "
          "noise even if a few carry a little signal; B4 is the fair version of that test: only the short list fixed in advance "
-         f"(WR/TE: {', '.join(WRTE_CORE)}; RB: {', '.join(RB_CORE)}).", "",
+         f"(WR/TE: {', '.join(WRTE_CORE)}; RB: {', '.join(RB_CORE)}). B5 and B6 are the same two tests for the route-type features (WR/TE only; short list: "
+         f"{', '.join(ROUTE_CORE)}).", "",
          "## Which Data Suite exports can be trusted", "",
          "The weekly player exports are only usable when they list a player whatever he did that week. The check compares each export with nflverse's "
          "players-on-the-field: an unfiltered export lists most quiet games; one filtered on the week's outcome drops them.", ""]
@@ -745,7 +753,7 @@ def compute(refresh: bool = False) -> dict:
     n_rows = {"WR/TE": f"{len(wr_df)} ({', '.join(f'{s} {n}' for s, n in wr_df.groupby('season').size().items())})",
               "RB": f"{len(rb_df)} ({', '.join(f'{s} {n}' for s, n in rb_df.groupby('season').size().items())})"}
     print(n_rows, flush=True)
-    wr = nested_study(wr_df, WRTE_TARGETS, WRTE_BASE, wr_seasons, tails_by="position", core=WRTE_CORE)
+    wr = nested_study(wr_df, WRTE_TARGETS, WRTE_BASE, wr_seasons, tails_by="position", core=WRTE_CORE, route_core=ROUTE_CORE)
     print("WR/TE nested study done", flush=True)
     rb = nested_study(rb_df, RB_TARGETS, RB_BASE, rb_seasons, core=RB_CORE)
     print("RB nested study done", flush=True)

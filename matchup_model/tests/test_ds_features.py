@@ -179,3 +179,101 @@ def test_read_weekly_drops_league_and_footer_rows_and_skips_files_without_a_name
     assert list(d.Name) == ["A One", "B Two"] and list(d.WEEK) == [1, 2]
     assert F.read_weekly("x-demo", seasons=[2023]).empty
     assert F.read_weekly("not-there").empty
+
+
+# ── route-type exposure ─────────────────────────────────────────────────────────────────────────────────
+def route_frame(seed: int = 7, weeks=WEEKS) -> pd.DataFrame:
+    rng = np.random.default_rng(seed)
+    rows = []
+    for i, nk in enumerate(PLAYERS):
+        for w in weeks:
+            counts = rng.multinomial(int(rng.integers(20, 45)), rng.dirichlet(np.ones(12)))
+            r = {"season": 2024, "week": w, "nk": nk, "name": nk, "team": f"T{i}", "opp": DEFENSES[(i + w) % 4], "rte": float(counts.sum())}
+            for x, c in zip(F.ROUTES.values(), counts):
+                r[f"rte_{x}"], r[f"yds_{x}"], r[f"tgt_{x}"] = float(c), float(c * rng.uniform(0.2, 2.0)), float(c * rng.uniform(0.02, 0.3))
+            rows.append(r)
+    return pd.DataFrame(rows)
+
+
+def test_route_features_ignore_the_game_being_predicted_and_everything_after_it():
+    R, q = route_frame(), query(week=7)
+    base = F.build_routes(q, R)
+    pd.testing.assert_frame_equal(base, F.build_routes(q, _poison(R, 7)))
+    assert not base.equals(F.build_routes(q, _poison(R, only_week=6)))
+    assert base.rp_n_prior.iloc[0] == 6 and base.rd_n_prior.iloc[0] == 6
+
+
+def test_route_mix_partitions_his_routes_and_the_depth_buckets_add_up():
+    out = F.build_routes(query(week=8), route_frame())
+    assert out[[f"rp_mix_{x}" for x in F.ROUTES.values()]].sum(axis=1).iloc[0] == pytest.approx(1.0)
+    assert out[[f"rp_mix_{b}" for b in F.BUCKETS]].sum(axis=1).iloc[0] == pytest.approx(1.0)
+    assert sorted(m for ms in F.BUCKETS.values() for m in ms) == sorted(F.ROUTES.values())      # every route type sits in exactly one bucket
+
+
+def _skewed(deep_share: float, deep_yds_mult: float) -> pd.DataFrame:
+    """Everyone runs `deep_share` of his routes deep; defense D1 gives up `deep_yds_mult` x the league yards per route on deep routes."""
+    R = route_frame()
+    deep = F.BUCKETS["deep"]
+    for x in F.ROUTES.values():
+        share = deep_share / len(deep) if x in deep else (1 - deep_share) / (12 - len(deep))
+        R[f"rte_{x}"] = 40.0 * share
+        R[f"yds_{x}"] = R[f"rte_{x}"] * np.where((R.opp == "D1") & (x in deep), deep_yds_mult, 1.0)
+        R[f"tgt_{x}"] = R[f"rte_{x}"] * 0.2
+    R["rte"] = 40.0
+    return R
+
+
+def test_route_mismatch_is_favourable_for_a_deep_receiver_against_a_defense_that_gives_up_the_deep_ball_and_not_against_one_that_stops_it():
+    q = query(week=4, opp="D1")
+    soft, stingy = F.build_routes(q, _skewed(0.7, 2.0)), F.build_routes(q, _skewed(0.7, 0.5))
+    assert soft.rm_deep_yprr.iloc[0] > 0.05 and soft.rm_yprr.iloc[0] > 0.02
+    assert stingy.rm_deep_yprr.iloc[0] < -0.02 and stingy.rm_yprr.iloc[0] < 0
+    # the same defense matters less to a receiver who works short: exposure, not just the defense, drives the mismatch
+    assert abs(F.build_routes(q, _skewed(0.1, 2.0)).rm_deep_yprr.iloc[0]) < abs(soft.rm_deep_yprr.iloc[0])
+
+
+def test_route_allowed_rates_are_shrunk_toward_the_league_when_a_cell_has_few_routes():
+    def go_rel(scale: float) -> float:
+        R = _skewed(0.5, 2.0)
+        for c in [c for c in R.columns if c.startswith(("rte_", "yds_", "tgt_"))]:
+            R[c] = R[c] * scale
+        return float(F.build_routes(query(week=4, opp="D1"), R).rd_deep_yprr_rel.iloc[0])
+    assert 0 < go_rel(0.1) < go_rel(10.0)
+
+
+def test_route_players_reads_the_two_row_header_and_skips_the_league_row(tmp_path, monkeypatch):
+    import csv
+    groups = [""] + ["Player Details"] * 5 + ["Splits"] * 4 + ["Overall"] * 17 + [g for g in F.ROUTES for _ in range(7)]
+    names = (["Season", "Rank", "Name", "Team", "POS", "G", "WEEK", "OPP", "RTE %", "TGT %"]
+             + ["RTE", "SEP SCORE", "YPRR", "TPRR", "WIN RATE", "SEP MS", "ADOR", "TGT %", "+1 Rate", "+2 Rate", "+3 Rate", "Neg Rate", "TGT", "REC", "YDS", "TD", "AY"]
+             + ["RTE", "RTE %", "SEP SCORE", "YPRR", "TPRR", "ADOR", "WIN RATE"] * 12)
+
+    def row(name, team, opp, week, rte_each):
+        v = {"Season": 2024, "Name": name, "Team": team, "POS": "WR", "WEEK": week, "OPP": opp}
+        out, seen = [], {}
+        for g, n in zip(groups, names):
+            if g == "Overall" and n == "RTE":
+                out.append(12 * rte_each)
+            elif g in F.ROUTES and n == "RTE":
+                out.append(rte_each)
+            elif g in F.ROUTES and n == "YPRR":
+                out.append(2.0)
+            elif g in F.ROUTES and n == "TPRR":
+                out.append(0.25)
+            else:
+                out.append(v.get(n, 0) if g in ("", "Player Details", "Splits") else 0)
+        return out
+    with open(tmp_path / "receiving-sepbyroutes_2024wk1-6_week.csv", "w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh)
+        w.writerow(groups)
+        w.writerow(names)
+        w.writerow([2024, "", "League Avg"] + [""] * (len(names) - 3))
+        w.writerow(row("Test Receiver", "KC", "LV", 3, 4))
+        w.writerow(row("Other Receiver", "BLT", "CLV", 3, 2))
+    monkeypatch.setattr(F, "DATA", tmp_path)
+    d = F.route_players()
+    assert list(d.nk) == [F.normalize_name("Other Receiver"), F.normalize_name("Test Receiver")] and (d.season == 2024).all() and (d.week == 3).all()
+    t = d[d.nk == F.normalize_name("Test Receiver")].iloc[0]
+    assert t.rte == 48 and t.rte_go == 4 and t.yds_go == pytest.approx(8.0) and t.tgt_go == pytest.approx(1.0)
+    assert sum(t[f"rte_{x}"] for x in F.ROUTES.values()) == t.rte                       # the route types partition his routes
+    assert t.team == F.norm_team("KC") and t.opp == F.norm_team("LV")

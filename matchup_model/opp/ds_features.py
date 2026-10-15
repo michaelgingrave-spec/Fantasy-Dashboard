@@ -494,3 +494,129 @@ def build_rushing(rows: pd.DataFrame, P: pd.DataFrame, box: pd.DataFrame) -> pd.
     pf = rb_player_features(P, rows)
     df = rb_defense_features(box, rb_allowed_table(P), rows)
     return pd.concat([rows, pf, df, rb_mismatch_features(pf, df)], axis=1)
+
+
+# ── WR/TE route-type exposure (separation-by-routes) ────────────────────────────────────────────────────
+# Where on the field a receiver works, by the route he runs (the 12 route-type RTEs partition his routes), against what each defense gives up on that
+# route type. Prefixes: rp_ (his route mix), rd_ (what the defense allowed per route type, vs the league), rm_ (where the two meet).
+ROUTES = {"Slant": "slant", "Out": "out", "In/Dig": "dig", "Hitch": "hitch", "Comeback": "comeback", "Corner": "corner", "Post": "post", "Go": "go",
+          "Crossers": "cross", "Screens": "screen", "Flat": "flat", "Backfield": "back"}
+BUCKETS = {"deep": ("go", "post", "corner"), "int": ("dig", "out", "comeback", "cross"), "short": ("slant", "hitch", "flat"), "gadget": ("screen", "back")}   # fixed in advance
+assert not set(ROUTES.values()) & set(BUCKETS)             # a bucket must never share a name with a route type (its columns would overwrite the route's)
+K_ROUTE = 150.0        # routes of pseudo-sample when shrinking a defense's allowed rate on ONE route type to the league (a cell holds ~100-200 routes in 8 games)
+_RCOLS = [f"{k}_{r}" for r in ROUTES.values() for k in ("rte", "yds", "tgt")]
+
+
+def route_players(seasons=None) -> pd.DataFrame:
+    """WR/TE player-weeks from the weekly separation-by-routes exports: routes, yards and targets on each route type."""
+    frames = []
+    for p in sorted(glob.glob(str(DATA / "receiving-sepbyroutes_20*_week.csv"))):
+        d = pd.read_csv(p, header=[0, 1])
+        d.columns = [n if str(g).startswith("Unnamed") else f"{g}|{n}" for g, n in d.columns]
+        name = d["Player Details|Name"]
+        frames.append(d[name.notna() & (name != "League Avg") & ~name.astype(str).str.contains("Exported", na=False)])
+    if not frames:
+        return pd.DataFrame()
+    d = pd.concat(frames, ignore_index=True)
+    out = pd.DataFrame({"season": pd.to_numeric(d["Season"], errors="coerce"), "week": pd.to_numeric(d["Splits|WEEK"], errors="coerce"),
+                        "name": d["Player Details|Name"], "team": d["Player Details|Team"].map(norm_team), "opp": d["Splits|OPP"].map(norm_team),
+                        "rte": pd.to_numeric(d["Overall|RTE"], errors="coerce")})
+    for g, r in ROUTES.items():
+        rte, yprr, tprr = (pd.to_numeric(d[f"{g}|{c}"], errors="coerce") for c in ("RTE", "YPRR", "TPRR"))
+        out[f"rte_{r}"], out[f"yds_{r}"], out[f"tgt_{r}"] = rte, yprr * rte, tprr * rte
+    out = out.dropna(subset=["season", "week"])
+    out["season"], out["week"] = out.season.astype(int), out.week.astype(int)
+    out["nk"] = out.name.map(normalize_name)
+    if seasons is not None:
+        out = out[out.season.isin(seasons)]
+    return out.sort_values(["nk", "season", "week"]).reset_index(drop=True)
+
+
+def route_player_features(R: pd.DataFrame, rows: pd.DataFrame) -> pd.DataFrame:
+    """His route mix: the share of his routes on each route type and in each depth bucket over his last games (recency- and route-weighted)."""
+    idx = _index(R)
+    out = []
+    for r in rows.itertuples():
+        f = {}
+        hit = idx.get(r.nk)
+        n = 0
+        if hit is not None:
+            keys, cols = hit
+            lo, hi = window(keys, key(r.season, r.week), WIN)
+            n = hi - lo
+            if n:
+                w = decay(n)
+                got = {x: float((np.nan_to_num(cols[f"rte_{x}"][lo:hi]) * w).sum()) for x in ROUTES.values()}
+                tot = sum(got.values())
+                if tot > 0:
+                    for x, v in got.items():
+                        f[f"rp_mix_{x}"] = v / tot
+                    for b, members in BUCKETS.items():
+                        f[f"rp_mix_{b}"] = sum(got[m] for m in members) / tot
+        f["rp_n_prior"] = n
+        out.append(f)
+    return pd.DataFrame(out, index=rows.index)
+
+
+def route_allowed_table(R: pd.DataFrame) -> pd.DataFrame:
+    """What each defense gave up per week on each route type (routes, yards, targets), summed over the receivers it faced."""
+    g = R.groupby(["opp", "season", "week"])[_RCOLS].sum().reset_index()
+    g["key"] = g.season * 100 + g.week
+    return g.sort_values(["opp", "key"])
+
+
+def route_defense_features(R: pd.DataFrame, rows: pd.DataFrame) -> pd.DataFrame:
+    """The opponent's trailing yards and targets per route allowed on each route type and depth bucket, relative to the league (shrunk, as-of)."""
+    A = route_allowed_table(R)
+    cells = {**{r: (r,) for r in ROUTES.values()}, **BUCKETS}
+    pos = {c: i for i, c in enumerate(_RCOLS)}
+    al = {d: (g.key.to_numpy(), g[_RCOLS].to_numpy(float)) for d, g in A.groupby("opp")}
+    lg_cache = {}
+    out = []
+    for r in rows.itertuples():
+        k = key(r.season, r.week)
+        f = {"rd_n_prior": 0}
+        hit = al.get(r.opp)
+        if hit is not None:
+            keys, arr = hit
+            lo, hi = window(keys, k, DWIN)
+            a = arr[lo:hi]
+            if len(a):
+                if k not in lg_cache:
+                    kk = np.sort(A.key.unique())
+                    lg_cache[k] = A[A.key.isin(kk[kk < k][-6:])][_RCOLS].sum()
+                lg = lg_cache[k]
+                S = (a * decay(len(a))[:, None]).sum(axis=0)
+                f["rd_n_prior"] = len(a)
+                for name, members in cells.items():
+                    rte = sum(S[pos[f"rte_{m}"]] for m in members)
+                    lrte = sum(lg[f"rte_{m}"] for m in members)
+                    for stat, label in (("yds", "yprr"), ("tgt", "tprr")):
+                        league = sum(lg[f"{stat}_{m}"] for m in members) / lrte if lrte > 0 else np.nan
+                        if not league > 0:
+                            continue
+                        mine = sum(S[pos[f"{stat}_{m}"]] for m in members) / rte if rte > 0 else league
+                        f[f"rd_{name}_{label}_rel"] = (rte * mine + K_ROUTE * league) / (rte + K_ROUTE) / league - 1
+        out.append(f)
+    return pd.DataFrame(out, index=rows.index)
+
+
+def route_mismatch_features(rp: pd.DataFrame, rd: pd.DataFrame) -> pd.DataFrame:
+    """His route mix x what the defense allows on each route type (positive = favourable for the receiver)."""
+    names = [*ROUTES.values(), *BUCKETS]
+    rp = _with(rp, [f"rp_mix_{x}" for x in names])
+    rd = _with(rd, [f"rd_{x}_{m}_rel" for x in names for m in ("yprr", "tprr")])
+    m = pd.DataFrame(index=rp.index)
+    for metric in ("yprr", "tprr"):
+        m[f"rm_{metric}"] = pd.concat([rp[f"rp_mix_{x}"] * rd[f"rd_{x}_{metric}_rel"] for x in ROUTES.values()], axis=1).sum(axis=1, min_count=1)
+    for b in BUCKETS:
+        m[f"rm_{b}_yprr"] = rp[f"rp_mix_{b}"] * rd[f"rd_{b}_yprr_rel"]
+    for b in ("deep", "int", "short"):
+        m[f"rm_{b}_tprr"] = rp[f"rp_mix_{b}"] * rd[f"rd_{b}_tprr_rel"]
+    return m
+
+
+def build_routes(rows: pd.DataFrame, R: pd.DataFrame) -> pd.DataFrame:
+    """The route-type columns only (rp_, rd_, rm_), indexed like `rows`, to be concatenated onto `build_receiving`'s output."""
+    rp, rd = route_player_features(R, rows), route_defense_features(R, rows)
+    return pd.concat([rp, rd, route_mismatch_features(rp, rd)], axis=1)

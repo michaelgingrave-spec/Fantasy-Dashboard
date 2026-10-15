@@ -204,6 +204,18 @@ def test_a_short_pre_specified_list_finds_a_planted_mismatch_that_the_full_set_d
     assert "B4" not in S.nested_study(d, TARGETS, BASE, SEASONS, kinds=("logit",), median=cheap_median)["auc"].columns        # no list, no B4
 
 
+def test_route_type_sets_take_the_short_list_for_b5_and_every_route_feature_for_b6():
+    d = synth()
+    d["rm_planted"], d["rp_mix_go"], d["rd_go_yprr_rel"], d["rp_n_prior"] = d.mm_x, np.random.default_rng(3).normal(size=len(d)), np.random.default_rng(4).normal(size=len(d)), 5
+    sets = S.feature_sets(d, BASE, BASE, route_core=["rm_planted"])
+    assert sets["B5"] == sets["B1"] + ["rm_planted"] and set(sets["B6"]) == set(sets["B1"]) | {"rm_planted", "rp_mix_go", "rd_go_yprr_rel"}      # counts are not features
+    assert "B5" not in S.feature_sets(d, BASE, BASE)
+    res = S.nested_study(d, TARGETS, BASE, SEASONS, kinds=("logit",), median=cheap_median, route_core=["rm_planted"])
+    steps = res["steps"].set_index("step")
+    assert steps.loc["B1->B5", "lo"] > 0 and "B1->B6" in steps.index and "B1->B4" not in steps.index
+    assert (res["tails"].feature == "rm_planted").any()                                                                 # route mismatches are tail-tested too
+
+
 def test_nested_study_finds_nothing_when_nothing_is_planted():
     d = synth(planted=False, seed=11)
     res = S.nested_study(d, TARGETS, BASE, SEASONS, kinds=("logit",), median=cheap_median)
