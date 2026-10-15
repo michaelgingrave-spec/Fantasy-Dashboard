@@ -1,0 +1,1037 @@
+season,week,event_id,away,home,commence_time,snapshot,player,market,line_open,n_books,over_price,over_book,under_price,under_book
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Jaxon Smith-Njigba,rec yds,81.5,2,-113,draftkings,-111,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,A.J. Brown,rec yds,64.5,2,-112,draftkings,-112,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Romeo Doubs,rec yds,35.5,2,-113,fanduel,-110,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Hunter Henry,rec yds,33.0,2,-113,fanduel,-109,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Rashid Shaheed,rec yds,31.5,2,-113,draftkings,-111,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Cooper Kupp,rec yds,29.0,2,-112,draftkings,-112,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,AJ Barner,rec yds,25.0,2,-112,draftkings,-112,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Rhamondre Stevenson,rec yds,23.5,2,-112,draftkings,-112,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,DeMario Douglas,rec yds,20.0,2,-112,draftkings,-112,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,George Holani,rec yds,11.0,2,-112,draftkings,-112,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Mack Hollins,rec yds,9.5,2,-108,draftkings,-113,fanduel
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Elijah Arroyo,rec yds,8.5,2,-114,draftkings,-106,fanduel
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Jadarian Price,rec yds,7.5,2,-113,fanduel,-105,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Jaxon Smith-Njigba,receptions,6.5,2,101,draftkings,-125,fanduel
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,A.J. Brown,receptions,5.5,2,100,draftkings,-125,fanduel
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Romeo Doubs,receptions,3.5,2,109,draftkings,-139,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Rhamondre Stevenson,receptions,3.5,2,122,draftkings,-154,fanduel
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Hunter Henry,receptions,3.5,2,148,fanduel,-178,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,AJ Barner,receptions,2.5,2,-154,draftkings,121,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Cooper Kupp,receptions,2.5,2,-132,fanduel,106,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Rashid Shaheed,receptions,2.5,2,107,draftkings,-122,fanduel
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,DeMario Douglas,receptions,1.5,2,-177,draftkings,142,fanduel
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,George Holani,receptions,1.5,2,-158,draftkings,123,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Jadarian Price,receptions,1.5,2,130,draftkings,-166,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Mack Hollins,receptions,1.5,2,162,fanduel,-188,draftkings
+2026,1,8c94552d022acec4a0458d70c19d3da9,New England Patriots,Seattle Seahawks,2026-09-10T00:20:00Z,2026-09-09T20:00:00Z,Elijah Arroyo,receptions,0.5,2,-192,fanduel,185,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Puka Nacua,rec yds,91.0,2,-114,draftkings,-110,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Davante Adams,rec yds,52.0,2,-110,draftkings,-114,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Mike Evans,rec yds,49.5,2,-112,draftkings,-112,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Christian McCaffrey,rec yds,40.0,2,-109,draftkings,-114,fanduel
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,George Kittle,rec yds,36.0,2,-112,draftkings,-112,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,De'Zhaun Stribling,rec yds,35.5,2,-114,fanduel,-109,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Deebo Samuel,rec yds,29.5,2,-109,draftkings,-114,fanduel
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Terrance Ferguson,rec yds,24.5,2,-112,draftkings,-112,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Colby Parkinson,rec yds,20.5,2,-110,draftkings,-114,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Tyler Higbee,rec yds,14.5,2,-113,draftkings,-111,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Demarcus Robinson,rec yds,11.5,2,-114,draftkings,-110,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Kyren Williams,rec yds,11.0,2,-112,draftkings,-112,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Kyle Juszczyk,rec yds,5.5,2,-103,draftkings,-114,fanduel
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Puka Nacua,receptions,7.5,2,116,fanduel,-138,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Christian McCaffrey,receptions,4.5,2,-102,fanduel,-110,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Davante Adams,receptions,4.5,2,-102,fanduel,-118,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Mike Evans,receptions,3.5,2,-130,fanduel,107,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,George Kittle,receptions,3.5,2,-118,fanduel,-101,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,De'Zhaun Stribling,receptions,3.5,2,134,fanduel,-163,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Deebo Samuel,receptions,2.5,2,-140,fanduel,114,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Colby Parkinson,receptions,2.5,2,122,draftkings,-156,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Terrance Ferguson,receptions,1.5,2,-152,fanduel,129,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Kyren Williams,receptions,1.5,2,-148,fanduel,121,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Tyler Higbee,receptions,1.5,2,-116,draftkings,-108,fanduel
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Demarcus Robinson,receptions,1.5,2,162,fanduel,-200,draftkings
+2026,1,acc580d74344ea3b31bbcdd057fe6a9c,San Francisco 49ers,Los Angeles Rams,2026-09-11T00:35:00Z,2026-09-09T20:00:00Z,Kyle Juszczyk,receptions,1.5,2,162,fanduel,-206,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Drake London,rec yds,64.0,2,-114,draftkings,-110,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,DK Metcalf,rec yds,49.5,2,-111,draftkings,-113,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Kyle Pitts,rec yds,44.0,2,-112,draftkings,-112,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Michael Pittman Jr.,rec yds,39.5,2,-111,draftkings,-113,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Bijan Robinson,rec yds,37.0,2,-109,draftkings,-114,fanduel
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Pat Freiermuth,rec yds,25.5,2,-109,draftkings,-114,fanduel
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jahan Dotson,rec yds,18.5,2,-108,draftkings,-114,fanduel
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Darnell Washington,rec yds,17.0,2,-112,draftkings,-112,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jaylen Warren,rec yds,16.0,2,-114,fanduel,-108,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Rico Dowdle,rec yds,10.0,2,-114,fanduel,-106,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Drake London,receptions,5.5,2,-111,draftkings,-106,fanduel
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Kyle Pitts,receptions,4.5,2,112,fanduel,-133,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Bijan Robinson,receptions,4.5,2,106,fanduel,-134,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Michael Pittman Jr.,receptions,4.0,2,115,draftkings,140,fanduel
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,DK Metcalf,receptions,3.5,2,-130,draftkings,102,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jaylen Warren,receptions,2.5,2,-114,fanduel,-109,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Pat Freiermuth,receptions,2.5,2,-117,draftkings,104,fanduel
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Darnell Washington,receptions,1.5,2,-172,fanduel,140,draftkings
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jahan Dotson,receptions,1.5,2,-149,draftkings,128,fanduel
+2026,1,95c01d1bb797d6df14824b106c5a9130,Atlanta Falcons,Pittsburgh Steelers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Rico Dowdle,receptions,1.5,2,-135,draftkings,112,fanduel
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Zay Flowers,rec yds,64.5,2,-111,draftkings,-113,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tyler Warren,rec yds,46.5,2,-114,draftkings,-110,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Alec Pierce,rec yds,45.5,2,-113,draftkings,-111,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Josh Downs,rec yds,45.5,2,-111,draftkings,-113,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Mark Andrews,rec yds,34.5,2,-112,draftkings,-112,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Rashod Bateman,rec yds,26.0,2,-111,draftkings,-113,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jonathan Taylor,rec yds,17.5,2,-114,fanduel,-108,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Justice Hill,rec yds,11.5,2,-106,draftkings,-114,fanduel
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Derrick Henry,rec yds,6.0,2,-114,fanduel,-104,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Zay Flowers,receptions,4.5,2,-142,draftkings,128,fanduel
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tyler Warren,receptions,4.5,2,-130,fanduel,106,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Josh Downs,receptions,4.5,2,124,fanduel,-157,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Mark Andrews,receptions,3.5,2,116,fanduel,-137,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Alec Pierce,receptions,3.5,2,113,draftkings,-140,fanduel
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jonathan Taylor,receptions,2.5,2,-156,draftkings,122,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Justice Hill,receptions,2.0,2,144,fanduel,149,draftkings
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Rashod Bateman,receptions,1.5,2,-187,draftkings,152,fanduel
+2026,1,b6cfdcbafa61ce220ba87dc2d9b80c77,Baltimore Ravens,Indianapolis Colts,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Derrick Henry,receptions,1.0,2,172,fanduel,183,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Nico Collins,rec yds,69.5,2,-113,draftkings,-111,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,DJ Moore,rec yds,47.0,2,-113,draftkings,-111,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Dalton Kincaid,rec yds,38.5,2,-109,draftkings,-114,fanduel
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Khalil Shakir,rec yds,36.5,2,-111,draftkings,-113,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Dalton Schultz,rec yds,33.0,2,-114,fanduel,-109,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Kayshon Boutte,rec yds,24.0,2,-114,fanduel,-109,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Xavier Hutchinson,rec yds,19.0,2,-108,draftkings,-114,fanduel
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,James Cook,rec yds,15.5,2,-113,draftkings,-111,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Dawson Knox,rec yds,14.5,2,-110,draftkings,-114,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,David Montgomery,rec yds,8.5,2,-114,fanduel,-105,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Woody Marks,rec yds,9.0,2,-114,fanduel,-106,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Nico Collins,receptions,5.5,2,103,draftkings,-132,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Khalil Shakir,receptions,3.5,2,-130,fanduel,109,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Dalton Schultz,receptions,3.5,2,-130,fanduel,107,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,DJ Moore,receptions,3.5,2,-118,draftkings,-102,fanduel
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Dalton Kincaid,receptions,3.5,2,106,draftkings,-130,fanduel
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,James Cook,receptions,2.5,2,119,draftkings,-144,fanduel
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Xavier Hutchinson,receptions,2.5,2,152,draftkings,-180,fanduel
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Kayshon Boutte,receptions,1.5,2,-165,draftkings,129,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,David Montgomery,receptions,1.5,2,-122,fanduel,-102,draftkings
+2026,1,7e09efed7e12c659b82740b67ce2f9a1,Buffalo Bills,Houston Texans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Dawson Knox,receptions,1.5,2,-105,draftkings,-114,fanduel
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tetairoa McMillan,rec yds,58.5,2,-114,draftkings,-110,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Luther Burden III,rec yds,56.5,2,-113,draftkings,-111,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Colston Loveland,rec yds,51.5,2,-114,draftkings,-110,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Rome Odunze,rec yds,43.5,2,-112,draftkings,-112,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jalen Coker,rec yds,40.0,2,-111,draftkings,-113,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Xavier Legette,rec yds,18.5,2,-109,draftkings,-114,fanduel
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Kalif Raymond,rec yds,16.5,1,-115,draftkings,-109,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Cole Kmet,rec yds,14.5,2,-114,fanduel,-108,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tommy Tremble,rec yds,15.0,2,-114,fanduel,-108,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Luther Burden III,receptions,4.5,2,-136,draftkings,107,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Colston Loveland,receptions,4.5,2,-114,fanduel,-102,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tetairoa McMillan,receptions,4.5,2,-114,fanduel,-109,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jalen Coker,receptions,3.5,2,-128,fanduel,107,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Rome Odunze,receptions,3.5,2,109,draftkings,-139,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Xavier Legette,receptions,2.0,2,140,draftkings,164,fanduel
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tommy Tremble,receptions,1.5,2,-160,draftkings,125,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Cole Kmet,receptions,1.5,2,-138,fanduel,109,draftkings
+2026,1,fc362aff0d889ec52d358307a70c32ed,Chicago Bears,Carolina Panthers,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Kalif Raymond,receptions,1.5,1,-132,draftkings,103,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Ja'Marr Chase,rec yds,86.0,2,-111,draftkings,-113,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tee Higgins,rec yds,62.5,2,-110,draftkings,-114,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Emeka Egbuka,rec yds,53.5,2,-111,draftkings,-113,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Chris Godwin,rec yds,41.0,2,-113,draftkings,-111,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jalen McMillan,rec yds,34.5,2,-114,draftkings,-110,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Cade Otton,rec yds,28.5,2,-110,draftkings,-114,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Chase Brown,rec yds,23.5,2,-109,draftkings,-114,fanduel
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Kenny Gainwell,rec yds,20.5,2,-114,fanduel,-108,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Mike Gesicki,rec yds,20.5,2,-111,draftkings,-113,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Bucky Irving,rec yds,14.0,2,-111,draftkings,-113,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Samaje Perine,rec yds,6.5,2,-114,fanduel,-105,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Ja'Marr Chase,receptions,7.5,2,116,fanduel,-136,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tee Higgins,receptions,4.5,2,-140,fanduel,116,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Emeka Egbuka,receptions,4.5,2,128,draftkings,-163,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Chris Godwin,receptions,3.5,2,-138,fanduel,109,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Chase Brown,receptions,3.5,2,-108,fanduel,-115,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Cade Otton,receptions,3.5,2,124,fanduel,-152,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Kenny Gainwell,receptions,3.5,2,131,draftkings,-154,fanduel
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jalen McMillan,receptions,2.5,2,-154,fanduel,135,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Mike Gesicki,receptions,2.5,2,124,fanduel,-153,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Bucky Irving,receptions,2.5,2,144,fanduel,-184,draftkings
+2026,1,ed6d24ff979f9c71979fead577b0b3f7,Tampa Bay Buccaneers,Cincinnati Bengals,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Samaje Perine,receptions,1.5,2,140,fanduel,-157,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Parker Washington,rec yds,52.0,2,-113,draftkings,-111,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Brian Thomas Jr,rec yds,37.5,2,-112,draftkings,-112,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jakobi Meyers,rec yds,37.0,2,-114,draftkings,-110,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Brenton Strange,rec yds,36.0,2,-110,draftkings,-114,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,KC Concepcion,rec yds,33.5,2,-114,fanduel,-109,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Harold Fannin Jr.,rec yds,35.0,2,-112,draftkings,-112,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jerry Jeudy,rec yds,31.0,2,-109,draftkings,-114,fanduel
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Denzel Boston,rec yds,24.5,2,-114,draftkings,-110,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Bhayshul Tuten,rec yds,11.5,2,-111,draftkings,-113,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Quinshon Judkins,rec yds,10.0,2,-108,draftkings,-114,fanduel
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Parker Washington,receptions,4.0,2,125,draftkings,136,fanduel
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Harold Fannin Jr.,receptions,4.0,2,124,fanduel,128,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jakobi Meyers,receptions,3.5,2,-109,draftkings,-114,fanduel
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,KC Concepcion,receptions,3.5,2,102,fanduel,-124,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Brenton Strange,receptions,3.5,2,101,draftkings,-129,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Brian Thomas Jr,receptions,2.5,2,-170,draftkings,132,draftkings
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jerry Jeudy,receptions,2.5,2,-159,draftkings,130,fanduel
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Denzel Boston,receptions,2.5,2,122,draftkings,-148,fanduel
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Bhayshul Tuten,receptions,1.5,2,-160,draftkings,128,fanduel
+2026,1,e55c6fe19fce094ce214c8b0e5b504e9,Cleveland Browns,Jacksonville Jaguars,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Quinshon Judkins,receptions,1.5,2,-130,fanduel,109,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Amon-Ra St. Brown,rec yds,77.5,2,-114,draftkings,-110,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Chris Olave,rec yds,77.0,2,-110,draftkings,-114,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jameson Williams,rec yds,58.5,2,-114,draftkings,-110,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Juwan Johnson,rec yds,42.5,2,-111,draftkings,-114,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Sam LaPorta,rec yds,41.5,2,-110,draftkings,-114,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Devaughn Vele,rec yds,39.5,2,-110,draftkings,-114,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jahmyr Gibbs,rec yds,30.5,2,-111,draftkings,-113,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Travis Etienne Jr.,rec yds,18.0,2,-114,draftkings,-110,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Isaac TeSlaa,rec yds,17.5,2,-114,draftkings,-110,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Amon-Ra St. Brown,receptions,6.5,2,-114,fanduel,-111,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Chris Olave,receptions,6.5,2,107,draftkings,-130,fanduel
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jahmyr Gibbs,receptions,4.5,2,120,fanduel,-140,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Juwan Johnson,receptions,4.5,2,118,draftkings,-151,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Sam LaPorta,receptions,3.5,2,-160,draftkings,128,fanduel
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Jameson Williams,receptions,3.5,2,-148,fanduel,120,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Devaughn Vele,receptions,3.5,2,101,draftkings,-128,draftkings
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Travis Etienne Jr.,receptions,3.0,2,122,draftkings,152,fanduel
+2026,1,c1d3fcec25aaeb06ebd2244d33d338e0,New Orleans Saints,Detroit Lions,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Isaac TeSlaa,receptions,1.5,2,106,draftkings,-135,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Garrett Wilson,rec yds,61.0,2,-112,draftkings,-112,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Wan'Dale Robinson,rec yds,42.5,2,-111,draftkings,-113,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Carnell Tate,rec yds,38.0,2,-113,draftkings,-111,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Adonai Mitchell,rec yds,32.0,2,-114,fanduel,-109,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Calvin Ridley,rec yds,27.5,2,-110,draftkings,-114,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Gunnar Helm,rec yds,22.5,2,-110,draftkings,-114,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Mason Taylor,rec yds,20.0,2,-114,fanduel,-109,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Breece Hall,rec yds,19.5,2,-110,draftkings,-114,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tyjae Spears,rec yds,17.5,2,-110,draftkings,-114,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tony Pollard,rec yds,9.5,2,-114,draftkings,-110,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Garrett Wilson,receptions,5.5,2,-107,draftkings,-114,fanduel
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Wan'Dale Robinson,receptions,4.5,2,-101,draftkings,-126,draftkings
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Carnell Tate,receptions,3.5,2,113,draftkings,-140,fanduel
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tyjae Spears,receptions,2.5,2,-137,draftkings,112,fanduel
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Adonai Mitchell,receptions,2.5,2,-127,draftkings,104,fanduel
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Gunnar Helm,receptions,2.5,2,-108,draftkings,-114,fanduel
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Breece Hall,receptions,2.5,2,-105,draftkings,-114,fanduel
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Mason Taylor,receptions,2.5,2,104,draftkings,-130,fanduel
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Calvin Ridley,receptions,2.5,2,148,draftkings,-188,fanduel
+2026,1,7dddb296a42e7a41a774b24bd1709ce1,New York Jets,Tennessee Titans,2026-09-13T17:00:00Z,2026-09-09T20:00:00Z,Tony Pollard,receptions,1.5,2,-120,draftkings,-102,fanduel
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Trey McBride,rec yds,56.5,2,-114,draftkings,-110,draftkings
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Ladd McConkey,rec yds,52.0,2,-111,draftkings,-113,draftkings
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Marvin Harrison Jr.,rec yds,47.0,2,-114,fanduel,-109,draftkings
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Quentin Johnston,rec yds,42.0,2,-111,draftkings,-113,draftkings
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Michael Wilson,rec yds,40.5,2,-111,draftkings,-113,draftkings
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Tre Harris,rec yds,26.5,2,-109,draftkings,-114,fanduel
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Kendrick Bourne,rec yds,18.5,2,-114,draftkings,-110,draftkings
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Charlie Kolar,rec yds,17.0,2,-111,draftkings,-113,draftkings
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Omarion Hampton,rec yds,12.5,2,-108,draftkings,-114,fanduel
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Trey McBride,receptions,6.5,2,120,fanduel,-149,draftkings
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Ladd McConkey,receptions,4.5,2,-102,fanduel,-116,draftkings
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Marvin Harrison Jr.,receptions,4.0,2,124,draftkings,128,fanduel
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Michael Wilson,receptions,3.5,2,-117,draftkings,-108,fanduel
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Quentin Johnston,receptions,3.5,2,116,fanduel,-131,draftkings
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Tre Harris,receptions,2.5,2,104,draftkings,-130,fanduel
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Omarion Hampton,receptions,2.5,2,130,draftkings,-166,fanduel
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Kendrick Bourne,receptions,2.5,2,141,draftkings,-180,fanduel
+2026,1,1edfa5ceaa1ad2cb57df1c1b908731f6,Arizona Cardinals,Los Angeles Chargers,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Charlie Kolar,receptions,1.5,2,-154,draftkings,128,fanduel
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Justin Jefferson,rec yds,74.5,2,-110,draftkings,-114,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Christian Watson,rec yds,56.5,2,-110,draftkings,-114,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Tucker Kraft,rec yds,45.5,2,-110,draftkings,-114,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Jordan Addison,rec yds,43.5,2,-110,draftkings,-114,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Matthew Golden,rec yds,40.0,2,-111,draftkings,-113,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Jayden Reed,rec yds,39.5,2,-112,draftkings,-112,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,T.J. Hockenson,rec yds,27.5,2,-111,draftkings,-113,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Jauan Jennings,rec yds,22.5,2,-109,draftkings,-114,fanduel
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Aaron Jones,rec yds,14.0,2,-114,fanduel,-107,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,MarShawn Lloyd,rec yds,10.5,2,-112,draftkings,-112,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Justin Jefferson,receptions,5.5,2,-146,draftkings,115,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Christian Watson,receptions,3.5,2,-164,draftkings,132,fanduel
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Tucker Kraft,receptions,3.5,2,-164,draftkings,128,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,T.J. Hockenson,receptions,3.5,2,-108,draftkings,-114,fanduel
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Matthew Golden,receptions,3.5,2,-102,fanduel,-120,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Jordan Addison,receptions,3.5,2,102,fanduel,-122,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Jayden Reed,receptions,3.5,2,-102,draftkings,-125,draftkings
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Aaron Jones,receptions,2.5,2,-111,draftkings,-110,fanduel
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Jauan Jennings,receptions,2.5,2,143,draftkings,-180,fanduel
+2026,1,cb77efed7e711d25a72c1a2a0a1af119,Green Bay Packers,Minnesota Vikings,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,MarShawn Lloyd,receptions,1.5,2,-152,draftkings,119,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Brock Bowers,rec yds,64.0,2,-113,draftkings,-111,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Tre Tucker,rec yds,40.5,2,-109,draftkings,-114,fanduel
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Caleb Douglas,rec yds,27.0,2,-112,draftkings,-112,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,De'Von Achane,rec yds,27.5,2,-114,fanduel,-108,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Malik Washington,rec yds,27.5,2,-113,draftkings,-111,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Greg Dulcich,rec yds,27.0,2,-109,draftkings,-114,fanduel
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Jalen Nailor,rec yds,22.0,2,-113,draftkings,-111,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Michael Mayer,rec yds,17.5,2,-113,draftkings,-111,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Jack Bech,rec yds,15.5,2,-111,draftkings,-113,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Brock Bowers,receptions,5.5,2,-145,draftkings,114,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,De'Von Achane,receptions,4.0,2,122,fanduel,128,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Tre Tucker,receptions,3.5,2,-108,fanduel,-110,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Malik Washington,receptions,2.5,2,-150,draftkings,118,fanduel
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Greg Dulcich,receptions,2.5,2,-113,draftkings,-113,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Caleb Douglas,receptions,2.5,2,120,fanduel,-141,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Michael Mayer,receptions,2.5,2,144,fanduel,-170,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Jalen Nailor,receptions,2.5,2,154,fanduel,-173,draftkings
+2026,1,c5d95f48a16849ab6bebc68fbbfcb74a,Miami Dolphins,Las Vegas Raiders,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Jack Bech,receptions,1.5,2,-110,draftkings,-114,fanduel
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,DeVonta Smith,rec yds,66.5,2,-111,draftkings,-113,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Terry McLaurin,rec yds,51.0,2,-113,draftkings,-111,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Stefon Diggs,rec yds,41.5,2,-111,draftkings,-113,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Dallas Goedert,rec yds,35.0,2,-110,draftkings,-114,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Dontayvion Wicks,rec yds,28.0,2,-114,fanduel,-109,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Chig Okonkwo,rec yds,25.5,2,-113,draftkings,-111,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Makai Lemon,rec yds,24.0,2,-112,draftkings,-112,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Saquon Barkley,rec yds,16.0,2,-114,fanduel,-108,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Rachaad White,rec yds,14.5,2,-114,fanduel,-108,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,DeVonta Smith,receptions,5.5,2,106,draftkings,-135,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Terry McLaurin,receptions,3.5,2,-162,draftkings,128,fanduel
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Stefon Diggs,receptions,3.5,2,-148,fanduel,117,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Dallas Goedert,receptions,3.5,2,102,fanduel,-116,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Chig Okonkwo,receptions,2.5,2,-148,draftkings,118,fanduel
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Saquon Barkley,receptions,2.5,2,-102,fanduel,-113,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Dontayvion Wicks,receptions,2.5,2,-111,draftkings,-114,fanduel
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Makai Lemon,receptions,2.5,2,124,fanduel,-154,draftkings
+2026,1,17885cb8dcade8f6c3bce14b2de805e8,Washington Commanders,Philadelphia Eagles,2026-09-13T20:25:00Z,2026-09-09T20:00:00Z,Rachaad White,receptions,2.5,2,134,fanduel,-160,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,CeeDee Lamb,rec yds,77.0,2,-111,draftkings,-113,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,George Pickens,rec yds,68.5,2,-114,draftkings,-110,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Malik Nabers,rec yds,60.5,2,-113,draftkings,-111,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Isaiah Likely,rec yds,35.5,2,-109,draftkings,-114,fanduel
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Jake Ferguson,rec yds,29.0,2,-114,fanduel,-108,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Malachi Fields,rec yds,21.5,2,-114,fanduel,-109,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Cam Skattebo,rec yds,16.0,2,-109,draftkings,-114,fanduel
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Odell Beckham Jr.,rec yds,11.0,2,-112,draftkings,-112,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Javonte Williams,rec yds,9.5,2,-105,draftkings,-114,fanduel
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,CeeDee Lamb,receptions,6.5,2,117,draftkings,-150,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Malik Nabers,receptions,5.5,2,120,fanduel,-151,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,George Pickens,receptions,5.0,2,124,fanduel,120,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Jake Ferguson,receptions,3.5,2,-106,fanduel,-119,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Isaiah Likely,receptions,3.5,2,116,fanduel,-131,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Cam Skattebo,receptions,2.5,2,116,fanduel,-129,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Malachi Fields,receptions,2.5,2,149,draftkings,-180,fanduel
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Javonte Williams,receptions,2.0,2,154,fanduel,148,draftkings
+2026,1,3e646c7479c57f5d9752d8c7dfe7059b,Dallas Cowboys,New York Giants,2026-09-14T00:20:00Z,2026-09-09T20:00:00Z,Odell Beckham Jr.,receptions,1.5,1,107,draftkings,-136,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Rashee Rice,rec yds,60.5,2,-114,draftkings,-110,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Jaylen Waddle,rec yds,55.0,2,-111,draftkings,-113,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Courtland Sutton,rec yds,43.5,2,-114,draftkings,-110,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Travis Kelce,rec yds,42.0,2,-110,draftkings,-114,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Xavier Worthy,rec yds,37.0,2,-113,draftkings,-111,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Pat Bryant,rec yds,23.5,2,-113,draftkings,-111,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Evan Engram,rec yds,23.0,2,-108,draftkings,-114,fanduel
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Tyquan Thornton,rec yds,20.0,2,-111,draftkings,-113,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Kenneth Walker III,rec yds,16.0,2,-114,fanduel,-109,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,RJ Harvey,rec yds,16.5,2,-109,draftkings,-114,fanduel
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Noah Gray,rec yds,9.5,2,-114,fanduel,-109,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Adam Trautman,rec yds,8.0,2,-114,fanduel,-107,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,J.K. Dobbins,rec yds,4.0,2,-109,draftkings,-114,fanduel
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Rashee Rice,receptions,5.5,2,-122,fanduel,100,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Jaylen Waddle,receptions,4.5,2,-114,fanduel,-106,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Courtland Sutton,receptions,4.5,2,124,fanduel,-157,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Travis Kelce,receptions,4.0,2,127,draftkings,112,fanduel
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Xavier Worthy,receptions,3.5,2,112,fanduel,-142,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Kenneth Walker III,receptions,2.5,2,-130,fanduel,118,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Evan Engram,receptions,2.5,2,-130,fanduel,111,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,RJ Harvey,receptions,2.5,2,-108,draftkings,-114,fanduel
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Pat Bryant,receptions,2.5,2,120,fanduel,-149,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Tyquan Thornton,receptions,1.5,2,106,fanduel,-124,draftkings
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Noah Gray,receptions,1.5,2,137,draftkings,-174,fanduel
+2026,1,5ad8135dc2b5f27de0b777acd317855a,Denver Broncos,Kansas City Chiefs,2026-09-15T00:15:00Z,2026-09-09T20:00:00Z,Adam Trautman,receptions,1.5,2,188,fanduel,-229,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Amon-Ra St. Brown,rec yds,80.0,2,-113,draftkings,-111,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,DJ Moore,rec yds,62.5,2,-113,draftkings,-111,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Jameson Williams,rec yds,59.0,2,-112,draftkings,-112,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Dalton Kincaid,rec yds,51.0,2,-111,draftkings,-113,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Sam LaPorta,rec yds,46.5,2,-110,draftkings,-114,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Khalil Shakir,rec yds,44.0,2,-112,draftkings,-112,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Jahmyr Gibbs,rec yds,29.5,2,-112,draftkings,-112,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,James Cook,rec yds,17.5,2,-110,draftkings,-114,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Isaac TeSlaa,rec yds,15.5,2,-111,draftkings,-113,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Keon Coleman,rec yds,13.5,2,-114,fanduel,-109,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Joshua Palmer,rec yds,13.5,2,-111,draftkings,-114,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Dawson Knox,rec yds,12.5,2,-112,draftkings,-112,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Amon-Ra St. Brown,receptions,7.5,2,101,draftkings,-125,fanduel
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,DJ Moore,receptions,4.5,2,-107,draftkings,-118,fanduel
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Sam LaPorta,receptions,4.5,2,105,draftkings,-134,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Khalil Shakir,receptions,4.5,2,112,draftkings,-136,fanduel
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Jahmyr Gibbs,receptions,4.5,2,122,draftkings,-146,fanduel
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Jameson Williams,receptions,3.5,2,-162,draftkings,142,fanduel
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Dalton Kincaid,receptions,3.5,2,-161,draftkings,126,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,James Cook,receptions,2.5,2,105,draftkings,-130,fanduel
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Isaac TeSlaa,receptions,1.5,2,118,fanduel,-149,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Dawson Knox,receptions,1.5,2,124,fanduel,-156,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Keon Coleman,receptions,1.5,2,158,fanduel,-174,draftkings
+2026,2,56e8897681915f7ec92baeee952bb1ae,Detroit Lions,Buffalo Bills,2026-09-18T00:15:00Z,2026-09-16T20:00:00Z,Joshua Palmer,receptions,1.5,2,158,draftkings,-200,fanduel
+2026,2,aee7eae1849ebb103b9bf233e9741392,Carolina Panthers,Atlanta Falcons,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Tetairoa McMillan,rec yds,58.0,2,-113,draftkings,-111,draftkings
+2026,2,aee7eae1849ebb103b9bf233e9741392,Carolina Panthers,Atlanta Falcons,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Jalen Coker,rec yds,49.0,2,-112,draftkings,-112,draftkings
+2026,2,aee7eae1849ebb103b9bf233e9741392,Carolina Panthers,Atlanta Falcons,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Tetairoa McMillan,receptions,4.5,2,-102,fanduel,-120,draftkings
+2026,2,aee7eae1849ebb103b9bf233e9741392,Carolina Panthers,Atlanta Falcons,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Jalen Coker,receptions,4.5,2,-104,draftkings,-123,draftkings
+2026,2,aee7eae1849ebb103b9bf233e9741392,Carolina Panthers,Atlanta Falcons,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Drake London,rec yds,56.5,1,-114,fanduel,-114,fanduel
+2026,2,aee7eae1849ebb103b9bf233e9741392,Carolina Panthers,Atlanta Falcons,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Bijan Robinson,rec yds,42.5,1,-114,fanduel,-114,fanduel
+2026,2,aee7eae1849ebb103b9bf233e9741392,Carolina Panthers,Atlanta Falcons,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Drake London,receptions,4.5,1,-132,fanduel,100,fanduel
+2026,2,aee7eae1849ebb103b9bf233e9741392,Carolina Panthers,Atlanta Falcons,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Bijan Robinson,receptions,4.5,1,-154,fanduel,116,fanduel
+2026,2,2143ade9684fd876b68a4e8cbf451f05,New Orleans Saints,Baltimore Ravens,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Chris Olave,rec yds,73.5,2,-113,draftkings,-111,draftkings
+2026,2,2143ade9684fd876b68a4e8cbf451f05,New Orleans Saints,Baltimore Ravens,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Devaughn Vele,rec yds,42.0,2,-114,draftkings,-110,draftkings
+2026,2,2143ade9684fd876b68a4e8cbf451f05,New Orleans Saints,Baltimore Ravens,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Chris Olave,receptions,6.0,2,115,draftkings,118,fanduel
+2026,2,2143ade9684fd876b68a4e8cbf451f05,New Orleans Saints,Baltimore Ravens,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Devaughn Vele,receptions,3.5,2,-118,draftkings,-102,fanduel
+2026,2,0283a29e1b38ef78b29b904fd56a16dd,Minnesota Vikings,Chicago Bears,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Justin Jefferson,rec yds,73.5,2,-114,draftkings,-110,draftkings
+2026,2,0283a29e1b38ef78b29b904fd56a16dd,Minnesota Vikings,Chicago Bears,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Luther Burden III,rec yds,50.5,2,-112,draftkings,-112,draftkings
+2026,2,0283a29e1b38ef78b29b904fd56a16dd,Minnesota Vikings,Chicago Bears,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Colston Loveland,rec yds,47.5,2,-113,draftkings,-111,draftkings
+2026,2,0283a29e1b38ef78b29b904fd56a16dd,Minnesota Vikings,Chicago Bears,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Jordan Addison,rec yds,35.5,2,-112,draftkings,-112,draftkings
+2026,2,0283a29e1b38ef78b29b904fd56a16dd,Minnesota Vikings,Chicago Bears,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Justin Jefferson,receptions,5.5,2,-139,draftkings,112,fanduel
+2026,2,0283a29e1b38ef78b29b904fd56a16dd,Minnesota Vikings,Chicago Bears,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Colston Loveland,receptions,4.5,2,107,draftkings,-136,fanduel
+2026,2,0283a29e1b38ef78b29b904fd56a16dd,Minnesota Vikings,Chicago Bears,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Luther Burden III,receptions,4.5,2,110,draftkings,-140,draftkings
+2026,2,0283a29e1b38ef78b29b904fd56a16dd,Minnesota Vikings,Chicago Bears,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Jordan Addison,receptions,2.5,2,-164,draftkings,128,draftkings
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Ja'Marr Chase,rec yds,75.5,2,-111,draftkings,-114,draftkings
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Nico Collins,rec yds,70.5,2,-113,draftkings,-111,draftkings
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Tee Higgins,rec yds,53.0,2,-111,draftkings,-113,draftkings
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Dalton Schultz,rec yds,37.5,2,-109,draftkings,-114,fanduel
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Xavier Hutchinson,rec yds,27.5,2,-114,draftkings,-110,draftkings
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Mike Gesicki,rec yds,24.5,2,-114,fanduel,-109,draftkings
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Ja'Marr Chase,receptions,6.5,2,-111,draftkings,-114,fanduel
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Nico Collins,receptions,5.5,2,120,fanduel,-146,draftkings
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Tee Higgins,receptions,3.5,2,-144,draftkings,120,fanduel
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Dalton Schultz,receptions,3.5,2,-127,draftkings,108,fanduel
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Xavier Hutchinson,receptions,2.5,2,-132,draftkings,104,draftkings
+2026,2,36ad2fa722f4915ef23d2c81351261de,Cincinnati Bengals,Houston Texans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Mike Gesicki,receptions,2.5,2,104,draftkings,-130,fanduel
+2026,2,4aeee070bb6ec60bdfae4dede61b9014,Green Bay Packers,New York Jets,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Garrett Wilson,rec yds,63.5,2,-113,draftkings,-111,draftkings
+2026,2,4aeee070bb6ec60bdfae4dede61b9014,Green Bay Packers,New York Jets,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Christian Watson,rec yds,60.5,2,-111,draftkings,-113,draftkings
+2026,2,4aeee070bb6ec60bdfae4dede61b9014,Green Bay Packers,New York Jets,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Tucker Kraft,rec yds,46.5,2,-112,draftkings,-112,draftkings
+2026,2,4aeee070bb6ec60bdfae4dede61b9014,Green Bay Packers,New York Jets,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Garrett Wilson,receptions,5.5,2,-139,draftkings,112,fanduel
+2026,2,4aeee070bb6ec60bdfae4dede61b9014,Green Bay Packers,New York Jets,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Christian Watson,receptions,4.0,2,134,fanduel,130,draftkings
+2026,2,4aeee070bb6ec60bdfae4dede61b9014,Green Bay Packers,New York Jets,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Tucker Kraft,receptions,3.5,2,-138,draftkings,110,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Romeo Doubs,rec yds,38.0,2,-112,draftkings,-112,draftkings
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Hunter Henry,rec yds,38.5,2,-110,draftkings,-114,draftkings
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Mack Hollins,rec yds,37.0,2,-114,draftkings,-110,draftkings
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,DeMario Douglas,rec yds,35.0,2,-114,draftkings,-110,draftkings
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Mack Hollins,receptions,3.5,2,112,draftkings,-143,draftkings
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Hunter Henry,receptions,3.5,2,117,draftkings,-140,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Romeo Doubs,receptions,3.5,2,140,fanduel,-163,draftkings
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,DeMario Douglas,receptions,3.5,2,132,draftkings,-166,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Pat Freiermuth,rec yds,25.5,1,-114,fanduel,-114,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Roman Wilson,rec yds,16.5,1,-114,fanduel,-114,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Michael Pittman Jr.,rec yds,32.5,1,-114,fanduel,-114,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Darnell Washington,rec yds,18.5,1,-114,fanduel,-114,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Jaylen Warren,rec yds,20.5,1,-114,fanduel,-114,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Rico Dowdle,rec yds,12.5,1,-114,fanduel,-114,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,DK Metcalf,rec yds,54.5,1,-114,fanduel,-114,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Rico Dowdle,receptions,2.5,1,110,fanduel,-146,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Michael Pittman Jr.,receptions,3.5,1,-136,fanduel,102,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,DK Metcalf,receptions,3.5,1,-178,fanduel,132,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Darnell Washington,receptions,2.5,1,134,fanduel,-180,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Pat Freiermuth,receptions,3.5,1,136,fanduel,-182,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Jaylen Warren,receptions,3.5,1,112,fanduel,-148,fanduel
+2026,2,9d14f87600f6edc74dbcb5c74edf6246,Pittsburgh Steelers,New England Patriots,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Roman Wilson,receptions,1.5,1,-138,fanduel,104,fanduel
+2026,2,fafc649c455e32a0f2ba1bd06e2039bc,Philadelphia Eagles,Tennessee Titans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,DeVonta Smith,rec yds,60.5,2,-113,draftkings,-111,draftkings
+2026,2,fafc649c455e32a0f2ba1bd06e2039bc,Philadelphia Eagles,Tennessee Titans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Carnell Tate,rec yds,41.0,2,-110,draftkings,-114,draftkings
+2026,2,fafc649c455e32a0f2ba1bd06e2039bc,Philadelphia Eagles,Tennessee Titans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Wan'Dale Robinson,rec yds,37.0,2,-113,draftkings,-111,draftkings
+2026,2,fafc649c455e32a0f2ba1bd06e2039bc,Philadelphia Eagles,Tennessee Titans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Saquon Barkley,rec yds,11.0,2,-110,draftkings,-114,draftkings
+2026,2,fafc649c455e32a0f2ba1bd06e2039bc,Philadelphia Eagles,Tennessee Titans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,DeVonta Smith,receptions,4.5,2,-132,draftkings,104,draftkings
+2026,2,fafc649c455e32a0f2ba1bd06e2039bc,Philadelphia Eagles,Tennessee Titans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Wan'Dale Robinson,receptions,4.5,2,117,draftkings,-148,fanduel
+2026,2,fafc649c455e32a0f2ba1bd06e2039bc,Philadelphia Eagles,Tennessee Titans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Carnell Tate,receptions,3.5,2,-131,draftkings,112,fanduel
+2026,2,fafc649c455e32a0f2ba1bd06e2039bc,Philadelphia Eagles,Tennessee Titans,2026-09-20T17:00:00Z,2026-09-16T20:00:00Z,Saquon Barkley,receptions,1.5,1,-188,fanduel,140,fanduel
+2026,2,1fd6628c781f556a7a19638e97d7107f,Jacksonville Jaguars,Denver Broncos,2026-09-20T20:05:00Z,2026-09-16T20:00:00Z,Jaylen Waddle,rec yds,53.0,2,-112,draftkings,-112,draftkings
+2026,2,1fd6628c781f556a7a19638e97d7107f,Jacksonville Jaguars,Denver Broncos,2026-09-20T20:05:00Z,2026-09-16T20:00:00Z,Parker Washington,rec yds,52.5,2,-112,draftkings,-112,draftkings
+2026,2,1fd6628c781f556a7a19638e97d7107f,Jacksonville Jaguars,Denver Broncos,2026-09-20T20:05:00Z,2026-09-16T20:00:00Z,Courtland Sutton,rec yds,42.0,2,-114,draftkings,-110,draftkings
+2026,2,1fd6628c781f556a7a19638e97d7107f,Jacksonville Jaguars,Denver Broncos,2026-09-20T20:05:00Z,2026-09-16T20:00:00Z,Jaylen Waddle,receptions,4.5,2,110,fanduel,-134,draftkings
+2026,2,1fd6628c781f556a7a19638e97d7107f,Jacksonville Jaguars,Denver Broncos,2026-09-20T20:05:00Z,2026-09-16T20:00:00Z,Parker Washington,receptions,4.5,2,109,draftkings,-136,fanduel
+2026,2,1fd6628c781f556a7a19638e97d7107f,Jacksonville Jaguars,Denver Broncos,2026-09-20T20:05:00Z,2026-09-16T20:00:00Z,Courtland Sutton,receptions,3.5,2,-106,fanduel,-109,draftkings
+2026,2,71b3b83747589efdc5baef2c5cf811bf,Las Vegas Raiders,Los Angeles Chargers,2026-09-20T20:05:00Z,2026-09-16T20:00:00Z,Ashton Jeanty,rec yds,28.0,2,-108,draftkings,-114,fanduel
+2026,2,71b3b83747589efdc5baef2c5cf811bf,Las Vegas Raiders,Los Angeles Chargers,2026-09-20T20:05:00Z,2026-09-16T20:00:00Z,Ashton Jeanty,receptions,4.5,2,123,draftkings,-148,fanduel
+2026,2,4dd8020192a544385db42374e5555303,Seattle Seahawks,Arizona Cardinals,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Jaxon Smith-Njigba,rec yds,81.5,2,-110,draftkings,-114,draftkings
+2026,2,4dd8020192a544385db42374e5555303,Seattle Seahawks,Arizona Cardinals,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Trey McBride,rec yds,61.0,2,-113,draftkings,-111,draftkings
+2026,2,4dd8020192a544385db42374e5555303,Seattle Seahawks,Arizona Cardinals,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Michael Wilson,rec yds,38.0,2,-114,fanduel,-109,draftkings
+2026,2,4dd8020192a544385db42374e5555303,Seattle Seahawks,Arizona Cardinals,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Marvin Harrison Jr.,rec yds,34.5,2,-109,draftkings,-114,fanduel
+2026,2,4dd8020192a544385db42374e5555303,Seattle Seahawks,Arizona Cardinals,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Jeremiyah Love,rec yds,15.0,2,-106,draftkings,-114,fanduel
+2026,2,4dd8020192a544385db42374e5555303,Seattle Seahawks,Arizona Cardinals,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Trey McBride,receptions,6.5,2,-131,draftkings,114,fanduel
+2026,2,4dd8020192a544385db42374e5555303,Seattle Seahawks,Arizona Cardinals,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Jaxon Smith-Njigba,receptions,6.5,2,-103,draftkings,-124,draftkings
+2026,2,4dd8020192a544385db42374e5555303,Seattle Seahawks,Arizona Cardinals,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Michael Wilson,receptions,3.5,2,-122,draftkings,100,fanduel
+2026,2,4dd8020192a544385db42374e5555303,Seattle Seahawks,Arizona Cardinals,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Marvin Harrison Jr.,receptions,3.0,2,120,fanduel,131,draftkings
+2026,2,4dd8020192a544385db42374e5555303,Seattle Seahawks,Arizona Cardinals,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Jeremiyah Love,receptions,2.5,2,-108,draftkings,-114,fanduel
+2026,2,85ef85098ddd22fe4ecf45e7e3c0a9c0,Washington Commanders,Dallas Cowboys,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,CeeDee Lamb,rec yds,75.0,2,-113,draftkings,-111,draftkings
+2026,2,85ef85098ddd22fe4ecf45e7e3c0a9c0,Washington Commanders,Dallas Cowboys,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,George Pickens,rec yds,63.0,2,-112,draftkings,-112,draftkings
+2026,2,85ef85098ddd22fe4ecf45e7e3c0a9c0,Washington Commanders,Dallas Cowboys,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Terry McLaurin,rec yds,53.0,2,-111,draftkings,-113,draftkings
+2026,2,85ef85098ddd22fe4ecf45e7e3c0a9c0,Washington Commanders,Dallas Cowboys,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Stefon Diggs,rec yds,47.5,2,-111,draftkings,-113,draftkings
+2026,2,85ef85098ddd22fe4ecf45e7e3c0a9c0,Washington Commanders,Dallas Cowboys,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Javonte Williams,rec yds,11.5,2,-114,fanduel,-106,draftkings
+2026,2,85ef85098ddd22fe4ecf45e7e3c0a9c0,Washington Commanders,Dallas Cowboys,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,CeeDee Lamb,receptions,5.5,2,-122,draftkings,104,fanduel
+2026,2,85ef85098ddd22fe4ecf45e7e3c0a9c0,Washington Commanders,Dallas Cowboys,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Stefon Diggs,receptions,4.5,2,-132,fanduel,107,draftkings
+2026,2,85ef85098ddd22fe4ecf45e7e3c0a9c0,Washington Commanders,Dallas Cowboys,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,George Pickens,receptions,4.5,2,-114,fanduel,102,draftkings
+2026,2,85ef85098ddd22fe4ecf45e7e3c0a9c0,Washington Commanders,Dallas Cowboys,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Terry McLaurin,receptions,4.0,2,121,draftkings,128,fanduel
+2026,2,85ef85098ddd22fe4ecf45e7e3c0a9c0,Washington Commanders,Dallas Cowboys,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Javonte Williams,receptions,2.5,2,-110,fanduel,-113,draftkings
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Demarcus Robinson,rec yds,24.5,1,-114,fanduel,-114,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Mike Evans,rec yds,47.5,1,-114,fanduel,-114,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,George Kittle,rec yds,42.5,1,-114,fanduel,-114,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Chris Bell,rec yds,22.5,1,-114,fanduel,-114,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Christian McCaffrey,rec yds,42.5,1,-114,fanduel,-114,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,De'Von Achane,rec yds,27.5,1,-114,fanduel,-114,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Deebo Samuel,rec yds,32.5,1,-114,fanduel,-114,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Malik Washington,rec yds,31.5,1,-114,fanduel,-114,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Greg Dulcich,rec yds,23.5,1,-114,fanduel,-114,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Caleb Douglas,rec yds,38.5,1,-114,fanduel,-114,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Malik Washington,receptions,3.5,1,114,fanduel,-152,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Caleb Douglas,receptions,2.5,1,-188,fanduel,140,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Deebo Samuel,receptions,3.5,1,142,fanduel,-192,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Demarcus Robinson,receptions,1.5,1,-128,fanduel,-104,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Mike Evans,receptions,3.5,1,-114,fanduel,-114,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,George Kittle,receptions,3.5,1,-154,fanduel,116,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,De'Von Achane,receptions,4.5,1,126,fanduel,-168,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Christian McCaffrey,receptions,4.5,1,-148,fanduel,112,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Greg Dulcich,receptions,2.5,1,124,fanduel,-166,fanduel
+2026,2,68bc55903f50af4af4766adcc89fcc61,Miami Dolphins,San Francisco 49ers,2026-09-20T20:25:00Z,2026-09-16T20:00:00Z,Chris Bell,receptions,1.5,1,-172,fanduel,128,fanduel
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Rashee Rice,rec yds,55.0,2,-112,draftkings,-112,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Tyler Warren,rec yds,44.5,2,-110,draftkings,-114,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Alec Pierce,rec yds,43.5,2,-112,draftkings,-112,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Travis Kelce,rec yds,42.5,2,-114,draftkings,-110,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Xavier Worthy,rec yds,37.5,2,-113,draftkings,-111,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Josh Downs,rec yds,36.5,2,-114,draftkings,-110,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Keenan Allen,rec yds,30.5,2,-113,draftkings,-111,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Kenneth Walker III,rec yds,19.5,2,-114,draftkings,-110,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Jonathan Taylor,rec yds,17.0,2,-114,fanduel,-109,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Tyquan Thornton,rec yds,14.5,2,-108,draftkings,-114,fanduel
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Rashee Rice,receptions,4.5,2,-154,fanduel,121,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Tyler Warren,receptions,4.5,2,-130,fanduel,106,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Travis Kelce,receptions,3.5,2,-154,draftkings,121,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Josh Downs,receptions,3.5,2,-122,fanduel,111,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Keenan Allen,receptions,3.5,2,-117,draftkings,-102,fanduel
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Xavier Worthy,receptions,3.5,2,117,draftkings,-140,fanduel
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Alec Pierce,receptions,2.5,2,-170,draftkings,133,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Kenneth Walker III,receptions,2.5,2,-159,draftkings,124,draftkings
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Jonathan Taylor,receptions,2.5,2,-115,draftkings,102,fanduel
+2026,2,50bc247030707d823b9c3581d7eb5760,Indianapolis Colts,Kansas City Chiefs,2026-09-21T00:20:00Z,2026-09-16T20:00:00Z,Tyquan Thornton,receptions,1.5,2,162,fanduel,-205,draftkings
+2026,2,32367f882fac1a0c20a6335619922025,New York Giants,Los Angeles Rams,2026-09-22T00:15:00Z,2026-09-16T20:00:00Z,Puka Nacua,rec yds,86.5,2,-112,draftkings,-112,draftkings
+2026,2,32367f882fac1a0c20a6335619922025,New York Giants,Los Angeles Rams,2026-09-22T00:15:00Z,2026-09-16T20:00:00Z,Malik Nabers,rec yds,64.5,2,-112,draftkings,-112,draftkings
+2026,2,32367f882fac1a0c20a6335619922025,New York Giants,Los Angeles Rams,2026-09-22T00:15:00Z,2026-09-16T20:00:00Z,Isaiah Likely,rec yds,46.0,2,-113,draftkings,-111,draftkings
+2026,2,32367f882fac1a0c20a6335619922025,New York Giants,Los Angeles Rams,2026-09-22T00:15:00Z,2026-09-16T20:00:00Z,Davante Adams,rec yds,44.5,2,-114,draftkings,-110,draftkings
+2026,2,32367f882fac1a0c20a6335619922025,New York Giants,Los Angeles Rams,2026-09-22T00:15:00Z,2026-09-16T20:00:00Z,Puka Nacua,receptions,6.5,2,-130,fanduel,112,draftkings
+2026,2,32367f882fac1a0c20a6335619922025,New York Giants,Los Angeles Rams,2026-09-22T00:15:00Z,2026-09-16T20:00:00Z,Malik Nabers,receptions,5.5,2,-114,fanduel,-105,draftkings
+2026,2,32367f882fac1a0c20a6335619922025,New York Giants,Los Angeles Rams,2026-09-22T00:15:00Z,2026-09-16T20:00:00Z,Isaiah Likely,receptions,4.5,2,-119,draftkings,104,fanduel
+2026,2,32367f882fac1a0c20a6335619922025,New York Giants,Los Angeles Rams,2026-09-22T00:15:00Z,2026-09-16T20:00:00Z,Davante Adams,receptions,3.5,2,-136,fanduel,108,draftkings
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Skyy Moore,rec yds,10.5,1,-120,fanduel,-108,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Olamide Zaccheaus,rec yds,10.5,1,-114,fanduel,-114,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Christian Watson,rec yds,69.5,1,-114,fanduel,-114,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Matthew Golden,rec yds,54.5,1,-114,fanduel,-114,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Jonnu Smith,rec yds,7.5,1,-114,fanduel,-114,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Tucker Kraft,rec yds,46.5,1,-114,fanduel,-114,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Chris Brooks,rec yds,7.5,1,-114,fanduel,-114,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Drake London,rec yds,65.5,1,-114,fanduel,-114,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,MarShawn Lloyd,rec yds,5.5,1,-114,fanduel,-114,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Bijan Robinson,rec yds,40.5,1,-114,fanduel,-114,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Kyle Pitts,rec yds,37.5,1,-114,fanduel,-114,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Jahan Dotson,rec yds,19.5,1,-114,fanduel,-114,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,MarShawn Lloyd,receptions,1.5,1,154,fanduel,-210,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Chris Brooks,receptions,1.5,1,116,fanduel,-154,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Tucker Kraft,receptions,3.5,1,-154,fanduel,116,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Christian Watson,receptions,4.5,1,-138,fanduel,104,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Olamide Zaccheaus,receptions,1.5,1,136,fanduel,-182,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Kyle Pitts,receptions,3.5,1,-140,fanduel,106,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Drake London,receptions,5.5,1,106,fanduel,-140,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Matthew Golden,receptions,4.5,1,102,fanduel,-136,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Bijan Robinson,receptions,4.5,1,-130,fanduel,-102,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Skyy Moore,receptions,1.5,1,130,fanduel,-174,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Jahan Dotson,receptions,1.5,1,-162,fanduel,122,fanduel
+2026,3,e5fbd3b3953b896b1bf897ddadb3cc4b,Atlanta Falcons,Green Bay Packers,2026-09-25T00:15:00Z,2026-09-23T20:00:00Z,Jonnu Smith,receptions,1.5,1,130,fanduel,-174,fanduel
+2026,3,b225458a282e140c44c45651255f2f6c,Los Angeles Chargers,Buffalo Bills,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Omarion Hampton,rec yds,11.5,1,-114,fanduel,-114,fanduel
+2026,3,b225458a282e140c44c45651255f2f6c,Los Angeles Chargers,Buffalo Bills,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Quentin Johnston,rec yds,35.5,1,-114,fanduel,-114,fanduel
+2026,3,b225458a282e140c44c45651255f2f6c,Los Angeles Chargers,Buffalo Bills,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Tre Harris,rec yds,33.5,1,-114,fanduel,-114,fanduel
+2026,3,b225458a282e140c44c45651255f2f6c,Los Angeles Chargers,Buffalo Bills,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,DJ Moore,rec yds,49.5,1,-114,fanduel,-114,fanduel
+2026,3,b225458a282e140c44c45651255f2f6c,Los Angeles Chargers,Buffalo Bills,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Ladd McConkey,rec yds,52.5,1,-114,fanduel,-114,fanduel
+2026,3,b225458a282e140c44c45651255f2f6c,Los Angeles Chargers,Buffalo Bills,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Quentin Johnston,receptions,3.5,1,132,fanduel,-178,fanduel
+2026,3,b225458a282e140c44c45651255f2f6c,Los Angeles Chargers,Buffalo Bills,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Tre Harris,receptions,2.5,1,-166,fanduel,124,fanduel
+2026,3,b225458a282e140c44c45651255f2f6c,Los Angeles Chargers,Buffalo Bills,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,DJ Moore,receptions,3.5,1,-140,fanduel,106,fanduel
+2026,3,b225458a282e140c44c45651255f2f6c,Los Angeles Chargers,Buffalo Bills,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Omarion Hampton,receptions,1.5,1,-148,fanduel,112,fanduel
+2026,3,b225458a282e140c44c45651255f2f6c,Los Angeles Chargers,Buffalo Bills,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Ladd McConkey,receptions,4.5,1,112,fanduel,-148,fanduel
+2026,3,71123be049587b6facce3a20c53e5d09,Cincinnati Bengals,Pittsburgh Steelers,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,DK Metcalf,rec yds,52.5,1,-114,fanduel,-114,fanduel
+2026,3,71123be049587b6facce3a20c53e5d09,Cincinnati Bengals,Pittsburgh Steelers,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Pat Freiermuth,rec yds,34.5,1,-114,fanduel,-114,fanduel
+2026,3,71123be049587b6facce3a20c53e5d09,Cincinnati Bengals,Pittsburgh Steelers,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Tee Higgins,rec yds,53.5,1,-114,fanduel,-114,fanduel
+2026,3,71123be049587b6facce3a20c53e5d09,Cincinnati Bengals,Pittsburgh Steelers,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Chase Brown,rec yds,21.5,1,-114,fanduel,-114,fanduel
+2026,3,71123be049587b6facce3a20c53e5d09,Cincinnati Bengals,Pittsburgh Steelers,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Ja'Marr Chase,rec yds,76.5,1,-114,fanduel,-114,fanduel
+2026,3,71123be049587b6facce3a20c53e5d09,Cincinnati Bengals,Pittsburgh Steelers,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Pat Freiermuth,receptions,3.5,1,-148,fanduel,112,fanduel
+2026,3,71123be049587b6facce3a20c53e5d09,Cincinnati Bengals,Pittsburgh Steelers,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,DK Metcalf,receptions,4.5,1,-102,fanduel,-130,fanduel
+2026,3,71123be049587b6facce3a20c53e5d09,Cincinnati Bengals,Pittsburgh Steelers,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Tee Higgins,receptions,4.5,1,106,fanduel,-140,fanduel
+2026,3,71123be049587b6facce3a20c53e5d09,Cincinnati Bengals,Pittsburgh Steelers,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Chase Brown,receptions,3.5,1,106,fanduel,-140,fanduel
+2026,3,71123be049587b6facce3a20c53e5d09,Cincinnati Bengals,Pittsburgh Steelers,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Ja'Marr Chase,receptions,6.5,1,-138,fanduel,104,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Garrett Wilson,rec yds,61.5,1,-114,fanduel,-114,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Sam LaPorta,rec yds,45.5,1,-114,fanduel,-114,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Jahmyr Gibbs,rec yds,35.5,1,-114,fanduel,-114,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Jameson Williams,rec yds,54.5,1,-114,fanduel,-114,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Breece Hall,rec yds,21.5,1,-114,fanduel,-114,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Adonai Mitchell,rec yds,45.5,1,-114,fanduel,-114,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Amon-Ra St. Brown,rec yds,75.5,1,-114,fanduel,-114,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Jahmyr Gibbs,receptions,4.5,1,-114,fanduel,-114,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Amon-Ra St. Brown,receptions,7.5,1,130,fanduel,-174,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Breece Hall,receptions,3.5,1,120,fanduel,-160,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Garrett Wilson,receptions,5.5,1,102,fanduel,-136,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Sam LaPorta,receptions,4.5,1,-114,fanduel,-114,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Adonai Mitchell,receptions,3.5,1,-138,fanduel,104,fanduel
+2026,3,07f552badfa8a565d1be22123713e4da,New York Jets,Detroit Lions,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Jameson Williams,receptions,4.5,1,124,fanduel,-166,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Mack Hollins,rec yds,33.5,1,-114,fanduel,-114,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Hunter Henry,rec yds,41.5,1,-114,fanduel,-114,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Brenton Strange,rec yds,27.5,1,-114,fanduel,-114,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Bhayshul Tuten,rec yds,9.5,1,-114,fanduel,-114,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Rhamondre Stevenson,rec yds,14.5,1,-114,fanduel,-114,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Jakobi Meyers,rec yds,34.5,1,-114,fanduel,-114,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Parker Washington,rec yds,61.5,1,-114,fanduel,-114,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,TreVeyon Henderson,rec yds,9.5,1,-114,fanduel,-114,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Brian Thomas Jr,rec yds,38.5,1,-114,fanduel,-114,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,DeMario Douglas,rec yds,28.5,1,-114,fanduel,-114,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Romeo Doubs,rec yds,42.5,1,-114,fanduel,-114,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Brian Thomas Jr,receptions,3.5,1,140,fanduel,-188,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Romeo Doubs,receptions,3.5,1,120,fanduel,-160,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Jakobi Meyers,receptions,3.5,1,-102,fanduel,-130,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,DeMario Douglas,receptions,2.5,1,-172,fanduel,128,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Brenton Strange,receptions,2.5,1,-180,fanduel,134,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Parker Washington,receptions,4.5,1,-148,fanduel,112,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,TreVeyon Henderson,receptions,1.5,1,-102,fanduel,-130,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Bhayshul Tuten,receptions,1.5,1,-122,fanduel,-108,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Rhamondre Stevenson,receptions,2.5,1,102,fanduel,-136,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Mack Hollins,receptions,2.5,1,-172,fanduel,128,fanduel
+2026,3,1f3cfd315a24d1a7dd5859a8e6b88e18,New England Patriots,Jacksonville Jaguars,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Hunter Henry,receptions,3.5,1,-166,fanduel,124,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Xavier Worthy,rec yds,35.5,1,-114,fanduel,-114,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Rashee Rice,rec yds,48.5,1,-114,fanduel,-114,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,De'Von Achane,rec yds,26.5,1,-114,fanduel,-114,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Emmett Johnson,rec yds,10.5,1,-114,fanduel,-114,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Kenneth Walker III,rec yds,22.5,1,-114,fanduel,-114,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Travis Kelce,rec yds,51.5,1,-114,fanduel,-114,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Kenneth Walker III,receptions,3.5,1,120,fanduel,-160,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Rashee Rice,receptions,4.5,1,118,fanduel,-158,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Travis Kelce,receptions,4.5,1,-114,fanduel,-114,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Emmett Johnson,receptions,1.5,1,-102,fanduel,-130,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,Xavier Worthy,receptions,3.5,1,-104,fanduel,-128,fanduel
+2026,3,0339a0e41bcee12820eb3e64bb5fadb4,Kansas City Chiefs,Miami Dolphins,2026-09-27T17:00:00Z,2026-09-23T20:00:00Z,De'Von Achane,receptions,3.5,1,-122,fanduel,-106,fanduel
+2026,3,9d2b09e0f9b6dd5ce0d985894f4f98fa,Arizona Cardinals,San Francisco 49ers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Michael Wilson,rec yds,44.5,1,-114,fanduel,-114,fanduel
+2026,3,9d2b09e0f9b6dd5ce0d985894f4f98fa,Arizona Cardinals,San Francisco 49ers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Trey McBride,rec yds,67.5,1,-114,fanduel,-114,fanduel
+2026,3,9d2b09e0f9b6dd5ce0d985894f4f98fa,Arizona Cardinals,San Francisco 49ers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Marvin Harrison Jr.,rec yds,26.5,1,-114,fanduel,-114,fanduel
+2026,3,9d2b09e0f9b6dd5ce0d985894f4f98fa,Arizona Cardinals,San Francisco 49ers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Michael Wilson,receptions,3.5,1,-178,fanduel,132,fanduel
+2026,3,9d2b09e0f9b6dd5ce0d985894f4f98fa,Arizona Cardinals,San Francisco 49ers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Marvin Harrison Jr.,receptions,2.5,1,134,fanduel,-180,fanduel
+2026,3,9d2b09e0f9b6dd5ce0d985894f4f98fa,Arizona Cardinals,San Francisco 49ers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Trey McBride,receptions,7.5,1,112,fanduel,-148,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Justin Jefferson,rec yds,68.5,1,-114,fanduel,-114,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,T.J. Hockenson,rec yds,30.5,1,-114,fanduel,-114,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Emeka Egbuka,rec yds,48.5,1,-114,fanduel,-114,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Jordan Addison,rec yds,32.5,1,-114,fanduel,-114,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Chris Godwin,rec yds,35.5,1,-114,fanduel,-114,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Cade Otton,rec yds,27.5,1,-114,fanduel,-114,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Chris Godwin,receptions,3.5,1,120,fanduel,-160,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Jordan Addison,receptions,2.5,1,-160,fanduel,120,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Emeka Egbuka,receptions,4.5,1,118,fanduel,-158,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,T.J. Hockenson,receptions,3.5,1,-112,fanduel,-118,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Justin Jefferson,receptions,5.5,1,-132,fanduel,100,fanduel
+2026,3,f1724dead3eab61546033032fc782375,Minnesota Vikings,Tampa Bay Buccaneers,2026-09-27T20:05:00Z,2026-09-23T20:00:00Z,Cade Otton,receptions,3.5,1,134,fanduel,-180,fanduel
+2026,3,84cfca14efc21363fd605508404cf1ff,Baltimore Ravens,Dallas Cowboys,2026-09-27T20:25:00Z,2026-09-23T20:00:00Z,Jake Ferguson,rec yds,28.5,1,-114,fanduel,-114,fanduel
+2026,3,84cfca14efc21363fd605508404cf1ff,Baltimore Ravens,Dallas Cowboys,2026-09-27T20:25:00Z,2026-09-23T20:00:00Z,George Pickens,rec yds,59.5,1,-114,fanduel,-114,fanduel
+2026,3,84cfca14efc21363fd605508404cf1ff,Baltimore Ravens,Dallas Cowboys,2026-09-27T20:25:00Z,2026-09-23T20:00:00Z,Zay Flowers,rec yds,71.5,1,-114,fanduel,-114,fanduel
+2026,3,84cfca14efc21363fd605508404cf1ff,Baltimore Ravens,Dallas Cowboys,2026-09-27T20:25:00Z,2026-09-23T20:00:00Z,CeeDee Lamb,rec yds,84.5,1,-114,fanduel,-114,fanduel
+2026,3,84cfca14efc21363fd605508404cf1ff,Baltimore Ravens,Dallas Cowboys,2026-09-27T20:25:00Z,2026-09-23T20:00:00Z,Javonte Williams,rec yds,16.5,1,-114,fanduel,-114,fanduel
+2026,3,84cfca14efc21363fd605508404cf1ff,Baltimore Ravens,Dallas Cowboys,2026-09-27T20:25:00Z,2026-09-23T20:00:00Z,CeeDee Lamb,receptions,6.5,1,-154,fanduel,116,fanduel
+2026,3,84cfca14efc21363fd605508404cf1ff,Baltimore Ravens,Dallas Cowboys,2026-09-27T20:25:00Z,2026-09-23T20:00:00Z,Zay Flowers,receptions,5.5,1,124,fanduel,-166,fanduel
+2026,3,84cfca14efc21363fd605508404cf1ff,Baltimore Ravens,Dallas Cowboys,2026-09-27T20:25:00Z,2026-09-23T20:00:00Z,Javonte Williams,receptions,2.5,1,-154,fanduel,116,fanduel
+2026,3,84cfca14efc21363fd605508404cf1ff,Baltimore Ravens,Dallas Cowboys,2026-09-27T20:25:00Z,2026-09-23T20:00:00Z,George Pickens,receptions,5.5,1,112,fanduel,-148,fanduel
+2026,3,84cfca14efc21363fd605508404cf1ff,Baltimore Ravens,Dallas Cowboys,2026-09-27T20:25:00Z,2026-09-23T20:00:00Z,Jake Ferguson,receptions,3.5,1,-122,fanduel,-108,fanduel
+2026,3,3bfd8bfb4b8e9a365a0877879b73b16b,Los Angeles Rams,Denver Broncos,2026-09-28T00:20:00Z,2026-09-23T20:00:00Z,Jaylen Waddle,rec yds,57.5,1,-114,fanduel,-114,fanduel
+2026,3,3bfd8bfb4b8e9a365a0877879b73b16b,Los Angeles Rams,Denver Broncos,2026-09-28T00:20:00Z,2026-09-23T20:00:00Z,Jaylen Waddle,receptions,4.5,1,-154,fanduel,116,fanduel
+2026,3,47dc7baa254659f3beb2ed2b38c207b6,Philadelphia Eagles,Chicago Bears,2026-09-29T00:15:00Z,2026-09-23T20:00:00Z,DeVonta Smith,rec yds,72.5,1,-114,fanduel,-114,fanduel
+2026,3,47dc7baa254659f3beb2ed2b38c207b6,Philadelphia Eagles,Chicago Bears,2026-09-29T00:15:00Z,2026-09-23T20:00:00Z,Dontayvion Wicks,rec yds,41.5,1,-114,fanduel,-114,fanduel
+2026,3,47dc7baa254659f3beb2ed2b38c207b6,Philadelphia Eagles,Chicago Bears,2026-09-29T00:15:00Z,2026-09-23T20:00:00Z,Saquon Barkley,rec yds,13.5,1,-114,fanduel,-114,fanduel
+2026,3,47dc7baa254659f3beb2ed2b38c207b6,Philadelphia Eagles,Chicago Bears,2026-09-29T00:15:00Z,2026-09-23T20:00:00Z,DeVonta Smith,receptions,5.5,1,-122,fanduel,-108,fanduel
+2026,3,47dc7baa254659f3beb2ed2b38c207b6,Philadelphia Eagles,Chicago Bears,2026-09-29T00:15:00Z,2026-09-23T20:00:00Z,Saquon Barkley,receptions,2.5,1,116,fanduel,-154,fanduel
+2026,3,47dc7baa254659f3beb2ed2b38c207b6,Philadelphia Eagles,Chicago Bears,2026-09-29T00:15:00Z,2026-09-23T20:00:00Z,Dontayvion Wicks,receptions,3.5,1,140,fanduel,-188,fanduel
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,DK Metcalf,rec yds,43.0,2,-112,draftkings,-112,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Harold Fannin Jr.,rec yds,40.5,2,-111,draftkings,-113,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Denzel Boston,rec yds,37.5,2,-112,draftkings,-112,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,KC Concepcion,rec yds,34.5,2,-110,draftkings,-114,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Michael Pittman Jr.,rec yds,34.0,2,-109,draftkings,-114,fanduel
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Pat Freiermuth,rec yds,28.5,2,-110,draftkings,-114,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Jaylen Warren,rec yds,24.0,2,-114,draftkings,-110,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Roman Wilson,rec yds,19.0,2,-114,fanduel,-108,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Darnell Washington,rec yds,17.0,2,-109,draftkings,-114,fanduel
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Jerry Jeudy,rec yds,13.5,2,-112,draftkings,-112,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Quinshon Judkins,rec yds,12.5,2,-114,fanduel,-108,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Raheim Sanders,rec yds,11.5,2,-114,fanduel,-109,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Harold Fannin Jr.,receptions,4.5,2,-111,draftkings,-114,fanduel
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,KC Concepcion,receptions,3.5,2,-138,fanduel,118,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,DK Metcalf,receptions,3.5,2,-122,fanduel,108,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Jaylen Warren,receptions,3.5,2,116,fanduel,-127,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Michael Pittman Jr.,receptions,3.5,2,106,fanduel,-127,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Pat Freiermuth,receptions,3.5,2,109,draftkings,-138,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Denzel Boston,receptions,2.5,2,-153,draftkings,120,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Roman Wilson,receptions,2.5,2,144,fanduel,-171,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Quinshon Judkins,receptions,2.5,2,140,fanduel,-178,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Darnell Washington,receptions,1.5,2,-188,fanduel,151,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Raheim Sanders,receptions,1.5,2,-172,fanduel,144,draftkings
+2026,4,d55cb69fed50a09170560b5b75d8de86,Pittsburgh Steelers,Cleveland Browns,2026-10-02T00:15:00Z,2026-09-30T20:00:00Z,Jerry Jeudy,receptions,1.5,2,124,fanduel,-148,draftkings
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Josh Downs,rec yds,64.5,2,-110,draftkings,-114,draftkings
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Terry McLaurin,rec yds,53.5,2,-113,draftkings,-111,draftkings
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Tyler Warren,rec yds,47.5,2,-109,draftkings,-114,fanduel
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Stefon Diggs,rec yds,42.0,2,-110,draftkings,-114,draftkings
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Keenan Allen,rec yds,34.0,2,-109,draftkings,-114,fanduel
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Jonathan Taylor,rec yds,19.5,2,-112,draftkings,-112,draftkings
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Tyler Warren,receptions,5.5,2,-102,fanduel,-122,draftkings
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Josh Downs,receptions,5.5,2,122,fanduel,-148,draftkings
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Terry McLaurin,receptions,4.5,2,-106,fanduel,-118,draftkings
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Stefon Diggs,receptions,4.5,2,129,draftkings,-154,fanduel
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Keenan Allen,receptions,3.5,2,-122,fanduel,-102,draftkings
+2026,4,c9d8ed8aa4889486eaf10a630138ede0,Indianapolis Colts,Washington Commanders,2026-10-04T13:30:00Z,2026-09-30T20:00:00Z,Jonathan Taylor,receptions,2.5,2,-130,fanduel,109,draftkings
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Trey McBride,rec yds,68.0,2,-110,draftkings,-114,draftkings
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Michael Wilson,rec yds,56.0,2,-112,draftkings,-112,draftkings
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Malik Nabers,rec yds,53.0,2,-110,draftkings,-114,draftkings
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Isaiah Likely,rec yds,38.5,2,-113,draftkings,-111,draftkings
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Marvin Harrison Jr.,rec yds,33.0,2,-113,draftkings,-111,draftkings
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Malachi Fields,rec yds,23.5,2,-111,draftkings,-113,draftkings
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Trey McBride,receptions,7.5,2,108,fanduel,-127,draftkings
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Michael Wilson,receptions,5.0,2,112,fanduel,117,draftkings
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Malik Nabers,receptions,4.5,2,-122,fanduel,107,draftkings
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Isaiah Likely,receptions,4.0,2,125,draftkings,118,fanduel
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Marvin Harrison Jr.,receptions,2.5,2,-105,draftkings,-114,fanduel
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Malachi Fields,receptions,1.5,2,-172,fanduel,138,draftkings
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Jeremiyah Love,rec yds,14.5,1,-114,fanduel,-114,fanduel
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Cam Skattebo,rec yds,16.5,1,-114,fanduel,-114,fanduel
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Jeremiyah Love,receptions,3.5,1,142,fanduel,-192,fanduel
+2026,4,664e6bda5721dc63be16bcf7d962a436,Arizona Cardinals,New York Giants,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Cam Skattebo,receptions,2.5,1,102,fanduel,-136,fanduel
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Zay Flowers,rec yds,67.5,2,-110,draftkings,-114,draftkings
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Carnell Tate,rec yds,42.5,2,-111,draftkings,-113,draftkings
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Mark Andrews,rec yds,38.5,2,-111,draftkings,-113,draftkings
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Wan'Dale Robinson,rec yds,38.0,2,-114,fanduel,-109,draftkings
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Rashod Bateman,rec yds,34.0,2,-114,fanduel,-109,draftkings
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Gunnar Helm,rec yds,19.0,2,-110,draftkings,-114,draftkings
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Elic Ayomanor,rec yds,19.5,2,-114,fanduel,-108,draftkings
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Tony Pollard,rec yds,10.0,2,-109,draftkings,-114,fanduel
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Derrick Henry,rec yds,7.5,2,-114,fanduel,-108,draftkings
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Zay Flowers,receptions,5.5,2,120,fanduel,-150,draftkings
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Carnell Tate,receptions,4.5,2,104,draftkings,-122,fanduel
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Mark Andrews,receptions,4.5,2,134,fanduel,-165,draftkings
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Wan'Dale Robinson,receptions,3.5,2,-152,draftkings,122,fanduel
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Rashod Bateman,receptions,2.5,2,-147,draftkings,116,fanduel
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Gunnar Helm,receptions,2.5,2,-143,draftkings,118,fanduel
+2026,4,f01589b0e7e6dd4f4ac1220a1db81f53,Tennessee Titans,Baltimore Ravens,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Elic Ayomanor,receptions,1.5,2,-154,fanduel,123,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Dalton Kincaid,rec yds,51.5,2,-113,draftkings,-111,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,DJ Moore,rec yds,48.0,2,-110,draftkings,-114,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Mack Hollins,rec yds,43.5,2,-112,draftkings,-112,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Romeo Doubs,rec yds,40.0,2,-111,draftkings,-113,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Khalil Shakir,rec yds,38.5,2,-110,draftkings,-114,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Hunter Henry,rec yds,31.5,2,-110,draftkings,-114,fanduel
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,DeMario Douglas,rec yds,27.0,2,-114,fanduel,-109,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Rhamondre Stevenson,rec yds,18.5,2,-109,draftkings,-114,fanduel
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Keon Coleman,rec yds,13.0,2,-110,draftkings,-114,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Ty Johnson,rec yds,13.0,2,-114,fanduel,-109,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,TreVeyon Henderson,rec yds,7.5,2,-110,draftkings,-114,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,James Cook,rec yds,6.5,2,-114,fanduel,-102,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Dalton Kincaid,receptions,4.5,2,-107,draftkings,-112,fanduel
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,DJ Moore,receptions,3.5,2,-143,draftkings,112,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Khalil Shakir,receptions,3.5,2,-138,draftkings,112,fanduel
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Mack Hollins,receptions,3.5,2,-109,draftkings,-102,fanduel
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Hunter Henry,receptions,3.5,2,103,draftkings,-122,fanduel
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Romeo Doubs,receptions,3.5,2,120,draftkings,-144,fanduel
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Rhamondre Stevenson,receptions,2.5,2,-128,draftkings,104,fanduel
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,DeMario Douglas,receptions,2.5,2,-124,draftkings,102,fanduel
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Ty Johnson,receptions,1.5,2,-141,draftkings,118,fanduel
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Keon Coleman,receptions,1.5,2,-102,draftkings,-125,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,James Cook,receptions,1.5,2,106,fanduel,-131,draftkings
+2026,4,573cc0ef39631a4f6673ec843a8bedd4,New England Patriots,Buffalo Bills,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,TreVeyon Henderson,receptions,1.5,2,134,fanduel,-164,draftkings
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Garrett Wilson,rec yds,77.5,1,-114,fanduel,-114,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Rome Odunze,rec yds,28.5,1,-114,fanduel,-114,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Kalif Raymond,rec yds,36.5,1,-114,fanduel,-114,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Luther Burden III,rec yds,46.5,1,-114,fanduel,-114,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,D'Andre Swift,rec yds,14.5,1,-114,fanduel,-114,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Colston Loveland,rec yds,28.5,1,-114,fanduel,-114,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Cole Kmet,rec yds,9.5,1,-114,fanduel,-114,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Rome Odunze,receptions,2.5,1,104,fanduel,-138,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Cole Kmet,receptions,1.5,1,182,fanduel,-250,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Kalif Raymond,receptions,3.5,1,-108,fanduel,-122,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,D'Andre Swift,receptions,2.5,1,140,fanduel,-188,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Garrett Wilson,receptions,6.5,1,-108,fanduel,-122,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Colston Loveland,receptions,3.5,1,116,fanduel,-154,fanduel
+2026,4,164e6eb68f31bac190381903c3cccd31,New York Jets,Chicago Bears,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Luther Burden III,receptions,4.5,1,106,fanduel,-140,fanduel
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Ja'Marr Chase,rec yds,78.0,2,-114,draftkings,-110,draftkings
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Parker Washington,rec yds,72.5,2,-111,draftkings,-113,draftkings
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Tee Higgins,rec yds,60.5,2,-114,draftkings,-110,draftkings
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Jakobi Meyers,rec yds,40.5,2,-113,draftkings,-111,draftkings
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Dohnte Meyers,rec yds,20.0,2,-114,fanduel,-109,draftkings
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Ja'Marr Chase,receptions,6.5,2,-119,draftkings,100,fanduel
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Parker Washington,receptions,5.5,2,114,draftkings,-140,fanduel
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Tee Higgins,receptions,4.5,2,106,fanduel,-129,draftkings
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Jakobi Meyers,receptions,3.5,2,-140,draftkings,112,fanduel
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Dohnte Meyers,receptions,2.5,2,121,draftkings,-130,fanduel
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Mike Gesicki,rec yds,28.5,1,-114,fanduel,-114,fanduel
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Chase Brown,rec yds,17.5,1,-114,fanduel,-114,fanduel
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Mike Gesicki,receptions,2.5,1,-130,fanduel,-102,fanduel
+2026,4,2ea94ddf20f66432b9024fe2e2eaba5f,Jacksonville Jaguars,Cincinnati Bengals,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Chase Brown,receptions,3.5,1,-102,fanduel,-130,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,CeeDee Lamb,rec yds,76.5,2,-110,draftkings,-114,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Nico Collins,rec yds,73.0,2,-113,draftkings,-111,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,George Pickens,rec yds,68.0,2,-114,draftkings,-110,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Dalton Schultz,rec yds,45.5,2,-111,draftkings,-113,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Ryan Flournoy,rec yds,33.0,2,-113,draftkings,-111,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Jake Ferguson,rec yds,24.0,2,-114,draftkings,-110,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Javonte Williams,rec yds,13.5,2,-111,draftkings,-113,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,David Montgomery,rec yds,10.5,2,-108,draftkings,-114,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Woody Marks,rec yds,9.5,2,-107,draftkings,-114,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,CeeDee Lamb,receptions,5.5,2,-130,fanduel,109,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Nico Collins,receptions,5.5,2,102,draftkings,-130,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Dalton Schultz,receptions,4.5,2,-134,draftkings,116,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,George Pickens,receptions,4.5,2,-134,draftkings,108,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Ryan Flournoy,receptions,3.5,2,102,fanduel,-123,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Jake Ferguson,receptions,3.5,2,100,draftkings,-127,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Javonte Williams,receptions,2.5,2,-131,draftkings,106,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Woody Marks,receptions,1.5,2,-152,fanduel,130,draftkings
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,David Montgomery,receptions,1.5,2,-123,draftkings,104,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Jaylin Noel,rec yds,8.5,1,-114,fanduel,-114,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Xavier Hutchinson,rec yds,29.5,1,-114,fanduel,-114,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Kayshon Boutte,rec yds,23.5,1,-114,fanduel,-114,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Xavier Hutchinson,receptions,2.5,1,-140,fanduel,106,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Jaylin Noel,receptions,1.5,1,178,fanduel,-245,fanduel
+2026,4,daf55e2df5341c007fee5a0fc5bbc2d4,Dallas Cowboys,Houston Texans,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Kayshon Boutte,receptions,2.5,1,154,fanduel,-210,fanduel
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Christian Watson,rec yds,67.5,2,-114,draftkings,-111,draftkings
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Matthew Golden,rec yds,58.0,2,-110,draftkings,-114,draftkings
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Tucker Kraft,rec yds,39.5,2,-111,draftkings,-113,draftkings
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Emeka Egbuka,rec yds,36.0,2,-113,draftkings,-111,draftkings
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Chris Godwin,rec yds,27.0,2,-113,draftkings,-111,draftkings
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Cade Otton,rec yds,25.5,2,-110,draftkings,-114,draftkings
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Bucky Irving,rec yds,13.0,2,-114,fanduel,-109,draftkings
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Christian Watson,receptions,4.5,2,-143,draftkings,116,fanduel
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Matthew Golden,receptions,4.5,2,-108,fanduel,-110,draftkings
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Tucker Kraft,receptions,3.5,2,-145,draftkings,114,draftkings
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Emeka Egbuka,receptions,3.5,2,110,draftkings,-138,fanduel
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Cade Otton,receptions,2.5,2,-164,draftkings,132,fanduel
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Chris Godwin,receptions,2.5,2,-130,draftkings,102,draftkings
+2026,4,99a9bae4dc0dc2590496bd3102b211f2,Green Bay Packers,Tampa Bay Buccaneers,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Bucky Irving,receptions,2.5,2,-113,draftkings,-113,draftkings
+2026,4,1b4f2e60ce83fa1d63a5dff83769d27c,Los Angeles Rams,Philadelphia Eagles,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Davante Adams,rec yds,73.5,2,-113,draftkings,-111,draftkings
+2026,4,1b4f2e60ce83fa1d63a5dff83769d27c,Los Angeles Rams,Philadelphia Eagles,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,DeVonta Smith,rec yds,68.5,2,-110,draftkings,-114,draftkings
+2026,4,1b4f2e60ce83fa1d63a5dff83769d27c,Los Angeles Rams,Philadelphia Eagles,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Dontayvion Wicks,rec yds,39.5,2,-114,draftkings,-110,draftkings
+2026,4,1b4f2e60ce83fa1d63a5dff83769d27c,Los Angeles Rams,Philadelphia Eagles,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Makai Lemon,rec yds,26.5,2,-110,draftkings,-114,draftkings
+2026,4,1b4f2e60ce83fa1d63a5dff83769d27c,Los Angeles Rams,Philadelphia Eagles,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,DeVonta Smith,receptions,5.5,2,-135,draftkings,116,fanduel
+2026,4,1b4f2e60ce83fa1d63a5dff83769d27c,Los Angeles Rams,Philadelphia Eagles,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Davante Adams,receptions,5.0,2,112,fanduel,123,draftkings
+2026,4,1b4f2e60ce83fa1d63a5dff83769d27c,Los Angeles Rams,Philadelphia Eagles,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Makai Lemon,receptions,2.5,2,-158,fanduel,134,draftkings
+2026,4,1b4f2e60ce83fa1d63a5dff83769d27c,Los Angeles Rams,Philadelphia Eagles,2026-10-04T17:00:00Z,2026-09-30T20:00:00Z,Dontayvion Wicks,receptions,3.0,2,130,fanduel,131,draftkings
+2026,4,c327223d76a3b7b0db8c6c104442f44b,Miami Dolphins,Minnesota Vikings,2026-10-04T20:05:00Z,2026-09-30T20:00:00Z,Malik Washington,rec yds,38.5,1,-114,fanduel,-114,fanduel
+2026,4,c327223d76a3b7b0db8c6c104442f44b,Miami Dolphins,Minnesota Vikings,2026-10-04T20:05:00Z,2026-09-30T20:00:00Z,Chris Bell,rec yds,32.5,1,-114,fanduel,-114,fanduel
+2026,4,c327223d76a3b7b0db8c6c104442f44b,Miami Dolphins,Minnesota Vikings,2026-10-04T20:05:00Z,2026-09-30T20:00:00Z,Jaylen Wright,rec yds,7.5,1,-114,fanduel,-114,fanduel
+2026,4,c327223d76a3b7b0db8c6c104442f44b,Miami Dolphins,Minnesota Vikings,2026-10-04T20:05:00Z,2026-09-30T20:00:00Z,Greg Dulcich,rec yds,27.5,1,-114,fanduel,-114,fanduel
+2026,4,c327223d76a3b7b0db8c6c104442f44b,Miami Dolphins,Minnesota Vikings,2026-10-04T20:05:00Z,2026-09-30T20:00:00Z,Greg Dulcich,receptions,2.5,1,-144,fanduel,108,fanduel
+2026,4,c327223d76a3b7b0db8c6c104442f44b,Miami Dolphins,Minnesota Vikings,2026-10-04T20:05:00Z,2026-09-30T20:00:00Z,Chris Bell,receptions,2.5,1,104,fanduel,-138,fanduel
+2026,4,c327223d76a3b7b0db8c6c104442f44b,Miami Dolphins,Minnesota Vikings,2026-10-04T20:05:00Z,2026-09-30T20:00:00Z,Malik Washington,receptions,3.5,1,-144,fanduel,108,fanduel
+2026,4,c327223d76a3b7b0db8c6c104442f44b,Miami Dolphins,Minnesota Vikings,2026-10-04T20:05:00Z,2026-09-30T20:00:00Z,Jaylen Wright,receptions,1.5,1,162,fanduel,-220,fanduel
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,George Kittle,rec yds,64.0,2,-111,draftkings,-113,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Jaylen Waddle,rec yds,57.0,2,-110,draftkings,-114,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Christian McCaffrey,rec yds,38.0,2,-114,fanduel,-109,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Courtland Sutton,rec yds,38.0,2,-112,draftkings,-112,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Pat Bryant,rec yds,23.0,2,-113,draftkings,-111,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,RJ Harvey,rec yds,22.0,2,-109,draftkings,-114,fanduel
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Evan Engram,rec yds,17.5,1,-108,draftkings,-116,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,George Kittle,receptions,4.5,2,-148,fanduel,119,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Christian McCaffrey,receptions,4.5,2,-122,fanduel,104,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Jaylen Waddle,receptions,4.5,2,104,fanduel,-117,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,RJ Harvey,receptions,3.5,2,102,fanduel,-121,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Courtland Sutton,receptions,3.5,2,114,fanduel,-141,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Evan Engram,receptions,2.5,1,104,draftkings,-132,draftkings
+2026,4,a7e7efb75a9792ac63480ae6328dca18,Denver Broncos,San Francisco 49ers,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Pat Bryant,receptions,2.5,2,118,fanduel,-136,draftkings
+2026,4,96d2373cda647873b971f268482bced0,Los Angeles Chargers,Seattle Seahawks,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Jaxon Smith-Njigba,rec yds,91.5,2,-110,draftkings,-114,draftkings
+2026,4,96d2373cda647873b971f268482bced0,Los Angeles Chargers,Seattle Seahawks,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Ladd McConkey,rec yds,45.5,2,-113,draftkings,-111,draftkings
+2026,4,96d2373cda647873b971f268482bced0,Los Angeles Chargers,Seattle Seahawks,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Quentin Johnston,rec yds,35.0,2,-112,draftkings,-112,draftkings
+2026,4,96d2373cda647873b971f268482bced0,Los Angeles Chargers,Seattle Seahawks,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,AJ Barner,rec yds,31.0,2,-109,draftkings,-114,fanduel
+2026,4,96d2373cda647873b971f268482bced0,Los Angeles Chargers,Seattle Seahawks,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Cooper Kupp,rec yds,25.0,2,-114,draftkings,-110,draftkings
+2026,4,96d2373cda647873b971f268482bced0,Los Angeles Chargers,Seattle Seahawks,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Jaxon Smith-Njigba,receptions,6.5,2,-135,draftkings,106,draftkings
+2026,4,96d2373cda647873b971f268482bced0,Los Angeles Chargers,Seattle Seahawks,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Ladd McConkey,receptions,3.5,2,-157,draftkings,124,fanduel
+2026,4,96d2373cda647873b971f268482bced0,Los Angeles Chargers,Seattle Seahawks,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,AJ Barner,receptions,3.5,2,137,draftkings,-160,fanduel
+2026,4,96d2373cda647873b971f268482bced0,Los Angeles Chargers,Seattle Seahawks,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Quentin Johnston,receptions,2.5,2,-172,draftkings,134,draftkings
+2026,4,96d2373cda647873b971f268482bced0,Los Angeles Chargers,Seattle Seahawks,2026-10-04T20:25:00Z,2026-09-30T20:00:00Z,Cooper Kupp,receptions,2.5,2,115,draftkings,-146,fanduel
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Amon-Ra St. Brown,rec yds,76.0,2,-114,draftkings,-110,draftkings
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Tetairoa McMillan,rec yds,70.5,2,-114,draftkings,-110,draftkings
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Jameson Williams,rec yds,51.0,2,-110,draftkings,-114,draftkings
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Sam LaPorta,rec yds,48.5,2,-109,draftkings,-114,fanduel
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Jahmyr Gibbs,rec yds,35.5,2,-109,draftkings,-114,fanduel
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Chuba Hubbard,rec yds,18.5,2,-112,draftkings,-112,draftkings
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Isaac TeSlaa,rec yds,17.5,2,-113,draftkings,-111,draftkings
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Amon-Ra St. Brown,receptions,7.0,2,117,draftkings,112,fanduel
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Tetairoa McMillan,receptions,5.0,2,118,draftkings,112,fanduel
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Jahmyr Gibbs,receptions,4.5,2,-126,draftkings,-101,draftkings
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Sam LaPorta,receptions,4.5,2,-108,fanduel,-113,draftkings
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Jameson Williams,receptions,3.5,2,-102,fanduel,-119,draftkings
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Chuba Hubbard,receptions,2.5,2,-147,draftkings,118,fanduel
+2026,4,a73a76599a4f3422803e57bd8f61b626,Detroit Lions,Carolina Panthers,2026-10-05T00:20:00Z,2026-09-30T20:00:00Z,Isaac TeSlaa,receptions,1.5,2,-106,draftkings,-120,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Chris Olave,rec yds,85.5,2,-112,draftkings,-112,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Drake London,rec yds,78.5,2,-112,draftkings,-112,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Devaughn Vele,rec yds,45.0,2,-113,draftkings,-111,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Juwan Johnson,rec yds,40.5,2,-112,draftkings,-112,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Bijan Robinson,rec yds,38.5,2,-112,draftkings,-112,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Kyle Pitts,rec yds,26.5,2,-114,fanduel,-109,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Noah Fant,rec yds,17.5,2,-114,fanduel,-108,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Alvin Kamara,rec yds,16.5,2,-114,fanduel,-109,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Jahan Dotson,rec yds,17.0,2,-113,draftkings,-111,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Austin Hooper,rec yds,11.5,2,-114,fanduel,-107,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Chris Olave,receptions,7.0,2,124,fanduel,118,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Drake London,receptions,5.5,2,-136,fanduel,117,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Bijan Robinson,receptions,4.5,2,102,draftkings,-114,fanduel
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Devaughn Vele,receptions,4.0,2,112,draftkings,128,fanduel
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Juwan Johnson,receptions,3.5,2,-113,draftkings,-113,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Alvin Kamara,receptions,3.5,2,128,draftkings,-164,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Kyle Pitts,receptions,2.5,2,-130,fanduel,108,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Noah Fant,receptions,2.0,2,128,fanduel,150,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Jahan Dotson,receptions,1.5,2,-125,fanduel,103,draftkings
+2026,4,8bd90781e17e6d97df3941063cedae1e,Atlanta Falcons,New Orleans Saints,2026-10-06T00:15:00Z,2026-09-30T20:00:00Z,Austin Hooper,receptions,1.5,2,124,draftkings,-158,fanduel
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,CeeDee Lamb,rec yds,80.0,2,-113,draftkings,-111,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,George Pickens,rec yds,61.5,2,-114,draftkings,-110,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Emeka Egbuka,rec yds,34.0,2,-110,draftkings,-114,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Ryan Flournoy,rec yds,31.5,2,-114,fanduel,-109,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Chris Godwin,rec yds,28.0,2,-114,draftkings,-110,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Jake Ferguson,rec yds,27.5,2,-108,draftkings,-114,fanduel
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Cade Otton,rec yds,27.5,2,-110,draftkings,-114,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Ted Hurst III,rec yds,21.0,2,-112,draftkings,-112,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Javonte Williams,rec yds,15.0,2,-114,draftkings,-110,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Tez Johnson,rec yds,13.5,2,-109,draftkings,-114,fanduel
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Bucky Irving,rec yds,12.5,2,-111,draftkings,-113,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Kenny Gainwell,rec yds,10.5,2,-107,draftkings,-114,fanduel
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,CeeDee Lamb,receptions,6.0,2,107,draftkings,124,fanduel
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,George Pickens,receptions,4.5,2,-108,fanduel,-113,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Chris Godwin,receptions,3.5,2,-110,fanduel,-114,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Jake Ferguson,receptions,3.5,2,-109,draftkings,-114,fanduel
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Cade Otton,receptions,3.5,2,108,fanduel,-134,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Ryan Flournoy,receptions,3.5,2,125,draftkings,-160,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Emeka Egbuka,receptions,3.0,2,136,draftkings,140,fanduel
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Javonte Williams,receptions,2.5,2,-129,draftkings,102,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Bucky Irving,receptions,2.5,2,123,draftkings,-154,fanduel
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Kenny Gainwell,receptions,1.5,2,-165,draftkings,129,draftkings
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Ted Hurst III,receptions,1.5,2,-152,draftkings,128,fanduel
+2026,5,259b5df9aa0d10257f56de78523495e0,Tampa Bay Buccaneers,Dallas Cowboys,2026-10-09T00:15:00Z,2026-10-07T20:00:00Z,Tez Johnson,receptions,1.5,2,144,fanduel,-169,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Parker Washington,rec yds,60.5,2,-110,draftkings,-114,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Jakobi Meyers,rec yds,41.5,2,-113,draftkings,-111,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Brenton Strange,rec yds,34.0,2,-111,draftkings,-113,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Brian Thomas Jr,rec yds,24.5,2,-112,draftkings,-112,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Josh Cameron,rec yds,11.5,2,-114,fanduel,-108,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Bhayshul Tuten,rec yds,9.5,2,-111,draftkings,-113,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Parker Washington,receptions,4.5,2,-130,fanduel,104,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Jakobi Meyers,receptions,3.5,2,-122,fanduel,-102,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Brenton Strange,receptions,3.5,2,112,fanduel,-135,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Brian Thomas Jr,receptions,2.5,2,141,draftkings,-180,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Bhayshul Tuten,receptions,1.5,2,-112,draftkings,-113,draftkings
+2026,5,21b26266f3d78af02eb672e606275d95,Philadelphia Eagles,Jacksonville Jaguars,2026-10-11T13:30:00Z,2026-10-07T20:00:00Z,Josh Cameron,receptions,1.5,2,129,draftkings,-152,fanduel
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Christian Watson,rec yds,61.0,2,-111,draftkings,-113,draftkings
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Matthew Golden,rec yds,55.5,2,-110,draftkings,-114,draftkings
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Tucker Kraft,rec yds,49.0,2,-113,draftkings,-111,draftkings
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Luther Burden III,rec yds,48.5,2,-112,draftkings,-112,draftkings
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Rome Odunze,rec yds,39.5,2,-109,draftkings,-114,fanduel
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Colston Loveland,rec yds,36.5,2,-111,draftkings,-113,draftkings
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Kalif Raymond,rec yds,29.5,2,-108,draftkings,-114,fanduel
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,D'Andre Swift,rec yds,14.0,2,-107,draftkings,-114,fanduel
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Luther Burden III,receptions,4.5,2,-122,draftkings,-104,fanduel
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Matthew Golden,receptions,4.5,2,-112,draftkings,-114,draftkings
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Tucker Kraft,receptions,4.5,2,-106,draftkings,-114,fanduel
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Christian Watson,receptions,4.5,2,113,draftkings,-145,draftkings
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Colston Loveland,receptions,3.5,2,-156,draftkings,122,draftkings
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Kalif Raymond,receptions,3.5,2,117,draftkings,-149,draftkings
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Rome Odunze,receptions,3.0,2,132,draftkings,136,fanduel
+2026,5,2caea57b1e5cfbba1334cfbfd46f6771,Chicago Bears,Green Bay Packers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,D'Andre Swift,receptions,2.5,2,148,fanduel,-180,draftkings
+2026,5,9db4ed15fe34fca1fb62f040cd244591,Cleveland Browns,New York Jets,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Garrett Wilson,rec yds,69.5,2,-112,draftkings,-112,draftkings
+2026,5,9db4ed15fe34fca1fb62f040cd244591,Cleveland Browns,New York Jets,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Denzel Boston,rec yds,48.0,2,-114,draftkings,-110,draftkings
+2026,5,9db4ed15fe34fca1fb62f040cd244591,Cleveland Browns,New York Jets,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,KC Concepcion,rec yds,38.0,2,-112,draftkings,-112,draftkings
+2026,5,9db4ed15fe34fca1fb62f040cd244591,Cleveland Browns,New York Jets,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Harold Fannin Jr.,rec yds,36.0,2,-113,draftkings,-111,draftkings
+2026,5,9db4ed15fe34fca1fb62f040cd244591,Cleveland Browns,New York Jets,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Garrett Wilson,receptions,6.5,2,116,fanduel,-142,draftkings
+2026,5,9db4ed15fe34fca1fb62f040cd244591,Cleveland Browns,New York Jets,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Harold Fannin Jr.,receptions,4.5,2,129,draftkings,-158,fanduel
+2026,5,9db4ed15fe34fca1fb62f040cd244591,Cleveland Browns,New York Jets,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,KC Concepcion,receptions,4.5,2,131,draftkings,-166,fanduel
+2026,5,9db4ed15fe34fca1fb62f040cd244591,Cleveland Browns,New York Jets,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Denzel Boston,receptions,3.5,2,116,draftkings,-144,fanduel
+2026,5,cc52bba56e74f5cddbe9011046181c3d,Houston Texans,Tennessee Titans,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Nico Collins,rec yds,77.5,1,-111,draftkings,-113,draftkings
+2026,5,cc52bba56e74f5cddbe9011046181c3d,Houston Texans,Tennessee Titans,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Carnell Tate,rec yds,50.5,1,-111,draftkings,-112,draftkings
+2026,5,cc52bba56e74f5cddbe9011046181c3d,Houston Texans,Tennessee Titans,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Wan'Dale Robinson,rec yds,34.5,1,-111,draftkings,-113,draftkings
+2026,5,cc52bba56e74f5cddbe9011046181c3d,Houston Texans,Tennessee Titans,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Nico Collins,receptions,5.5,1,-106,draftkings,-120,draftkings
+2026,5,cc52bba56e74f5cddbe9011046181c3d,Houston Texans,Tennessee Titans,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Carnell Tate,receptions,4.5,1,-122,draftkings,-104,draftkings
+2026,5,cc52bba56e74f5cddbe9011046181c3d,Houston Texans,Tennessee Titans,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Wan'Dale Robinson,receptions,3.5,1,-140,draftkings,109,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Josh Downs,rec yds,57.5,2,-110,draftkings,-114,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Tyler Warren,rec yds,51.5,2,-114,draftkings,-110,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,DK Metcalf,rec yds,51.5,2,-113,draftkings,-111,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Roman Wilson,rec yds,33.5,1,-112,draftkings,-112,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Pat Freiermuth,rec yds,28.0,2,-110,draftkings,-114,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Keenan Allen,rec yds,27.0,2,-109,draftkings,-114,fanduel
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Darnell Washington,rec yds,23.0,2,-111,draftkings,-113,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Jonathan Taylor,rec yds,15.5,2,-112,draftkings,-112,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Tyler Warren,receptions,5.5,2,108,fanduel,-137,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Josh Downs,receptions,4.5,2,-150,draftkings,128,fanduel
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,DK Metcalf,receptions,4.0,2,128,draftkings,134,fanduel
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Pat Freiermuth,receptions,3.5,2,116,fanduel,-121,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Keenan Allen,receptions,3.0,2,129,draftkings,142,fanduel
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Roman Wilson,receptions,2.5,1,-167,draftkings,130,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Jonathan Taylor,receptions,2.5,2,-110,fanduel,-115,draftkings
+2026,5,448d7cf18c6db4c811ed82ded1b72867,Indianapolis Colts,Pittsburgh Steelers,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Darnell Washington,receptions,2.5,2,124,fanduel,-147,draftkings
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Brock Bowers,rec yds,73.0,2,-114,draftkings,-110,draftkings
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Romeo Doubs,rec yds,52.0,2,-112,draftkings,-112,draftkings
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Tre Tucker,rec yds,42.0,2,-114,draftkings,-110,draftkings
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Hunter Henry,rec yds,37.5,2,-113,draftkings,-111,draftkings
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Michael Mayer,rec yds,29.0,2,-112,draftkings,-112,draftkings
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Ashton Jeanty,rec yds,21.0,2,-108,draftkings,-114,fanduel
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Brock Bowers,receptions,6.5,2,-130,fanduel,104,draftkings
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Romeo Doubs,receptions,3.5,2,-148,fanduel,121,draftkings
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Hunter Henry,receptions,3.5,2,-132,draftkings,106,fanduel
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Michael Mayer,receptions,3.5,2,-109,draftkings,-114,fanduel
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Tre Tucker,receptions,3.5,2,-104,draftkings,-118,fanduel
+2026,5,6b024bad1abb54f597225e4ab9b39d89,Las Vegas Raiders,New England Patriots,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Ashton Jeanty,receptions,3.5,2,122,draftkings,-130,fanduel
+2026,5,2cda9bf0fbe35a2735f0dd8aaafe9eff,Minnesota Vikings,New Orleans Saints,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Chris Olave,rec yds,81.5,2,-114,draftkings,-110,draftkings
+2026,5,2cda9bf0fbe35a2735f0dd8aaafe9eff,Minnesota Vikings,New Orleans Saints,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Juwan Johnson,rec yds,42.5,2,-111,draftkings,-113,draftkings
+2026,5,2cda9bf0fbe35a2735f0dd8aaafe9eff,Minnesota Vikings,New Orleans Saints,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Devaughn Vele,rec yds,37.0,2,-112,draftkings,-112,draftkings
+2026,5,2cda9bf0fbe35a2735f0dd8aaafe9eff,Minnesota Vikings,New Orleans Saints,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Aaron Jones,rec yds,18.5,2,-111,draftkings,-113,draftkings
+2026,5,2cda9bf0fbe35a2735f0dd8aaafe9eff,Minnesota Vikings,New Orleans Saints,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Chris Olave,receptions,6.5,2,-114,draftkings,-106,fanduel
+2026,5,2cda9bf0fbe35a2735f0dd8aaafe9eff,Minnesota Vikings,New Orleans Saints,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Juwan Johnson,receptions,4.5,2,113,draftkings,-136,fanduel
+2026,5,2cda9bf0fbe35a2735f0dd8aaafe9eff,Minnesota Vikings,New Orleans Saints,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Devaughn Vele,receptions,3.5,2,-130,fanduel,106,draftkings
+2026,5,2cda9bf0fbe35a2735f0dd8aaafe9eff,Minnesota Vikings,New Orleans Saints,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Aaron Jones,receptions,3.0,2,134,draftkings,130,fanduel
+2026,5,fbffd0b7722fd81d68d5d62472dc80e8,New York Giants,Washington Commanders,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Malik Nabers,rec yds,55.5,2,-114,draftkings,-110,draftkings
+2026,5,fbffd0b7722fd81d68d5d62472dc80e8,New York Giants,Washington Commanders,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Isaiah Likely,rec yds,41.0,2,-114,draftkings,-110,draftkings
+2026,5,fbffd0b7722fd81d68d5d62472dc80e8,New York Giants,Washington Commanders,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Malachi Fields,rec yds,27.5,2,-114,draftkings,-110,draftkings
+2026,5,fbffd0b7722fd81d68d5d62472dc80e8,New York Giants,Washington Commanders,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Darnell Mooney,rec yds,18.5,2,-108,draftkings,-114,fanduel
+2026,5,fbffd0b7722fd81d68d5d62472dc80e8,New York Giants,Washington Commanders,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Cam Skattebo,rec yds,13.0,2,-114,fanduel,-108,draftkings
+2026,5,fbffd0b7722fd81d68d5d62472dc80e8,New York Giants,Washington Commanders,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Malik Nabers,receptions,5.5,2,120,fanduel,-140,draftkings
+2026,5,fbffd0b7722fd81d68d5d62472dc80e8,New York Giants,Washington Commanders,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Isaiah Likely,receptions,4.5,2,106,fanduel,-117,draftkings
+2026,5,fbffd0b7722fd81d68d5d62472dc80e8,New York Giants,Washington Commanders,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Cam Skattebo,receptions,2.0,2,121,draftkings,152,fanduel
+2026,5,fbffd0b7722fd81d68d5d62472dc80e8,New York Giants,Washington Commanders,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Malachi Fields,receptions,2.5,2,125,draftkings,-158,fanduel
+2026,5,fbffd0b7722fd81d68d5d62472dc80e8,New York Giants,Washington Commanders,2026-10-11T17:00:00Z,2026-10-07T20:00:00Z,Darnell Mooney,receptions,1.5,2,-117,draftkings,100,fanduel
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,Jaylen Waddle,rec yds,51.5,2,-113,draftkings,-111,draftkings
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,Courtland Sutton,rec yds,36.5,2,-114,draftkings,-110,draftkings
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,RJ Harvey,rec yds,27.0,2,-110,draftkings,-114,draftkings
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,Evan Engram,rec yds,17.5,2,-114,draftkings,-110,draftkings
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,Troy Franklin,rec yds,18.0,2,-110,draftkings,-114,draftkings
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,Marvin Mims Jr.,rec yds,13.0,2,-109,draftkings,-114,fanduel
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,Jaylen Waddle,receptions,4.5,2,-104,draftkings,-114,fanduel
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,RJ Harvey,receptions,4.0,2,126,draftkings,130,fanduel
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,Courtland Sutton,receptions,3.5,2,109,draftkings,-136,fanduel
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,Evan Engram,receptions,2.5,2,128,draftkings,-164,draftkings
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,Troy Franklin,receptions,1.5,2,102,draftkings,-114,fanduel
+2026,5,d1d408fdfd272046fb517fe992a1c5a0,Denver Broncos,Los Angeles Chargers,2026-10-11T20:05:00Z,2026-10-07T20:00:00Z,Marvin Mims Jr.,receptions,1.5,2,116,draftkings,-140,fanduel
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Trey McBride,rec yds,80.5,2,-112,draftkings,-112,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Amon-Ra St. Brown,rec yds,79.0,2,-114,fanduel,-110,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Michael Wilson,rec yds,72.5,2,-113,draftkings,-111,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Jameson Williams,rec yds,53.0,2,-110,draftkings,-114,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Sam LaPorta,rec yds,51.5,2,-114,draftkings,-110,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Jahmyr Gibbs,rec yds,37.5,2,-112,draftkings,-112,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Marvin Harrison Jr.,rec yds,34.0,2,-114,fanduel,-109,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Isaac TeSlaa,rec yds,26.5,2,-112,draftkings,-112,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Kendrick Bourne,rec yds,24.0,2,-110,draftkings,-114,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Jeremiyah Love,rec yds,11.5,2,-114,fanduel,-109,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Trey McBride,receptions,7.5,2,-128,draftkings,108,fanduel
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Amon-Ra St. Brown,receptions,7.0,2,106,draftkings,120,fanduel
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Michael Wilson,receptions,5.5,2,-120,draftkings,-106,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Sam LaPorta,receptions,5.0,2,125,draftkings,128,fanduel
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Jahmyr Gibbs,receptions,4.5,2,-125,draftkings,102,fanduel
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Jameson Williams,receptions,3.5,2,-126,draftkings,104,fanduel
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Marvin Harrison Jr.,receptions,2.5,2,-144,draftkings,113,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Jeremiyah Love,receptions,2.5,2,-102,fanduel,-115,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Kendrick Bourne,receptions,2.5,2,112,fanduel,-138,draftkings
+2026,5,f8e7f43f73aa983c5c99c189587f0118,Detroit Lions,Arizona Cardinals,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Isaac TeSlaa,receptions,2.5,2,135,draftkings,-158,fanduel
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Jaxon Smith-Njigba,rec yds,94.0,2,-112,draftkings,-112,draftkings
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,George Kittle,rec yds,56.5,2,-111,draftkings,-113,draftkings
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Mike Evans,rec yds,48.5,2,-114,fanduel,-110,draftkings
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Christian McCaffrey,rec yds,34.5,2,-109,draftkings,-114,fanduel
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Deebo Samuel,rec yds,31.5,2,-109,draftkings,-114,fanduel
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Cooper Kupp,rec yds,24.5,2,-114,fanduel,-109,draftkings
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,AJ Barner,rec yds,24.0,2,-114,fanduel,-110,draftkings
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Rashid Shaheed,rec yds,18.5,2,-110,draftkings,-114,draftkings
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Jaxon Smith-Njigba,receptions,6.5,2,-130,fanduel,105,draftkings
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Christian McCaffrey,receptions,4.5,2,-125,fanduel,100,draftkings
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,George Kittle,receptions,4.5,2,-126,draftkings,104,fanduel
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Mike Evans,receptions,3.5,2,-163,draftkings,134,fanduel
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Deebo Samuel,receptions,3.5,2,-102,fanduel,-121,draftkings
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,AJ Barner,receptions,2.5,2,-132,draftkings,114,fanduel
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Cooper Kupp,receptions,2.5,2,-101,draftkings,-122,fanduel
+2026,5,8e5d515b10d8a5ffb324640ed60bcc55,San Francisco 49ers,Seattle Seahawks,2026-10-11T20:25:00Z,2026-10-07T20:00:00Z,Rashid Shaheed,receptions,1.5,2,-172,fanduel,138,draftkings
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Drake London,rec yds,82.5,2,-113,draftkings,-111,draftkings
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Zay Flowers,rec yds,66.0,2,-114,draftkings,-110,draftkings
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Mark Andrews,rec yds,28.5,2,-113,draftkings,-111,draftkings
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Bijan Robinson,rec yds,27.0,2,-114,draftkings,-110,draftkings
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Kyle Pitts,rec yds,24.5,2,-113,draftkings,-111,draftkings
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Rashod Bateman,rec yds,19.5,2,-109,draftkings,-114,fanduel
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Jahan Dotson,rec yds,19.0,2,-114,fanduel,-109,draftkings
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Drake London,receptions,6.0,2,130,fanduel,116,draftkings
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Zay Flowers,receptions,5.5,2,112,draftkings,-132,fanduel
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Bijan Robinson,receptions,3.5,2,-128,draftkings,102,fanduel
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Mark Andrews,receptions,3.5,2,-125,draftkings,104,fanduel
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Kyle Pitts,receptions,2.5,2,112,draftkings,-136,fanduel
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Rashod Bateman,receptions,2.0,2,152,draftkings,152,fanduel
+2026,5,86457f91112732f21ad4bb7d37bd291c,Baltimore Ravens,Atlanta Falcons,2026-10-12T00:20:00Z,2026-10-07T20:00:00Z,Jahan Dotson,receptions,1.5,2,-148,draftkings,122,fanduel
+2026,5,e6d00eedd87d367e510314bd8cab8f6f,Buffalo Bills,Los Angeles Rams,2026-10-13T00:15:00Z,2026-10-07T20:00:00Z,Puka Nacua,rec yds,93.5,2,-111,draftkings,-113,draftkings
+2026,5,e6d00eedd87d367e510314bd8cab8f6f,Buffalo Bills,Los Angeles Rams,2026-10-13T00:15:00Z,2026-10-07T20:00:00Z,Davante Adams,rec yds,62.0,2,-114,draftkings,-110,draftkings
+2026,5,e6d00eedd87d367e510314bd8cab8f6f,Buffalo Bills,Los Angeles Rams,2026-10-13T00:15:00Z,2026-10-07T20:00:00Z,Dalton Kincaid,rec yds,50.0,2,-112,draftkings,-112,draftkings
+2026,5,e6d00eedd87d367e510314bd8cab8f6f,Buffalo Bills,Los Angeles Rams,2026-10-13T00:15:00Z,2026-10-07T20:00:00Z,Kyren Williams,rec yds,20.0,2,-110,draftkings,-114,draftkings
+2026,5,e6d00eedd87d367e510314bd8cab8f6f,Buffalo Bills,Los Angeles Rams,2026-10-13T00:15:00Z,2026-10-07T20:00:00Z,Puka Nacua,receptions,7.0,2,110,draftkings,120,fanduel
+2026,5,e6d00eedd87d367e510314bd8cab8f6f,Buffalo Bills,Los Angeles Rams,2026-10-13T00:15:00Z,2026-10-07T20:00:00Z,Davante Adams,receptions,4.5,2,108,fanduel,-122,draftkings
+2026,5,e6d00eedd87d367e510314bd8cab8f6f,Buffalo Bills,Los Angeles Rams,2026-10-13T00:15:00Z,2026-10-07T20:00:00Z,Dalton Kincaid,receptions,3.5,2,-138,draftkings,108,draftkings
+2026,5,e6d00eedd87d367e510314bd8cab8f6f,Buffalo Bills,Los Angeles Rams,2026-10-13T00:15:00Z,2026-10-07T20:00:00Z,Kyren Williams,receptions,2.5,2,-158,fanduel,128,draftkings
