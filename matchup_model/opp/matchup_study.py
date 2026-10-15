@@ -36,7 +36,7 @@ import numpy as np
 import pandas as pd
 
 from dfs.names import normalize_name
-from dfs.props import _sigma
+from dfs.props import DATA, _amer_to_dec, _sigma, place_bet
 from dfs import historical_lines as HL
 from matchup_model.config import OUT
 from matchup_model.opp import data as D
@@ -654,6 +654,192 @@ def follow_table(L: pd.DataFrame, sg: Signal, ks=(0.5, 1.0, 1.5), books=("draftk
     return pd.DataFrame(rows)
 
 
+STAT_COL = {"rec yds": "receiving_yards", "receptions": "receptions", "rush yds": "rushing_yards"}
+
+
+def book_pairs(L: pd.DataFrame, results: pd.DataFrame) -> pd.DataFrame:
+    """One row per (game, player, market) listed at BOTH DraftKings and FanDuel, each book's number and prices (the line nearest a coin flip if a book lists
+    several) and the result. `results` has season, week, nk and the stat columns, with players who played but recorded nothing as zeros."""
+    d = L[L.over_price.notna() & L.under_price.notna() & L.book.isin(["draftkings", "fanduel"])].copy()
+    d["nk"] = d.player.map(normalize_name)
+    d = d.assign(dist=np.abs(devig(d.over_price, d.under_price) - 0.5)).sort_values("dist").drop_duplicates(["season", "week", "event_id", "nk", "market", "book"], keep="first")
+    wide = d.pivot_table(index=["season", "week", "event_id", "nk", "market"], columns="book", values=["point", "over_price", "under_price"], aggfunc="first")
+    wide.columns = [f"{a}_{'dk' if b == 'draftkings' else 'fd'}" for a, b in wide.columns]
+    res = results[["season", "week", "nk", *STAT_COL.values()]].drop_duplicates(["season", "week", "nk"])
+    out = wide.dropna().reset_index().merge(res, on=["season", "week", "nk"], how="left")
+    out["actual"] = [row[STAT_COL[m]] for row, m in zip(out.to_dict("records"), out.market)]
+    return out[out.actual.notna()].reset_index(drop=True)
+
+
+def _leg(price, won, push) -> float:
+    return 0.0 if push else (float(profit(price, True)) if won else -1.0)
+
+
+def cross_book(P: pd.DataFrame, reps: int) -> dict:
+    """Do the two books disagree on the same prop, and does it pay? (1) how often the numbers differ; (2) single bets: an OVER / UNDER at the lower / higher of
+    the two numbers, each at its own posted price; (3) the 'middle' (OVER at the lower number AND UNDER at the higher, one unit each: both win if the result lands
+    between); (4) arbitrage at the same number (best over price + best under price whose implied probabilities sum to less than 1)."""
+    gaps, legs, mids, arbs = [], [], [], 0
+    for m, g in P.groupby("market"):
+        gap = (g.point_dk - g.point_fd).abs()
+        gaps.append({"market": m, "props": len(g), "same": 100 * float((gap == 0).mean()), "by 1": 100 * float((gap == 1).mean()), "by 2-3": 100 * float(((gap >= 2) & (gap <= 3)).mean()),
+                     "by 4+": 100 * float((gap >= 4).mean())})
+        rows, mrows = [], []
+        for r in g[gap > 0].itertuples():
+            lo_b, hi_b = ("dk", "fd") if r.point_dk < r.point_fd else ("fd", "dk")
+            lo, hi, x = getattr(r, f"point_{lo_b}"), getattr(r, f"point_{hi_b}"), r.actual
+            for leg, book, pt, col in (("OVER at the lower number", lo_b, lo, "over"), ("OVER at the higher number", hi_b, hi, "over"),
+                                       ("UNDER at the higher number", hi_b, hi, "under"), ("UNDER at the lower number", lo_b, lo, "under")):
+                rows.append((leg, _leg(getattr(r, f"{col}_price_{book}"), (x > pt) if col == "over" else (x < pt), x == pt), r.nk))
+            mrows.append((_leg(getattr(r, f"over_price_{lo_b}"), x > lo, x == lo) + _leg(getattr(r, f"under_price_{hi_b}"), x < hi, x == hi), float(lo < x < hi), r.nk))
+        for leg in dict.fromkeys(r[0] for r in rows):
+            sub_ = [r for r in rows if r[0] == leg]
+            legs.append({"market": m, "leg": leg, "bets": len(sub_), "roi": tuple(100 * v for v in clustered_mean([r[1] for r in sub_], [r[2] for r in sub_], reps))})
+        if mrows:
+            mids.append({"market": m, "pairs": len(mrows), "middle hit": 100 * float(np.mean([r[1] for r in mrows])),
+                         "roi": tuple(100 * v / 2 for v in clustered_mean([r[0] for r in mrows], [r[2] for r in mrows], reps))})
+        same = g[g.point_dk == g.point_fd]
+        imp = lambda a: np.where(a > 0, 100 / (a + 100), -a / (-a + 100))  # noqa: E731
+        arbs += int(((np.minimum(imp(same.over_price_dk), imp(same.over_price_fd)) + np.minimum(imp(same.under_price_dk), imp(same.under_price_fd))) < 1).sum())
+    return {"gaps": pd.DataFrame(gaps), "legs": pd.DataFrame(legs), "middle": pd.DataFrame(mids), "arb": arbs, "same_number": int((P.point_dk == P.point_fd).sum())}
+
+
+def load_openers() -> pd.DataFrame:
+    """The Wednesday-afternoon opening lines (data/dfs/props/opening_lines.csv): one row per week, player key and market."""
+    path = DATA / "props" / "opening_lines.csv"
+    if not path.exists():
+        return pd.DataFrame(columns=["week", "nk", "market", "line_open"])
+    o = pd.read_csv(path)
+    o["nk"] = o.player.map(normalize_name)
+    return o.drop_duplicates(["week", "nk", "market"])[["week", "nk", "market", "line_open"]]
+
+
+def timing_table(frames: dict, openers: pd.DataFrame, reps: int) -> pd.DataFrame:
+    """Is a signal priced BETWEEN the Wednesday opening line and the late line? The usage scores use only games already played, so they are the same on Wednesday
+    as on Sunday. Per SD of signal, in SDs of the stat, player-clustered: what the opening line already held (opening line minus OUR projection), what the late line
+    held, what the market ADDED during the week (late minus opening), and what was left at the open and at the late line (the result minus each)."""
+    rows = []
+    for label, f in frames.items():
+        d = f[f.signal.notna()].merge(openers, on=["week", "nk", "market"], how="inner")
+        if len(d) < 60:
+            continue
+        y = {"open_moved": (d.line_open - d.raw) / d.sigma, "close_moved": (d.line - d.raw) / d.sigma, "added": (d.line - d.line_open) / d.sigma,
+             "left_open": (d.actual - d.line_open) / d.sigma, "left_close": (d.actual - d.line) / d.sigma}
+        rows.append({"signal": label, "n": len(d), "weeks": _weeks(d.week), **{k: clustered_slope(d.signal, v, d.player, reps) for k, v in y.items()}})
+    return pd.DataFrame(rows)
+
+
+RAW_COL = {"rec yds": "b_rec_yds", "receptions": "b_rec", "rush yds": "b_rush_yds"}      # our baseline projection for each market
+
+
+def execution_frame(L: pd.DataFrame, results: pd.DataFrame, wr_df: pd.DataFrame, rb_df: pd.DataFrame) -> pd.DataFrame:
+    """Props listed at both books (`book_pairs`) with our baseline projection for the market (`raw`) and the two books' mean number (`ref`, the app's consensus
+    line for two books); props with no projection of ours are dropped."""
+    P = book_pairs(L, results)
+    proj = pd.concat([wr_df[["season", "week", "nk", "b_rec_yds", "b_rec"]], rb_df[["season", "week", "nk", "b_rec_yds", "b_rec", "b_rush_yds"]]]).drop_duplicates(["season", "week", "nk"])
+    P = P.merge(proj, on=["season", "week", "nk"], how="inner")
+    P["raw"] = [row[RAW_COL[m]] for row, m in zip(P.to_dict("records"), P.market)]
+    P = P[P.raw.notna()].copy()
+    P["ref"] = (P.point_dk + P.point_fd) / 2
+    return P.reset_index(drop=True)
+
+
+def _placed(P: pd.DataFrame, over: np.ndarray, how: str) -> tuple[np.ndarray, np.ndarray]:
+    """(number, price) of the bet on the side given by `over` for every prop under placement `how`: 'A' = the best PRICE at that book's own number (what the
+    app did before 2026-10-15); 'B' = dfs.props.place_bet, the best NUMBER then the best price (what it does now)."""
+    nums, prices = [], []
+    for r, o in zip(P.itertuples(), over):
+        side = "over" if o else "under"
+        q = [("draftkings", side, r.point_dk, getattr(r, f"{side}_price_dk")), ("fanduel", side, r.point_fd, getattr(r, f"{side}_price_fd"))]
+        pick = place_bet(q, side) if how == "B" else max(q, key=lambda x: _amer_to_dec(x[3]))
+        nums.append(pick["point"] if how == "B" else pick[2])
+        prices.append(pick["price"] if how == "B" else pick[3])
+    return np.array(nums, float), np.array(prices, float)
+
+
+def _bet_profit(over: np.ndarray, number: np.ndarray, price: np.ndarray, x: np.ndarray) -> np.ndarray:
+    """Profit of a 1-unit bet: a win pays decimal-1, a loss costs 1, a result equal to the number is a push."""
+    won = np.where(over, x > number, x < number)
+    return np.where(x == number, 0.0, np.where(won, np.where(price < 0, 100 / np.abs(price), price / 100), -1.0))
+
+
+def execution_table(P: pd.DataFrame, reps: int) -> dict:
+    """What EXECUTION alone earns on a season of two-book closing lines. Our projection's lean (OVER if our baseline is above the two books' mean number) is held
+    fixed and only where and on which side we bet changes: the app's old rule (A, best price) against its new one (B, best number), each for every lean and for
+    the UNDER leans only, then two baselines that ignore our projection (always UNDER, always OVER). ROI per unit at the posted prices, pushes refunded,
+    player-clustered 95% intervals; `paired` is B minus A on the same bets."""
+    over_lean = (P.raw > P.ref).to_numpy()
+    keep = (P.raw != P.ref).to_numpy()
+    x = P.actual.to_numpy(float)
+    cuts = {"all yardage": P.market.isin(["rec yds", "rush yds"]).to_numpy(), "rec yds": (P.market == "rec yds").to_numpy(), "rush yds": (P.market == "rush yds").to_numpy(),
+            "receptions": (P.market == "receptions").to_numpy()}
+
+    def one(sel: np.ndarray, over: np.ndarray, how: str):
+        n, pr = _placed(P[sel], over[sel], how)
+        pnl = _bet_profit(over[sel], n, pr, x[sel])
+        won = np.where(over[sel], x[sel] > n, x[sel] < n)[x[sel] != n]
+        return pnl, float(won.mean()) if len(won) else float("nan")
+
+    pol, blind = [], []
+    for label, how, only_under in (("A  best price (the app before)", "A", False), ("B  best number (the app now)", "B", False),
+                                   ("A  UNDER leans only", "A", True), ("B  UNDER leans only", "B", True)):
+        for m, cut in cuts.items():
+            sel = keep & cut & (~over_lean if only_under else True)
+            if sel.sum() >= 30:
+                pnl, win = one(sel, over_lean, how)
+                pol.append({"policy": label, "market": m, "bets": int(sel.sum()), "over share": 100 * float(over_lean[sel].mean()), "win": 100 * win,
+                            "roi": tuple(100 * v for v in clustered_mean(pnl, P.nk[sel], reps))})
+    for side, over in (("always UNDER", False), ("always OVER", True)):
+        for how, label in (("A", "best price"), ("B", "best number")):
+            for m, cut in cuts.items():
+                if cut.sum() < 30:
+                    continue
+                ov = np.full(len(P), over)
+                pnl, win = one(cut, ov, how)
+                blind.append({"bet": side, "placed": label, "market": m, "bets": int(cut.sum()), "win": 100 * win,
+                              "roi": tuple(100 * v for v in clustered_mean(pnl, P.nk[cut], reps))})
+    paired = {}
+    for label, only_under in (("every lean", False), ("UNDER leans only", True)):
+        sel = keep & cuts["all yardage"] & (~over_lean if only_under else True)
+        a, _ = one(sel, over_lean, "A")
+        b, _ = one(sel, over_lean, "B")
+        paired[label] = (int(sel.sum()),) + tuple(100 * v for v in clustered_mean(b - a, P.nk[sel], reps))
+    return {"policies": pd.DataFrame(pol), "blind": pd.DataFrame(blind), "paired": paired, "props": len(P), "over_lean": 100 * float(over_lean.mean())}
+
+
+# H5, frozen 2026-10-15 before any week-6 line was graded: FantasyPoints' own weekly projection against our (already nudged) number.
+FP_GAP_CAP = 0.693      # |log(FantasyPoints / ours)| beyond this (a 2x disagreement) is mostly an unresolved-status placeholder, not a view: clipped
+FP_GAP_SD = 0.203       # SD of the clipped, within-week-centred gap on weeks 2-5 (the scale the registry's 'per SD' refers to; never re-fit)
+FP_MARKETS = ("rec yds", "receptions", "rush yds", "pass yds")      # the history is also shown per market (descriptive)
+
+
+def fp_gap_frame(lh: pd.DataFrame) -> pd.DataFrame:
+    """Graded lines (as the app logged them) with FantasyPoints' gap signal: log(its weekly projection / our nudged number), which is the stored `role_ratio`;
+    clipped at FP_GAP_CAP, centred within the week (the level of the gap moves with the model version, a within-week deviation does not) and scaled by FP_GAP_SD."""
+    d = ME.prepare(lh)
+    if d.empty or "role_ratio" not in d.columns:
+        return pd.DataFrame()
+    d = d[d.role_ratio.notna() & (d.role_ratio > 0)].copy()
+    g = np.log(d.role_ratio.astype(float)).clip(-FP_GAP_CAP, FP_GAP_CAP)
+    d["fp_dev"] = (g - g.groupby(d.week).transform("mean")) / FP_GAP_SD
+    d["raw"] = d["our proj"].astype(float)
+    return d
+
+
+def fp_gap_table(lh: pd.DataFrame, reps: int) -> pd.DataFrame:
+    """Does FantasyPoints' own projection know more than our number and the book's price? `signal_vs_market` on the gap signal for the weeks already seen
+    (history, with a per-market breakdown that is descriptive only) and for the forward weeks (the registered test)."""
+    d = fp_gap_frame(lh)
+    if d.empty:
+        return pd.DataFrame()
+    hist, fwd = d[d.week < FORWARD_FROM], d[d.week >= FORWARD_FROM]
+    cuts = []
+    if len(hist):
+        cuts += [(f"weeks {_weeks(hist.week)} as logged, all markets", hist)] + [(f"... {m} only (descriptive)", hist[hist.market == m]) for m in FP_MARKETS]
+    cuts += [(f"forward (week {FORWARD_FROM}+), all markets", fwd)]
+    return pd.DataFrame([{"lines": label, **signal_vs_market(sub, "fp_dev", reps)} for label, sub in cuts])
+
+
 # the markets we model, as (label, history frame key, prop market, outcome column, our raw projection column, component for the stat's SD)
 MARKET_SETS = (("WR/TE rec yds", "wr", "rec yds", "receiving_yards", "b_rec_yds", "rec_yds"), ("WR/TE receptions", "wr", "receptions", "receptions", "b_rec", "rec"),
                ("RB rush yds", "rb", "rush yds", "rushing_yards", "b_rush_yds", "rush_yds"), ("RB receptions", "rb", "receptions", "receptions", "b_rec", "rec"),
@@ -785,6 +971,53 @@ def _edge_md(t: pd.DataFrame | None) -> list[str]:
     return ["Does our raw projection add anything to the closing line?", ""] + _md(out)
 
 
+def _cross_md(c: dict | None) -> list[str]:
+    if not c:
+        return ["(no historical lines pulled)"]
+    g, lg, mid = c["gaps"], c["legs"], c["middle"]
+    out = ["| market | props at both books | same number | differ by 1 | by 2-3 | by 4+ |", "|---|--:|--:|--:|--:|--:|"]
+    out += [f"| {r.market} | {r.props} | {r.same:.0f}% | {r['by 1']:.0f}% | {r['by 2-3']:.0f}% | {r['by 4+']:.0f}% |" for _, r in g.iterrows()] + [""]
+    t = pd.DataFrame({"market": lg.market, "bet (only where the numbers differ)": lg.leg, "bets": lg.bets, "roi per bet": [f"{v[0]:+.1f}% [{v[1]:+.1f}, {v[2]:+.1f}]" for v in lg.roi]})
+    m = pd.DataFrame({"market": mid.market, "pairs": mid.pairs, "result lands between the numbers": mid["middle hit"].round(1).astype(str) + "%",
+                      "middle roi per $ staked": [f"{v[0]:+.1f}% [{v[1]:+.1f}, {v[2]:+.1f}]" for v in mid.roi]}) if len(mid) else pd.DataFrame()
+    return out + _md(t) + [""] + (_md(m) + [""] if len(m) else []) + [f"Same-number arbitrage: {c['arb']} of {c['same_number']} same-number props had a best over + best under price summing to under 100%."]
+
+
+def _timing_md(t: pd.DataFrame | None) -> list[str]:
+    if t is None or t.empty:
+        return ["(no opening lines with a signal)"]
+    return _md(pd.DataFrame({"signal": t.signal, "lines": t.n, "weeks": t.weeks, "the opening line already moved by": [_ci(*v) for v in t.open_moved],
+                             "the late line moved by": [_ci(*v) for v in t.close_moved], "added during the week": [_ci(*v) for v in t.added],
+                             "left at the OPEN (result minus opening line)": [_ci(*v) for v in t.left_open], "left at the late line": [_ci(*v) for v in t.left_close]}))
+
+
+def _fp_md(t: pd.DataFrame | None) -> list[str]:
+    if t is None or t.empty:
+        return ["(no graded lines with a FantasyPoints number)"]
+    rows = []
+    for r in t.itertuples():
+        if not isinstance(getattr(r, "coef", None), tuple):
+            rows.append({"lines": r.lines, "n": r.n, "weeks": "", "beyond the price and our edge (logit per SD)": "too few lines"})
+            continue
+        rows.append({"lines": r.lines, "n": r.n, "weeks": r.weeks, "beyond the price and our edge (logit per SD)": _ci(*r.coef),
+                     "moves P(over) by": f"{r.pts[0]:+.1f} pts [{r.pts[1]:+.1f}, {r.pts[2]:+.1f}]", "result minus OUR projection": _ci(*r.replication),
+                     "the book moved its line by": _ci(*r.book_moves), "result minus the LINE (what is left)": _ci(*r.result_vs_line)})
+    return _md(pd.DataFrame(rows))
+
+
+def _execution_md(e: dict | None) -> list[str]:
+    if not e:
+        return ["(no historical lines pulled)"]
+    r = lambda v: f"{v[0]:+.1f}% [{v[1]:+.1f}, {v[2]:+.1f}]"  # noqa: E731
+    pol, bl = e["policies"], e["blind"]
+    t = pd.DataFrame({"policy": pol.policy, "market": pol.market, "bets": pol.bets, "OVER share": pol["over share"].round(0).astype(int).astype(str) + "%",
+                      "win": pol.win.round(1).astype(str) + "%", "roi per bet": [r(v) for v in pol.roi]})
+    b = pd.DataFrame({"bet": bl.bet, "placed at": bl.placed, "market": bl.market, "bets": bl.bets, "win": bl.win.round(1).astype(str) + "%", "roi per bet": [r(v) for v in bl.roi]})
+    pr = " ; ".join(f"{k}: {v[1]:+.2f} points of ROI per bet [{v[2]:+.2f}, {v[3]:+.2f}] over {v[0]} bets" for k, v in e["paired"].items())
+    return ([f"{e['props']} props listed at both books with a projection of ours; our baseline leans OVER on {e['over_lean']:.0f}% of them.", ""] + _md(t) + ["",
+            "Baselines that ignore our projection:", ""] + _md(b) + ["", f"Taking the best number instead of the best price, on the same yardage bets (B minus A): {pr}."])
+
+
 def _follow_md(t: pd.DataFrame | None) -> list[str]:
     if t is None or t.empty:
         return ["(no historical lines pulled)"]
@@ -806,7 +1039,7 @@ def _history_md(h: pd.DataFrame) -> list[str]:
 H1_LABEL = "RB own-usage-trend score, rush yds lines"        # the one candidate still alive: the bet-level table is for this signal
 
 REGISTRY = [
-    "## Forward-test registry (frozen 2026-10-15, rule tightened the same day before any forward week was seen)", "",
+    "## Forward-test registry (frozen 2026-10-15, rule tightened the same day before any forward week was seen; H5 added the same day, also before any week-6 line was graded)", "",
     f"One test per hypothesis, no re-fitting, on 2026 lines from week {FORWARD_FROM} on. After each week is graded run `python -m matchup_model.opp.matchup_study --forward` "
     "(a few minutes) and the 'forward' rows above fill in. 'Result minus the LINE' is 0 when the book already contains the signal, but it is measured in MEAN yards, and rushing "
     "yards are right-skewed: a mean shift of +0.4 SD can be only +3 points of P(over) (the 2025 RB result: the top score quintile beat the line by +0.45 SD on average but went "
@@ -817,7 +1050,13 @@ REGISTRY = [
     "| H1 | RB own-usage-trend score | RB rush yds | +0.19 to +0.31 SD of the stat per SD of score in every season 2022-25; on 612 DraftKings closing lines of 2025 the book moved only +0.07 of the +0.21 and +0.14 [+0.07, +0.21] was left (both halves of the season, FanDuel the same), almost all of it on RISING usage; but that is only about +3 points of P(over) per SD, and following the score at the posted price returned +0.5% [-11, +12] per bet at k = 1 (211 bets); 2026 weeks 1-5: +0.06 left (interval -0.07 to +0.19) | real but about the size of the vig: tracked, not bet |",
     "| H2 | RB run-defense weakness index | RB rush yds | +0.08 to +0.12 in 2022-24, +0.01 in 2025; on the 2025 closing lines the book moved +0.07 of the +0.09 (priced), -0.05 [-0.14, +0.03] left | dead |",
     "| H3 | RB opponent zone rate | RB receptions | +0.05 per SD in 2022-24; 2025 closing lines: book moved +0.02, about 0 left | dead |",
-    "| H4 | WR/TE own-usage-trend score | rec yds, receptions | 2025 closing lines (1,629 / 1,564 DraftKings lines): the book moved +0.09 / +0.13 of the +0.10 / +0.17, +0.02 / +0.04 left (intervals about +/-0.06); 2026: +0.00 / +0.01 left | priced, no edge |", ""]
+    "| H4 | WR/TE own-usage-trend score | rec yds, receptions | 2025 closing lines (1,629 / 1,564 DraftKings lines): the book moved +0.09 / +0.13 of the +0.10 / +0.17, +0.02 / +0.04 left (intervals about +/-0.06); 2026: +0.00 / +0.01 left | priced, no edge |",
+    f"| H5 | FantasyPoints' own weekly projection vs our nudged number: log(role_ratio), clipped at +/-{FP_GAP_CAP}, centred within the week, in units of {FP_GAP_SD} | rec yds, receptions, rush yds, pass yds, pooled | weeks 2-5 as logged (2,016 lines): FantasyPoints is closer to the truth than our number (result minus OUR projection +0.156 [+0.103, +0.216] SD per SD) but the book's line had moved +0.189 [+0.160, +0.226] toward it, leaving -0.033 [-0.081, +0.025]; beyond the price and our edge +2.1 points of P(over) per SD [-1.0, +5.5] | priced so far: tracked, rule below |", "",
+    f"**H5 rule (added 2026-10-15 before any week-{FORWARD_FROM} line was graded; the weeks-2-5 row is a description, it was run once before the rule was frozen).** The one test is the 'forward' row of the "
+    "FantasyPoints table above (all markets pooled, the signal exactly as defined, nothing re-fitted). It is read at two fixed checkpoints only, after week 12 (about 3,000 forward lines) and "
+    "after week 18, never from the weekly refreshes: FantasyPoints' weight (`blend.FP_SHIFT_CAP`, 0.50 now) is raised only if the 95% interval of the beyond-the-price coefficient is "
+    "entirely above 0 AND its point estimate is at least 2.4 points of P(over) per SD; the new weight is then set from the 'result minus OUR projection' slope on the forward lines alone, "
+    "and a pass at week 12 is re-checked at week 18 before it stays. Everything else in that table (per market, per week) is descriptive.", ""]
 
 CAVEATS = [
     "## Caveats", "",
@@ -832,6 +1071,14 @@ CAVEATS = [
     "- **Which lines.** 2025 is DraftKings and FanDuel CLOSING lines (a snapshot 5 minutes before kickoff, weeks 5-18; 205 of 208 games had props) with each book's own two prices; "
     "2026 is the lines as logged by the app (a few hundred per market, weeks 1-5) with the stored no-vig probability. A bettor who bets earlier than the close faces a softer line, "
     "so the close is the hardest test.",
+    "- **What the bet-level tests can and cannot rule out.** At 200-500 bets per signal an ROI interval is about +/-8 to 13 points wide (the payoff of one bet has a standard "
+    "deviation of about 0.95 units), so a true +5% edge would show up as 'entirely above zero' about 1 time in 5 at 500 bets (a true +3%: 1 in 10), and confirming +3% with 80% "
+    "power takes about 8,000 bets. 'No improvement' therefore means no edge worth more than roughly +8 to 13% ROI; smaller ones are invisible in either direction. The "
+    "line-movement tests are far tighter (+/-0.02 SD) because a line move is not a coin flip, which is why they are worth running first.",
+    "- **FantasyPoints history.** FantasyPoints did not archive past weekly projections, so H5 exists only for 2026 weeks 2-5 as the app logged them (about 2,000 lines of about 900 "
+    "player-weeks; one player's lines in a week share one gap, so the intervals are clustered by player). Those weeks ran on the original (v1) projections, which over-projected "
+    "WR/TE, so part of FantasyPoints' edge over our number there was bias our later recalibration removes: the forward weeks (v3 projections) are the clean test. The raw log "
+    "ratio, unclipped and uncentred, gives the same picture (+0.45 per unit beyond the price and our edge [-0.04, +0.96]).",
     "- **Many tests.** The WR/TE and RB tails alone are several hundred; Benjamini-Hochberg is applied within each group, and the pre-specified RB hypotheses are the only "
     "ones that were fixed before the outcomes were looked at.",
     "- **Not covered:** QBs, anytime-TD and passing markets, injuries/teammate-out usage shifts, game script, and the defender-level (cornerback / safety) Data Suite tables, "
@@ -840,7 +1087,8 @@ CAVEATS = [
 
 def build_report(rec: dict, rush: dict, wr: dict, rb: dict, gain: pd.DataFrame, usage_wr: pd.DataFrame, usage_rb: pd.DataFrame, slopes: pd.DataFrame,
                  market: pd.DataFrame, history: pd.DataFrame, n_rows: dict, lean: pd.DataFrame | None = None, edge: pd.DataFrame | None = None,
-                 follow: pd.DataFrame | None = None) -> str:
+                 follow: pd.DataFrame | None = None, cross: dict | None = None, timing: pd.DataFrame | None = None, fp: pd.DataFrame | None = None,
+                 execution: dict | None = None) -> str:
     pres = pd.concat([rec["presence"].assign(table="WR/TE receiving"), rush["presence"].assign(table="RB rushing")]).reset_index().rename(columns={"index": "season"})
     pres = pres.assign(**{"low-usage presence": (100 * pres.low).round(0).astype(int).astype(str) + "%", "high-usage presence": (100 * pres.high).round(0).astype(int).astype(str) + "%",
                           "ratio": pres.ratio.round(2), "verdict": np.where(pres.ratio < 0.4, "FILTERED - dropped", "complete")})
@@ -904,6 +1152,27 @@ def build_report(rec: dict, rush: dict, wr: dict, rb: dict, gain: pd.DataFrame, 
           "posted price (unit stakes, pushes excluded, player-clustered 95% intervals). **Projection**: logistic 'went over' on the book's no-vig probability and our raw "
           "projection's edge in SDs (z); a z coefficient of 0 means our number adds nothing to the close, and about +0.1 per SD would move a coin-flip bet by the 2.4 points "
           "the vig costs.", ""] + _lean_md(lean) + [""] + _edge_md(edge) + [""]
+    L += ["### Is it priced by Wednesday, or during the week? (2026 opening lines)", "",
+          "The usage scores use only games already played, so they are the same on Wednesday as on Sunday. If the market learned them during the week the opening line would "
+          "hold less of the signal than the late line, and betting early would capture the difference ('added during the week' above 0, 'left at the OPEN' above 'left at the "
+          "late line'). Per +1 SD of signal, in SDs of the stat, player-clustered 95% intervals. The Wednesday 4pm ET snapshots exist for receiving markets only (weeks 1-5), so "
+          "the RB rush yards signal cannot be tested this way. One look, exploratory.", ""] + _timing_md(timing) + [""]
+    L += ["### What execution alone is worth: where and on which side the same leans are placed (2025 closing lines, DraftKings and FanDuel)", "",
+          "Not a signal and not a forecast: our model's lean is held fixed and only the placement changes. A is what the Prop Edges screen did until 2026-10-15 (the book with the best "
+          "PRICE on the lean, at that book's own number); B is what it does now (`dfs.props.place_bet`: the best NUMBER, best price on a tie; lowest for an OVER, highest for an UNDER). "
+          "The UNDER-only rows drop the OVER leans, which is the screen's new default for rec yds, receptions and rush yds. In-sample for the idea (the 2025 lines are where "
+          "the OVER/UNDER split was found); the 2026 graded leans, an independent season, show the same split.", ""] + _execution_md(execution) + [""]
+    L += ["### Does FantasyPoints' own projection know more than our number? (2026 lines as logged)", "",
+          "FantasyPoints' weekly export is the one proprietary input that is not a function of games already played. The app already nudges our number toward it (up to half "
+          "the gap once they differ by more than 12%), and stores the remaining gap as `role_ratio` = FantasyPoints / our nudged number. The signal is log(role_ratio), clipped "
+          f"at +/-{FP_GAP_CAP}, centred within the week and divided by {FP_GAP_SD} (the SD on weeks 2-5, fixed). 'Beyond the price and our edge' is the logistic coefficient "
+          "of 'went over' on the book's no-vig probability, our edge z and the signal; a positive 'result minus OUR projection' means FantasyPoints is closer to the truth than "
+          "our nudged number; 'what is left' is what is still there after the book's own line. Week 1 had no FantasyPoints number when its lines were pulled. The forward row "
+          "is the registered test (H5 below); the per-market rows are descriptive.", ""] + _fp_md(fp) + [""]
+    L += ["### Do DraftKings and FanDuel disagree, and does shopping the number pay? (2025 closing lines)", "",
+          "The two books post different numbers on most yardage props. For every prop listed at both: how often the numbers differ; what a single bet earns at the lower or the "
+          "higher of the two numbers (each at its own posted price, unit stakes, pushes refunded, player-clustered 95% intervals); the 'middle' (OVER at the lower number and "
+          "UNDER at the higher, one unit each: both win when the result lands between); and same-number arbitrage.", ""] + _cross_md(cross) + [""]
     L += ["### H1 at the posted price: following the RB usage-trend score (2025 closing lines)", "",
           "OVER when the score is at least k SDs above his norm, UNDER when at least k below, at the book's closing price, one unit per bet. The thresholds are shown "
           "together, not chosen: bigger k means fewer, stronger-signal bets. `break-even` is the win rate those prices need. In-sample for the rule's existence "
@@ -934,7 +1203,12 @@ def market_section(ds: dict) -> dict:
     market, history = market_tables(sigs, f26, L) if (f26 or len(L)) else (pd.DataFrame(), pd.DataFrame())
     lean, edge = lean_and_edge(L, ds["wr_df"], ds["rb_df"], REPS["logit"]) if len(L) else (pd.DataFrame(), pd.DataFrame())
     h1 = next(sg for sg in sigs if sg.label == H1_LABEL)
-    return {"market": market, "history": history, "lean": lean, "edge": edge, "follow": follow_table(L, h1) if len(L) else pd.DataFrame()}
+    results25 = RC.universe_rows(("WR", "TE", "RB"), seasons=[2025], weeks=range(5, 19)) if len(L) else None
+    cross = cross_book(book_pairs(L, results25), REPS["logit"]) if len(L) else None
+    execution = execution_table(execution_frame(L, results25, ds["wr_df"], ds["rb_df"]), REPS["logit"]) if len(L) else None
+    timing = timing_table(f26, load_openers(), REPS["slope"] // 2) if f26 else pd.DataFrame()
+    fp = fp_gap_table(restate.graded_lines(), REPS["logit"])
+    return {"market": market, "history": history, "lean": lean, "edge": edge, "follow": follow_table(L, h1) if len(L) else pd.DataFrame(), "cross": cross, "timing": timing, "fp": fp, "execution": execution}
 
 
 def compute(refresh: bool = False) -> dict:

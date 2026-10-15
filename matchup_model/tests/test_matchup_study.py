@@ -442,3 +442,202 @@ def test_the_report_shows_the_lean_the_projection_test_and_the_follow_table_when
     for needle in ("Do the closing lines lean", "blind UNDER roi", "Does our raw projection add anything", "n/a: prices are flat", "following the RB usage-trend score", "break-even", "WR/TE rec yds"):
         assert needle in txt
     assert "no historical lines pulled" in S.build_report(**_results())                         # absent data degrades to a note, not an error
+
+
+# ── DraftKings vs FanDuel ────────────────────────────────────────────────────────────────────────────────
+def _two_books(actuals, dk_pt=54.5, fd_pt=55.5, dk=(-110, -110), fd=(-110, -110)):
+    rows, res = [], []
+    for i, x in enumerate(actuals):
+        for book, pt, (o, u) in (("draftkings", dk_pt, dk), ("fanduel", fd_pt, fd)):
+            rows.append(dict(season=2025, week=5, event_id=f"e{i}", player=f"Guy{i}", market="rec yds", book=book, point=pt, over_price=o, under_price=u))
+        res.append(dict(season=2025, week=5, nk=f"guy{i}", receiving_yards=float(x), receptions=0.0, rushing_yards=0.0))
+    return pd.DataFrame(rows), pd.DataFrame(res)
+
+
+def test_cross_book_legs_and_the_middle_pay_exactly_what_the_prices_say():
+    L, res = _two_books([55.0] * 20 + [70.0] * 20)             # 20 results land BETWEEN 54.5 and 55.5, 20 go over both numbers
+    c = S.cross_book(S.book_pairs(L, res), reps=60)
+    legs = c["legs"].set_index("leg")
+    w = 100 / 110
+    assert legs.loc["OVER at the lower number", "roi"][0] == pytest.approx(100 * w) and legs.loc["OVER at the higher number", "roi"][0] == pytest.approx(100 * (20 * w - 20) / 40)
+    assert legs.loc["UNDER at the higher number", "roi"][0] == pytest.approx(100 * (20 * w - 20) / 40) and legs.loc["UNDER at the lower number", "roi"][0] == pytest.approx(-100.0)
+    mid = c["middle"].iloc[0]
+    assert mid["middle hit"] == pytest.approx(50.0) and mid.roi[0] == pytest.approx(100 * (20 * 2 * w + 20 * (w - 1)) / 80)
+    assert c["gaps"].iloc[0]["by 1"] == pytest.approx(100.0) and c["arb"] == 0 and c["same_number"] == 0
+
+
+def test_a_push_is_refunded_and_same_number_arbitrage_is_counted():
+    L, res = _two_books([54.5 + 1] * 4, dk_pt=55.0, fd_pt=56.0)                       # a whole-number line: result 55.5 is not a push, 56.0 would be
+    res2 = res.assign(receiving_yards=56.0)
+    c = S.cross_book(S.book_pairs(L, res2), reps=40)
+    assert c["legs"].set_index("leg").loc["UNDER at the higher number", "roi"][0] == pytest.approx(0.0)       # result == the higher number: refunded
+    La, resa = _two_books([60.0] * 5, dk_pt=54.5, fd_pt=54.5, dk=(105, -125), fd=(-125, 105))   # over +105 at one book, under +105 at the other: both > even money
+    ca = S.cross_book(S.book_pairs(La, resa), reps=40)
+    assert ca["arb"] == 5 and ca["same_number"] == 5 and ca["legs"].empty
+
+
+def test_the_report_shows_the_cross_book_section_and_degrades_without_it():
+    L, res = _two_books([55.0] * 30 + [70.0] * 30)
+    txt = S.build_report(**{**_results(), "cross": S.cross_book(S.book_pairs(L, res), reps=40)})
+    for needle in ("Do DraftKings and FanDuel disagree", "UNDER at the higher number", "Same-number arbitrage", "middle roi per $ staked"):
+        assert needle in txt
+    assert "Do DraftKings and FanDuel disagree" in S.build_report(**_results())
+
+
+# ── opening line vs late line ──────────────────────────────────────────────────────────────────────────────
+def _timing_frames(n: int = 1000, seed: int = 4, open_moved: float = 0.5, added: float = 0.2, left: float = 0.1):
+    """One signal's graded lines (one per week and player, like the real frames) with an opening line that holds `open_moved` SD per SD of signal (relative to our
+    projection), a late line that adds `added` more, and a result that beats the late line by `left` per SD."""
+    rng = np.random.default_rng(seed)
+    sig, sd, raw = rng.normal(size=n), 10.0, 50.0
+    opened = raw + sd * (open_moved * sig + rng.normal(0, 0.2, n))
+    late = opened + sd * (added * sig + rng.normal(0, 0.2, n))
+    f = pd.DataFrame({"week": 1 + np.arange(n) // 200, "nk": [f"p{i % 200}" for i in range(n)], "market": "rec yds", "signal": sig, "raw": raw, "sigma": sd,
+                      "line": late, "actual": late + sd * (left * sig + rng.normal(size=n))})
+    f["player"] = f.nk
+    o = pd.DataFrame({"week": f.week, "nk": f.nk, "market": f.market, "line_open": opened}).drop_duplicates(["week", "nk", "market"])
+    return {"demo usage score": f}, o
+
+
+def test_timing_table_splits_what_the_opening_line_held_from_what_the_market_added_during_the_week():
+    frames, o = _timing_frames()
+    t = S.timing_table(frames, o, reps=150).iloc[0]
+    assert t.n > 600 and t.weeks == "1-5"
+    assert t.open_moved[0] == pytest.approx(0.5, abs=0.07) and t.close_moved[0] == pytest.approx(0.7, abs=0.07) and t.added[0] == pytest.approx(0.2, abs=0.07)
+    assert t.added[1] > 0.1 and t.left_open[0] == pytest.approx(0.3, abs=0.1) and t.left_close[0] == pytest.approx(0.1, abs=0.1)
+    assert t.left_open[0] == pytest.approx(t.left_close[0] + t.added[0], abs=1e-9)           # result - open = (result - late) + (late - open)
+    frames, o = _timing_frames(seed=5, added=0.0, left=0.0)                                 # the market learns nothing after the open, nothing is left
+    t = S.timing_table(frames, o, reps=150).iloc[0]
+    assert t.added[1] < 0 < t.added[2] and abs(t.left_open[0]) < 0.12 and t.open_moved[0] == pytest.approx(t.close_moved[0], abs=0.05)
+
+
+def test_timing_table_needs_enough_lines_with_both_an_open_and_a_late_line():
+    frames, o = _timing_frames()
+    assert S.timing_table(frames, o.iloc[:40], reps=50).empty                                # only 40 lines have an opening line
+    assert S.timing_table({}, o, reps=50).empty
+    f = frames["demo usage score"].assign(signal=np.nan)
+    assert S.timing_table({"x": f}, o, reps=50).empty                                        # a signal that is undefined for these rows
+
+
+def test_openers_are_read_by_player_key_and_a_missing_file_is_an_empty_frame(tmp_path, monkeypatch):
+    monkeypatch.setattr(S, "DATA", tmp_path)
+    assert S.load_openers().empty
+    (tmp_path / "props").mkdir()
+    pd.DataFrame({"week": [1, 1, 2], "player": ["Ja'Marr Chase", "Ja'Marr Chase", "A.J. Brown"], "market": ["rec yds"] * 3, "line_open": [80.5, 81.5, 64.5]}).to_csv(tmp_path / "props" / "opening_lines.csv", index=False)
+    o = S.load_openers()
+    assert list(o.nk) == ["jamarr chase", "aj brown"] and list(o.line_open) == [80.5, 64.5]
+
+
+def test_the_report_shows_the_timing_section_and_degrades_without_it():
+    frames, o = _timing_frames()
+    txt = S.build_report(**{**_results(), "timing": S.timing_table(frames, o, reps=60)})
+    for needle in ("priced by Wednesday, or during the week", "demo usage score", "added during the week", "left at the OPEN", "What the bet-level tests can and cannot rule out"):
+        assert needle in txt
+    assert "(no opening lines with a signal)" in S.build_report(**_results())
+
+
+# ── FantasyPoints' own projection (H5) ─────────────────────────────────────────────────────────────────
+def _fp_history(weeks=(2, 3, 4, 5), per_week: int = 400, seed: int = 8, info: float = 0.3, priced: float = 0.0, shift: float = 0.0, with_ratio: bool = True) -> pd.DataFrame:
+    """Graded line_history rows: FantasyPoints' number holds `info` SD per SD of the gap beyond our projection, the book's line sits `priced` per SD toward it
+    (`shift` moves the level of every gap, as a model-version change would). The book also knows something of its own (`u`, in its line AND in the truth), as a real
+    line does: that is what makes the yes/no coefficient measure what is left after the line rather than what FantasyPoints knows beyond us."""
+    rng = np.random.default_rng(seed)
+    n, line = per_week * len(weeks), 60.5
+    s0 = float(S._sigma("rec_yds", line))
+    sig, u = rng.normal(size=n), rng.normal(0, 0.3, n)
+    ours = 60.0
+    book_line = ours + s0 * (priced * sig + u)
+    actual = ours + s0 * (info * sig + u + rng.normal(size=n))
+    p_over = np.clip(0.5 + rng.normal(0, 0.03, n), 0.3, 0.7)
+    lean = np.where(ours > book_line, "OVER", "UNDER")
+    lh = pd.DataFrame({"season": 2026, "week": np.repeat(weeks, per_week), "player": [f"pl{i % 300}" for i in range(n)], "market": "rec yds", "line": book_line,
+                       "actual": actual, "our proj": ours, "lean": lean, "book %": np.round(100 * np.where(lean == "OVER", p_over, 1 - p_over)),
+                       "result": np.where((actual > book_line) == (lean == "OVER"), "win", "loss"),
+                       "role_ratio": np.exp(S.FP_GAP_SD * sig + shift) if with_ratio else np.nan})
+    return lh
+
+
+def test_the_fp_gap_is_clipped_centred_within_the_week_and_scaled_by_the_frozen_sd():
+    lh = _fp_history(shift=0.15)
+    lh.loc[0, "role_ratio"] = 9.0                                            # a 9x disagreement: a placeholder, not a view
+    lh.loc[1, "role_ratio"] = np.nan                                         # no FantasyPoints number for this player
+    d = S.fp_gap_frame(lh)
+    assert len(d) < len(lh) and d.fp_dev.abs().max() < 7                     # the NaN row is dropped and the 9x ratio clipped at +/-0.693 / 0.203 = 3.4 SD
+    assert d.groupby("week").fp_dev.mean().abs().max() < 1e-9                # centred within each week, so a level shift from a new model version cancels
+    assert d.fp_dev.std() == pytest.approx(1.0, abs=0.08) and (d.raw == 60.0).all()
+    assert S.fp_gap_frame(lh.drop(columns="role_ratio")).empty and S.fp_gap_frame(lh.iloc[:0]).empty
+
+
+def test_fp_gap_table_tells_a_projection_that_knows_more_from_one_the_book_already_priced():
+    lh = _fp_history(info=0.3, priced=0.0)
+    t = S.fp_gap_table(lh, reps=150)
+    r = t.iloc[0]
+    assert r.lines.startswith("weeks 2-5") and r.n > 1400 and r.coef[1] > 0 and r.pts[0] > 5                         # nobody priced it: beyond the price and our edge
+    assert r.replication[0] == pytest.approx(0.3, abs=0.07) and abs(r.book_moves[0]) < 0.06 and r.result_vs_line[0] == pytest.approx(0.3, abs=0.07)
+    assert t.iloc[1].lines.endswith("rec yds only (descriptive)") and t.iloc[1].n == r.n                             # the only market in the fixture
+    assert t.iloc[-1].lines.startswith("forward") and t.iloc[-1].n == 0                                               # no forward week yet: the row is there, empty
+    t = S.fp_gap_table(_fp_history(seed=9, info=0.3, priced=0.3, shift=-0.1), reps=150).iloc[0]                       # the book moved all of it, level shifted
+    assert t.replication[0] == pytest.approx(0.3, abs=0.07) and t.book_moves[0] == pytest.approx(0.3, abs=0.07) and abs(t.result_vs_line[0]) < 0.08 and abs(t.coef[0]) < 0.12
+
+
+def test_fp_gap_table_keeps_the_weeks_already_seen_apart_from_the_forward_weeks():
+    lh = pd.concat([_fp_history(), _fp_history(weeks=(6, 7), per_week=300, seed=13, info=0.0)], ignore_index=True)
+    t = S.fp_gap_table(lh, reps=100)
+    hist, fwd = t.iloc[0], t.iloc[-1]
+    assert hist.weeks == "2-5" and fwd.weeks == "6-7" and fwd.n > 500 and hist.n > 1400
+    assert fwd.replication[0] == pytest.approx(0.0, abs=0.1) and hist.replication[0] == pytest.approx(0.3, abs=0.07)   # a fixed rule applied to a different truth
+    assert S.fp_gap_table(_fp_history(with_ratio=False), reps=50).empty                                                # nothing with a number: no table
+
+
+def test_the_report_shows_the_fantasypoints_section_and_the_h5_rule():
+    txt = S.build_report(**{**_results(), "fp": S.fp_gap_table(_fp_history(), reps=60)})
+    for needle in ("know more than our number", "beyond the price and our edge", "too few lines", "H5 rule", "FP_SHIFT_CAP", "FantasyPoints history"):
+        assert needle in txt
+    assert "(no graded lines with a FantasyPoints number)" in S.build_report(**_results())
+
+
+# ── execution: where and on which side the same leans are placed ───────────────────────────────────────────
+def _placement_props(n_each: int = 100) -> pd.DataFrame:
+    """Two kinds of props, one lean each. OVER leans: DraftKings has the lower NUMBER (54.5), FanDuel the better PRICE (55.5 at -105). UNDER leans: DraftKings has the
+    better price (54.5 at -110), FanDuel the higher number (55.5 at -115). Every result is 55: the best number wins each bet, the best price loses each."""
+    rows = []
+    for i in range(2 * n_each):
+        over = i < n_each
+        rows.append({"season": 2025, "week": 5 + i % 14, "nk": f"p{i}", "market": "rec yds", "point_dk": 54.5, "point_fd": 55.5, "over_price_dk": -110, "under_price_dk": -110,
+                     "over_price_fd": -105, "under_price_fd": -115, "actual": 55.0, "raw": 60.0 if over else 50.0})
+    P = pd.DataFrame(rows)
+    P["ref"] = (P.point_dk + P.point_fd) / 2
+    return P
+
+
+def test_execution_table_prices_the_same_leans_placed_at_the_best_price_and_at_the_best_number():
+    e = S.execution_table(_placement_props(), reps=60)
+    pol = e["policies"].set_index(["policy", "market"])
+    a, b = pol.loc[("A  best price (the app before)", "all yardage")], pol.loc[("B  best number (the app now)", "all yardage")]
+    assert a.bets == b.bets == 200 and a.roi[0] == pytest.approx(-100.0) and a.win == 0.0                                   # the best price lands on the number that loses
+    assert b.roi[0] == pytest.approx(100 * (0.5 * 100 / 110 + 0.5 * 100 / 115)) and b.win == 100.0                           # the best number wins both kinds
+    assert pol.loc[("B  UNDER leans only", "all yardage")].roi[0] == pytest.approx(100 * 100 / 115) and pol.loc[("B  UNDER leans only", "all yardage")].bets == 100
+    assert pol.loc[("A  UNDER leans only", "rec yds")].roi[0] == pytest.approx(-100.0) and pol.loc[("B  best number (the app now)", "rec yds")]["over share"] == pytest.approx(50.0)
+    assert ("A  best price (the app before)", "rush yds") not in pol.index and e["props"] == 200 and e["over_lean"] == 50.0   # a market with no props is left out
+    n, mean, lo, hi = e["paired"]["every lean"]
+    assert n == 200 and mean == pytest.approx(100 * (0.5 * (100 / 110 + 1) + 0.5 * (100 / 115 + 1)))                       # B minus A, per bet
+    bl = e["blind"].set_index(["bet", "placed", "market"])
+    assert bl.loc[("always UNDER", "best number", "all yardage"), "roi"][0] == pytest.approx(100 * 100 / 115)             # FanDuel's 55.5 beats a 55 result
+    assert bl.loc[("always OVER", "best number", "all yardage"), "roi"][0] == pytest.approx(100 * 100 / 110)               # DraftKings' 54.5 does too
+    assert bl.loc[("always OVER", "best price", "all yardage"), "roi"][0] == pytest.approx(-100.0)                         # -105 at 55.5 loses a 55
+
+
+def test_execution_frame_attaches_our_projection_and_the_consensus_number():
+    L, res = _two_books([55.0] * 12)
+    wr = pd.DataFrame({"season": 2025, "week": 5, "nk": [f"guy{i}" for i in range(10)], "b_rec_yds": 60.0, "b_rec": 4.0})
+    rb = pd.DataFrame({"season": 2025, "week": 5, "nk": ["guy10", "guy11"], "b_rec_yds": 20.0, "b_rec": 2.0, "b_rush_yds": 70.0})
+    P = S.execution_frame(L, res, wr, rb)
+    assert len(P) == 12 and (P.ref == 55.0).all() and set(P.raw) == {60.0, 20.0} and set(P[P.nk.isin(["guy10", "guy11"])].raw) == {20.0}      # rec yds -> b_rec_yds, from the RB table for the RBs
+    assert S.execution_frame(L, res, wr.iloc[:0], rb.iloc[:0]).empty
+
+
+def test_the_report_shows_the_execution_section():
+    txt = S.build_report(**{**_results(), "execution": S.execution_table(_placement_props(), reps=60)})
+    for needle in ("What execution alone is worth", "B  best number (the app now)", "always UNDER", "Taking the best number instead of the best price"):
+        assert needle in txt
+    assert "What execution alone is worth" in S.build_report(**_results())
