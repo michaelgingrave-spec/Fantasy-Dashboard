@@ -321,3 +321,68 @@ def test_save_load_clear_last_pull_with_attd(tmp_path, monkeypatch):
     props.clear_last_pull()
     assert props.load_last_pull() is None
     assert not props.LAST_PULL_ATTD_CSV.exists()
+
+
+# ── where to place the bet, and the UNDER-first default ────────────────────────────────────────────────────
+def _quotes():
+    return [("draftkings", "over", 54.5, -110), ("draftkings", "under", 54.5, -110),
+            ("fanduel", "over", 55.5, -105), ("fanduel", "under", 55.5, -115)]
+
+
+def test_place_bet_takes_the_lowest_number_for_an_over_and_the_highest_for_an_under():
+    over = props.place_bet(_quotes(), "OVER")
+    assert (over["book"], over["point"], over["price"]) == ("draftkings", 54.5, -110) and over["gap"] == 1.0   # not FanDuel's better PRICE at 55.5
+    under = props.place_bet(_quotes(), "under")
+    assert (under["book"], under["point"], under["price"]) == ("fanduel", 55.5, -115) and under["gap"] == 1.0  # a worse price, a yard better
+    assert props.place_bet([], "OVER") is None and props.place_bet(_quotes(), "OVER") is not None
+
+
+def test_place_bet_breaks_a_tie_on_number_by_price_and_has_no_gap_with_one_book_or_equal_numbers():
+    q = [("draftkings", "over", 4.5, -130), ("fanduel", "over", 4.5, -115)]
+    b = props.place_bet(q, "OVER")
+    assert (b["book"], b["price"], b["gap"]) == ("fanduel", -115, 0.0)
+    one = props.place_bet([("draftkings", "under", 80.5, -105)], "UNDER")
+    assert (one["book"], one["point"], one["gap"]) == ("draftkings", 80.5, 0.0)
+    assert props.place_bet([("draftkings", "over", None, -110), ("fanduel", "over", 3.5, None)], "OVER") is None      # unusable quotes are skipped
+
+
+def test_edges_from_raw_says_where_to_place_each_lean(monkeypatch):
+    import dfs.projections as pj
+    import matchup_model.opp.blend as blend
+    import matchup_model.project_stats as ps
+
+    monkeypatch.setattr(pj, "load_weekly_projections", lambda *_a, **_k: (_ for _ in ()).throw(RuntimeError("no file")))
+
+    def fake_line(name_key, pos, *a, **k):
+        if name_key == props.normalize_name("Test Wr"):
+            return {"line": {"rec_yds": 62.0, "rec": 4.6}, "fp": 12.0, "games": 6}
+        if name_key == props.normalize_name("Test Rb"):
+            return {"line": {"rush_yds": 78.0}, "fp": 14.0, "games": 6}
+        return {"fp": None, "reason": "x"}
+    monkeypatch.setattr(blend, "blended_line", fake_line)
+    monkeypatch.setattr(ps, "projected_line", fake_line)
+    df = props.edges_from_raw(_raw(), week=1).set_index("player")
+    wr, rb = df.loc["Test Wr"], df.loc["Test Rb"]
+    assert wr["lean"] == "OVER" and wr["bet line"] == 49.5 and wr["bet book"] == "fanduel" and wr["bet price"] == -108       # FanDuel has the lower number
+    assert wr["bet at"] == "fanduel 49.5 -108" and wr["num edge"] == 1.0                                                      # one yard below DraftKings' 50.5
+    assert rb["lean"] == "UNDER" and rb["bet at"] == "draftkings 80.5 -105" and rb["num edge"] == 0.0                         # one book only
+    assert wr["best"] in ("fanduel -108", "draftkings -110") and wr["line"] == 50.0                                           # the consensus-line columns are unchanged
+
+
+def test_under_first_drops_only_the_over_leans_of_the_markets_where_they_lose():
+    df = pd.DataFrame({"market": ["rec yds", "rec yds", "receptions", "rush yds", "pass yds", "pass yds", "pass TD"],
+                       "lean": ["OVER", "UNDER", "OVER", "UNDER", "OVER", "UNDER", "OVER"], "player": list("abcdefg")})
+    assert list(props.under_first(df).player) == ["b", "d", "e", "f", "g"]
+    assert props.under_first(df.iloc[0:0]).empty and props.under_first(df.drop(columns="lean")).equals(df.drop(columns="lean"))
+
+
+def test_snapshot_lines_keeps_the_placement_columns_and_old_rows_without_them(tmp_path, monkeypatch):
+    path = tmp_path / "line_history.csv"
+    monkeypatch.setattr(props, "LINE_HISTORY_PATH", path)
+    old = pd.DataFrame({"player": ["A"], "market": ["rec yds"], "line": [50.0], "lean": ["OVER"], "best": ["fanduel -108"]})
+    assert props.snapshot_lines(old, 2026, 5, "G1") == 1
+    new = pd.DataFrame({"player": ["B"], "market": ["rec yds"], "line": [60.0], "lean": ["UNDER"], "best": ["draftkings -110"],
+                        "bet line": [60.5], "bet price": [-115], "bet book": ["fanduel"], "num edge": [1.0]})
+    assert props.snapshot_lines(new, 2026, 6, "G2") == 1
+    lh = pd.read_csv(path).set_index("player")
+    assert lh.loc["B", "bet line"] == 60.5 and lh.loc["B", "bet book"] == "fanduel" and pd.isna(lh.loc["A", "bet line"]) and len(lh) == 2

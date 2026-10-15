@@ -233,6 +233,37 @@ def bulk_prop_edges(events: list[dict], markets: list[str],
     return df, rem
 
 
+# Markets where the OVER side has lost far more than the UNDER side in BOTH seasons on file: 2025 DraftKings/FanDuel closing lines
+# (always-OVER at the best number -9% at the posted prices, always-UNDER about +1%) and this season's graded leans (OVER 48.7%,
+# -7.0% at -110; UNDER 53.2%, +1.6%). Books shade the OVER side; a model whose leans are mostly OVERs pays that on every bet.
+# The Prop Edges screen's default view keeps only the UNDER leans in these markets; every other market is left alone.
+UNDER_FIRST_MARKETS = ("rec yds", "receptions", "rush yds")
+
+
+def under_first(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop the OVER leans in UNDER_FIRST_MARKETS (every other market's rows pass through)."""
+    if df is None or df.empty or not {"market", "lean"}.issubset(df.columns):
+        return df
+    return df[~df["market"].isin(UNDER_FIRST_MARKETS) | (df["lean"] == "UNDER")].reset_index(drop=True)
+
+
+def place_bet(quotes: list, side: str) -> dict | None:
+    """Where to place `side` ('OVER' / 'UNDER') of one prop, given every book's quote as (book, side, point, price): the best NUMBER first
+    (the lowest for an OVER, the highest for an UNDER), and on equal numbers the best price. 2025 closing lines, same leans placed two
+    ways: the best number earned 1.2 points of ROI per bet more than the best price alone (95% interval +0.6 to +1.9, 2,596 yardage bets),
+    and choosing by number AND price together (EV against the books' consensus) added nothing more (+0.0). `gap` = how much better the
+    chosen number is than the best of the OTHER books' numbers on that side (0 with one book or equal numbers)."""
+    side = str(side).lower()
+    qs = [q for q in quotes if q[1] == side and q[2] is not None and q[3] is not None]
+    if not qs:
+        return None
+    sign = -1.0 if side == "over" else 1.0                     # an OVER wants the lowest number, an UNDER the highest
+    book, _, point, price = max(qs, key=lambda q: (sign * float(q[2]), _amer_to_dec(q[3])))
+    others = [q for q in qs if q[0] != book]
+    gap = max(0.0, sign * (float(point) - float(max(others, key=lambda q: sign * float(q[2]))[2]))) if others else 0.0
+    return {"book": book, "point": float(point), "price": int(price), "gap": gap}
+
+
 def _amer_to_prob(price: float) -> float:
     return 100 / (price + 100) if price > 0 else (-price) / ((-price) + 100)
 
@@ -291,12 +322,13 @@ def edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
                 continue
             for o in mkt.get("outcomes", []):
                 key = (o.get("description", ""), mk)
-                d = acc.setdefault(key, {"points": [], "over": [], "under": []})
+                d = acc.setdefault(key, {"points": [], "over": [], "under": [], "quotes": []})
                 if o.get("point") is not None:
                     d["points"].append(o["point"])
                 side = "over" if o.get("name") == "Over" else "under" if o.get("name") == "Under" else None
                 if side:
                     d[side].append((o["price"], bk["key"]))
+                    d["quotes"].append((bk["key"], side, o.get("point"), o["price"]))
 
     try:
         proj = load_weekly_projections(week)
@@ -346,6 +378,7 @@ def edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
 
         role_ratio = (wk_proj / pl["fp"]) if (wk_proj and pl.get("fp")) else None
         conf = conf_label(z, comp)
+        bet = place_bet(d["quotes"], lean)
         rows.append({
             "player": player, "market": _NICE.get(comp, comp),
             "line": round(line, 1), "our proj": round(our, 1),
@@ -358,6 +391,10 @@ def edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
             "edge %": round(100 * edge / line) if line else None,
             "lean": lean,
             "best": f"{best_book} {best_price:+d}" if best_price is not None else "",
+            # where to actually place the lean: the best NUMBER (then price) among the books -- `best` above is the best price on the consensus line
+            "bet at": f"{bet['book']} {bet['point']:g} {bet['price']:+d}" if bet else "",
+            "bet line": bet["point"] if bet else None, "bet price": bet["price"] if bet else None,
+            "bet book": bet["book"] if bet else None, "num edge": round(bet["gap"], 2) if bet else None,
             "role_ratio": round(role_ratio, 2) if role_ratio is not None else None,
             "_rank": _CONF_RANK.get(conf, 0),
         })
@@ -559,7 +596,7 @@ def snapshot_lines(edges: pd.DataFrame, season: int, week: int, event: str) -> i
     if edges is None or edges.empty:
         return 0
     keep = ["player", "market", "line", "our proj", "conf", "z", "edge", "p(hit)%", "p edge",
-            "book %", "edge %", "lean", "best", "role_ratio"]
+            "book %", "edge %", "lean", "best", "bet line", "bet price", "bet book", "num edge", "role_ratio"]
     snap = edges[[c for c in keep if c in edges.columns]].copy()
     snap.insert(0, "season", int(season))
     snap.insert(1, "week", int(week))

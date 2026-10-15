@@ -435,6 +435,25 @@ def line_history_by_lean(df: pd.DataFrame | None = None, min_n: int = 1) -> pd.D
     return pd.DataFrame(rows)
 
 
+def line_history_by_market_lean(df: pd.DataFrame | None = None, min_n: int = 1) -> pd.DataFrame:
+    """Win% + notional ROI@-110 for every (market, OVER/UNDER lean), graded vs the real book line -- the table behind the Prop Edges
+    screen's default 'UNDER leans only' view (OVER leans have run well below UNDER leans in the markets it applies to). Sorted by market, UNDER first."""
+    df = load_line_history() if df is None else df
+    if df.empty or not {"market", "lean", "result"}.issubset(df.columns):
+        return pd.DataFrame()
+    g = df[df["result"].isin(["win", "loss", "push"])].copy()
+    if g.empty:
+        return pd.DataFrame()
+    rows = []
+    for (mk, lean), s in g.groupby(["market", "lean"]):
+        w, l = int((s.result == "win").sum()), int((s.result == "loss").sum())
+        if w + l < min_n:
+            continue
+        rows.append({"market": mk, "lean": lean, "n": len(s), "win%": round(100 * w / (w + l), 1) if (w + l) else None,
+                     "ROI@-110%": round(100 * _roi_at(_PRICE, w, l), 1) if (w + l) else None})
+    return pd.DataFrame(rows).sort_values(["market", "lean"], ascending=[True, False]).reset_index(drop=True)
+
+
 def line_history_by_position(df: pd.DataFrame | None = None, min_n: int = 1) -> pd.DataFrame:
     """Win% + notional ROI@-110 by player position (QB/RB/WR/TE). line_history.csv doesn't
     store position, so this joins against nflverse's own field by normalized player name

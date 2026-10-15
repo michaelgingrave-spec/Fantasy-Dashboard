@@ -71,6 +71,23 @@ def _rule_help() -> str:
         return "Keeps rows with `p cal %` of 55 or more and `EV %` above 0."
 
 
+@st.cache_data(ttl=600, show_spinner=False)
+def _under_first_help() -> str:
+    """Tooltip for the UNDER-leans-only toggle, with this season's graded record by side."""
+    head = ("Keeps only the UNDER leans in rec yds, receptions and rush yds (other markets are untouched). The books shade the OVER side: on 2025 "
+            "DraftKings/FanDuel closing lines, always betting the OVER at the best number lost about 9% per bet and always betting the UNDER about "
+            "broke even; ")
+    try:
+        from dfs import bets as _b
+        rec = {r["lean"]: r for r in _b.line_history_by_lean().to_dict("records")}
+        bits = [f"{k} leans {rec[k]['win%']:.1f}% (n={rec[k]['n']}, {rec[k]['ROI@-110%']:+.1f}% at -110)" for k in ("UNDER", "OVER") if k in rec]
+        if bits:
+            head += "this season's graded leans so far: " + "; ".join(bits) + ". "
+    except Exception:  # noqa: BLE001 -- a tooltip must never take the screen down
+        pass
+    return head + "Turn it off to see every lean."
+
+
 @st.cache_data(show_spinner=False)
 def _slates(_nonce: int):
     return classic_slates()
@@ -904,6 +921,16 @@ def render(screen: str) -> None:
                     st.caption(f"Bets with `p cal %` ≥ 55 and `EV %` > 0, weeks {first}–{last}, "
                                "each week calibrated only on the weeks before it; `of all` = "
                                "every bet the screen could show in that tier those weeks.")
+            side_perf = _bets0.line_history_by_market_lean()
+            if not side_perf.empty:
+                with st.expander("By market and side — the reason ⬇ UNDER leans only is on by default"):
+                    st.dataframe(side_perf, hide_index=True, width="stretch",
+                                 height=35 * (len(side_perf) + 1))
+                    st.caption("Every graded lean this season (all tiers), win % and ROI at a flat -110 on the "
+                               "consensus line. The OVER side has run well below the UNDER side in rec yds, "
+                               "receptions and rush yds, and the same split showed in 2025: on DraftKings/FanDuel "
+                               "closing lines always betting the OVER at the best number lost about 9% per bet, "
+                               "always betting the UNDER about broke even. Pass props are not filtered.")
 
         if not ODDS_API_KEY:
             st.error("No Odds API key. Add a free key from the-odds-api.com as "
@@ -911,7 +938,7 @@ def render(screen: str) -> None:
             st.stop()
 
         from dfs.props import (CORE_MARKETS, MARKETS, PropsError, confident_only,
-                               parlay_odds, role_stable)
+                               parlay_odds, role_stable, under_first)
 
         try:
             events, ev_rem = _prop_events()
@@ -1088,13 +1115,17 @@ def render(screen: str) -> None:
             help=(_rule_help() if cal is not None else
                   "Needs more graded weeks before `p cal %` and `EV %` exist."),
         )
-        show = confident_only(df)
-        show = show[show["conf"].isin(tiers)] if tiers else show.iloc[0:0]
+        under_only = tc2.toggle("⬇ UNDER leans only", value=True, key="pe_under_first", help=_under_first_help())
+        base = confident_only(df)
+        if under_only:
+            base = under_first(base)
+        show = base[base["conf"].isin(tiers)] if tiers else base.iloc[0:0]
         if rec_only:
             show = role_stable(show)
         if show.empty:
-            st.warning("Nothing cleared the filters. Widen the tiers, or turn off "
-                       "\"Recommended only\" to see rows with a role-ratio flag.")
+            st.warning("Nothing cleared the filters. Widen the tiers, turn off "
+                       "\"Recommended only\" to see rows with a role-ratio flag"
+                       + (", or turn off \"UNDER leans only\" to see the OVER leans." if under_only else "."))
             st.stop()
 
         if cal is not None:
@@ -1103,7 +1134,7 @@ def render(screen: str) -> None:
                 picked = _conviction.calibrated_picks(show)
                 # rows that clear the rule anywhere the screen can show them, minus these
                 outside = len(_conviction.calibrated_picks(
-                    _conviction.annotate(confident_only(df), cal))) - len(picked)
+                    _conviction.annotate(base, cal))) - len(picked)
                 if picked.empty:
                     st.warning("No rows clear `p cal %` ≥ 55 and `EV %` > 0 in this selection."
                                + (f" {outside} clear it outside your tier / Recommended "
@@ -1117,7 +1148,12 @@ def render(screen: str) -> None:
                                "outside your tier / Recommended selection; widen the tiers or "
                                "turn off \"Recommended only\" to see them.")
         hidden = len(df) - len(show)
-        view = show.drop(columns=["role_ratio", "game"])
+        view = show.drop(columns=[c for c in ("role_ratio", "game", "bet line", "bet price", "bet book") if c in show.columns])
+        has_bet_at = "bet at" in view.columns and view["bet at"].astype(str).str.len().gt(0).any()
+        if has_bet_at:
+            view = view.drop(columns=["best"], errors="ignore")      # `bet at` carries the book, the number and the price
+        else:
+            view = view.drop(columns=["bet at", "num edge"], errors="ignore")
         if cal is not None:
             lead = [c for c in _conviction.LEAD_COLUMNS if c in view.columns]
             view = view[lead + [c for c in view.columns if c not in lead]]
@@ -1134,7 +1170,13 @@ def render(screen: str) -> None:
             "`conf` = confidence tier from |z| (standardized edge = SDs past the line, "
             "comparable across markets). `z` = the raw number · `p(hit)%` = our shrunk "
             "probability the bet lands · `book %` = de-vigged book prob · `p edge` = "
-            "p(hit) − book% (EV proxy) · `best` = best price across DK/FD."
+            "p(hit) − book% (EV proxy) · "
+            + ("`bet at` = the book, number and price to place the lean at: the best NUMBER between "
+               "DK and FD (lowest for an OVER, highest for an UNDER), best price on a tie; `num edge` = "
+               "how much better that number is than the other book's. On 2025 closing lines taking the "
+               "best number instead of the best price added about 1.2 points of ROI per bet. `line`, `z`, "
+               "`p edge` and `EV %` are still measured on the consensus line."
+               if has_bet_at else "`best` = best price across DK/FD.")
             + (f"  ·  {hidden} row(s) hidden (no real edge, a role-ratio red flag, or "
                "outside the selected filters)." if hidden else "")
         )
@@ -1213,16 +1255,24 @@ def render(screen: str) -> None:
         from dfs import bets as _bets
         with st.expander("🧾 Log a single bet from this table"):
             recs = show.to_dict("records")
-            opts = {f'{d["player"]} · {d["market"]} · {d["lean"]} {d["line"]} '
-                    f'({d.get("best") or "?"})': d for d in recs}
+
+            def _placed(d: dict) -> tuple:
+                """(line, odds, book) of the bet as it would be placed: the best NUMBER's book when the pull has one, else the old best price."""
+                bl, bp, bb = d.get("bet line"), d.get("bet price"), d.get("bet book")
+                if bl is not None and bl == bl and bp is not None and bp == bp:
+                    return float(bl), int(bp), str(bb or "")
+                return float(d["line"]), _parse_amer(d.get("best")), str(d.get("best") or "").split()[0] if d.get("best") else ""
+
+            opts = {f'{d["player"]} · {d["market"]} · {d["lean"]} {_placed(d)[0]:g} '
+                    f'({_placed(d)[2]} {_placed(d)[1]:+d})': d for d in recs}
             pick_bet = st.selectbox("Row", list(opts), key="pe_logrow")
             br = opts[pick_bet]
+            pl_line, pl_odds, pl_book = _placed(br)
             lc1, lc2, lc3 = st.columns(3)
             odds_in = lc1.number_input("Odds (american)", -100000, 100000,
-                                       _parse_amer(br.get("best")), step=5, key="pe_logodds")
+                                       pl_odds, step=5, key=f"pe_logodds_{pick_bet}")
             stake_in = lc2.number_input("Stake (units)", 0.0, 100.0, 1.0, 0.5, key="pe_logstake")
-            book_in = lc3.text_input("Book", str(br.get("best") or "").split()[0] if br.get("best") else "",
-                                     key="pe_logbook")
+            book_in = lc3.text_input("Book", pl_book, key=f"pe_logbook_{pick_bet}")
             if st.button("Log it", key="pe_logbtn"):
                 # tag with the week THIS pull actually used, not whatever the sidebar
                 # currently shows — they can drift apart if the pull was restored from an
@@ -1232,7 +1282,7 @@ def render(screen: str) -> None:
                     season=int(_cur_season()), week=int(_log_week or week),
                     event=str(br.get("game", cache["game"])).split("  ·")[0],
                     player=br["player"], market=br["market"],
-                    side=br["lean"], line=float(br["line"]), odds=int(odds_in), book=book_in,
+                    side=br["lean"], line=pl_line, odds=int(odds_in), book=book_in,
                     stake=float(stake_in), our_proj=float(br["our proj"]),
                     ev_pct=(float(br["p edge"]) if br.get("p edge") is not None else None),
                 )

@@ -257,3 +257,20 @@ def test_grade_line_history_counts_the_quiet_players_it_used_to_skip(tmp_path, m
     assert got.loc[("Quiet WR", "rush yds"), "result"] == "win"       # ...and an UNDER on him wins
     assert got.loc[("Inactive RB", "rec yds"), "result"] == "dnp"
     assert got.loc[("Pending WR", "rec yds"), "result"] == ""          # stays pending
+
+
+def test_line_history_by_market_lean_splits_every_market_into_its_over_and_under_record():
+    import pandas as pd
+
+    rows = ([{"market": "rec yds", "lean": "UNDER", "result": r} for r in ("win", "win", "win", "loss", "push")]
+            + [{"market": "rec yds", "lean": "OVER", "result": r} for r in ("win", "loss", "loss", "loss")]
+            + [{"market": "pass yds", "lean": "OVER", "result": r} for r in ("win", "win", "loss")]
+            + [{"market": "rec yds", "lean": "OVER", "result": "dnp"}])                   # a DNP is not a graded bet
+    t = B.line_history_by_market_lean(pd.DataFrame(rows)).set_index(["market", "lean"])
+    assert t.loc[("rec yds", "UNDER"), "n"] == 5 and t.loc[("rec yds", "UNDER"), "win%"] == 75.0           # the push counts in n, not in win%
+    assert t.loc[("rec yds", "OVER"), "n"] == 4 and t.loc[("rec yds", "OVER"), "win%"] == 25.0
+    assert t.loc[("rec yds", "UNDER"), "ROI@-110%"] > 0 > t.loc[("rec yds", "OVER"), "ROI@-110%"]
+    assert t.loc[("pass yds", "OVER"), "win%"] == pytest.approx(66.7, abs=0.1)
+    assert list(B.line_history_by_market_lean(pd.DataFrame(rows)).market) == ["pass yds", "rec yds", "rec yds"] and list(
+        B.line_history_by_market_lean(pd.DataFrame(rows)).lean)[1:] == ["UNDER", "OVER"]                    # UNDER sorts first within a market
+    assert B.line_history_by_market_lean(pd.DataFrame()).empty and B.line_history_by_market_lean(pd.DataFrame(rows).iloc[:0]).empty

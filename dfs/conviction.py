@@ -249,7 +249,7 @@ def annotate(edges: pd.DataFrame, cal: Calibration) -> pd.DataFrame:
 _GOOD = "background-color: rgba(46, 160, 67, 0.40)"
 _BAD = "background-color: rgba(220, 70, 70, 0.32)"
 # what you act on, left to right: the pick, the verdict, the price, the evidence
-LEAD_COLUMNS = ("player", "market", "lean", "line", "p cal %", "EV %", "best", "kind record")
+LEAD_COLUMNS = ("player", "market", "lean", "line", "bet at", "num edge", "p cal %", "EV %", "best", "kind record")
 
 
 def style_picks(view: pd.DataFrame, p_min: float = P_MIN):
