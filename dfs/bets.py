@@ -332,16 +332,29 @@ def grade_line_history(force: bool = False) -> tuple[pd.DataFrame, int]:
     return df, n
 
 
-def line_history_buckets(df: pd.DataFrame | None = None, min_n: int = 0) -> pd.DataFrame:
+def recommended_rows(df: pd.DataFrame) -> pd.DataFrame:
+    """The rows the Prop Edges screen calls Recommended: a labeled tier that clears the
+    always-on `confident_only` guard AND the `role_stable` filter -- the same two functions
+    the screen's ✓ Recommended only toggle applies."""
+    from dfs import props
+    return props.role_stable(props.confident_only(df))
+
+
+def line_history_buckets(df: pd.DataFrame | None = None, min_n: int = 0,
+                         recommended_only: bool = False) -> pd.DataFrame:
     """Win% + notional ROI@-110 by confidence tier, graded vs the real book line. Buckets
     by the stored `conf` column (matches Prop Edges) — not re-derived from raw |z|, which
     disagrees with `conf` for rush props (per-market offset) and pass att (always excluded).
     Shows every tier that has at least one graded row by default (`min_n=0`) — early season
-    that means small samples, but hiding a tier outright is worse than a visible small n."""
+    that means small samples, but hiding a tier outright is worse than a visible small n.
+    `recommended_only` limits it to the rows the screen would recommend (`recommended_rows`),
+    which is the population you actually bet from; the unfiltered table stays one call away."""
     df = load_line_history() if df is None else df
     if df.empty or "conf" not in df.columns:
         return pd.DataFrame()
     g = df[df["result"].isin(["win", "loss", "push"])].copy()
+    if recommended_only and not g.empty:
+        g = recommended_rows(g)
     if g.empty:
         return pd.DataFrame()
     rows = []

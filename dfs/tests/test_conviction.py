@@ -91,10 +91,22 @@ def _tier_history():
         + _rows(20, 3, conf="—", price="draftkings -110", wins=8, prefix="N"))       # 8-12
 
 
+def test_tier_help_text_counts_only_recommended_bets_by_default():
+    stable = pd.DataFrame(_rows(100, 1, conf="solid", price="draftkings -110", wins=56, prefix="S"))
+    shaky = pd.DataFrame(_rows(60, 2, conf="solid", price="draftkings -110", wins=15, prefix="X"))
+    shaky["role_ratio"] = 2.0                      # FantasyPoints disagrees with our role read
+    hist = pd.concat([stable, shaky], ignore_index=True)
+    txt = C.tier_help_text(hist)
+    assert "recommended bets" in txt and "solid 56.0% vs 52.4% (n=100)" in txt
+    assert "it has gone" not in txt                # the never-shown tier can't be recommended
+    every = C.tier_help_text(hist, recommended_only=False)
+    assert "pulled lines" in every and "solid 44.4% vs 52.4% (n=160)" in every
+
+
 def test_tier_help_text_quotes_live_results_against_the_break_even_their_prices_need():
     from dfs import bets
     hist = _tier_history()
-    txt = C.tier_help_text(hist)
+    txt = C.tier_help_text(hist, recommended_only=False)
     assert "lean 50.0% vs 52.4% (n=40)" in txt                       # 20-20 at -110
     assert "solid 70.0% vs 66.7% (n=40)" in txt                      # 28-12 at -200: a heavier price
     assert "2026 through week 3" in txt
@@ -108,7 +120,7 @@ def test_tier_help_text_quotes_live_results_against_the_break_even_their_prices_
 
 def test_tier_help_text_has_no_numbers_until_enough_is_graded():
     thin = pd.DataFrame(_rows(30, 1, conf="solid", wins=15))
-    txt = C.tier_help_text(thin)
+    txt = C.tier_help_text(thin, recommended_only=False)
     assert "Not enough graded lines yet" in txt and "%" not in txt
     assert "Not enough graded lines yet" in C.tier_help_text(pd.DataFrame())
 

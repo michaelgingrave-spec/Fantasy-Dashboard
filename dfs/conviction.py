@@ -146,23 +146,27 @@ def history_calibration(lh: pd.DataFrame | None = None) -> Calibration | None:
     return cal if (len(cal.table) and cal.table["n"].sum() >= MIN_CAL_ROWS) else None
 
 
-def tier_help_text(lh: pd.DataFrame | None = None, min_graded: int = MIN_CAL_ROWS) -> str:
+def tier_help_text(lh: pd.DataFrame | None = None, min_graded: int = MIN_CAL_ROWS,
+                   recommended_only: bool = True) -> str:
     """Tooltip for the Prop Edges tier picker: how each tier has actually done on graded
     pulled lines -- the same win% and n as the tier table on that screen -- next to the
     win% the prices on those picks needed to break even, so the screen never quotes a
     backtest figure the live weeks haven't matched. The table's ROI is at a flat -110,
     which flatters the higher tiers (they are heavier favourites, so each win pays less);
-    the break-even shows what they really had to clear. No numbers until `min_graded`
-    lines are graded."""
+    the break-even shows what they really had to clear. `recommended_only` (default, like
+    the table) counts just the rows the screen would recommend. No numbers until
+    `min_graded` lines are graded."""
     from dfs import bets
     head = "Confidence tier from |z| (standardized edge). "
     never = "`—` (under ~0.15 SD) is never shown"
     lh = bets.load_line_history() if lh is None else lh
-    lb = bets.line_history_buckets(lh)
+    lb = bets.line_history_buckets(lh, recommended_only=recommended_only)
     if lb.empty or int(lb["n"].sum()) < min_graded:
         return head + f"Not enough graded lines yet for a live hit rate (see Bet Log). {never}."
     lb = lb.dropna(subset=["win%"]).set_index("conf")
     graded = lh[lh["result"].isin(["win", "loss", "push"])]
+    if recommended_only:
+        graded = bets.recommended_rows(graded)
     need = pd.Series(dtype=float)
     if "best" in graded.columns:
         be = graded["best"].map(parse_price).map(lambda o: breakeven(o) if pd.notna(o) else np.nan)
@@ -177,7 +181,8 @@ def tier_help_text(lh: pd.DataFrame | None = None, min_graded: int = MIN_CAL_ROW
         season = int(graded["season"].max())
         scope = f", {season} through week {int(graded.loc[graded['season'] == season, 'week'].max())}"
     shown = " · ".join(f"{t} {cell(t)}" for t in ("lean", "solid", "strong", "high") if t in lb.index)
-    out = (head + f"Live results on graded pulled lines{scope}: win% vs the win% the prices on "
+    what = "recommended bets (the ✓ Recommended filter)" if recommended_only else "pulled lines"
+    out = (head + f"Live results on graded {what}{scope}: win% vs the win% the prices on "
            f"those picks needed to break even — {shown}. ")
     if "—" in lb.index:
         return out + f"{never}: it has gone {cell('—')}."

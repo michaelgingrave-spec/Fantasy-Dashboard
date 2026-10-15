@@ -861,14 +861,28 @@ def render(screen: str) -> None:
             "(on by default) hides the worst of those."
         )
         from dfs import bets as _bets0
-        conf_perf = _bets0.line_history_buckets()
-        if not conf_perf.empty:
-            st.caption(f"**2026 so far, by confidence tier** ({int(conf_perf['n'].sum())} "
+        rec_perf = _bets0.line_history_buckets(recommended_only=True)
+        all_perf = _bets0.line_history_buckets()
+        if not rec_perf.empty:
+            st.caption(f"**2026 so far, recommended bets by confidence tier** "
+                       f"({int(rec_perf['n'].sum())} graded bets that pass the ✓ Recommended "
+                       "filter — small samples this early, read directionally; every graded "
+                       "line is in the expander below)")
+            _small_col, _ = st.columns([7, 3])   # ~30% narrower than full width
+            _small_col.dataframe(rec_perf, hide_index=True, width="content",
+                                 height=35 * (len(rec_perf) + 1))
+            if not all_perf.empty:
+                with st.expander("All graded lines, every tier (including rows the filters hide)"):
+                    st.caption(f"{int(all_perf['n'].sum())} graded props pulled this season")
+                    st.dataframe(all_perf, hide_index=True, width="content",
+                                 height=35 * (len(all_perf) + 1))
+        elif not all_perf.empty:
+            st.caption(f"**2026 so far, by confidence tier** ({int(all_perf['n'].sum())} "
                        "graded props pulled this season — small samples this early, read "
                        "directionally)")
-            _small_col, _ = st.columns([7, 3])   # ~30% narrower than full width
-            _small_col.dataframe(conf_perf, hide_index=True, width="content",
-                                 height=35 * (len(conf_perf) + 1))
+            _small_col, _ = st.columns([7, 3])
+            _small_col.dataframe(all_perf, hide_index=True, width="content",
+                                 height=35 * (len(all_perf) + 1))
 
         if not ODDS_API_KEY:
             st.error("No Odds API key. Add a free key from the-odds-api.com as "

@@ -95,6 +95,22 @@ def test_line_history_snapshot_and_buckets(tmp_path, monkeypatch):
     assert bk.loc[lean, "win%"] == 0.0
 
 
+def test_line_history_buckets_can_be_limited_to_the_recommended_rows():
+    import pandas as pd
+
+    base = {"season": 2026, "week": 1, "line": 50.0, "market": "rec yds", "our proj": 60.0,
+            "conf": "solid"}
+    # four stable-role rows (3-1) and four where FantasyPoints disagrees with our role read (0-4)
+    rows = ([{**base, "role_ratio": 1.0, "result": r} for r in ("win", "win", "win", "loss")]
+            + [{**base, "role_ratio": 2.0, "result": "loss"} for _ in range(4)])
+    df = pd.DataFrame(rows)
+    every = B.line_history_buckets(df).set_index("conf")
+    rec = B.line_history_buckets(df, recommended_only=True).set_index("conf")
+    assert every.loc["solid", "n"] == 8 and every.loc["solid", "win%"] == 37.5
+    assert rec.loc["solid", "n"] == 4 and rec.loc["solid", "win%"] == 75.0
+    assert B.line_history_buckets(df.assign(role_ratio=2.0), recommended_only=True).empty
+
+
 def test_line_history_by_market(tmp_path, monkeypatch):
     import pandas as pd
     from dfs import props
