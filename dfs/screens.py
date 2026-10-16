@@ -24,6 +24,7 @@ from dfs.dk_client import (
     get_salaries,
     pick_main_slate,
     slate_types_present,
+    this_week,
 )
 from dfs.datasuite.features import inventory
 from dfs.edge import player_boosts, weekly_edges
@@ -88,9 +89,10 @@ def _under_first_help() -> str:
     return head + "Turn it off to see every lean."
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(ttl=1800, show_spinner=False)
 def _slates(_nonce: int):
-    return classic_slates()
+    """The classic slates of the week being played (dk_client.this_week); re-read every 30 minutes so the list follows the calendar."""
+    return this_week(classic_slates())
 
 
 @st.cache_data(show_spinner=True)

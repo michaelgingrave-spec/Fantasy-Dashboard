@@ -22,7 +22,7 @@ import json
 import re
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 
@@ -248,7 +248,25 @@ def classic_slates(sport: str = DK_SPORT, use_cache: bool = True) -> list[Slate]
     return out
 
 
-def pick_main_slate(slates: list[Slate]) -> Slate | None:
+def _utc(dt: datetime) -> datetime:
+    return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+
+
+def this_week(slates: list[Slate], now: datetime | None = None, window_days: int = 6, grace_hours: int = 12) -> list[Slate]:
+    """The slates of the week being played: everything that starts within `window_days` of the earliest slate that has not already kicked off (one that
+    started less than `grace_hours` ago still counts, so a slate stays listed through its own games). DraftKings keeps pre-created draft groups for LATER weeks
+    in the lobby -- a Nov 1 'Main' with no salaries has sat there since Sept 17 -- and 'the Sunday main slate with the most games' picked it the first week the
+    real main had fewer games (10 vs 11, because of byes). It would also have merged that week's players into every screen that unions the week's pools.
+    Slates with no start time are kept; when nothing is upcoming every slate is returned."""
+    now = _utc(now or datetime.now(timezone.utc))
+    upcoming = [_utc(s.start) for s in slates if s.start and _utc(s.start) >= now - timedelta(hours=grace_hours)]
+    if not upcoming:
+        return list(slates)
+    first = min(upcoming)
+    return [s for s in slates if s.start is None or first <= _utc(s.start) <= first + timedelta(days=window_days)]
+
+
+def pick_main_slate(slates: list[Slate], now: datetime | None = None) -> Slate | None:
     """Default choice: DK's own 'Sunday main' slate (Sunday 1pm + 4pm games only --
     no Thu/Sun-night/Monday games) when one exists that week. A 'Sunday-Monday' or
     'Full week' slate often has MORE games than 'Sunday main' (it just adds MNF/TNF on
@@ -258,7 +276,7 @@ def pick_main_slate(slates: list[Slate]) -> Slate | None:
     rule. Falls back to the earliest Sunday slate with the most games, then the largest
     classic slate overall, for weeks with no distinct 'Sunday main' bucket.
     """
-    classic = [s for s in slates if s.is_classic]
+    classic = this_week([s for s in slates if s.is_classic], now)      # only the week being played: see this_week
     if not classic:
         return None
     main = [s for s in classic if s.slate_type == "Sunday main"]

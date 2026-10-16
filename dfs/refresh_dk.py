@@ -36,6 +36,7 @@ from dfs.dk_client import (
     _get_csv,
     _get_json,
     classic_slates,
+    this_week,
 )
 
 LOBBY_FILE = "lobby_NFL.json"
@@ -82,7 +83,7 @@ def refresh(prune: bool = True) -> list[int]:
     _save(LOBBY_FILE, _slim_lobby(lobby))
     print(f"  {LOBBY_FILE}  ({len(lobby.get('DraftGroups', []))} draft groups)")
 
-    slates = classic_slates(use_cache=False)
+    slates = this_week(classic_slates(use_cache=False))      # the week being played, not pre-created later weeks
     saved: list[int] = []
     for s in slates:
         try:
