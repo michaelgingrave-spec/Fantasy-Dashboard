@@ -342,31 +342,31 @@ All effects are per +1 SD of the signal, in SDs of the stat (rush yards, recepti
 
 | signal | lines | n | weeks | history: result minus OUR projection | on these lines: result minus OUR projection | on these lines: the book moved its line by | on these lines: result minus the LINE (what is left) | beyond-the-price coefficient (logit) | moves P(over) by |
 |---|---|---|---|---|---|---|---|---|---|
-| WR/TE own-usage-trend score, rec yds lines | 2026 weeks 1-5 (all) | 632 | 1-5 | +0.157 [+0.137, +0.177] | +0.119 [+0.005, +0.242] | +0.124 [+0.074, +0.177] | +0.003 [-0.095, +0.115] | -0.017 [-0.197, +0.189] | -0.4 pts [-4.9, +4.7] |
-| WR/TE own-usage-trend score, rec yds lines | 2026 forward (week 6+) | 0 |  | +0.157 [+0.137, +0.177] |  |  | too few lines |  |  |
-| WR/TE own-usage-trend score, rec yds lines | 2025 closing, DraftKings | 1629 | 5-18 | +0.157 [+0.137, +0.177] | +0.102 [+0.038, +0.160] | +0.085 [+0.056, +0.111] | +0.017 [-0.040, +0.078] | +0.046 [-0.074, +0.163] | +1.1 pts [-1.9, +4.1] |
-| WR/TE own-usage-trend score, rec yds lines | 2025 closing, FanDuel | 1593 | 5-18 | +0.157 [+0.137, +0.177] | +0.100 [+0.045, +0.159] | +0.082 [+0.050, +0.108] | +0.018 [-0.035, +0.073] | +0.051 [-0.060, +0.169] | +1.3 pts [-1.5, +4.2] |
-| WR/TE own-usage-trend score, rec yds lines | 2025 DK closing + 2026 | 2261 | 1-18 | +0.157 [+0.137, +0.177] | +0.110 [+0.046, +0.165] | +0.096 [+0.074, +0.121] | +0.016 [-0.044, +0.067] | +0.033 [-0.068, +0.128] | +0.8 pts [-1.7, +3.2] |
-| WR/TE own-usage-trend score, receptions lines | 2026 weeks 1-5 (all) | 621 | 1-5 | +0.196 [+0.174, +0.219] | +0.182 [+0.077, +0.291] | +0.175 [+0.113, +0.233] | +0.008 [-0.090, +0.097] | +0.030 [-0.170, +0.231] | +0.8 pts [-4.3, +5.7] |
-| WR/TE own-usage-trend score, receptions lines | 2026 forward (week 6+) | 0 |  | +0.196 [+0.174, +0.219] |  |  | too few lines |  |  |
-| WR/TE own-usage-trend score, receptions lines | 2025 closing, DraftKings | 1564 | 5-18 | +0.196 [+0.174, +0.219] | +0.173 [+0.110, +0.236] | +0.131 [+0.101, +0.165] | +0.042 [-0.015, +0.103] | +0.149 [+0.040, +0.276] | +3.7 pts [+1.0, +6.9] |
-| WR/TE own-usage-trend score, receptions lines | 2025 closing, FanDuel | 1548 | 5-18 | +0.196 [+0.174, +0.219] | +0.163 [+0.111, +0.217] | +0.130 [+0.101, +0.163] | +0.033 [-0.024, +0.089] | +0.163 [+0.042, +0.311] | +4.1 pts [+1.0, +7.7] |
-| WR/TE own-usage-trend score, receptions lines | 2025 DK closing + 2026 | 2185 | 1-18 | +0.196 [+0.174, +0.219] | +0.178 [+0.131, +0.229] | +0.144 [+0.116, +0.172] | +0.034 [-0.014, +0.079] | +0.114 [+0.008, +0.221] | +2.8 pts [+0.2, +5.5] |
-| RB run-defense weakness index, rush yds lines | 2026 weeks 1-5 (all) | 258 | 1-5 | +0.085 [+0.044, +0.124] | -0.024 [-0.155, +0.113] | +0.052 [-0.002, +0.108] | -0.076 [-0.191, +0.041] | -0.084 [-0.427, +0.231] | -2.1 pts [-10.5, +5.7] |
-| RB run-defense weakness index, rush yds lines | 2026 forward (week 6+) | 0 |  | +0.085 [+0.044, +0.124] |  |  | too few lines |  |  |
-| RB run-defense weakness index, rush yds lines | 2025 closing, DraftKings | 612 | 5-18 | +0.085 [+0.044, +0.124] | +0.017 [-0.069, +0.099] | +0.067 [+0.041, +0.092] | -0.051 [-0.138, +0.030] | -0.053 [-0.224, +0.102] | -1.3 pts [-5.6, +2.5] |
-| RB run-defense weakness index, rush yds lines | 2025 closing, FanDuel | 606 | 5-18 | +0.085 [+0.044, +0.124] | +0.013 [-0.073, +0.101] | +0.067 [+0.036, +0.097] | -0.054 [-0.139, +0.025] | -0.074 [-0.259, +0.102] | -1.8 pts [-6.4, +2.6] |
-| RB run-defense weakness index, rush yds lines | 2025 DK closing + 2026 | 870 | 1-18 | +0.085 [+0.044, +0.124] | +0.005 [-0.064, +0.082] | +0.063 [+0.038, +0.086] | -0.058 [-0.124, +0.013] | -0.062 [-0.206, +0.089] | -1.6 pts [-5.1, +2.2] |
-| RB opponent zone rate, receptions lines | 2026 weeks 1-5 (all) | 191 | 1-5 | +0.049 [+0.025, +0.068] | +0.041 [-0.075, +0.179] | -0.002 [-0.033, +0.035] | +0.043 [-0.080, +0.171] | +0.097 [-0.151, +0.390] | +2.4 pts [-3.8, +9.6] |
-| RB opponent zone rate, receptions lines | 2026 forward (week 6+) | 0 |  | +0.049 [+0.025, +0.068] |  |  | too few lines |  |  |
-| RB opponent zone rate, receptions lines | 2025 closing, DraftKings | 413 | 5-18 | +0.049 [+0.025, +0.068] | +0.013 [-0.059, +0.066] | +0.018 [+0.000, +0.034] | -0.005 [-0.077, +0.050] | +0.030 [-0.112, +0.165] | +0.7 pts [-2.8, +4.1] |
-| RB opponent zone rate, receptions lines | 2025 closing, FanDuel | 410 | 5-18 | +0.049 [+0.025, +0.068] | +0.015 [-0.047, +0.071] | +0.009 [-0.011, +0.027] | +0.006 [-0.058, +0.067] | +0.017 [-0.126, +0.153] | +0.4 pts [-3.1, +3.8] |
-| RB opponent zone rate, receptions lines | 2025 DK closing + 2026 | 604 | 1-18 | +0.049 [+0.025, +0.068] | +0.021 [-0.038, +0.079] | +0.012 [-0.004, +0.027] | +0.008 [-0.049, +0.066] | +0.044 [-0.074, +0.164] | +1.1 pts [-1.9, +4.1] |
-| RB own-usage-trend score, rush yds lines | 2026 weeks 1-5 (all) | 260 | 1-5 | +0.254 [+0.211, +0.291] | +0.079 [-0.059, +0.221] | +0.021 [-0.032, +0.072] | +0.057 [-0.065, +0.189] | +0.129 [-0.170, +0.466] | +3.2 pts [-4.2, +11.5] |
-| RB own-usage-trend score, rush yds lines | 2026 forward (week 6+) | 0 |  | +0.254 [+0.211, +0.291] |  |  | too few lines |  |  |
-| RB own-usage-trend score, rush yds lines | 2025 closing, DraftKings | 612 | 5-18 | +0.254 [+0.211, +0.291] | +0.209 [+0.147, +0.277] | +0.068 [+0.021, +0.110] | +0.141 [+0.065, +0.214] | +0.134 [-0.019, +0.286] | +3.4 pts [-0.5, +7.1] |
-| RB own-usage-trend score, rush yds lines | 2025 closing, FanDuel | 606 | 5-18 | +0.254 [+0.211, +0.291] | +0.213 [+0.142, +0.289] | +0.062 [+0.017, +0.102] | +0.151 [+0.074, +0.228] | +0.166 [+0.016, +0.331] | +4.1 pts [+0.4, +8.2] |
-| RB own-usage-trend score, rush yds lines | 2025 DK closing + 2026 | 872 | 1-18 | +0.254 [+0.211, +0.291] | +0.116 [+0.063, +0.168] | +0.036 [+0.006, +0.066] | +0.080 [+0.025, +0.134] | +0.101 [+0.005, +0.202] | +2.5 pts [+0.1, +5.0] |
+| WR/TE own-usage-trend score, rec yds lines | 2026 weeks 1-5 (all) | 764 | 1-6 | +0.145 [+0.124, +0.166] | +0.117 [+0.024, +0.216] | +0.100 [+0.056, +0.138] | +0.016 [-0.065, +0.093] | -0.042 [-0.217, +0.136] | -1.0 pts [-5.4, +3.4] |
+| WR/TE own-usage-trend score, rec yds lines | 2026 forward (week 6+) | 132 | 6 | +0.145 [+0.124, +0.166] | +0.012 [-0.165, +0.184] | +0.054 [-0.018, +0.123] | -0.055 [-0.220, +0.118] | -0.259 [-0.760, +0.165] | -6.4 pts [-18.1, +4.1] |
+| WR/TE own-usage-trend score, rec yds lines | 2025 closing, DraftKings | 1637 | 5-18 | +0.145 [+0.124, +0.166] | +0.078 [+0.014, +0.147] | +0.057 [+0.029, +0.084] | +0.022 [-0.042, +0.086] | +0.045 [-0.085, +0.173] | +1.1 pts [-2.1, +4.3] |
+| WR/TE own-usage-trend score, rec yds lines | 2025 closing, FanDuel | 1601 | 5-18 | +0.145 [+0.124, +0.166] | +0.078 [+0.009, +0.141] | +0.056 [+0.028, +0.084] | +0.022 [-0.045, +0.079] | +0.058 [-0.060, +0.175] | +1.5 pts [-1.5, +4.4] |
+| WR/TE own-usage-trend score, rec yds lines | 2025 DK closing + 2026 | 2401 | 1-18 | +0.145 [+0.124, +0.166] | +0.091 [+0.028, +0.142] | +0.070 [+0.046, +0.092] | +0.020 [-0.031, +0.076] | +0.018 [-0.082, +0.108] | +0.4 pts [-2.0, +2.7] |
+| WR/TE own-usage-trend score, receptions lines | 2026 weeks 1-5 (all) | 749 | 1-6 | +0.194 [+0.176, +0.212] | +0.140 [+0.035, +0.232] | +0.162 [+0.109, +0.219] | -0.022 [-0.107, +0.068] | -0.077 [-0.268, +0.115] | -1.9 pts [-6.7, +2.9] |
+| WR/TE own-usage-trend score, receptions lines | 2026 forward (week 6+) | 128 | 6 | +0.194 [+0.176, +0.212] | -0.003 [-0.243, +0.215] | +0.121 [+0.008, +0.235] | -0.110 [-0.329, +0.134] | -0.434 [-0.997, -0.005] | -10.7 pts [-23.0, -0.1] |
+| WR/TE own-usage-trend score, receptions lines | 2025 closing, DraftKings | 1571 | 5-18 | +0.194 [+0.176, +0.212] | +0.155 [+0.086, +0.225] | +0.112 [+0.077, +0.150] | +0.043 [-0.036, +0.116] | +0.148 [+0.006, +0.290] | +3.7 pts [+0.1, +7.2] |
+| WR/TE own-usage-trend score, receptions lines | 2025 closing, FanDuel | 1555 | 5-18 | +0.194 [+0.176, +0.212] | +0.134 [+0.067, +0.208] | +0.110 [+0.075, +0.145] | +0.025 [-0.042, +0.091] | +0.144 [+0.002, +0.283] | +3.6 pts [+0.1, +7.0] |
+| WR/TE own-usage-trend score, receptions lines | 2025 DK closing + 2026 | 2320 | 1-18 | +0.194 [+0.176, +0.212] | +0.148 [+0.096, +0.199] | +0.128 [+0.098, +0.159] | +0.018 [-0.035, +0.073] | +0.065 [-0.058, +0.187] | +1.6 pts [-1.5, +4.6] |
+| RB run-defense weakness index, rush yds lines | 2026 weeks 1-5 (all) | 311 | 1-6 | +0.086 [+0.047, +0.123] | -0.031 [-0.144, +0.086] | +0.080 [+0.025, +0.126] | -0.111 [-0.208, +0.005] | -0.148 [-0.405, +0.106] | -3.7 pts [-10.0, +2.7] |
+| RB run-defense weakness index, rush yds lines | 2026 forward (week 6+) | 53 |  | +0.086 [+0.047, +0.123] |  |  | too few lines |  |  |
+| RB run-defense weakness index, rush yds lines | 2025 closing, DraftKings | 610 | 5-18 | +0.086 [+0.047, +0.123] | +0.017 [-0.067, +0.098] | +0.070 [+0.042, +0.094] | -0.052 [-0.139, +0.029] | -0.058 [-0.226, +0.101] | -1.4 pts [-5.6, +2.5] |
+| RB run-defense weakness index, rush yds lines | 2025 closing, FanDuel | 605 | 5-18 | +0.086 [+0.047, +0.123] | +0.015 [-0.074, +0.103] | +0.070 [+0.041, +0.101] | -0.055 [-0.142, +0.026] | -0.077 [-0.263, +0.098] | -1.9 pts [-6.5, +2.4] |
+| RB run-defense weakness index, rush yds lines | 2025 DK closing + 2026 | 921 | 1-18 | +0.086 [+0.047, +0.123] | +0.001 [-0.062, +0.074] | +0.073 [+0.046, +0.100] | -0.071 [-0.126, -0.007] | -0.087 [-0.236, +0.046] | -2.2 pts [-5.9, +1.1] |
+| RB opponent zone rate, receptions lines | 2026 weeks 1-5 (all) | 231 | 1-6 | +0.050 [+0.027, +0.072] | +0.040 [-0.068, +0.172] | -0.007 [-0.036, +0.031] | +0.047 [-0.063, +0.173] | +0.117 [-0.098, +0.370] | +2.9 pts [-2.5, +9.1] |
+| RB opponent zone rate, receptions lines | 2026 forward (week 6+) | 40 |  | +0.050 [+0.027, +0.072] |  |  | too few lines |  |  |
+| RB opponent zone rate, receptions lines | 2025 closing, DraftKings | 412 | 5-18 | +0.050 [+0.027, +0.072] | +0.022 [-0.051, +0.073] | +0.025 [+0.008, +0.039] | -0.003 [-0.077, +0.054] | +0.030 [-0.118, +0.166] | +0.8 pts [-2.9, +4.1] |
+| RB opponent zone rate, receptions lines | 2025 closing, FanDuel | 409 | 5-18 | +0.050 [+0.027, +0.072] | +0.025 [-0.035, +0.084] | +0.018 [+0.000, +0.034] | +0.007 [-0.056, +0.070] | +0.017 [-0.134, +0.150] | +0.4 pts [-3.3, +3.7] |
+| RB opponent zone rate, receptions lines | 2025 DK closing + 2026 | 643 | 1-18 | +0.050 [+0.027, +0.072] | +0.027 [-0.025, +0.079] | +0.014 [+0.000, +0.029] | +0.013 [-0.043, +0.068] | +0.059 [-0.055, +0.173] | +1.5 pts [-1.4, +4.3] |
+| RB own-usage-trend score, rush yds lines | 2026 weeks 1-5 (all) | 313 | 1-6 | +0.247 [+0.212, +0.283] | +0.078 [-0.060, +0.221] | +0.021 [-0.034, +0.077] | +0.056 [-0.068, +0.189] | +0.088 [-0.202, +0.398] | +2.2 pts [-5.0, +9.8] |
+| RB own-usage-trend score, rush yds lines | 2026 forward (week 6+) | 53 |  | +0.247 [+0.212, +0.283] |  |  | too few lines |  |  |
+| RB own-usage-trend score, rush yds lines | 2025 closing, DraftKings | 610 | 5-18 | +0.247 [+0.212, +0.283] | +0.213 [+0.143, +0.277] | +0.063 [+0.017, +0.107] | +0.150 [+0.069, +0.227] | +0.149 [-0.004, +0.311] | +3.7 pts [-0.1, +7.7] |
+| RB own-usage-trend score, rush yds lines | 2025 closing, FanDuel | 605 | 5-18 | +0.247 [+0.212, +0.283] | +0.216 [+0.146, +0.289] | +0.058 [+0.015, +0.103] | +0.158 [+0.080, +0.238] | +0.171 [+0.020, +0.343] | +4.3 pts [+0.5, +8.5] |
+| RB own-usage-trend score, rush yds lines | 2025 DK closing + 2026 | 923 | 1-18 | +0.247 [+0.212, +0.283] | +0.108 [+0.061, +0.155] | +0.030 [+0.003, +0.057] | +0.079 [+0.034, +0.127] | +0.098 [-0.003, +0.199] | +2.5 pts [-0.1, +5.0] |
 
 ### Do the closing lines lean, and does our projection beat them? (2025 closing lines, DraftKings and FanDuel)
 
@@ -374,31 +374,31 @@ Not about any signal: just the lines. **Lean**: the share of lines that went ove
 
 | market | book | lines | went over | market said | gap (pts) | over, first / second half | blind UNDER roi | blind OVER roi |
 |---|---|---|---|---|---|---|---|---|
-| WR/TE rec yds | draftkings | 1629 | 46.8% | 50.0% | -3.2 [-5.3, -1.0] | 47.4 / 46.1 | +0.7% [-3.4, +4.6] | -11.3% [-15.3, -7.3] |
-| WR/TE rec yds | fanduel | 1593 | 47.1% | 50.0% | -2.9 [-5.1, -0.5] | 47.5 / 46.6 | +0.1% [-4.6, +4.3] | -10.9% [-15.1, -6.2] |
-| WR/TE receptions | draftkings | 1564 | 45.0% | 49.0% | -4.0 [-6.4, -1.7] | 44.3 / 45.9 | +1.7% [-2.5, +6.0] | -13.7% [-18.3, -9.3] |
-| WR/TE receptions | fanduel | 1548 | 44.6% | 48.8% | -4.1 [-6.5, -1.8] | 44.6 / 44.7 | +1.8% [-2.7, +6.4] | -14.0% [-18.7, -9.3] |
-| RB rush yds | draftkings | 612 | 48.9% | 50.0% | -1.1 [-4.8, +2.4] | 47.5 / 50.5 | -3.2% [-9.8, +3.7] | -7.5% [-14.5, -0.9] |
-| RB rush yds | fanduel | 606 | 47.7% | 50.0% | -2.3 [-6.2, +1.4] | 45.7 / 50.2 | -1.0% [-8.0, +6.4] | -9.7% [-17.2, -2.7] |
-| RB receptions | draftkings | 413 | 43.6% | 49.1% | -5.6 [-9.7, -1.6] | 42.8 / 44.4 | +4.5% [-3.1, +12.5] | -16.8% [-25.3, -8.6] |
-| RB receptions | fanduel | 410 | 43.4% | 49.2% | -5.8 [-9.8, -1.5] | 45.3 / 40.9 | +4.5% [-3.5, +12.0] | -17.7% [-25.6, -9.4] |
-| RB rec yds | draftkings | 437 | 45.1% | 50.0% | -4.9 [-9.1, -0.7] | 45.9 / 44.2 | +3.8% [-4.1, +11.9] | -14.6% [-22.7, -6.7] |
-| RB rec yds | fanduel | 422 | 46.7% | 50.0% | -3.3 [-7.7, +0.8] | 45.1 / 48.3 | +0.8% [-6.9, +9.2] | -11.6% [-19.9, -3.9] |
+| WR/TE rec yds | draftkings | 1637 | 46.7% | 50.0% | -3.3 [-5.8, -0.9] | 47.2 / 46.1 | +0.9% [-3.6, +5.6] | -11.5% [-16.2, -7.1] |
+| WR/TE rec yds | fanduel | 1601 | 47.0% | 50.0% | -3.0 [-5.2, -0.8] | 47.2 / 46.6 | +0.3% [-3.9, +4.5] | -11.1% [-15.2, -6.8] |
+| WR/TE receptions | draftkings | 1571 | 44.9% | 49.0% | -4.1 [-6.3, -1.9] | 44.2 / 45.9 | +1.8% [-2.4, +6.0] | -13.8% [-18.3, -9.6] |
+| WR/TE receptions | fanduel | 1555 | 44.5% | 48.7% | -4.2 [-6.5, -1.8] | 44.4 / 44.6 | +2.0% [-2.6, +6.3] | -14.2% [-18.9, -9.4] |
+| RB rush yds | draftkings | 610 | 48.9% | 50.0% | -1.1 [-4.8, +2.4] | 47.5 / 50.5 | -3.2% [-9.9, +3.8] | -7.5% [-14.5, -0.9] |
+| RB rush yds | fanduel | 605 | 47.6% | 50.0% | -2.4 [-6.0, +1.1] | 45.5 / 50.2 | -0.8% [-7.5, +6.0] | -9.9% [-16.8, -3.2] |
+| RB receptions | draftkings | 412 | 43.4% | 49.1% | -5.7 [-10.0, -1.7] | 42.8 / 44.1 | +4.8% [-2.8, +12.9] | -17.0% [-25.5, -9.0] |
+| RB receptions | fanduel | 409 | 43.3% | 49.2% | -5.9 [-10.1, -1.8] | 45.1 / 40.9 | +4.7% [-3.1, +12.9] | -18.0% [-26.3, -9.6] |
+| RB rec yds | draftkings | 436 | 45.0% | 50.0% | -5.0 [-9.3, -0.7] | 45.9 / 43.9 | +4.1% [-4.0, +12.3] | -14.9% [-23.0, -6.7] |
+| RB rec yds | fanduel | 421 | 46.6% | 50.0% | -3.4 [-7.8, +0.7] | 45.1 / 48.1 | +1.1% [-6.8, +9.4] | -11.8% [-20.1, -4.1] |
 
 Does our raw projection add anything to the closing line?
 
 | market | book | lines | market-price coefficient | our edge z coefficient (per SD) | +1 SD of edge moves P(over) by |
 |---|---|---|---|---|---|
-| WR/TE rec yds | draftkings | 1629 | n/a: prices are flat (~-110/-110) | +0.060 [-0.239, +0.388] | +1.5 pts [-5.9, +9.6] |
-| WR/TE rec yds | fanduel | 1593 | n/a: prices are flat (~-110/-110) | +0.030 [-0.280, +0.347] | +0.7 pts [-7.0, +8.6] |
-| WR/TE receptions | draftkings | 1564 | +1.13 [+0.65, +1.59] | +0.034 [-0.301, +0.360] | +0.8 pts [-7.5, +8.9] |
-| WR/TE receptions | fanduel | 1548 | +1.17 [+0.76, +1.67] | +0.084 [-0.262, +0.400] | +2.1 pts [-6.5, +9.9] |
-| RB rush yds | draftkings | 612 | n/a: prices are flat (~-110/-110) | +0.405 [-0.043, +0.955] | +10.0 pts [-1.1, +22.2] |
-| RB rush yds | fanduel | 606 | n/a: prices are flat (~-110/-110) | +0.418 [-0.003, +0.849] | +10.3 pts [-0.1, +20.0] |
-| RB receptions | draftkings | 413 | +1.16 [+0.51, +1.92] | +0.050 [-0.647, +0.842] | +1.3 pts [-15.6, +19.9] |
-| RB receptions | fanduel | 410 | +1.55 [+0.85, +2.31] | -0.028 [-0.773, +0.718] | -0.7 pts [-18.4, +17.2] |
-| RB rec yds | draftkings | 437 | n/a: prices are flat (~-110/-110) | -0.068 [-1.229, +1.047] | -1.7 pts [-27.4, +24.0] |
-| RB rec yds | fanduel | 422 | n/a: prices are flat (~-110/-110) | -0.151 [-1.338, +0.923] | -3.8 pts [-29.2, +21.6] |
+| WR/TE rec yds | draftkings | 1637 | n/a: prices are flat (~-110/-110) | +0.089 [-0.226, +0.415] | +2.2 pts [-5.6, +10.2] |
+| WR/TE rec yds | fanduel | 1601 | n/a: prices are flat (~-110/-110) | +0.054 [-0.256, +0.380] | +1.4 pts [-6.4, +9.4] |
+| WR/TE receptions | draftkings | 1571 | +1.11 [+0.61, +1.57] | +0.108 [-0.218, +0.420] | +2.7 pts [-5.4, +10.3] |
+| WR/TE receptions | fanduel | 1555 | +1.14 [+0.71, +1.62] | +0.161 [-0.161, +0.484] | +4.0 pts [-4.0, +11.9] |
+| RB rush yds | draftkings | 610 | n/a: prices are flat (~-110/-110) | +0.419 [+0.002, +0.910] | +10.3 pts [+0.0, +21.3] |
+| RB rush yds | fanduel | 605 | n/a: prices are flat (~-110/-110) | +0.395 [-0.035, +0.815] | +9.7 pts [-0.9, +19.3] |
+| RB receptions | draftkings | 412 | +1.27 [+0.61, +2.05] | -0.160 [-0.874, +0.594] | -4.0 pts [-20.5, +14.4] |
+| RB receptions | fanduel | 409 | +1.67 [+0.94, +2.44] | -0.237 [-0.952, +0.560] | -5.9 pts [-22.1, +13.6] |
+| RB rec yds | draftkings | 436 | n/a: prices are flat (~-110/-110) | -0.242 [-1.378, +0.838] | -6.0 pts [-29.9, +19.8] |
+| RB rec yds | fanduel | 421 | n/a: prices are flat (~-110/-110) | -0.216 [-1.319, +0.814] | -5.4 pts [-28.9, +19.3] |
 
 ### Is it priced by Wednesday, or during the week? (2026 opening lines)
 
@@ -406,57 +406,57 @@ The usage scores use only games already played, so they are the same on Wednesda
 
 | signal | lines | weeks | the opening line already moved by | the late line moved by | added during the week | left at the OPEN (result minus opening line) | left at the late line |
 |---|---|---|---|---|---|---|---|
-| WR/TE own-usage-trend score, rec yds lines | 367 | 1-5 | +0.066 [+0.012, +0.121] | +0.074 [+0.012, +0.137] | +0.008 [-0.010, +0.026] | +0.059 [-0.099, +0.196] | +0.051 [-0.098, +0.188] |
-| WR/TE own-usage-trend score, receptions lines | 362 | 1-5 | +0.111 [+0.028, +0.188] | +0.112 [+0.017, +0.193] | +0.000 [-0.024, +0.024] | +0.004 [-0.132, +0.146] | +0.004 [-0.129, +0.145] |
-| RB opponent zone rate, receptions lines | 89 | 1-5 | -0.002 [-0.052, +0.068] | -0.014 [-0.064, +0.056] | -0.013 [-0.036, +0.003] | -0.039 [-0.240, +0.148] | -0.026 [-0.222, +0.165] |
+| WR/TE own-usage-trend score, rec yds lines | 367 | 1-5 | +0.052 [+0.000, +0.104] | +0.070 [+0.012, +0.131] | +0.018 [-0.001, +0.037] | +0.080 [-0.071, +0.227] | +0.062 [-0.089, +0.212] |
+| WR/TE own-usage-trend score, receptions lines | 362 | 1-5 | +0.097 [+0.013, +0.184] | +0.106 [+0.010, +0.202] | +0.009 [-0.019, +0.037] | -0.000 [-0.167, +0.169] | -0.009 [-0.165, +0.157] |
+| RB opponent zone rate, receptions lines | 89 | 1-5 | -0.010 [-0.059, +0.060] | -0.023 [-0.071, +0.049] | -0.013 [-0.036, +0.003] | -0.039 [-0.240, +0.148] | -0.026 [-0.222, +0.165] |
 
 ### What execution alone is worth: where and on which side the same leans are placed (2025 closing lines, DraftKings and FanDuel)
 
 Not a signal and not a forecast: our model's lean is held fixed and only the placement changes. A is what the Prop Edges screen did until 2026-10-15 (the book with the best PRICE on the lean, at that book's own number); B is what it does now (`dfs.props.place_bet`: the best NUMBER, best price on a tie; lowest for an OVER, highest for an UNDER). The UNDER-only rows drop the OVER leans, which is the screen's new default for rec yds, receptions and rush yds. In-sample for the idea (the 2025 lines are where the OVER/UNDER split was found); the 2026 graded leans, an independent season, show the same split.
 
-4539 props listed at both books with a projection of ours; our baseline leans OVER on 59% of them.
+4549 props listed at both books with a projection of ours; our baseline leans OVER on 60% of them.
 
 | policy | market | bets | OVER share | win | roi per bet |
 |---|---|---|---|---|---|
-| A  best price (the app before) | all yardage | 2596 | 67% | 49.5% | -5.8% [-9.3, -2.5] |
-| A  best price (the app before) | rec yds | 1998 | 71% | 47.7% | -9.2% [-12.8, -5.3] |
-| A  best price (the app before) | rush yds | 598 | 54% | 55.5% | +5.5% [-1.9, +13.1] |
-| A  best price (the app before) | receptions | 1943 | 48% | 52.5% | -2.2% [-7.0, +2.3] |
-| B  best number (the app now) | all yardage | 2596 | 67% | 50.4% | -4.6% [-8.0, -1.2] |
-| B  best number (the app now) | rec yds | 1998 | 71% | 48.7% | -7.7% [-11.4, -3.5] |
-| B  best number (the app now) | rush yds | 598 | 54% | 55.9% | +5.8% [-1.4, +13.2] |
-| B  best number (the app now) | receptions | 1943 | 48% | 54.3% | -1.4% [-6.1, +2.7] |
-| A  UNDER leans only | all yardage | 859 | 0% | 53.7% | +1.9% [-4.1, +7.4] |
-| A  UNDER leans only | rec yds | 586 | 0% | 51.9% | -1.5% [-8.3, +5.3] |
-| A  UNDER leans only | rush yds | 273 | 0% | 57.5% | +9.2% [-1.0, +20.8] |
-| A  UNDER leans only | receptions | 1009 | 0% | 57.5% | +5.2% [-0.1, +10.7] |
-| B  UNDER leans only | all yardage | 859 | 0% | 54.2% | +2.7% [-3.1, +8.1] |
-| B  UNDER leans only | rec yds | 586 | 0% | 52.4% | -0.9% [-7.7, +5.9] |
-| B  UNDER leans only | rush yds | 273 | 0% | 58.2% | +10.3% [+0.4, +22.2] |
-| B  UNDER leans only | receptions | 1009 | 0% | 59.6% | +6.5% [+1.6, +11.8] |
+| A  best price (the app before) | all yardage | 2601 | 69% | 48.7% | -7.4% [-11.0, -3.7] |
+| A  best price (the app before) | rec yds | 2004 | 73% | 46.9% | -10.9% [-14.7, -6.7] |
+| A  best price (the app before) | rush yds | 597 | 57% | 54.9% | +4.4% [-3.6, +11.6] |
+| A  best price (the app before) | receptions | 1943 | 48% | 51.8% | -3.7% [-7.8, +0.5] |
+| B  best number (the app now) | all yardage | 2601 | 69% | 49.6% | -6.1% [-9.6, -2.5] |
+| B  best number (the app now) | rec yds | 2004 | 73% | 47.9% | -9.3% [-13.2, -5.2] |
+| B  best number (the app now) | rush yds | 597 | 57% | 55.3% | +4.7% [-3.3, +11.7] |
+| B  best number (the app now) | receptions | 1943 | 48% | 53.6% | -2.8% [-6.8, +1.1] |
+| A  UNDER leans only | all yardage | 805 | 0% | 52.7% | +0.0% [-6.3, +6.0] |
+| A  UNDER leans only | rec yds | 549 | 0% | 50.5% | -4.2% [-11.3, +3.1] |
+| A  UNDER leans only | rush yds | 256 | 0% | 57.4% | +9.0% [-2.1, +20.3] |
+| A  UNDER leans only | receptions | 1006 | 0% | 56.9% | +4.1% [-0.9, +9.8] |
+| B  UNDER leans only | all yardage | 805 | 0% | 53.3% | +0.9% [-5.5, +6.9] |
+| B  UNDER leans only | rec yds | 549 | 0% | 51.0% | -3.5% [-10.7, +3.8] |
+| B  UNDER leans only | rush yds | 256 | 0% | 58.2% | +10.2% [-0.6, +21.2] |
+| B  UNDER leans only | receptions | 1006 | 0% | 58.8% | +5.4% [+0.6, +10.5] |
 
 Baselines that ignore our projection:
 
 | bet | placed at | market | bets | win | roi per bet |
 |---|---|---|---|---|---|
-| always UNDER | best price | all yardage | 2596 | 52.7% | +0.1% [-3.2, +3.5] |
-| always UNDER | best price | rec yds | 1998 | 53.0% | +0.7% [-3.3, +4.6] |
-| always UNDER | best price | rush yds | 598 | 51.7% | -1.8% [-8.8, +4.8] |
-| always UNDER | best price | receptions | 1943 | 54.6% | +3.5% [-0.4, +7.3] |
-| always UNDER | best number | all yardage | 2596 | 53.5% | +1.3% [-2.2, +4.6] |
-| always UNDER | best number | rec yds | 1998 | 54.0% | +2.2% [-1.8, +6.0] |
-| always UNDER | best number | rush yds | 598 | 52.0% | -1.5% [-8.3, +5.3] |
-| always UNDER | best number | receptions | 1943 | 56.3% | +3.8% [-0.0, +7.8] |
-| always OVER | best price | all yardage | 2596 | 47.1% | -10.5% [-13.8, -7.1] |
-| always OVER | best price | rec yds | 1998 | 46.6% | -11.3% [-15.1, -7.0] |
-| always OVER | best price | rush yds | 598 | 48.5% | -7.8% [-14.7, -0.8] |
-| always OVER | best price | receptions | 1943 | 43.7% | -13.9% [-17.7, -9.6] |
-| always OVER | best number | all yardage | 2596 | 47.9% | -9.2% [-12.7, -5.9] |
-| always OVER | best number | rec yds | 1998 | 47.6% | -9.8% [-13.7, -5.7] |
-| always OVER | best number | rush yds | 598 | 48.8% | -7.5% [-14.2, -0.6] |
-| always OVER | best number | receptions | 1943 | 45.4% | -13.0% [-16.9, -8.7] |
+| always UNDER | best price | all yardage | 2601 | 52.7% | +0.3% [-3.0, +3.7] |
+| always UNDER | best price | rec yds | 2004 | 53.0% | +0.9% [-3.2, +4.6] |
+| always UNDER | best price | rush yds | 597 | 51.8% | -1.7% [-8.9, +5.1] |
+| always UNDER | best price | receptions | 1948 | 54.6% | +3.6% [-0.8, +7.5] |
+| always UNDER | best number | all yardage | 2601 | 53.6% | +1.5% [-1.7, +4.8] |
+| always UNDER | best number | rec yds | 2004 | 54.0% | +2.3% [-1.8, +6.1] |
+| always UNDER | best number | rush yds | 597 | 52.1% | -1.3% [-8.4, +5.3] |
+| always UNDER | best number | receptions | 1948 | 56.4% | +4.0% [-0.2, +7.7] |
+| always OVER | best price | all yardage | 2601 | 47.0% | -10.7% [-14.2, -7.4] |
+| always OVER | best price | rec yds | 2004 | 46.6% | -11.5% [-15.2, -7.4] |
+| always OVER | best price | rush yds | 597 | 48.4% | -8.0% [-14.9, -0.8] |
+| always OVER | best price | receptions | 1948 | 43.6% | -14.1% [-18.3, -9.8] |
+| always OVER | best number | all yardage | 2601 | 47.8% | -9.4% [-12.9, -6.2] |
+| always OVER | best number | rec yds | 2004 | 47.6% | -9.9% [-13.9, -5.8] |
+| always OVER | best number | rush yds | 597 | 48.7% | -7.6% [-14.5, -0.6] |
+| always OVER | best number | receptions | 1948 | 45.4% | -13.1% [-17.3, -8.9] |
 
-Taking the best number instead of the best price, on the same yardage bets (B minus A): every lean: +1.25 points of ROI per bet [+0.62, +1.94] over 2596 bets ; UNDER leans only: +0.78 points of ROI per bet [-0.09, +1.88] over 859 bets.
+Taking the best number instead of the best price, on the same yardage bets (B minus A): every lean: +1.32 points of ROI per bet [+0.74, +2.09] over 2601 bets ; UNDER leans only: +0.86 points of ROI per bet [-0.05, +2.04] over 805 bets.
 
 ### Does FantasyPoints' own projection know more than our number? (2026 lines as logged)
 
@@ -469,7 +469,7 @@ FantasyPoints' weekly export is the one proprietary input that is not a function
 | ... receptions only (descriptive) | 703 | 2-5 | +0.081 [-0.083, +0.239] | +2.0 pts [-2.1, +6.0] | +0.154 [+0.082, +0.225] | +0.166 [+0.126, +0.209] | -0.012 [-0.078, +0.048] |
 | ... rush yds only (descriptive) | 344 | 2-5 | +0.086 [-0.189, +0.393] | +2.1 pts [-4.7, +9.7] | +0.094 [-0.015, +0.237] | +0.111 [+0.059, +0.174] | -0.017 [-0.115, +0.105] |
 | ... pass yds only (descriptive) | 122 | 2-5 | +0.196 [-0.559, +0.904] | +4.9 pts [-13.6, +21.2] | +0.256 [-0.069, +0.540] | +0.303 [+0.118, +0.394] | -0.046 [-0.296, +0.283] |
-| forward (week 6+), all markets | 0 |  | too few lines |  |  |  |  |
+| forward (week 6+), all markets | 483 | 6 | +0.073 [-0.218, +0.383] | +1.8 pts [-5.4, +9.5] | +0.143 [+0.032, +0.258] | +0.143 [+0.084, +0.209] | +0.000 [-0.116, +0.105] |
 
 ### Do DraftKings and FanDuel disagree, and does shopping the number pay? (2025 closing lines)
 
@@ -510,24 +510,24 @@ OVER when the score is at least k SDs above his norm, UNDER when at least k belo
 
 | book | k (SD) | side | bets | win | break-even | roi per bet |
 |---|---|---|---|---|---|---|
-| draftkings | 0.5 | both | 395 | 51.1% | 52.8% | -3.2% [-12.7, +5.8] |
-| draftkings | 0.5 | over | 261 | 50.2% | 52.8% | -5.0% [-15.4, +6.0] |
-| draftkings | 0.5 | under | 134 | 53.0% | 52.9% | +0.3% [-13.6, +13.4] |
-| draftkings | 1.0 | both | 211 | 53.1% | 52.8% | +0.5% [-10.9, +12.2] |
-| draftkings | 1.0 | over | 147 | 52.4% | 52.8% | -0.8% [-16.2, +14.6] |
-| draftkings | 1.0 | under | 64 | 54.7% | 52.8% | +3.6% [-16.8, +25.8] |
-| draftkings | 1.5 | both | 102 | 53.9% | 52.9% | +2.0% [-13.6, +20.3] |
-| draftkings | 1.5 | over | 69 | 55.1% | 52.9% | +4.1% [-14.8, +27.1] |
-| draftkings | 1.5 | under | 33 | 51.5% | 52.8% | -2.3% [-28.4, +30.5] |
-| fanduel | 0.5 | both | 390 | 51.5% | 52.8% | -2.4% [-11.7, +6.4] |
-| fanduel | 0.5 | over | 258 | 49.6% | 52.8% | -6.1% [-17.6, +6.0] |
-| fanduel | 0.5 | under | 132 | 55.3% | 52.8% | +4.7% [-8.5, +18.7] |
-| fanduel | 1.0 | both | 205 | 53.7% | 52.8% | +1.6% [-11.5, +14.5] |
-| fanduel | 1.0 | over | 144 | 52.8% | 52.8% | -0.1% [-15.3, +16.4] |
-| fanduel | 1.0 | under | 61 | 55.7% | 52.8% | +5.5% [-17.2, +32.9] |
-| fanduel | 1.5 | both | 100 | 54.0% | 52.8% | +2.2% [-13.4, +19.9] |
-| fanduel | 1.5 | over | 68 | 54.4% | 52.8% | +3.0% [-15.0, +26.2] |
-| fanduel | 1.5 | under | 32 | 53.1% | 52.8% | +0.6% [-28.2, +36.7] |
+| draftkings | 0.5 | both | 387 | 53.0% | 52.8% | +0.2% [-8.5, +9.4] |
+| draftkings | 0.5 | over | 242 | 50.4% | 52.8% | -4.6% [-16.6, +6.7] |
+| draftkings | 0.5 | under | 145 | 57.2% | 52.9% | +8.3% [-5.6, +23.2] |
+| draftkings | 1.0 | both | 199 | 53.3% | 52.8% | +0.8% [-13.5, +14.3] |
+| draftkings | 1.0 | over | 135 | 50.4% | 52.8% | -4.7% [-20.1, +12.0] |
+| draftkings | 1.0 | under | 64 | 59.4% | 52.8% | +12.4% [-11.0, +37.0] |
+| draftkings | 1.5 | both | 98 | 57.1% | 52.8% | +8.2% [-11.2, +29.8] |
+| draftkings | 1.5 | over | 66 | 54.5% | 52.9% | +3.1% [-19.0, +34.2] |
+| draftkings | 1.5 | under | 32 | 62.5% | 52.7% | +18.6% [-16.8, +50.5] |
+| fanduel | 0.5 | both | 380 | 53.2% | 52.8% | +0.6% [-8.6, +10.2] |
+| fanduel | 0.5 | over | 239 | 49.8% | 52.8% | -5.8% [-17.3, +4.5] |
+| fanduel | 0.5 | under | 141 | 58.9% | 52.8% | +11.4% [-2.7, +27.3] |
+| fanduel | 1.0 | both | 195 | 53.3% | 52.8% | +1.0% [-11.2, +12.7] |
+| fanduel | 1.0 | over | 133 | 50.4% | 52.8% | -4.6% [-19.3, +10.8] |
+| fanduel | 1.0 | under | 62 | 59.7% | 52.8% | +13.0% [-10.5, +37.2] |
+| fanduel | 1.5 | both | 96 | 57.3% | 52.8% | +8.4% [-10.4, +30.5] |
+| fanduel | 1.5 | over | 65 | 53.8% | 52.8% | +1.9% [-20.6, +32.8] |
+| fanduel | 1.5 | under | 31 | 64.5% | 52.8% | +22.1% [-8.4, +54.3] |
 
 ### Is each signal stable across seasons, or fading?
 
@@ -535,11 +535,11 @@ The 'history' column above, season by season (result minus OUR projection per SD
 
 | signal | 2022 | 2023 | 2024 | 2025 |
 |---|---|---|---|---|
-| RB opponent zone rate, receptions lines | +0.054 [+0.016, +0.090] (n 675) | +0.052 [+0.004, +0.096] (n 768) | +0.057 [+0.019, +0.103] (n 744) | +0.029 [-0.016, +0.076] (n 728) |
-| RB own-usage-trend score, rush yds lines | +0.299 [+0.215, +0.378] (n 675) | +0.187 [+0.119, +0.253] (n 768) | +0.314 [+0.239, +0.386] (n 744) | +0.234 [+0.174, +0.299] (n 728) |
-| RB run-defense weakness index, rush yds lines | +0.112 [+0.039, +0.203] (n 675) | +0.084 [+0.008, +0.153] (n 768) | +0.119 [+0.029, +0.198] (n 744) | +0.013 [-0.075, +0.092] (n 728) |
-| WR/TE own-usage-trend score, rec yds lines | +0.168 [+0.124, +0.207] (n 2061) | +0.172 [+0.133, +0.208] (n 2091) | +0.151 [+0.116, +0.192] (n 2161) | +0.132 [+0.089, +0.168] (n 2143) |
-| WR/TE own-usage-trend score, receptions lines | +0.223 [+0.176, +0.266] (n 2061) | +0.214 [+0.177, +0.253] (n 2091) | +0.155 [+0.108, +0.208] (n 2161) | +0.193 [+0.148, +0.236] (n 2143) |
+| RB opponent zone rate, receptions lines | +0.055 [+0.013, +0.091] (n 680) | +0.053 [+0.001, +0.101] (n 767) | +0.055 [+0.016, +0.099] (n 740) | +0.037 [-0.012, +0.088] (n 726) |
+| RB own-usage-trend score, rush yds lines | +0.286 [+0.212, +0.369] (n 680) | +0.180 [+0.107, +0.254] (n 767) | +0.314 [+0.231, +0.398] (n 740) | +0.238 [+0.180, +0.303] (n 726) |
+| RB run-defense weakness index, rush yds lines | +0.112 [+0.036, +0.193] (n 680) | +0.089 [+0.007, +0.168] (n 767) | +0.118 [+0.046, +0.197] (n 740) | +0.011 [-0.078, +0.100] (n 726) |
+| WR/TE own-usage-trend score, rec yds lines | +0.150 [+0.110, +0.187] (n 2089) | +0.161 [+0.122, +0.202] (n 2133) | +0.143 [+0.102, +0.183] (n 2189) | +0.124 [+0.080, +0.164] (n 2168) |
+| WR/TE own-usage-trend score, receptions lines | +0.222 [+0.179, +0.264] (n 2089) | +0.203 [+0.174, +0.234] (n 2133) | +0.164 [+0.116, +0.210] (n 2189) | +0.187 [+0.138, +0.226] (n 2168) |
 
 ## Forward-test registry (frozen 2026-10-15, rule tightened the same day before any forward week was seen; H5 added the same day, also before any week-6 line was graded)
 
