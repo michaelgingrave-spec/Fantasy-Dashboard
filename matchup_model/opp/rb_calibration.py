@@ -27,9 +27,9 @@ STATS = {"rush_att": "carries", "rush_yds": "rushing_yards", "rec": "receptions"
 UNIT = {"rush_att": 1.0, "rush_yds": 1.0, "rec": 1.0, "rec_yds": 1.0, "td": 1.0}
 INVOLVED = {"rush_att": ("p_rush_att", 6.0), "rush_yds": ("p_rush_att", 6.0), "rec": ("p_rec", 1.5), "rec_yds": ("p_rec", 1.5)}
 RB_KEYS = RC.RB_KEYS + ("TEAM_VOLUME_MODEL",)
-ORIGINAL = {**RC.RB_ORIGINAL, "TEAM_VOLUME_MODEL": "legacy"}
-MID = dict(K_CARRY=3.0, RB_CARRY_PRIOR=0.42, RB_YDS_CATCH_FACTOR=False, TEAM_VOLUME_MODEL="fitted")
-NEW = dict(K_CARRY=1.0, RB_CARRY_PRIOR=0.25, RB_YDS_CATCH_FACTOR=False, TEAM_VOLUME_MODEL="fitted")
+ORIGINAL = {**RC.RB_ORIGINAL, "TEAM_VOLUME_MODEL": "legacy", "INJ_REDIST": RC.INJ_LEGACY}      # the older variants keep the injury rule they ran with (see receiving_calibration)
+MID = dict(K_CARRY=3.0, RB_CARRY_PRIOR=0.42, RB_YDS_CATCH_FACTOR=False, TEAM_VOLUME_MODEL="fitted", INJ_REDIST=RC.INJ_LEGACY)
+NEW = dict(K_CARRY=1.0, RB_CARRY_PRIOR=0.25, RB_YDS_CATCH_FACTOR=False, TEAM_VOLUME_MODEL="fitted")      # takes the injury rule from model.INJ_REDIST
 REPORT = Path(__file__).resolve().parents[1] / "rb_calibration_report.md"
 
 
@@ -41,7 +41,7 @@ def _set(params: dict) -> None:
 
 def project(params: dict, universe: pd.DataFrame) -> pd.DataFrame:
     """Raw (unscaled) RB projections under `params`, plus DK points and expected TDs; model state is restored after."""
-    saved = {k: getattr(M, k) for k in RB_KEYS}
+    saved = {k: getattr(M, k) for k in (*RB_KEYS, *params)}          # a worker process is reused: whatever a variant sets must be put back
     try:
         _set({**params, "RB_SCALE": dict(UNIT)})
         out = []

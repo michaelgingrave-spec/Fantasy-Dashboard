@@ -40,8 +40,22 @@ K_YDS = 28.0             # targets or carries, for yds/opportunity
 #   1 = original opportunity model        2 = 2026-10 WR/TE receiving recalibration (the block just below)
 #   3 = fitted team-volume model (team_volume.py) replacing the hand-set formula, whose spread term was backwards,
 #       plus the RB recalibration (carry-share shrinkage, scales) and WR/TE constants re-learned on the new volume
-MODEL_VERSION = 3
+#   4 = the injury usage boost scaled to what teammates really absorb (INJ_REDIST below)
+MODEL_VERSION = 4
 TEAM_VOLUME_MODEL = "fitted"   # "legacy" = the pre-v3 hand-set formula with its reversed spread sign, kept only to reproduce old backtests
+
+# Injury usage redistribution (matchup_model/opp/injuries.py). When a rotation player is Out / Doubtful / Questionable the model used to hand his
+# whole vacated share to the healthy teammates in proportion to their own share (a 1.0 scale). Measured on 2022-26 box scores
+# (matchup_model.opp.injury_absorption, leave-one-season-out) the teammates who play pick up only part of it: this is the share of the proportional
+# boost that is real, per unit and per kind of absence, after the usual fall-back of a share from its trailing value (about 0.9 on weeks with nobody
+# Out; the scale constants below absorb that fall-back, so the boost is judged beyond it). 'new' = the player appeared in the team's last game (his
+# absence is news); 'ongoing' = he had already missed it, so teammates' trailing shares already hold part of it. Receiving: much of a vacated target
+# share goes to depth players outside the rotation (0.46 for a new absence, 0.37 ongoing). Rushing: backs absorb most of it (0.74 new, 0.42
+# ongoing). Player-level check (injury_boost_scan.py, 2023-25 out of season): receiving error is flat across these fractions overall and lower than the
+# old rule where a starter is newly absent (the +0.25-target over-projection goes away); rushing is clearly better. All 1.0 = the v1-v3 rule
+# (restate.py uses it to reproduce those versions). REC_SCALE and RB_SCALE below were re-learned under these numbers: the old full boost had
+# inflated the average involved player's projection, and the old scales had absorbed that.
+INJ_REDIST = {"rec": {"new": 0.46, "ongoing": 0.37}, "rush": {"new": 0.74, "ongoing": 0.42}}
 
 # WR/TE receiving recalibration (2023-25 walk-forward; derived by matchup_model.opp.receiving_calibration, which also
 # reports the before/after). The old model gave a team's WR+TE ~28% more targets than they really get (every season),
@@ -50,12 +64,13 @@ TEAM_VOLUME_MODEL = "fitted"   # "legacy" = the pre-v3 hand-set formula with its
 # targets allowed to the position. The scale is learned on players projected for >= 3 targets (the ones with prop lines
 # and DFS salaries) with players who were on the field but had no stat line counted as zeros; depth players are still
 # over-projected (actual/projected ~0.5-0.7 below 3 targets). Re-run receiving_calibration and paste its block here to
-# re-derive them.
+# re-derive them. v4: re-learned under INJ_REDIST (the scale and the injury rule are coupled: the old full boost inflated the
+# average involved player's projection, and the old scales, WR tgt 0.847 / TE 0.867, had absorbed it).
 K_SHARE_REC = 1.0         # games, WR/TE target share (RB share keeps K_SHARE)
 K_YPT = 60.0              # targets, WR/TE yards per target (RB keeps K_YDS)
 REC_SCALE = {
-    "WR": {"tgt": 0.847, "rec": 0.840, "rec_yds": 0.848, "td": 0.933},
-    "TE": {"tgt": 0.867, "rec": 0.883, "rec_yds": 0.893, "td": 1.010},
+    "WR": {"tgt": 0.881, "rec": 0.873, "rec_yds": 0.882, "td": 0.970},
+    "TE": {"tgt": 0.909, "rec": 0.925, "rec_yds": 0.935, "td": 1.060},
 }
 DEF_TGT_B = 0.09          # weight on (defense targets-allowed rate to the position / league - 1); 0.22 under the old team volume
 DEF_TGT_GAMES = 8         # trailing defense games in that rate
@@ -65,7 +80,7 @@ DEF_TGT_CLIP = (0.6, 1.5)
 # committee backs were shrunk up toward a 0.42 carry-share prior and over-projected (actual / projected carries 0.42 at 2-5 projected,
 # 0.65 at 5-8), so carry-share shrinkage is lighter and the prior lower; a constant scale per stat is learned on the backs the model
 # expects to be involved (6+ projected carries, 1.5+ receptions); rec_yds no longer multiplies the catch rate onto a per-TARGET yardage
-# that already includes the incompletions.
+# that already includes the incompletions. v4: RB_SCALE re-learned under INJ_REDIST (it was 0.969 / 0.973 / 0.911 / 0.872 / 1.017).
 K_CARRY = 1.0             # games, RB carry-share shrinkage (was 3, shared with K_SHARE)
 RB_CARRY_PRIOR = 0.25     # the share a back is shrunk toward (was 0.42)
 K_RB_TGT = 3.0            # games, RB target-share shrinkage
@@ -74,7 +89,7 @@ K_YPC = 28.0              # carries, yards per carry (was K_YDS)
 K_RB_YPT = 28.0           # targets, RB yards per target (was K_YDS)
 RB_CATCH = 0.75           # receptions per target
 RB_YDS_CATCH_FACTOR = False  # True = the original double count: rec_yds = targets x catch rate x YARDS PER TARGET
-RB_SCALE = {"rush_att": 0.969, "rush_yds": 0.973, "rec": 0.911, "rec_yds": 0.872, "td": 1.017}
+RB_SCALE = {"rush_att": 0.989, "rush_yds": 0.993, "rec": 0.946, "rec_yds": 0.902, "td": 1.047}
 K_CATCH = 26.0
 K_TD = 55.0
 K_YPA = 90.0             # dropbacks, for QB yds/att

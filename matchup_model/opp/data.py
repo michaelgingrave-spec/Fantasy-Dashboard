@@ -108,8 +108,14 @@ def clear_caches() -> None:
     DataFrame — `refresh(force=True)` alone only replaces the files on disk, it doesn't
     know anything is holding an lru_cache'd copy in memory. Safe to call regardless of
     which modules happen to be imported yet."""
-    for fn in (player_weeks, team_weeks, games, _reachable):
+    for fn in (player_weeks, team_weeks, games, snaps, injuries, _reachable):
         fn.cache_clear()
+    try:
+        from matchup_model.opp import injuries as _inj
+        _inj._shares_base.cache_clear()
+        _inj._group_components.cache_clear()
+    except Exception:  # noqa: BLE001
+        pass
     try:
         from matchup_model.opp import model as _m
         for fn in (_m._priors, _m._team_weeks_idx, _m.team_context, _m._games_idx,
