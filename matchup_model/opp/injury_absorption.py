@@ -88,6 +88,7 @@ def observations(unit: str, base: pd.DataFrame, inj: pd.DataFrame, snaps: pd.Dat
         if V < min_v or not healthy:
             continue
         V_new = sum(sh[p] for p in out if p in in_last)
+        key = max(out, key=lambda p: sh[p])                              # the Out player who vacates the most: the one a with / without split is taken against
         avail = {p: I.play_prob(status.get(p, "")) for p in sh}
         vacated = sum(sh[p] * (1.0 - avail[p]) for p in sh)
         avail_share = sum(sh[p] * avail[p] for p in sh)
@@ -95,7 +96,7 @@ def observations(unit: str, base: pd.DataFrame, inj: pd.DataFrame, snaps: pd.Dat
         for p in healthy:
             B = min(avail[p] * sh[p] * (1.0 + vacated / avail_share), I._MULT_CAP * sh[p]) if avail_share > 1e-9 else sh[p]
             rows.append({"unit": unit, "season": season, "week": week, "team": team, "pid": p, "pos": pos[p], "s": sh[p], "a": actual.get((season, week, team, p), 0.0),
-                         "V": V, "V_new": V_new, "V_old": V - V_new, "B": B, **{f"V_{q}": vac_pos[q] for q in POS}})
+                         "V": V, "V_new": V_new, "V_old": V - V_new, "B": B, "key": key, "name": names[p], "key_name": names[key], **{f"V_{q}": vac_pos[q] for q in POS}})
     return pd.DataFrame(rows)
 
 
