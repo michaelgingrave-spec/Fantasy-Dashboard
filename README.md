@@ -18,6 +18,11 @@ Sidebar nav (`dashboard.py` → `_SCREENS` / `dfs/screens.py`):
 - **Best-ball / rankings / projections / roster optimizer** — the original tool.
 - **🏈 DFS Optimizer** — DraftKings NFL Classic MILP lineup builder (PuLP): lock/exclude,
   stacking, multi-lineup + exposure caps, variance control. Optional "Apply regression lean".
+- **🎮 DFS Game Projections** — pick a game and see our projection for every player in it: FantasyPoints'
+  number next to ours (DK points), the projected stat line by position (pass/rush/receiving), DK salary,
+  the injury tag and the game's spread / implied totals. By default only players FantasyPoints also
+  projects (above 0) are shown, so depth players stay out; a min-FP box, "hide players ruled Out" and a
+  position picker narrow it further.
 - **🎯 DFS Matchup Edge**, **💡 DFS Suggestions**, **🔍 DFS Data Check**.
 - **🔎 DFS Player Lookup** — per-player research: FantasyPoints projection vs regression lean,
   recent usage, FP-vs-xFP regression flag, historical coverage splits, opponent scheme

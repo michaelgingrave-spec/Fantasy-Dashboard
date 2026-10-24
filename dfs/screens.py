@@ -1,4 +1,4 @@
-"""DFS screens for the Fantasy Model dashboard — Optimizer, Matchup Finder,
+"""DFS screens for the Fantasy Model dashboard — Optimizer, Game Projections, Matchup Finder,
 Suggestions, Data Check. Rendered by dashboard.py via ``render(screen)``.
 
 The whole DFS feature set was built as a standalone app and folded in here so
@@ -436,6 +436,11 @@ def render(screen: str) -> None:
             st.download_button("⬇️ Download DK upload CSV", csv,
                                file_name=f"dk_lineups_week{week}.csv", mime="text/csv",
                                key="dfs_dl")
+
+    # ── Game Projections ───────────────────────────────────────────────────
+    elif screen == "Game Projections":
+        from dfs import game_view
+        game_view.render(week, slate_df)             # slate_df is only used for the salary column; None (DK unreachable) just omits it
 
     # ── Matchup Finder ─────────────────────────────────────────────────────
     elif screen == "Matchup Finder":

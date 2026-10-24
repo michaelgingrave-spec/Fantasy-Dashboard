@@ -108,7 +108,7 @@ def clear_caches() -> None:
     DataFrame — `refresh(force=True)` alone only replaces the files on disk, it doesn't
     know anything is holding an lru_cache'd copy in memory. Safe to call regardless of
     which modules happen to be imported yet."""
-    for fn in (player_weeks, team_weeks, games, snaps, injuries, _reachable):
+    for fn in (player_weeks, team_weeks, games, schedule, snaps, injuries, _reachable):
         fn.cache_clear()
     try:
         from matchup_model.opp import injuries as _inj
@@ -224,6 +224,25 @@ def games() -> pd.DataFrame:
     # `spread` here is THIS team's betting spread: NEGATIVE = favourite (e.g. -6.0 = favoured by 6), POSITIVE = underdog.
     # (The pre-v3 volume model read it the other way round; corr(team_total - opp_total, spread) = -1.0 confirms this.)
     return out.sort_values(["season", "week", "team"]).reset_index(drop=True)
+
+
+@lru_cache(maxsize=1)
+def schedule() -> pd.DataFrame:
+    """The regular-season schedule as nflverse lists it, one row per game: kickoff (US Eastern wall clock), canonical teams, the home team's spread
+    (`spread_home`, positive = home favoured), the total, roof, the listed starting QBs and the final score once played."""
+    p = CACHE / "games.csv"
+    if not p.exists():
+        refresh()
+    g = pd.read_csv(p)
+    g = g[g["game_type"] == "REG"].copy()
+    when = pd.to_datetime(g["gameday"].astype(str) + " " + g["gametime"].fillna("13:00").astype(str), errors="coerce")
+    return (pd.DataFrame({
+        "game_id": g["game_id"], "season": g["season"], "week": g["week"], "kickoff": when,
+        "away": g["away_team"].map(canon_team), "home": g["home_team"].map(canon_team),
+        "spread_home": g["spread_line"], "total": g["total_line"], "roof": g["roof"],
+        "away_qb": g.get("away_qb_name"), "home_qb": g.get("home_qb_name"),
+        "away_score": g["away_score"], "home_score": g["home_score"]})
+        .sort_values(["season", "week", "kickoff"]).reset_index(drop=True))
 
 
 @lru_cache(maxsize=1)
