@@ -880,7 +880,7 @@ def market_tables(sigs: list[Signal], f26: dict, L: pd.DataFrame) -> tuple[pd.Da
         sets = []
         if sg.label in f26:
             g = f26[sg.label]
-            sets += [("2026 weeks 1-5 (all)", g), (f"2026 forward (week {FORWARD_FROM}+)", g[g.week >= FORWARD_FROM])]
+            sets += [(f"2026 weeks 1-{int(g.week.max()) if len(g) else FORWARD_FROM - 1} (all)", g), (f"2026 forward (week {FORWARD_FROM}+)", g[g.week >= FORWARD_FROM])]
         if len(L):
             f25 = {bk: historical_frame(L, sg, bk) for bk in ("draftkings", "fanduel")}
             sets += [("2025 closing, DraftKings", f25["draftkings"]), ("2025 closing, FanDuel", f25["fanduel"])]

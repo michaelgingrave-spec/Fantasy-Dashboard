@@ -1,84 +1,84 @@
-# Error-signal audit — 2026 weeks 1-5
+# Error-signal audit — 2026 weeks 1-7
 (all player-profile features built walk-forward from strictly-prior-week exports only -- see module docstring)
 
 ## Part A — defense faced that week
 
-n=978 props. 38 tests — expect ~1.9 false positives at p<0.05 by chance; treat p<0.01 as a lead, not a finding.
+n=2521 props. 38 tests — expect ~1.9 false positives at p<0.05 by chance; treat p<0.01 as a lead, not a finding.
 
 | feature | vs | n | r | p |
 |---|---|--:|--:|--:|
-| BASE % | z_error | 978 | 0.062 | 0.052 |
-| DIME % | z_error | 978 | -0.057 | 0.0761 |
-| PRESS % (ANY) | z_error | 978 | -0.056 | 0.0821 |
-| COVER 2 % | abs_z_error | 978 | 0.054 | 0.0886 |
-| DISGUISE % | z_error | 978 | -0.05 | 0.1213 |
-| NICKEL % | abs_z_error | 978 | -0.05 | 0.1159 |
-| COVER 0 % | z_error | 978 | 0.05 | 0.1147 |
-| PRESS % (ANY) | abs_z_error | 978 | 0.047 | 0.1391 |
-| COVER 6 % | abs_z_error | 978 | 0.045 | 0.1635 |
-| TO 1-HI % | z_error | 978 | -0.045 | 0.1559 |
-| COVER 3 % | abs_z_error | 978 | -0.044 | 0.1699 |
-| 1-HI/MOF C % | abs_z_error | 978 | -0.041 | 0.2011 |
-| 2-HI/MOF O % | abs_z_error | 978 | 0.041 | 0.2011 |
-| PRESS % (TGT) | z_error | 978 | -0.036 | 0.255 |
-| COVER 4 % | abs_z_error | 978 | -0.034 | 0.2946 |
-| BASE % | abs_z_error | 978 | 0.031 | 0.3308 |
-| COVER 1 % | z_error | 978 | -0.028 | 0.3851 |
-| COVER 2 MAN % | z_error | 978 | -0.027 | 0.3918 |
-| DIME % | abs_z_error | 978 | 0.024 | 0.4547 |
-| COVER 2 MAN % | abs_z_error | 978 | 0.022 | 0.4925 |
-| COVER 6 % | z_error | 978 | -0.02 | 0.533 |
-| 1-HI/MOF C % | z_error | 978 | -0.019 | 0.5633 |
-| COVER 4 % | z_error | 978 | 0.019 | 0.5425 |
-| 2-HI/MOF O % | z_error | 978 | 0.019 | 0.5633 |
-| PRESS % (TGT) | abs_z_error | 978 | 0.018 | 0.5751 |
-| MAN % | z_error | 978 | -0.015 | 0.6457 |
-| COVER 0 % | abs_z_error | 978 | 0.012 | 0.7018 |
-| ZONE % | abs_z_error | 978 | -0.009 | 0.7671 |
-| COVER 2 % | z_error | 978 | -0.008 | 0.7915 |
-| TO 1-HI % | abs_z_error | 978 | 0.007 | 0.8216 |
-| COVER 1 % | abs_z_error | 978 | -0.007 | 0.8173 |
-| TO 2-HI % | abs_z_error | 978 | 0.005 | 0.8766 |
-| COVER 3 % | z_error | 978 | 0.005 | 0.8786 |
-| MAN % | abs_z_error | 978 | 0.003 | 0.915 |
-| NICKEL % | z_error | 978 | -0.003 | 0.9149 |
-| DISGUISE % | abs_z_error | 978 | 0.003 | 0.9221 |
-| ZONE % | z_error | 978 | 0.002 | 0.9546 |
-| TO 2-HI % | z_error | 978 | 0.001 | 0.9657 |
+| PRESS % (TGT) | abs_z_error | 2521 | 0.046 | 0.0199 |
+| PRESS % (ANY) | abs_z_error | 2521 | 0.044 | 0.028 |
+| COVER 2 % | abs_z_error | 2521 | 0.041 | 0.0373 |
+| TO 2-HI % | z_error | 2521 | -0.033 | 0.1008 |
+| PRESS % (ANY) | z_error | 2521 | -0.033 | 0.1025 |
+| COVER 4 % | abs_z_error | 2521 | -0.029 | 0.1406 |
+| COVER 1 % | z_error | 2521 | -0.027 | 0.1692 |
+| DISGUISE % | z_error | 2521 | -0.026 | 0.1888 |
+| BASE % | z_error | 2521 | 0.026 | 0.1959 |
+| COVER 2 % | z_error | 2521 | -0.023 | 0.2587 |
+| PRESS % (TGT) | z_error | 2521 | -0.023 | 0.254 |
+| MAN % | z_error | 2521 | -0.02 | 0.3164 |
+| DISGUISE % | abs_z_error | 2521 | 0.02 | 0.3267 |
+| COVER 3 % | z_error | 2521 | 0.02 | 0.3106 |
+| 1-HI/MOF C % | abs_z_error | 2521 | -0.018 | 0.3748 |
+| NICKEL % | z_error | 2521 | -0.018 | 0.3682 |
+| COVER 2 MAN % | abs_z_error | 2521 | 0.018 | 0.363 |
+| 2-HI/MOF O % | abs_z_error | 2521 | 0.018 | 0.3762 |
+| COVER 2 MAN % | z_error | 2521 | -0.017 | 0.4054 |
+| COVER 4 % | z_error | 2521 | 0.016 | 0.4322 |
+| TO 1-HI % | abs_z_error | 2521 | 0.016 | 0.4231 |
+| COVER 0 % | abs_z_error | 2521 | 0.015 | 0.4661 |
+| COVER 3 % | abs_z_error | 2521 | -0.014 | 0.4875 |
+| COVER 6 % | z_error | 2521 | -0.013 | 0.5188 |
+| COVER 0 % | z_error | 2521 | 0.01 | 0.6256 |
+| ZONE % | abs_z_error | 2521 | -0.009 | 0.6681 |
+| BASE % | abs_z_error | 2521 | -0.009 | 0.652 |
+| COVER 1 % | abs_z_error | 2521 | -0.009 | 0.6419 |
+| ZONE % | z_error | 2521 | 0.008 | 0.7005 |
+| DIME % | abs_z_error | 2521 | 0.008 | 0.6819 |
+| DIME % | z_error | 2521 | -0.007 | 0.7192 |
+| MAN % | abs_z_error | 2521 | 0.005 | 0.7976 |
+| NICKEL % | abs_z_error | 2521 | -0.003 | 0.8938 |
+| TO 1-HI % | z_error | 2521 | -0.003 | 0.8951 |
+| TO 2-HI % | abs_z_error | 2521 | 0.003 | 0.8843 |
+| 1-HI/MOF C % | z_error | 2521 | -0.001 | 0.9551 |
+| 2-HI/MOF O % | z_error | 2521 | 0.001 | 0.9473 |
+| COVER 6 % | abs_z_error | 2521 | 0.001 | 0.9622 |
 
 ## Part B — trailing receiving profile (YPRR, aDOT, man-coverage share)
 
-n=193 player-weeks. 6 tests.
+n=211 player-weeks. 6 tests.
 
 | feature | vs | n | r | p |
 |---|---|--:|--:|--:|
-| aDOT | mean_z_error | 189 | 0.198 | 0.0062 |
-| man_tgt_share | mean_z_error | 193 | 0.179 | 0.0129 |
-| YPRR | mean_z_error | 193 | 0.118 | 0.1015 |
-| YPRR | mean_abs_z_error | 193 | 0.042 | 0.5605 |
-| aDOT | mean_abs_z_error | 189 | 0.034 | 0.647 |
-| man_tgt_share | mean_abs_z_error | 193 | -0.001 | 0.9896 |
+| man_tgt_share | mean_z_error | 211 | 0.166 | 0.0156 |
+| aDOT | mean_z_error | 208 | 0.136 | 0.0497 |
+| YPRR | mean_z_error | 211 | 0.09 | 0.1923 |
+| aDOT | mean_abs_z_error | 208 | 0.043 | 0.5368 |
+| man_tgt_share | mean_abs_z_error | 211 | -0.043 | 0.5307 |
+| YPRR | mean_abs_z_error | 211 | 0.027 | 0.6996 |
 
 ## Part C — trailing rushing-efficiency profile (success rate, stuff rate, YBC/att, YACO/att, EPA/att, MTF/att, hit rate)
 
-n=71 player-weeks. 14 tests.
+n=85 player-weeks. 14 tests.
 
 | feature | vs | n | r | p |
 |---|---|--:|--:|--:|
-| EPA/A | mean_abs_z_error | 71 | 0.273 | 0.0211 |
-| YACO/ATT | mean_abs_z_error | 71 | 0.231 | 0.0523 |
-| YACO/ATT | mean_z_error | 71 | 0.214 | 0.0732 |
-| EPA/A | mean_z_error | 71 | 0.185 | 0.1234 |
-| MTF/A | mean_z_error | 71 | 0.172 | 0.1506 |
-| MTF/A | mean_abs_z_error | 71 | 0.127 | 0.2904 |
-| SUCC % | mean_abs_z_error | 71 | -0.111 | 0.3557 |
-| SUCC % | mean_z_error | 71 | 0.111 | 0.3584 |
-| HIT % | mean_abs_z_error | 71 | -0.11 | 0.3626 |
-| STUFF % | mean_z_error | 71 | -0.087 | 0.4725 |
-| STUFF % | mean_abs_z_error | 71 | -0.072 | 0.5515 |
-| YBC/ATT | mean_abs_z_error | 71 | 0.069 | 0.5648 |
-| YBC/ATT | mean_z_error | 71 | 0.029 | 0.8087 |
-| HIT % | mean_z_error | 71 | -0.007 | 0.9552 |
+| SUCC % | mean_z_error | 85 | 0.253 | 0.0193 |
+| EPA/A | mean_z_error | 85 | 0.219 | 0.0441 |
+| STUFF % | mean_z_error | 85 | -0.177 | 0.1054 |
+| MTF/A | mean_abs_z_error | 85 | -0.148 | 0.1753 |
+| YACO/ATT | mean_z_error | 85 | 0.145 | 0.1844 |
+| STUFF % | mean_abs_z_error | 85 | 0.139 | 0.2033 |
+| YACO/ATT | mean_abs_z_error | 85 | -0.133 | 0.2258 |
+| SUCC % | mean_abs_z_error | 85 | -0.111 | 0.314 |
+| MTF/A | mean_z_error | 85 | 0.088 | 0.4249 |
+| YBC/ATT | mean_z_error | 85 | 0.065 | 0.5554 |
+| YBC/ATT | mean_abs_z_error | 85 | -0.054 | 0.6252 |
+| HIT % | mean_abs_z_error | 85 | -0.052 | 0.6358 |
+| HIT % | mean_z_error | 85 | 0.051 | 0.6453 |
+| EPA/A | mean_abs_z_error | 85 | 0.003 | 0.9777 |
 
 ## Not tested — needs a new Data Suite pull, not just new code
 
