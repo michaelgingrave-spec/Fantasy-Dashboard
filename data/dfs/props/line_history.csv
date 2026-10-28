@@ -2981,3 +2981,494 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,6,Week 6 Monday,Austin Ekeler,rush yds,19.5,22.5,—,0.13,3.0,50,0.4,50,15,OVER,draftkings -108,2026-10-20T22:27:46,3.0,loss,0.66,19.5,-108.0,draftkings,0.0,4.0
 2026,6,Week 6 Monday,Christian McCaffrey,rush yds,60.5,63.6,—,0.09,3.1,50,-0.2,50,5,OVER,fanduel -113,2026-10-20T22:27:46,64.0,win,1.14,59.5,-113.0,fanduel,2.0,4.0
 2026,6,Week 6 Monday,Brock Purdy,rush yds,21.0,23.3,—,0.1,2.3,50,-0.4,50,11,OVER,fanduel -113,2026-10-20T22:27:46,28.0,win,0.95,20.5,-116.0,draftkings,1.0,4.0
+2026,7,Week 7 Thursday,Roschon Johnson,rec yds,6.5,14.6,solid,0.44,8.1,60,9.3,51,125,OVER,draftkings -114,2026-10-28T18:25:19,0.0,loss,1.18,6.5,-114.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,Cole Kmet,rec yds,8.5,15.6,solid,0.37,7.1,59,8.9,50,83,OVER,draftkings -110,2026-10-28T18:25:19,28.0,win,0.97,8.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,Drake Maye,pass TD,1.5,2.0,solid,0.4,0.5,59,7.0,52,31,OVER,draftkings -124,2026-10-28T18:25:19,2.0,win,0.93,1.5,-124.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,DeMario Douglas,receptions,3.5,2.9,solid,-0.32,-0.6,58,2.9,55,-19,UNDER,draftkings -132,2026-10-28T18:25:19,3.0,win,1.04,3.5,-132.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,TreVeyon Henderson,receptions,0.5,1.0,solid,0.37,0.5,59,-4.2,63,98,OVER,draftkings -198,2026-10-28T18:25:19,2.0,win,0.81,0.5,-198.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,Eli Raridon,receptions,1.5,1.9,lean,0.26,0.4,56,10.8,45,27,OVER,draftkings +111,2026-10-28T18:25:19,3.0,win,0.82,1.5,111.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,Kalif Raymond,receptions,2.5,3.0,lean,0.3,0.5,57,7.8,49,21,OVER,fanduel -108,2026-10-28T18:25:19,0.0,loss,0.89,2.5,-108.0,fanduel,0.0,4.0
+2026,7,Week 7 Thursday,Eli Raridon,rec yds,15.5,21.1,lean,0.26,5.6,56,6.2,50,36,OVER,draftkings -112,2026-10-28T18:25:19,56.0,win,0.82,15.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,Kalif Raymond,rec yds,24.5,31.1,lean,0.27,6.6,56,6.0,50,27,OVER,fanduel -113,2026-10-28T18:25:19,0.0,loss,0.89,24.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Thursday,TreVeyon Henderson,rec yds,3.0,8.1,lean,0.29,5.1,57,5.2,52,169,OVER,draftkings -117,2026-10-28T18:25:19,14.0,win,0.81,2.5,-125.0,fanduel,1.0,4.0
+2026,7,Week 7 Thursday,A.J. Brown,receptions,5.0,5.4,lean,0.16,0.4,54,0.4,53,7,OVER,draftkings +107,2026-10-28T18:25:19,3.0,loss,1.15,4.5,-188.0,fanduel,1.0,4.0
+2026,7,Week 7 Thursday,Caleb Williams,pass TD,1.5,1.7,lean,0.16,0.2,54,-3.9,58,13,OVER,fanduel -152,2026-10-28T18:25:19,2.0,win,1.02,1.5,-152.0,fanduel,0.0,4.0
+2026,7,Week 7 Thursday,Cole Kmet,receptions,1.5,1.6,—,0.06,0.1,51,16.7,35,6,OVER,fanduel +178,2026-10-28T18:25:19,3.0,win,0.97,1.5,178.0,fanduel,0.0,4.0
+2026,7,Week 7 Thursday,Kyle Williams,receptions,1.5,1.6,—,0.05,0.1,51,13.0,38,5,OVER,fanduel +148,2026-10-28T18:25:19,0.0,loss,1.15,1.5,148.0,fanduel,0.0,4.0
+2026,7,Week 7 Thursday,Roschon Johnson,receptions,1.5,1.6,—,0.1,0.1,52,10.9,41,10,OVER,fanduel +132,2026-10-28T18:25:19,0.0,loss,1.18,1.5,132.0,fanduel,0.0,4.0
+2026,7,Week 7 Thursday,D'Andre Swift,receptions,2.5,2.4,—,-0.04,-0.1,51,7.0,44,-3,UNDER,draftkings +124,2026-10-28T18:25:19,4.0,loss,1.03,2.5,124.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,Rome Odunze,rec yds,43.5,47.7,—,0.14,4.2,53,3.5,50,10,OVER,draftkings -110,2026-10-28T18:25:19,69.0,win,1.12,42.5,-110.0,draftkings,2.0,4.0
+2026,7,Week 7 Thursday,Rhamondre Stevenson,receptions,2.5,2.2,—,-0.15,-0.3,53,3.5,50,-10,UNDER,draftkings -113,2026-10-28T18:25:19,5.0,loss,0.92,2.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,Kyle Williams,rec yds,20.0,22.7,—,0.12,2.7,53,3.1,50,13,OVER,draftkings -109,2026-10-28T18:25:19,0.0,loss,1.15,19.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Thursday,DeMario Douglas,rec yds,39.0,35.7,—,-0.11,-3.3,53,2.9,50,-9,UNDER,draftkings -110,2026-10-28T18:25:19,23.0,win,1.04,39.5,-110.0,draftkings,1.0,4.0
+2026,7,Week 7 Thursday,D'Andre Swift,rec yds,21.0,18.3,—,-0.12,-2.7,53,2.9,50,-13,UNDER,draftkings -111,2026-10-28T18:25:19,12.0,win,1.03,21.5,-111.0,draftkings,1.0,4.0
+2026,7,Week 7 Thursday,Drake Maye,pass yds,249.0,257.5,—,0.11,8.5,53,2.7,50,3,OVER,draftkings -112,2026-10-28T18:25:19,321.0,win,0.93,247.5,-113.0,fanduel,3.0,4.0
+2026,7,Week 7 Thursday,Colston Loveland,rec yds,44.0,40.7,—,-0.11,-3.3,53,2.5,50,-8,UNDER,draftkings -113,2026-10-28T18:25:19,69.0,loss,1.12,44.5,-113.0,draftkings,1.0,4.0
+2026,7,Week 7 Thursday,Efton Chism III,rec yds,17.5,19.8,—,0.1,2.3,53,2.2,50,13,OVER,fanduel -113,2026-10-28T18:25:19,16.0,loss,0.95,17.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Thursday,Colston Loveland,receptions,4.0,3.9,—,-0.06,-0.1,51,2.2,49,-3,UNDER,fanduel +134,2026-10-28T18:25:19,7.0,loss,1.12,4.5,-165.0,draftkings,1.0,4.0
+2026,7,Week 7 Thursday,Hunter Henry,rec yds,34.5,36.6,—,0.08,2.1,52,1.7,50,6,OVER,draftkings -113,2026-10-28T18:25:19,71.0,win,1.01,33.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Thursday,A.J. Brown,rec yds,70.0,67.4,—,-0.07,-2.6,52,1.5,50,-4,UNDER,draftkings -113,2026-10-28T18:25:19,48.0,win,1.15,70.5,-113.0,draftkings,1.0,4.0
+2026,7,Week 7 Thursday,Caleb Williams,pass yds,247.5,243.0,—,-0.06,-4.5,51,1.4,50,-2,UNDER,draftkings -112,2026-10-28T18:25:19,308.0,loss,1.02,251.5,-112.0,draftkings,8.0,4.0
+2026,7,Week 7 Thursday,TreVeyon Henderson,rush yds,24.5,32.2,—,0.32,7.7,51,1.1,50,32,OVER,draftkings -110,2026-10-28T18:25:19,9.0,loss,0.81,24.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,Luther Burden III,rec yds,57.0,58.0,—,0.03,1.0,51,0.6,50,2,OVER,draftkings -112,2026-10-28T18:25:19,130.0,win,1.09,56.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Thursday,Roschon Johnson,rush yds,26.0,25.6,—,-0.02,-0.4,50,0.4,50,-2,UNDER,draftkings -108,2026-10-28T18:25:19,13.0,win,1.18,26.5,-108.0,draftkings,1.0,4.0
+2026,7,Week 7 Thursday,Corey Kiner,rush yds,14.5,18.6,—,0.19,4.1,50,0.4,50,29,OVER,draftkings -108,2026-10-28T18:25:19,13.0,loss,0.82,14.5,-108.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,Rhamondre Stevenson,rec yds,17.5,17.9,—,0.02,0.4,50,0.3,50,2,OVER,draftkings -113,2026-10-28T18:25:19,93.0,win,0.92,17.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,D'Andre Swift,rush yds,62.0,62.5,—,0.01,0.5,50,0.2,50,1,OVER,draftkings -110,2026-10-28T18:25:19,78.0,win,1.03,60.5,-113.0,fanduel,3.0,4.0
+2026,7,Week 7 Thursday,Rhamondre Stevenson,rush yds,44.0,45.7,—,0.06,1.7,50,0.2,50,4,OVER,draftkings -110,2026-10-28T18:25:19,22.0,loss,0.92,42.5,-113.0,fanduel,3.0,4.0
+2026,7,Week 7 Thursday,Drake Maye,rush yds,28.0,30.6,—,0.1,2.6,50,-0.1,50,9,OVER,draftkings -113,2026-10-28T18:25:19,26.0,loss,0.93,27.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Thursday,Efton Chism III,receptions,1.5,1.5,—,0.01,0.0,50,-0.3,50,1,OVER,fanduel -114,2026-10-28T18:25:19,1.0,loss,0.95,1.5,-114.0,fanduel,0.0,4.0
+2026,7,Week 7 Thursday,Caleb Williams,rush yds,17.5,23.8,—,0.28,6.3,50,-0.4,50,36,OVER,fanduel -113,2026-10-28T18:25:19,18.0,win,1.02,17.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Thursday,Luther Burden III,receptions,4.5,4.7,—,0.09,0.2,52,-4.0,56,4,OVER,draftkings -148,2026-10-28T18:25:19,4.0,loss,1.09,4.5,-148.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,Hunter Henry,receptions,3.5,3.4,—,-0.06,-0.1,51,-5.4,57,-3,UNDER,draftkings -152,2026-10-28T18:25:19,7.0,loss,1.01,3.5,-152.0,draftkings,0.0,4.0
+2026,7,Week 7 Thursday,Rome Odunze,receptions,3.5,3.4,—,-0.07,-0.1,52,-5.8,58,-4,UNDER,draftkings -151,2026-10-28T18:25:19,4.0,loss,1.12,3.5,-151.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kendre Miller,receptions,0.5,1.3,strong,0.63,0.8,64,3.6,61,168,OVER,draftkings -180,2026-10-28T18:25:19,3.0,win,1.16,0.5,-180.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Bryce Lance,rec yds,13.5,23.5,solid,0.48,10.0,61,11.5,50,74,OVER,draftkings -108,2026-10-28T18:25:19,12.0,loss,0.88,13.5,-108.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Rico Dowdle,receptions,1.5,2.0,solid,0.32,0.5,57,8.7,49,33,OVER,draftkings -101,2026-10-28T18:25:19,6.0,win,0.89,1.5,-101.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Rico Dowdle,rec yds,7.5,14.2,solid,0.36,6.7,58,8.3,50,90,OVER,draftkings -113,2026-10-28T18:25:19,45.0,win,0.89,7.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Aaron Rodgers,pass TD,1.5,1.9,solid,0.32,0.4,57,7.2,50,25,OVER,draftkings -115,2026-10-28T18:25:19,1.0,loss,0.94,1.5,-115.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Bryce Lance,receptions,1.5,1.8,lean,0.19,0.3,54,10.3,44,19,OVER,draftkings +114,2026-10-28T18:25:19,2.0,win,0.88,1.5,114.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kendre Miller,rec yds,4.0,9.0,lean,0.28,5.0,57,6.9,50,125,OVER,draftkings -110,2026-10-28T18:25:19,22.0,win,1.16,3.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Germie Bernard,receptions,5.0,4.6,lean,-0.18,-0.4,54,6.9,47,-8,UNDER,fanduel +128,2026-10-28T18:25:19,3.0,win,1.12,5.5,-133.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Aaron Rodgers,pass yds,229.5,250.3,lean,0.27,20.8,56,6.4,50,9,OVER,draftkings -112,2026-10-28T18:25:19,212.0,loss,0.94,229.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jaylen Warren,rush yds,66.5,84.8,lean,0.52,18.3,56,5.9,50,28,OVER,draftkings -110,2026-10-28T18:25:19,101.0,win,0.95,65.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Chris Olave,receptions,6.0,5.5,lean,-0.18,-0.5,54,5.3,49,-8,UNDER,fanduel +110,2026-10-28T18:25:19,6.0,push,1.01,6.5,-131.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Alvin Kamara,rush yds,17.5,28.3,lean,0.48,10.8,55,4.4,50,62,OVER,fanduel -113,2026-10-28T18:25:19,5.0,loss,0.86,16.5,-116.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Devaughn Vele,rec yds,42.0,47.2,lean,0.17,5.2,54,3.9,50,12,OVER,fanduel -113,2026-10-28T18:25:19,54.0,win,0.98,41.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Alvin Kamara,rec yds,12.5,15.6,lean,0.15,3.1,54,3.9,50,25,OVER,draftkings -109,2026-10-28T18:25:19,57.0,win,0.86,12.5,-109.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Germie Bernard,rec yds,55.0,49.6,lean,-0.16,-5.4,54,3.6,50,-10,UNDER,draftkings -113,2026-10-28T18:25:19,27.0,win,1.12,56.5,-113.0,draftkings,3.0,4.0
+2026,7,Week 7 Sunday,Jaylen Warren,receptions,3.5,3.0,lean,-0.22,-0.5,55,-3.5,59,-13,UNDER,draftkings -157,2026-10-28T18:25:19,3.0,win,0.95,3.5,-157.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Darnell Washington,receptions,2.5,2.7,—,0.13,0.2,53,6.1,47,9,OVER,draftkings +100,2026-10-28T18:25:19,1.0,loss,1.12,2.5,100.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Pat Freiermuth,rec yds,30.5,34.1,—,0.14,3.6,53,3.7,50,12,OVER,draftkings -108,2026-10-28T18:25:19,20.0,loss,1.01,30.5,-108.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Juwan Johnson,receptions,3.5,3.2,—,-0.12,-0.2,53,3.7,49,-7,UNDER,draftkings -106,2026-10-28T18:25:19,1.0,win,1.05,3.5,-106.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Juwan Johnson,rec yds,32.0,36.0,—,0.15,4.0,54,3.5,50,13,OVER,draftkings -113,2026-10-28T18:25:19,7.0,loss,1.05,31.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Darnell Washington,rec yds,24.5,27.8,—,0.14,3.3,53,3.1,50,13,OVER,draftkings -113,2026-10-28T18:25:19,4.0,loss,1.12,24.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Noah Fant,receptions,1.5,1.3,—,-0.12,-0.2,53,3.0,50,-13,UNDER,draftkings -112,2026-10-28T18:25:19,2.0,loss,1.12,1.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,CJ Donaldson,rush yds,10.5,18.2,—,0.38,7.7,52,2.9,49,74,OVER,draftkings -106,2026-10-28T18:25:19,0.0,loss,1.14,10.5,-106.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Noah Fant,rec yds,11.0,13.4,—,0.12,2.4,53,2.6,50,22,OVER,fanduel -113,2026-10-28T18:25:19,11.0,push,1.12,10.5,-115.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Chris Olave,rec yds,75.5,70.7,—,-0.12,-4.8,53,2.5,50,-6,UNDER,fanduel -113,2026-10-28T18:25:19,56.0,win,1.01,76.5,-114.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Jaylen Warren,rec yds,26.5,28.2,—,0.07,1.8,52,2.0,50,7,OVER,draftkings -109,2026-10-28T18:25:19,36.0,win,0.95,25.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,DK Metcalf,rec yds,57.5,55.3,—,-0.06,-2.2,52,1.6,50,-4,UNDER,draftkings -111,2026-10-28T18:25:19,56.0,win,1.11,58.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Tyler Shough,pass yds,220.5,223.4,—,0.04,2.9,51,0.9,50,1,OVER,draftkings -112,2026-10-28T18:25:19,278.0,win,0.84,220.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kendre Miller,rush yds,37.5,36.7,—,-0.03,-0.8,50,0.0,50,-2,UNDER,draftkings -112,2026-10-28T18:25:19,6.0,win,1.16,37.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Devaughn Vele,receptions,4.0,4.0,—,-0.01,-0.0,50,-0.1,50,-1,UNDER,draftkings +129,2026-10-28T18:25:19,5.0,loss,0.98,4.5,-174.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Rico Dowdle,rush yds,29.0,28.4,—,-0.02,-0.6,50,-0.2,50,-2,UNDER,fanduel -113,2026-10-28T18:25:19,41.0,loss,0.89,29.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Tyler Shough,rush yds,14.0,17.7,—,0.17,3.7,50,-0.2,50,27,OVER,fanduel -113,2026-10-28T18:25:19,7.0,loss,0.84,13.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Aaron Rodgers,rush yds,1.0,4.3,—,0.18,3.3,50,-0.8,51,332,OVER,draftkings -111,2026-10-28T18:25:19,6.0,win,0.94,0.5,-122.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,DK Metcalf,receptions,4.5,4.6,—,0.06,0.1,51,-1.9,53,3,OVER,draftkings -124,2026-10-28T18:25:19,2.0,loss,1.11,4.5,-124.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Alvin Kamara,receptions,2.5,2.5,—,0.01,0.0,50,-2.4,52,0,OVER,draftkings -124,2026-10-28T18:25:19,7.0,win,0.86,2.5,-124.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Pat Freiermuth,receptions,3.5,3.4,—,-0.06,-0.1,51,-6.0,57,-3,UNDER,fanduel -154,2026-10-28T18:25:19,2.0,win,1.01,3.5,-154.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Tyler Shough,pass TD,1.5,1.4,—,-0.06,-0.1,51,-12.0,63,-5,UNDER,draftkings -202,2026-10-28T18:25:19,1.0,win,0.84,1.5,-202.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Khalil Herbert,rush yds,7.5,24.9,strong,0.88,17.4,64,13.4,50,232,OVER,draftkings -113,2026-10-28T18:25:19,9.0,win,0.86,7.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Brock Purdy,pass TD,1.5,2.3,strong,0.7,0.8,65,10.6,55,54,OVER,draftkings -139,2026-10-28T18:25:19,1.0,loss,0.92,1.5,-139.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Austin Hooper,receptions,0.5,1.2,strong,0.56,0.7,63,8.6,54,148,OVER,fanduel -130,2026-10-28T18:25:19,2.0,win,0.5,0.5,-130.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Austin Hooper,rec yds,3.5,11.7,solid,0.47,8.2,61,11.1,50,235,OVER,draftkings -110,2026-10-28T18:25:19,21.0,win,0.5,3.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,George Kittle,receptions,5.5,6.7,solid,0.47,1.2,61,11.0,50,21,OVER,fanduel -112,2026-10-28T18:25:19,8.0,win,0.98,5.5,-112.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Bijan Robinson,rec yds,30.5,19.8,solid,-0.41,-10.8,59,9.8,50,-35,UNDER,draftkings -109,2026-10-28T18:25:19,59.0,loss,1.07,31.5,-109.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Zachariah Branch,rec yds,10.5,17.9,solid,0.38,7.4,59,8.8,50,71,OVER,draftkings -112,2026-10-28T18:25:19,9.0,loss,0.82,10.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Bijan Robinson,rush yds,89.0,115.3,solid,0.64,26.3,58,8.2,50,30,OVER,draftkings -113,2026-10-28T18:25:19,63.0,loss,1.07,88.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Jahan Dotson,rec yds,28.0,35.9,solid,0.31,7.9,57,7.6,50,28,OVER,draftkings -109,2026-10-28T18:25:19,6.0,loss,1.01,27.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Jordan Watkins,receptions,1.5,2.1,solid,0.39,0.6,59,4.3,55,40,OVER,draftkings -132,2026-10-28T18:25:19,3.0,win,1.09,1.5,-132.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Brandin Cooks,receptions,2.5,1.9,solid,-0.36,-0.6,59,-2.8,61,-26,UNDER,draftkings -183,2026-10-28T18:25:19,1.0,win,1.06,2.5,-183.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Michael Penix Jr.,pass yds,228.5,249.2,lean,0.27,20.7,56,6.2,50,9,OVER,draftkings -113,2026-10-28T18:25:19,213.0,loss,1.03,227.5,-113.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Brock Purdy,pass yds,241.0,257.0,lean,0.21,16.0,55,4.9,50,7,OVER,draftkings -112,2026-10-28T18:25:19,288.0,win,0.92,240.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Christian McCaffrey,rec yds,47.0,40.8,lean,-0.2,-6.2,55,4.6,50,-13,UNDER,draftkings -113,2026-10-28T18:25:19,61.0,loss,1.06,47.5,-113.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,George Kittle,rec yds,70.0,77.3,lean,0.18,7.3,54,4.5,50,10,OVER,draftkings -111,2026-10-28T18:25:19,88.0,win,0.98,69.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Kyle Pitts,rec yds,34.5,38.7,lean,0.15,4.2,54,3.9,50,12,OVER,draftkings -109,2026-10-28T18:25:19,22.0,loss,0.99,34.5,-109.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kyle Pitts,receptions,3.5,3.5,—,0.01,0.0,50,3.6,47,1,OVER,fanduel +106,2026-10-28T18:25:19,5.0,win,0.99,3.5,106.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Zachariah Branch,receptions,1.5,1.7,—,0.1,0.2,52,3.4,49,11,OVER,draftkings -104,2026-10-28T18:25:19,1.0,loss,0.82,1.5,-104.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jordan Watkins,rec yds,24.5,28.1,—,0.15,3.6,54,3.3,50,15,OVER,fanduel -113,2026-10-28T18:25:19,56.0,win,1.09,24.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Bijan Robinson,receptions,4.0,3.8,—,-0.1,-0.2,52,2.9,50,-6,UNDER,fanduel +128,2026-10-28T18:25:19,5.0,loss,1.07,4.5,-162.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Christian Kirk,rec yds,23.5,25.0,—,0.06,1.5,51,1.9,50,6,OVER,draftkings -109,2026-10-28T18:25:19,0.0,loss,1.14,22.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Michael Penix Jr.,rush yds,2.5,3.8,—,0.07,1.3,50,1.9,48,52,OVER,fanduel -102,2026-10-28T18:25:19,-1.0,loss,1.03,2.5,-102.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Drake London,rec yds,83.5,87.1,—,0.08,3.6,52,1.8,50,4,OVER,draftkings -113,2026-10-28T18:25:19,66.0,loss,1.14,83.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Christian McCaffrey,receptions,5.5,5.4,—,-0.04,-0.1,51,1.5,49,-2,UNDER,draftkings -109,2026-10-28T18:25:19,6.0,loss,1.06,5.5,-109.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Brandin Cooks,rec yds,24.0,25.0,—,0.04,1.0,51,1.1,50,4,OVER,draftkings -111,2026-10-28T18:25:19,13.0,loss,1.06,23.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Brock Purdy,rush yds,21.5,24.9,—,0.14,3.4,50,0.5,49,16,OVER,draftkings -107,2026-10-28T18:25:19,5.0,loss,0.92,20.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Christian McCaffrey,rush yds,55.5,59.8,—,0.13,4.3,50,-0.2,50,8,OVER,fanduel -113,2026-10-28T18:25:19,39.0,loss,1.06,53.5,-113.0,fanduel,4.0,4.0
+2026,7,Week 7 Sunday,Kaelon Black,rush yds,28.5,26.9,—,-0.06,-1.6,50,-0.3,50,-6,UNDER,fanduel -113,2026-10-28T18:25:19,63.0,loss,1.15,28.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Drake London,receptions,5.5,5.8,—,0.13,0.3,53,-2.9,56,6,OVER,draftkings -148,2026-10-28T18:25:19,7.0,win,1.14,5.5,-148.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Christian Kirk,receptions,2.5,2.3,—,-0.1,-0.2,52,-5.8,58,-7,UNDER,draftkings -155,2026-10-28T18:25:19,0.0,win,1.14,2.5,-155.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Michael Penix Jr.,pass TD,1.5,1.4,—,-0.04,-0.1,51,-6.0,57,-3,UNDER,draftkings -153,2026-10-28T18:25:19,3.0,loss,1.03,1.5,-153.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jahan Dotson,receptions,2.5,2.2,—,-0.14,-0.2,53,-6.8,60,-10,UNDER,fanduel -166,2026-10-28T18:25:19,1.0,win,1.01,2.5,-166.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Joe Burrow,pass TD,1.5,2.5,high,0.84,1.0,68,7.0,61,65,OVER,fanduel -176,2026-10-28T18:25:19,4.0,win,0.88,1.5,-176.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Josh Cuevas,rec yds,5.0,15.8,strong,0.6,10.8,64,13.9,50,215,OVER,fanduel -108,2026-10-28T18:25:19,35.0,win,0.63,4.5,-114.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Dohnte Meyers,rec yds,14.5,27.8,strong,0.63,13.3,64,13.8,50,92,OVER,fanduel -113,2026-10-28T18:25:19,0.0,loss,0.9,13.5,-115.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Dohnte Meyers,receptions,1.5,2.3,strong,0.53,0.8,62,9.8,52,55,OVER,fanduel -122,2026-10-28T18:25:19,0.0,loss,0.9,1.5,-122.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Josh Cuevas,receptions,0.5,1.5,strong,0.76,1.0,67,7.0,60,202,OVER,fanduel -172,2026-10-28T18:25:19,2.0,win,0.63,0.5,-172.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Tyler Huntley,pass TD,1.5,0.9,strong,-0.52,-0.6,62,-2.9,65,-40,UNDER,draftkings -219,2026-10-28T18:25:19,1.0,win,1.16,1.5,-219.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Zay Flowers,rec yds,64.5,81.3,solid,0.44,16.8,60,10.3,50,26,OVER,draftkings -112,2026-10-28T18:25:19,137.0,win,0.86,64.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Ja'Marr Chase,receptions,7.0,6.3,lean,-0.24,-0.7,56,8.7,47,-10,UNDER,fanduel +128,2026-10-28T18:25:19,5.0,win,1.15,7.5,-130.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Rashod Bateman,rec yds,19.0,25.2,lean,0.27,6.2,56,6.8,50,33,OVER,draftkings -109,2026-10-28T18:25:19,33.0,win,1.13,18.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Ja'Marr Chase,rec yds,81.5,69.7,lean,-0.27,-11.8,56,6.3,50,-15,UNDER,draftkings -113,2026-10-28T18:25:19,62.0,win,1.15,82.5,-113.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Tyler Huntley,pass yds,198.5,177.6,lean,-0.27,-20.9,56,6.2,50,-11,UNDER,draftkings -113,2026-10-28T18:25:19,298.0,loss,1.16,198.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Samaje Perine,rec yds,7.0,12.0,lean,0.27,5.0,56,5.7,51,71,OVER,fanduel -113,2026-10-28T18:25:19,0.0,loss,0.91,6.5,-119.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Mike Gesicki,rec yds,22.0,27.0,lean,0.21,5.0,55,4.8,50,23,OVER,fanduel -113,2026-10-28T18:25:19,6.0,loss,0.96,21.5,-114.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Mark Andrews,rec yds,29.5,33.8,lean,0.17,4.3,54,3.7,50,15,OVER,draftkings -113,2026-10-28T18:25:19,23.0,loss,1.0,29.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tee Higgins,receptions,5.0,4.4,lean,-0.26,-0.6,56,3.4,53,-12,UNDER,draftkings +112,2026-10-28T18:25:19,6.0,loss,1.07,5.5,-188.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Rashod Bateman,receptions,1.5,1.8,lean,0.19,0.3,55,-3.5,58,20,OVER,fanduel -158,2026-10-28T18:25:19,2.0,win,1.13,1.5,-158.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Derrick Henry,receptions,1.5,1.2,lean,-0.16,-0.2,54,-7.7,61,-17,UNDER,draftkings -180,2026-10-28T18:25:19,1.0,win,0.88,1.5,-180.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tee Higgins,rec yds,65.5,60.0,—,-0.15,-5.5,53,3.7,50,-8,UNDER,draftkings -110,2026-10-28T18:25:19,148.0,loss,1.07,65.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Chase Brown,rec yds,20.5,22.9,—,0.11,2.4,53,3.0,49,12,OVER,draftkings -107,2026-10-28T18:25:19,19.0,loss,0.99,19.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Derrick Henry,rec yds,6.5,8.9,—,0.13,2.4,53,2.3,51,37,OVER,fanduel -113,2026-10-28T18:25:19,4.0,loss,0.88,6.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Chase Brown,receptions,3.5,3.4,—,-0.07,-0.1,52,2.3,49,-4,UNDER,draftkings -108,2026-10-28T18:25:19,4.0,loss,0.99,3.5,-108.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Joe Burrow,pass yds,260.5,266.5,—,0.08,6.0,52,2.1,50,2,OVER,draftkings -110,2026-10-28T18:25:19,292.0,win,0.88,260.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Chase Brown,rush yds,41.0,51.5,—,0.37,10.5,52,2.1,50,26,OVER,draftkings -112,2026-10-28T18:25:19,39.0,loss,0.99,40.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Samaje Perine,receptions,1.5,1.7,—,0.12,0.2,53,1.8,51,12,OVER,draftkings -115,2026-10-28T18:25:19,0.0,loss,0.91,1.5,-115.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Justice Hill,rec yds,10.0,11.4,—,0.07,1.4,52,1.3,50,14,OVER,fanduel -113,2026-10-28T18:25:19,26.0,win,1.0,9.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Justice Hill,rush yds,10.0,11.9,—,0.09,1.9,50,0.5,50,19,OVER,draftkings -108,2026-10-28T18:25:19,7.0,loss,1.0,9.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Derrick Henry,rush yds,83.5,83.0,—,-0.01,-0.5,50,0.0,50,-1,UNDER,draftkings -112,2026-10-28T18:25:19,45.0,win,0.88,83.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tyler Huntley,rush yds,25.0,28.4,—,0.14,3.4,50,-0.1,50,13,OVER,draftkings -113,2026-10-28T18:25:19,12.0,loss,1.16,24.5,-113.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Samaje Perine,rush yds,27.0,23.9,—,-0.12,-3.1,50,-0.4,50,-11,UNDER,fanduel -113,2026-10-28T18:25:19,16.0,win,0.91,27.5,-116.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Mark Andrews,receptions,3.5,3.6,—,0.05,0.1,51,-0.5,52,3,OVER,draftkings -122,2026-10-28T18:25:19,3.0,loss,1.0,3.5,-122.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Joe Burrow,rush yds,6.5,8.6,—,0.11,2.1,50,-0.8,51,32,OVER,fanduel -113,2026-10-28T18:25:19,12.0,win,0.88,6.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Zay Flowers,receptions,5.5,5.8,—,0.11,0.3,53,-1.6,54,5,OVER,draftkings -137,2026-10-28T18:25:19,8.0,win,0.86,5.5,-137.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Mike Gesicki,receptions,2.5,2.4,—,-0.04,-0.1,51,-3.6,55,-3,UNDER,fanduel -138,2026-10-28T18:25:19,1.0,win,0.96,2.5,-138.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Justice Hill,receptions,1.5,1.6,—,0.08,0.1,52,-6.5,58,8,OVER,fanduel -158,2026-10-28T18:25:19,3.0,win,1.0,1.5,-158.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,John Metchie III,rec yds,13.5,24.4,strong,0.53,10.9,62,12.4,50,81,OVER,draftkings -109,2026-10-28T18:25:19,20.0,win,0.81,13.5,-109.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,John Metchie III,receptions,1.5,2.1,solid,0.37,0.6,59,13.9,45,39,OVER,draftkings +114,2026-10-28T18:25:19,2.0,win,0.81,1.5,114.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tommy Tremble,rec yds,16.0,26.1,solid,0.47,10.1,61,11.2,50,63,OVER,draftkings -109,2026-10-28T18:25:19,8.0,loss,0.87,15.5,-109.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Kenny Gainwell,rec yds,12.0,20.7,solid,0.43,8.7,60,10.6,49,73,OVER,draftkings -106,2026-10-28T18:25:19,0.0,loss,0.85,11.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Tommy Tremble,receptions,2.0,2.8,solid,0.47,0.8,61,10.5,50,40,OVER,draftkings +150,2026-10-28T18:25:19,1.0,loss,0.87,1.5,-205.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Darren Waller,rec yds,22.0,31.5,solid,0.4,9.5,59,9.8,50,43,OVER,draftkings -108,2026-10-28T18:25:19,50.0,win,0.85,21.5,-108.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Chuba Hubbard,receptions,2.5,1.9,solid,-0.31,-0.6,57,4.8,52,-22,UNDER,draftkings -123,2026-10-28T18:25:19,4.0,loss,1.06,2.5,-123.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Bryce Young,pass TD,1.5,1.9,solid,0.34,0.4,58,2.5,56,27,OVER,draftkings -142,2026-10-28T18:25:19,1.0,loss,0.94,1.5,-142.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Cade Otton,receptions,3.5,4.2,solid,0.33,0.7,58,0.4,57,19,OVER,draftkings -155,2026-10-28T18:25:19,0.0,loss,0.97,3.5,-155.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Baker Mayfield,pass TD,1.5,1.0,solid,-0.4,-0.5,59,-1.6,61,-31,UNDER,draftkings -172,2026-10-28T18:25:19,1.0,win,1.06,1.5,-172.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kenny Gainwell,receptions,2.5,2.9,lean,0.24,0.4,56,11.9,44,17,OVER,draftkings +117,2026-10-28T18:25:19,0.0,loss,0.85,2.5,117.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tez Johnson,rec yds,28.5,33.0,lean,0.17,4.5,54,4.2,50,16,OVER,draftkings -112,2026-10-28T18:25:19,33.0,win,1.24,28.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tetairoa McMillan,receptions,5.5,4.8,lean,-0.29,-0.7,57,2.3,55,-13,UNDER,draftkings -133,2026-10-28T18:25:19,4.0,win,1.14,5.5,-133.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jalen Coker,receptions,5.5,5.1,lean,-0.17,-0.4,54,-0.1,54,-8,UNDER,draftkings -132,2026-10-28T18:25:19,1.0,win,1.15,5.5,-132.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Ted Hurst III,receptions,2.5,3.0,lean,0.26,0.5,56,-2.5,59,19,OVER,draftkings -162,2026-10-28T18:25:19,0.0,loss,1.13,2.5,-162.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tez Johnson,receptions,2.5,2.2,lean,-0.16,-0.3,54,-4.4,58,-12,UNDER,draftkings -153,2026-10-28T18:25:19,2.0,win,1.24,2.5,-153.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Darren Waller,receptions,2.5,2.7,—,0.12,0.2,53,10.7,42,8,OVER,draftkings +126,2026-10-28T18:25:19,1.0,loss,0.85,2.5,126.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Ted Hurst III,rec yds,37.5,41.4,—,0.14,3.9,53,3.3,50,11,OVER,draftkings -112,2026-10-28T18:25:19,0.0,loss,1.13,36.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Jalen Coker,rec yds,66.5,61.5,—,-0.13,-5.0,53,3.2,50,-8,UNDER,draftkings -111,2026-10-28T18:25:19,9.0,win,1.15,66.5,-111.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Cade Otton,rec yds,37.5,41.2,—,0.13,3.7,53,2.8,50,10,OVER,fanduel -113,2026-10-28T18:25:19,0.0,loss,0.97,37.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Chuba Hubbard,rec yds,16.0,14.1,—,-0.09,-1.9,52,2.5,50,-12,UNDER,draftkings -108,2026-10-28T18:25:19,27.0,loss,1.06,16.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Bryce Young,pass yds,255.5,263.0,—,0.1,7.5,52,2.2,50,3,OVER,draftkings -113,2026-10-28T18:25:19,163.0,loss,0.94,255.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Bucky Irving,rec yds,17.0,14.8,—,-0.1,-2.2,52,2.1,50,-13,UNDER,fanduel -113,2026-10-28T18:25:19,4.0,win,1.13,17.5,-115.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Chris Godwin,rec yds,44.5,47.2,—,0.09,2.7,52,1.7,50,6,OVER,fanduel -113,2026-10-28T18:25:19,27.0,loss,1.15,44.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Baker Mayfield,rush yds,16.5,23.6,—,0.32,7.1,51,0.9,50,43,OVER,draftkings -113,2026-10-28T18:25:19,1.0,loss,1.06,16.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kenny Gainwell,rush yds,10.5,17.2,—,0.32,6.7,51,0.9,50,64,OVER,fanduel -113,2026-10-28T18:25:19,88.0,win,0.85,10.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Tetairoa McMillan,rec yds,70.0,68.9,—,-0.03,-1.1,51,0.7,50,-2,UNDER,draftkings -112,2026-10-28T18:25:19,40.0,win,1.14,70.5,-112.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Baker Mayfield,pass yds,215.0,217.3,—,0.03,2.3,51,0.6,50,1,OVER,draftkings -113,2026-10-28T18:25:19,64.0,loss,1.06,214.5,-113.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Bryce Young,rush yds,10.5,9.5,—,-0.05,-1.0,50,0.6,49,-9,UNDER,draftkings -106,2026-10-28T18:25:19,9.0,win,0.94,10.5,-106.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Chris Godwin,receptions,4.5,4.4,—,-0.04,-0.1,51,0.3,51,-2,UNDER,draftkings -110,2026-10-28T18:25:19,4.0,win,1.15,4.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Sean Tucker,rush yds,7.5,9.1,—,0.08,1.6,50,0.2,50,21,OVER,draftkings -110,2026-10-28T18:25:19,52.0,win,0.61,7.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Chuba Hubbard,rush yds,65.0,60.9,—,-0.12,-4.1,50,-0.1,50,-6,UNDER,draftkings -113,2026-10-28T18:25:19,33.0,win,1.06,65.5,-113.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Bucky Irving,rush yds,66.5,65.8,—,-0.02,-0.7,50,-0.2,50,-1,UNDER,fanduel -113,2026-10-28T18:25:19,106.0,loss,1.13,66.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Bucky Irving,receptions,2.5,2.7,—,0.12,0.2,53,-4.2,57,9,OVER,draftkings -153,2026-10-28T18:25:19,1.0,loss,1.13,2.5,-153.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Wan'Dale Robinson,rec yds,34.5,48.4,strong,0.5,13.9,62,11.3,50,40,OVER,fanduel -113,2026-10-28T18:25:19,7.0,loss,0.88,34.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Deshaun Watson,pass TD,1.5,0.9,strong,-0.52,-0.6,62,-1.9,64,-40,UNDER,draftkings -200,2026-10-28T18:25:19,0.0,win,1.16,1.5,-200.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Quinshon Judkins,rec yds,10.0,18.0,solid,0.41,8.0,59,9.7,50,80,OVER,draftkings -110,2026-10-28T18:25:19,8.0,loss,1.03,9.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Denzel Boston,receptions,3.5,2.7,solid,-0.38,-0.8,59,3.3,56,-22,UNDER,draftkings -132,2026-10-28T18:25:19,3.0,win,1.13,3.5,-132.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Cam Ward,pass TD,0.5,0.8,solid,0.32,0.3,57,-6.2,64,66,OVER,draftkings -200,2026-10-28T18:25:19,0.0,loss,1.01,0.5,-200.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Wan'Dale Robinson,receptions,4.5,4.9,lean,0.16,0.4,54,12.5,41,8,OVER,draftkings +129,2026-10-28T18:25:19,4.0,loss,0.88,4.5,129.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jerry Jeudy,rec yds,22.0,28.9,lean,0.29,6.9,57,7.2,50,32,OVER,draftkings -110,2026-10-28T18:25:19,21.0,loss,0.81,21.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Gunnar Helm,rec yds,12.5,17.8,lean,0.26,5.3,56,6.2,50,42,OVER,draftkings -112,2026-10-28T18:25:19,24.0,win,0.84,12.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Cam Ward,pass yds,181.0,200.0,lean,0.24,19.0,56,5.7,50,10,OVER,draftkings -112,2026-10-28T18:25:19,181.0,push,1.01,180.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Elic Ayomanor,rec yds,17.5,22.9,lean,0.25,5.4,56,5.5,50,31,OVER,fanduel -113,2026-10-28T18:25:19,44.0,win,0.76,17.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Denzel Boston,rec yds,50.0,43.5,lean,-0.2,-6.5,55,4.5,50,-13,UNDER,fanduel -113,2026-10-28T18:25:19,27.0,win,1.13,50.5,-114.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Carnell Tate,rec yds,52.0,57.7,lean,0.17,5.7,54,4.2,50,11,OVER,draftkings -110,2026-10-28T18:25:19,69.0,win,1.04,51.5,-110.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,KC Concepcion,receptions,4.5,4.0,lean,-0.24,-0.5,56,3.3,52,-12,UNDER,fanduel -122,2026-10-28T18:25:19,8.0,loss,1.15,4.5,-122.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Tony Pollard,rec yds,6.5,9.4,lean,0.16,2.9,54,3.1,51,45,OVER,fanduel -113,2026-10-28T18:25:19,26.0,win,1.16,6.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Harold Fannin Jr.,receptions,3.5,3.0,lean,-0.27,-0.5,56,1.9,54,-15,UNDER,draftkings -136,2026-10-28T18:25:19,6.0,loss,1.05,3.5,-136.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tony Pollard,receptions,1.5,1.8,lean,0.21,0.3,55,1.0,54,21,OVER,draftkings -132,2026-10-28T18:25:19,3.0,win,1.16,1.5,-132.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Dylan Sampson,receptions,1.5,1.8,lean,0.22,0.3,55,-1.8,57,23,OVER,fanduel -148,2026-10-28T18:25:19,3.0,win,1.09,1.5,-148.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Gunnar Helm,receptions,1.5,1.9,lean,0.26,0.4,56,-4.4,61,27,OVER,draftkings -175,2026-10-28T18:25:19,3.0,win,0.84,1.5,-175.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Quinshon Judkins,receptions,2.5,2.6,—,0.04,0.1,51,12.3,39,3,OVER,fanduel +146,2026-10-28T18:25:19,1.0,loss,1.03,2.5,146.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Carnell Tate,receptions,4.5,4.7,—,0.1,0.2,52,4.7,48,5,OVER,fanduel -102,2026-10-28T18:25:19,5.0,win,1.04,4.5,-102.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Dylan Sampson,rec yds,11.0,14.0,—,0.15,3.0,54,4.2,49,27,OVER,draftkings -106,2026-10-28T18:25:19,32.0,win,1.09,10.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Jerry Jeudy,receptions,2.0,2.2,—,0.15,0.2,54,3.5,50,12,OVER,draftkings +144,2026-10-28T18:25:19,4.0,win,0.81,1.5,-192.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Harold Fannin Jr.,rec yds,29.0,31.4,—,0.09,2.4,52,2.2,50,8,OVER,draftkings -112,2026-10-28T18:25:19,91.0,win,1.05,28.5,-112.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Elic Ayomanor,receptions,1.5,1.6,—,0.05,0.1,51,1.6,50,5,OVER,fanduel -108,2026-10-28T18:25:19,3.0,win,0.76,1.5,-108.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,KC Concepcion,rec yds,39.0,41.4,—,0.08,2.4,52,1.5,50,6,OVER,fanduel -113,2026-10-28T18:25:19,129.0,win,1.15,38.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Deshaun Watson,pass yds,210.5,206.0,—,-0.06,-4.5,51,1.3,50,-2,UNDER,draftkings -113,2026-10-28T18:25:19,308.0,loss,1.16,210.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Cam Ward,rush yds,10.0,9.8,—,-0.01,-0.2,50,0.7,49,-2,UNDER,draftkings -105,2026-10-28T18:25:19,5.0,win,1.01,10.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Tony Pollard,rush yds,70.0,79.2,—,0.25,9.2,50,0.0,50,13,OVER,draftkings -112,2026-10-28T18:25:19,129.0,win,1.16,69.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Quinshon Judkins,rush yds,45.0,47.5,—,0.08,2.5,50,-0.3,50,6,OVER,fanduel -113,2026-10-28T18:25:19,96.0,win,1.03,44.5,-115.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Deshaun Watson,rush yds,28.5,30.6,—,0.08,2.1,50,-0.4,50,7,OVER,fanduel -113,2026-10-28T18:25:19,19.0,loss,1.16,28.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Tank Dell,rec yds,8.5,29.9,high,1.12,21.4,72,21.4,51,252,OVER,fanduel -115,2026-10-28T18:25:19,43.0,win,0.4,8.5,-115.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Tank Dell,receptions,1.0,2.1,strong,0.8,1.1,67,16.1,51,115,OVER,draftkings +168,2026-10-28T18:25:19,1.0,push,0.4,0.5,-250.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Kayshon Boutte,rec yds,10.5,23.0,strong,0.63,12.5,64,14.7,49,119,OVER,draftkings -107,2026-10-28T18:25:19,25.0,win,0.71,10.5,-107.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Xavier Hutchinson,rec yds,14.0,25.9,strong,0.57,11.9,63,13.4,50,85,OVER,draftkings -108,2026-10-28T18:25:19,17.0,win,0.56,13.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Dalton Schultz,rec yds,26.0,39.1,strong,0.53,13.1,62,12.4,50,51,OVER,draftkings -109,2026-10-28T18:25:19,45.0,win,0.96,25.5,-109.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Malachi Fields,rec yds,20.0,31.6,strong,0.51,11.6,62,11.7,50,58,OVER,draftkings -112,2026-10-28T18:25:19,83.0,win,0.83,19.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Malachi Fields,receptions,1.5,2.4,strong,0.6,0.9,64,8.4,55,63,OVER,fanduel -138,2026-10-28T18:25:19,4.0,win,0.83,1.5,-138.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Xavier Hutchinson,receptions,1.5,2.0,solid,0.34,0.5,58,20.9,37,35,OVER,fanduel +154,2026-10-28T18:25:19,3.0,win,0.56,1.5,154.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Cam Skattebo,rec yds,5.5,13.1,solid,0.42,7.6,60,8.6,51,137,OVER,draftkings -117,2026-10-28T18:25:19,-3.0,loss,0.61,5.5,-117.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Foster Moreau,rec yds,8.0,14.9,solid,0.36,6.9,59,8.0,51,86,OVER,fanduel -113,2026-10-28T18:25:19,0.0,loss,0.81,7.5,-117.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Darnell Mooney,rec yds,17.0,24.5,solid,0.34,7.5,58,7.6,50,44,OVER,fanduel -113,2026-10-28T18:25:19,4.0,loss,0.96,16.5,-116.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,C.J. Stroud,pass TD,1.5,1.9,solid,0.32,0.4,57,-2.2,60,25,OVER,draftkings -167,2026-10-28T18:25:19,2.0,win,0.97,1.5,-167.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,J.J. McCarthy,pass TD,0.5,1.0,solid,0.44,0.5,60,-4.1,64,92,OVER,draftkings -215,2026-10-28T18:25:19,0.0,loss,1.14,0.5,-215.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kayshon Boutte,receptions,1.5,1.8,lean,0.21,0.3,55,17.2,38,21,OVER,draftkings +150,2026-10-28T18:25:19,1.0,loss,0.71,1.5,150.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Dalton Schultz,receptions,3.5,4.1,lean,0.29,0.6,57,16.0,41,17,OVER,fanduel +134,2026-10-28T18:25:19,5.0,win,0.96,3.5,134.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Jaylin Noel,rec yds,27.5,34.5,lean,0.28,7.0,57,6.4,50,25,OVER,draftkings -113,2026-10-28T18:25:19,-3.0,loss,1.0,27.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Devin Singletary,rec yds,6.0,9.9,lean,0.21,3.9,55,6.3,49,65,OVER,draftkings -101,2026-10-28T18:25:19,14.0,win,0.73,5.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Isaiah Likely,rec yds,48.5,57.1,lean,0.27,8.6,56,6.1,50,18,OVER,fanduel -113,2026-10-28T18:25:19,12.0,loss,0.92,47.5,-114.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Tyrone Tracy Jr.,rec yds,8.5,11.6,lean,0.16,3.1,54,4.3,50,37,OVER,draftkings -108,2026-10-28T18:25:19,2.0,loss,0.9,8.5,-108.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Marvin Harrison Jr.,receptions,2.5,2.0,lean,-0.29,-0.5,57,4.1,53,-20,UNDER,draftkings -125,2026-10-28T18:25:19,1.0,win,1.14,2.5,-125.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Cam Skattebo,receptions,1.5,1.6,—,0.1,0.1,52,17.2,35,10,OVER,draftkings +169,2026-10-28T18:25:19,1.0,loss,0.61,1.5,169.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Foster Moreau,receptions,1.5,1.6,—,0.09,0.1,52,11.0,41,9,OVER,draftkings +132,2026-10-28T18:25:19,0.0,loss,0.81,1.5,132.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Darnell Mooney,receptions,1.5,1.7,—,0.15,0.2,54,7.4,46,15,OVER,draftkings +109,2026-10-28T18:25:19,1.0,loss,0.96,1.5,109.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Nico Collins,receptions,4.5,4.4,—,-0.04,-0.1,51,7.3,44,-2,UNDER,fanduel +116,2026-10-28T18:25:19,2.0,win,1.14,4.5,116.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Tyrone Tracy Jr.,receptions,1.5,1.6,—,0.05,0.1,51,4.3,47,5,OVER,fanduel +102,2026-10-28T18:25:19,1.0,loss,0.9,1.5,102.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,C.J. Stroud,pass yds,256.0,266.2,—,0.13,10.2,53,3.1,50,4,OVER,draftkings -113,2026-10-28T18:25:19,153.0,loss,0.97,255.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,J.J. McCarthy,pass yds,204.0,211.9,—,0.1,7.9,52,2.5,50,4,OVER,draftkings -111,2026-10-28T18:25:19,252.0,win,1.14,203.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Woody Marks,rec yds,14.0,15.7,—,0.08,1.7,52,2.5,49,12,OVER,draftkings -107,2026-10-28T18:25:19,15.0,win,1.2,13.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,J.J. McCarthy,rush yds,23.5,15.4,—,-0.34,-8.1,51,1.5,50,-34,UNDER,draftkings -111,2026-10-28T18:25:19,1.0,win,1.14,23.5,-111.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Marvin Harrison Jr.,rec yds,27.5,28.6,—,0.04,1.1,51,0.7,50,4,OVER,fanduel -113,2026-10-28T18:25:19,6.0,loss,1.14,27.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Nico Collins,rec yds,69.5,68.6,—,-0.02,-0.9,51,0.4,50,-1,UNDER,draftkings -113,2026-10-28T18:25:19,6.0,win,1.14,69.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Malik Nabers,rec yds,68.0,68.4,—,0.01,0.4,50,0.4,50,1,OVER,draftkings -110,2026-10-28T18:25:19,111.0,win,0.96,67.5,-110.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Woody Marks,rush yds,65.0,71.0,—,0.17,6.0,50,0.2,50,9,OVER,draftkings -110,2026-10-28T18:25:19,66.0,win,1.2,63.5,-113.0,fanduel,3.0,4.0
+2026,7,Week 7 Sunday,Cam Skattebo,rush yds,36.0,33.1,—,-0.11,-2.9,50,0.2,50,-8,UNDER,draftkings -110,2026-10-28T18:25:19,124.0,loss,0.61,36.5,-110.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Tyrone Tracy Jr.,rush yds,22.5,17.3,—,-0.22,-5.2,50,-0.2,50,-23,UNDER,fanduel -113,2026-10-28T18:25:19,15.0,win,0.9,22.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,C.J. Stroud,rush yds,10.5,9.3,—,-0.06,-1.2,50,-0.2,50,-11,UNDER,fanduel -113,2026-10-28T18:25:19,4.0,win,0.97,10.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Malik Nabers,receptions,5.5,5.5,—,0.01,0.0,50,-2.7,53,0,OVER,fanduel -128,2026-10-28T18:25:19,7.0,win,0.96,5.5,-128.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Isaiah Likely,receptions,5.5,5.4,—,-0.05,-0.1,51,-3.6,55,-2,UNDER,fanduel -140,2026-10-28T18:25:19,2.0,win,0.92,5.5,-140.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Woody Marks,receptions,2.5,2.5,—,-0.02,-0.0,50,-3.8,54,-1,UNDER,draftkings -125,2026-10-28T18:25:19,1.0,win,1.2,2.5,-125.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jaylin Noel,receptions,2.5,2.4,—,-0.04,-0.1,51,-6.1,57,-3,UNDER,fanduel -154,2026-10-28T18:25:19,2.0,win,1.0,2.5,-154.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Devin Singletary,receptions,1.5,1.3,—,-0.15,-0.2,54,-6.8,60,-15,UNDER,draftkings -172,2026-10-28T18:25:19,3.0,loss,0.73,1.5,-172.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Aaron Jones,rush yds,38.5,70.8,high,1.15,32.3,69,18.7,50,84,OVER,draftkings -111,2026-10-28T18:25:19,26.0,loss,0.84,37.5,-111.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Jauan Jennings,rec yds,7.5,18.9,strong,0.6,11.4,64,13.1,51,151,OVER,fanduel -113,2026-10-28T18:25:19,34.0,win,0.84,7.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Jauan Jennings,receptions,1.0,1.5,solid,0.37,0.5,59,9.6,49,54,OVER,draftkings +186,2026-10-28T18:25:19,2.0,win,0.84,0.5,-230.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Daniel Jones,pass yds,189.0,216.2,solid,0.35,27.2,58,8.2,50,14,OVER,draftkings -111,2026-10-28T18:25:19,108.0,loss,1.02,188.5,-111.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Kyler Murray,pass TD,1.5,1.0,solid,-0.41,-0.5,60,6.9,53,-32,UNDER,fanduel -120,2026-10-28T18:25:19,1.0,win,1.16,1.5,-120.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Laquon Treadwell,receptions,1.5,2.0,solid,0.34,0.5,58,-2.9,61,35,OVER,draftkings -163,2026-10-28T18:25:19,2.0,win,1.15,1.5,-163.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Laquon Treadwell,rec yds,21.5,27.8,lean,0.27,6.3,56,6.2,50,29,OVER,fanduel -113,2026-10-28T18:25:19,19.0,loss,1.15,19.5,-114.0,draftkings,4.0,4.0
+2026,7,Week 7 Sunday,Josh Downs,receptions,4.5,4.0,lean,-0.24,-0.5,56,5.7,50,-12,UNDER,fanduel -112,2026-10-28T18:25:19,2.0,win,1.15,4.5,-112.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Jonathan Taylor,rec yds,18.0,22.4,lean,0.2,4.4,55,5.1,50,24,OVER,draftkings -108,2026-10-28T18:25:19,15.0,loss,0.91,17.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Jordan Addison,rec yds,38.5,44.8,lean,0.22,6.3,55,5.0,50,16,OVER,draftkings -113,2026-10-28T18:25:19,20.0,loss,1.14,38.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Keenan Allen,rec yds,41.0,45.6,lean,0.15,4.6,54,4.0,50,11,OVER,draftkings -109,2026-10-28T18:25:19,31.0,loss,1.13,40.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Kyler Murray,pass yds,210.0,198.0,lean,-0.15,-12.0,54,3.6,50,-6,UNDER,draftkings -113,2026-10-28T18:25:19,150.0,win,1.16,210.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,T.J. Hockenson,receptions,4.5,4.0,lean,-0.24,-0.5,56,0.8,55,-12,UNDER,draftkings -135,2026-10-28T18:25:19,4.0,win,1.1,4.5,-135.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jordan Addison,receptions,3.5,3.0,lean,-0.24,-0.5,56,-0.9,57,-14,UNDER,draftkings -140,2026-10-28T18:25:19,2.0,win,1.14,3.5,-140.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Daniel Jones,pass TD,0.5,0.8,lean,0.3,0.3,57,-7.2,64,62,OVER,draftkings -212,2026-10-28T18:25:19,0.0,loss,1.02,0.5,-212.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Keenan Allen,receptions,4.5,4.3,—,-0.07,-0.2,52,8.6,43,-4,UNDER,fanduel +120,2026-10-28T18:25:19,3.0,win,1.13,4.5,120.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Jonathan Taylor,receptions,2.5,2.7,—,0.1,0.2,52,5.6,47,7,OVER,draftkings +103,2026-10-28T18:25:19,2.0,loss,0.91,2.5,103.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Justin Jefferson,receptions,5.5,5.5,—,-0.01,-0.0,50,3.2,47,0,UNDER,draftkings +108,2026-10-28T18:25:19,4.0,win,1.15,5.5,108.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Justin Jefferson,rec yds,73.5,69.2,—,-0.11,-4.3,53,2.6,50,-6,UNDER,draftkings -112,2026-10-28T18:25:19,44.0,win,1.15,74.5,-112.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Will Mallory,rec yds,20.5,22.1,—,0.07,1.6,52,2.1,50,8,OVER,draftkings -108,2026-10-28T18:25:19,0.0,loss,1.32,20.5,-108.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Aaron Jones,receptions,2.5,2.7,—,0.1,0.2,52,0.6,52,7,OVER,draftkings -117,2026-10-28T18:25:19,1.0,loss,0.84,2.5,-117.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Josh Downs,rec yds,50.0,49.4,—,-0.02,-0.6,50,0.5,50,-1,UNDER,draftkings -111,2026-10-28T18:25:19,18.0,win,1.15,50.5,-111.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,T.J. Hockenson,rec yds,36.5,35.5,—,-0.04,-1.0,51,0.5,50,-3,UNDER,fanduel -113,2026-10-28T18:25:19,35.0,win,1.1,36.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Jonathan Taylor,rush yds,69.5,64.1,—,-0.15,-5.4,50,0.3,50,-8,UNDER,draftkings -109,2026-10-28T18:25:19,95.0,loss,0.91,69.5,-109.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jordan Mason,rush yds,47.5,39.6,—,-0.26,-7.9,50,0.0,50,-17,UNDER,draftkings -112,2026-10-28T18:25:19,68.0,loss,1.14,47.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kyler Murray,rush yds,24.5,29.9,—,0.22,5.4,50,0.0,50,22,OVER,draftkings -112,2026-10-28T18:25:19,39.0,win,1.16,24.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Seth McGowan,rush yds,13.0,16.1,—,0.15,3.1,50,0.0,50,24,OVER,draftkings -112,2026-10-28T18:25:19,46.0,win,0.9,11.5,-113.0,fanduel,3.0,4.0
+2026,7,Week 7 Sunday,Aaron Jones,rec yds,15.0,15.1,—,0.0,0.1,50,-0.2,50,1,OVER,fanduel -113,2026-10-28T18:25:19,0.0,loss,0.84,14.5,-115.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Daniel Jones,rush yds,6.5,11.8,—,0.27,5.3,50,-0.2,50,82,OVER,fanduel -113,2026-10-28T18:25:19,13.0,win,1.02,6.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Will Mallory,receptions,2.0,2.0,—,0.02,0.0,50,-1.2,52,1,OVER,draftkings +146,2026-10-28T18:25:19,0.0,loss,1.32,1.5,-225.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Adonai Mitchell,rec yds,27.5,44.2,strong,0.66,16.7,65,14.5,50,61,OVER,fanduel -113,2026-10-28T18:25:19,0.0,loss,0.85,26.5,-114.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Adonai Mitchell,receptions,2.5,3.0,solid,0.31,0.5,57,16.5,41,22,OVER,fanduel +134,2026-10-28T18:25:19,0.0,loss,0.85,2.5,134.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Greg Dulcich,receptions,2.5,3.1,solid,0.32,0.6,58,15.7,42,23,OVER,draftkings +124,2026-10-28T18:25:19,5.0,win,0.82,2.5,124.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Greg Dulcich,rec yds,21.5,32.8,solid,0.48,11.2,61,11.2,50,52,OVER,draftkings -111,2026-10-28T18:25:19,86.0,win,0.82,21.5,-111.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Mason Taylor,rec yds,18.0,28.2,solid,0.46,10.2,61,10.5,50,57,OVER,draftkings -113,2026-10-28T18:25:19,62.0,win,0.82,17.5,-113.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Kenyon Sadiq,rec yds,18.5,27.9,solid,0.42,9.4,60,10.0,50,51,OVER,draftkings -110,2026-10-28T18:25:19,6.0,loss,0.85,18.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Mason Taylor,receptions,2.5,3.1,solid,0.36,0.6,58,7.9,51,26,OVER,fanduel -114,2026-10-28T18:25:19,5.0,win,0.82,2.5,-114.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Malik Willis,pass TD,0.5,1.0,solid,0.44,0.5,60,-2.9,63,92,OVER,draftkings -197,2026-10-28T18:25:19,2.0,win,0.95,0.5,-197.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Garrett Wilson,receptions,5.5,4.8,lean,-0.29,-0.7,57,9.2,48,-13,UNDER,draftkings +109,2026-10-28T18:25:19,2.0,win,1.12,5.5,109.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Ollie Gordon II,receptions,1.5,1.1,lean,-0.23,-0.4,55,5.5,50,-24,UNDER,fanduel -104,2026-10-28T18:25:19,1.0,win,1.15,1.5,-104.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Garrett Wilson,rec yds,65.5,57.7,lean,-0.2,-7.8,55,4.9,50,-12,UNDER,draftkings -112,2026-10-28T18:25:19,26.0,win,1.12,66.5,-112.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Ollie Gordon II,rush yds,59.0,42.9,lean,-0.48,-16.1,55,4.7,50,-27,UNDER,draftkings -113,2026-10-28T18:25:19,103.0,loss,1.15,60.5,-113.0,draftkings,3.0,4.0
+2026,7,Week 7 Sunday,Malik Washington,rec yds,41.0,46.0,lean,0.17,5.0,54,4.3,50,12,OVER,draftkings -109,2026-10-28T18:25:19,27.0,loss,1.06,40.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Braelon Allen,receptions,2.5,2.1,lean,-0.2,-0.4,55,4.0,51,-14,UNDER,draftkings -117,2026-10-28T18:25:19,6.0,loss,1.21,2.5,-117.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Chris Bell,rec yds,20.0,23.5,lean,0.15,3.5,54,3.8,50,17,OVER,draftkings -110,2026-10-28T18:25:19,25.0,win,1.11,19.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Geno Smith,pass TD,1.5,1.2,lean,-0.24,-0.3,56,1.2,54,-19,UNDER,draftkings -137,2026-10-28T18:25:19,3.0,loss,1.13,1.5,-137.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Malik Washington,receptions,4.5,4.0,lean,-0.22,-0.5,55,-2.6,58,-11,UNDER,draftkings -155,2026-10-28T18:25:19,3.0,win,1.06,4.5,-155.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kenyon Sadiq,receptions,2.5,2.6,—,0.07,0.1,52,10.0,42,5,OVER,fanduel +136,2026-10-28T18:25:19,1.0,loss,0.85,2.5,136.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Braelon Allen,rec yds,13.5,14.9,—,0.07,1.4,52,2.1,50,11,OVER,draftkings -110,2026-10-28T18:25:19,30.0,win,1.21,13.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Geno Smith,rush yds,6.0,4.6,—,-0.07,-1.4,50,1.9,48,-24,UNDER,fanduel +100,2026-10-28T18:25:19,0.0,win,1.13,6.5,-108.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Geno Smith,pass yds,222.5,217.1,—,-0.07,-5.4,52,1.7,50,-2,UNDER,draftkings -112,2026-10-28T18:25:19,287.0,loss,1.13,223.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Malik Willis,pass yds,184.0,179.2,—,-0.06,-4.8,51,1.3,50,-3,UNDER,draftkings -113,2026-10-28T18:25:19,208.0,loss,0.95,185.5,-113.0,draftkings,3.0,4.0
+2026,7,Week 7 Sunday,Chris Bell,receptions,1.5,1.5,—,0.02,0.0,50,0.5,50,2,OVER,draftkings -113,2026-10-28T18:25:19,3.0,win,1.11,1.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Malik Willis,rush yds,32.0,37.1,—,0.2,5.1,50,0.3,50,16,OVER,draftkings -109,2026-10-28T18:25:19,37.0,win,0.95,30.5,-113.0,fanduel,3.0,4.0
+2026,7,Week 7 Sunday,Ollie Gordon II,rec yds,8.0,7.5,—,-0.03,-0.5,51,-0.1,51,-6,UNDER,fanduel -113,2026-10-28T18:25:19,0.0,win,1.15,8.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Braelon Allen,rush yds,76.5,72.1,—,-0.12,-4.4,50,-0.4,50,-6,UNDER,draftkings -114,2026-10-28T18:25:19,104.0,loss,1.21,76.5,-114.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jaylen Wright,rush yds,15.5,21.3,—,0.27,5.8,50,-0.6,51,38,OVER,fanduel -113,2026-10-28T18:25:19,8.0,loss,0.84,15.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Adam Trautman,rec yds,1.5,10.8,strong,0.55,9.3,63,16.6,46,617,OVER,fanduel +118,2026-10-28T18:25:19,0.0,loss,0.62,0.5,-105.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Adam Trautman,receptions,0.5,1.1,solid,0.42,0.6,60,12.2,47,110,OVER,fanduel +102,2026-10-28T18:25:19,0.0,loss,0.62,0.5,102.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,RJ Harvey,rush yds,15.0,30.6,solid,0.72,15.6,60,11.3,49,104,OVER,fanduel -106,2026-10-28T18:25:19,6.0,loss,0.84,14.5,-106.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,J.K. Dobbins,rec yds,4.5,9.8,solid,0.3,5.3,57,6.8,50,119,OVER,fanduel -113,2026-10-28T18:25:19,0.0,loss,1.03,4.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Kendrick Bourne,receptions,3.5,2.9,solid,-0.3,-0.6,57,6.3,51,-17,UNDER,draftkings -114,2026-10-28T18:25:19,3.0,win,1.08,3.5,-114.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Marvin Mims Jr.,receptions,1.5,2.0,solid,0.35,0.5,58,4.5,54,37,OVER,fanduel -130,2026-10-28T18:25:19,2.0,win,0.91,1.5,-130.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Elijah Higgins,rec yds,12.0,17.9,lean,0.29,5.9,57,6.7,50,50,OVER,fanduel -113,2026-10-28T18:25:19,17.0,win,0.77,11.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Elijah Higgins,receptions,1.5,1.8,lean,0.19,0.3,54,6.6,48,19,OVER,fanduel -102,2026-10-28T18:25:19,3.0,win,0.77,1.5,-102.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Jalen Brooks,rec yds,15.0,20.8,lean,0.27,5.8,56,6.4,50,39,OVER,draftkings -113,2026-10-28T18:25:19,35.0,win,1.22,14.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Bo Nix,pass yds,216.0,195.5,lean,-0.26,-20.5,56,6.2,50,-9,UNDER,draftkings -112,2026-10-28T18:25:19,222.0,loss,1.15,218.5,-112.0,draftkings,5.0,4.0
+2026,7,Week 7 Sunday,Jaylen Waddle,receptions,4.5,4.0,lean,-0.2,-0.5,55,5.6,49,-10,UNDER,draftkings +101,2026-10-28T18:25:19,4.0,win,1.14,4.5,101.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Marvin Mims Jr.,rec yds,15.0,20.4,lean,0.25,5.4,56,5.5,51,36,OVER,fanduel -113,2026-10-28T18:25:19,53.0,win,0.91,13.5,-113.0,fanduel,3.0,4.0
+2026,7,Week 7 Sunday,Bo Nix,pass TD,1.5,1.2,lean,-0.28,-0.3,57,5.3,51,-22,UNDER,draftkings -118,2026-10-28T18:25:19,1.0,win,1.15,1.5,-118.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,RJ Harvey,rec yds,27.5,21.7,lean,-0.23,-5.8,55,5.3,50,-21,UNDER,draftkings -113,2026-10-28T18:25:19,54.0,loss,0.84,28.5,-113.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Evan Engram,rec yds,23.0,27.9,lean,0.21,4.9,55,4.8,50,21,OVER,draftkings -113,2026-10-28T18:25:19,2.0,loss,1.05,22.5,-113.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,RJ Harvey,receptions,3.5,3.2,lean,-0.16,-0.3,54,4.8,49,-9,UNDER,draftkings -103,2026-10-28T18:25:19,2.0,win,0.84,3.5,-103.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Troy Franklin,rec yds,14.5,18.6,lean,0.19,4.1,55,4.6,50,28,OVER,draftkings -112,2026-10-28T18:25:19,0.0,loss,1.02,13.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Michael Wilson,rec yds,50.5,56.5,lean,0.18,6.0,54,4.3,50,12,OVER,draftkings -112,2026-10-28T18:25:19,55.0,win,1.0,49.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Bam Knight,rush yds,38.5,51.0,lean,0.45,12.5,54,4.0,50,32,OVER,fanduel -113,2026-10-28T18:25:19,48.0,win,0.95,38.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Tyler Allgeier,rush yds,32.0,43.4,lean,0.43,11.4,54,3.3,50,36,OVER,fanduel -113,2026-10-28T18:25:19,19.0,loss,1.2,31.5,-116.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Tyler Allgeier,receptions,2.5,2.0,lean,-0.26,-0.5,56,-3.4,60,-19,UNDER,draftkings -168,2026-10-28T18:25:19,3.0,loss,1.2,2.5,-168.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jacoby Brissett,pass TD,1.5,1.3,lean,-0.16,-0.2,54,-4.1,58,-13,UNDER,fanduel -160,2026-10-28T18:25:19,1.0,win,0.97,1.5,-160.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,J.K. Dobbins,receptions,1.5,1.6,—,0.06,0.1,52,13.7,38,7,OVER,fanduel +162,2026-10-28T18:25:19,0.0,loss,1.03,1.5,162.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Evan Engram,receptions,2.5,2.6,—,0.05,0.1,51,7.6,44,4,OVER,fanduel +116,2026-10-28T18:25:19,1.0,loss,1.05,2.5,116.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Courtland Sutton,receptions,3.0,2.8,—,-0.12,-0.2,53,4.4,48,-7,UNDER,fanduel +132,2026-10-28T18:25:19,3.0,push,1.14,3.5,-149.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,J.K. Dobbins,rush yds,49.5,62.8,—,0.43,13.2,54,3.9,50,27,OVER,draftkings -109,2026-10-28T18:25:19,23.0,loss,1.03,47.5,-113.0,fanduel,4.0,4.0
+2026,7,Week 7 Sunday,Jaylen Waddle,rec yds,51.5,47.2,—,-0.13,-4.3,53,3.1,50,-8,UNDER,draftkings -112,2026-10-28T18:25:19,48.0,win,1.14,52.5,-112.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Troy Franklin,receptions,1.5,1.6,—,0.06,0.1,51,2.8,49,6,OVER,fanduel +106,2026-10-28T18:25:19,0.0,loss,1.02,1.5,106.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Tyler Allgeier,rec yds,10.5,12.5,—,0.1,2.0,52,2.7,50,19,OVER,draftkings -110,2026-10-28T18:25:19,30.0,win,1.2,10.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Courtland Sutton,rec yds,34.5,32.7,—,-0.07,-1.8,52,1.5,50,-5,UNDER,draftkings -113,2026-10-28T18:25:19,45.0,loss,1.14,35.5,-113.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Zonovan Knight,rush yds,37.5,29.0,—,-0.31,-8.5,51,1.3,49,-23,UNDER,draftkings -109,2026-10-28T18:25:19,0.0,win,,37.5,-109.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kendrick Bourne,rec yds,35.0,35.7,—,0.02,0.7,51,0.4,50,2,OVER,fanduel -113,2026-10-28T18:25:19,9.0,loss,1.08,34.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Jacoby Brissett,pass yds,228.0,227.0,—,-0.01,-1.0,50,0.3,50,0,UNDER,draftkings -112,2026-10-28T18:25:19,272.0,loss,0.97,230.5,-112.0,draftkings,5.0,4.0
+2026,7,Week 7 Sunday,Trey McBride,rec yds,61.5,62.0,—,0.01,0.5,50,0.2,50,1,OVER,draftkings -113,2026-10-28T18:25:19,111.0,win,1.02,60.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Bo Nix,rush yds,10.5,12.0,—,0.07,1.5,50,-0.1,50,14,OVER,draftkings -113,2026-10-28T18:25:19,73.0,win,1.15,10.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Michael Wilson,receptions,4.5,4.6,—,0.03,0.1,51,-0.4,51,1,OVER,fanduel -114,2026-10-28T18:25:19,4.0,loss,1.0,4.5,-114.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Jacoby Brissett,rush yds,6.5,10.0,—,0.18,3.5,50,-2.2,52,54,OVER,draftkings -119,2026-10-28T18:25:19,16.0,win,0.97,6.5,-119.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jalen Brooks,receptions,1.5,1.5,—,-0.01,-0.0,50,-2.8,53,-1,UNDER,draftkings -120,2026-10-28T18:25:19,1.0,win,1.22,1.5,-120.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Trey McBride,receptions,7.5,7.3,—,-0.07,-0.2,52,-4.8,56,-3,UNDER,draftkings -137,2026-10-28T18:25:19,10.0,loss,1.02,7.5,-137.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Brock Wright,rec yds,3.5,13.0,strong,0.55,9.5,62,14.9,48,273,OVER,fanduel -102,2026-10-28T18:25:19,0.0,loss,0.78,3.5,-102.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Brock Wright,receptions,0.5,1.4,strong,0.64,0.9,64,5.8,59,170,OVER,draftkings -163,2026-10-28T18:25:19,0.0,loss,0.78,0.5,-163.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Sam LaPorta,rec yds,49.5,59.8,solid,0.31,10.3,57,7.6,50,21,OVER,draftkings -110,2026-10-28T18:25:19,18.0,loss,0.99,49.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Josh Jacobs,receptions,1.5,2.2,solid,0.42,0.7,60,6.2,54,44,OVER,fanduel -132,2026-10-28T18:25:19,5.0,win,1.15,1.5,-132.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Jordan Love,pass TD,1.5,2.0,solid,0.43,0.5,60,-2.5,62,33,OVER,fanduel -196,2026-10-28T18:25:19,2.0,win,1.06,1.5,-196.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Pierre Strong Jr.,receptions,1.5,1.8,lean,0.19,0.3,54,10.2,44,19,OVER,fanduel +116,2026-10-28T18:25:19,0.0,loss,0.77,1.5,116.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Pierre Strong Jr.,rec yds,7.0,11.3,lean,0.23,4.3,55,6.0,49,62,OVER,draftkings -107,2026-10-28T18:25:19,0.0,loss,0.77,6.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Jahmyr Gibbs,rush yds,94.5,73.6,lean,-0.49,-20.9,55,5.1,50,-22,UNDER,draftkings -111,2026-10-28T18:25:19,116.0,loss,1.03,95.5,-111.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Savion Williams,receptions,2.5,2.0,lean,-0.29,-0.5,57,4.8,52,-20,UNDER,draftkings -118,2026-10-28T18:25:19,3.0,loss,1.33,2.5,-118.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jordan Love,pass yds,285.5,272.6,lean,-0.17,-12.9,54,4.1,50,-5,UNDER,draftkings -112,2026-10-28T18:25:19,274.0,win,1.06,287.5,-112.0,draftkings,4.0,4.0
+2026,7,Week 7 Sunday,Jared Goff,pass yds,281.0,293.0,lean,0.16,12.0,54,3.8,50,4,OVER,draftkings -112,2026-10-28T18:25:19,303.0,win,0.85,278.5,-113.0,fanduel,5.0,4.0
+2026,7,Week 7 Sunday,Amon-Ra St. Brown,receptions,7.5,6.8,lean,-0.25,-0.7,56,3.4,52,-10,UNDER,draftkings -121,2026-10-28T18:25:19,9.0,loss,1.13,7.5,-121.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Isaac TeSlaa,receptions,1.5,1.9,lean,0.23,0.4,55,-0.8,56,24,OVER,fanduel -144,2026-10-28T18:25:19,1.0,loss,0.97,1.5,-144.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Jahmyr Gibbs,receptions,4.5,4.5,—,-0.02,-0.0,50,7.9,42,-1,UNDER,draftkings +124,2026-10-28T18:25:19,5.0,loss,1.03,4.5,124.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Josh Jacobs,rec yds,10.5,13.3,—,0.14,2.8,53,3.4,50,27,OVER,draftkings -112,2026-10-28T18:25:19,55.0,win,1.15,9.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Isaac TeSlaa,rec yds,25.5,29.0,—,0.14,3.5,53,3.3,50,14,OVER,draftkings -112,2026-10-28T18:25:19,10.0,loss,0.97,25.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Amon-Ra St. Brown,rec yds,82.0,77.1,—,-0.11,-4.9,53,2.8,50,-6,UNDER,draftkings -111,2026-10-28T18:25:19,153.0,loss,1.13,84.5,-111.0,draftkings,5.0,4.0
+2026,7,Week 7 Sunday,Jahmyr Gibbs,rec yds,41.5,37.8,—,-0.12,-3.7,53,2.7,50,-9,UNDER,fanduel -113,2026-10-28T18:25:19,27.0,win,1.03,43.5,-114.0,draftkings,4.0,4.0
+2026,7,Week 7 Sunday,Sam LaPorta,receptions,5.0,5.2,—,0.08,0.2,52,2.2,50,4,OVER,draftkings +116,2026-10-28T18:25:19,1.0,loss,0.99,4.5,-148.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Savion Williams,rec yds,25.0,23.0,—,-0.08,-2.0,52,1.7,50,-8,UNDER,fanduel -113,2026-10-28T18:25:19,47.0,loss,1.33,25.5,-114.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Christian Watson,rec yds,76.5,73.7,—,-0.07,-2.8,52,1.4,50,-4,UNDER,fanduel -113,2026-10-28T18:25:19,57.0,win,1.14,77.5,-114.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,MarShawn Lloyd,rush yds,11.0,17.9,—,0.33,6.9,51,1.4,50,63,OVER,draftkings -111,2026-10-28T18:25:19,20.0,win,0.62,10.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Matthew Golden,rec yds,73.5,71.8,—,-0.04,-1.7,51,1.0,50,-2,UNDER,draftkings -112,2026-10-28T18:25:19,39.0,win,1.15,74.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Tucker Kraft,receptions,4.5,4.7,—,0.07,0.2,52,1.0,51,3,OVER,fanduel -114,2026-10-28T18:25:19,4.0,loss,1.11,4.5,-114.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Jameson Williams,rec yds,54.5,53.4,—,-0.03,-1.1,51,0.6,50,-2,UNDER,fanduel -113,2026-10-28T18:25:19,91.0,loss,1.02,54.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Sione Vaki,rush yds,8.5,12.2,—,0.19,3.8,50,0.4,50,44,OVER,draftkings -108,2026-10-28T18:25:19,5.0,loss,1.23,8.5,-108.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tucker Kraft,rec yds,51.0,50.6,—,-0.01,-0.4,50,0.2,50,-1,UNDER,draftkings -113,2026-10-28T18:25:19,48.0,win,1.11,51.5,-113.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Josh Jacobs,rush yds,47.5,42.6,—,-0.16,-4.9,50,0.1,50,-10,UNDER,draftkings -111,2026-10-28T18:25:19,36.0,win,1.15,47.5,-111.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Pierre Strong Jr.,rush yds,8.0,12.2,—,0.21,4.2,50,0.0,50,52,OVER,draftkings -112,2026-10-28T18:25:19,0.0,loss,0.77,7.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Jordan Love,rush yds,6.5,4.5,—,-0.1,-2.0,50,-0.1,50,-31,UNDER,draftkings -113,2026-10-28T18:25:19,0.0,win,1.06,6.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Christian Watson,receptions,4.5,4.6,—,0.06,0.1,51,-0.5,52,3,OVER,draftkings -118,2026-10-28T18:25:19,5.0,win,1.14,4.5,-118.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jared Goff,rush yds,0.5,2.0,—,0.08,1.5,50,-1.6,52,292,OVER,draftkings -111,2026-10-28T18:25:19,-1.0,loss,0.85,0.5,-111.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jameson Williams,receptions,3.5,3.7,—,0.09,0.2,52,-1.7,54,5,OVER,draftkings -133,2026-10-28T18:25:19,5.0,win,1.02,3.5,-133.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Matthew Golden,receptions,4.5,4.8,—,0.12,0.3,53,-4.1,57,6,OVER,fanduel -148,2026-10-28T18:25:19,6.0,win,1.15,4.5,-148.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Jared Goff,pass TD,2.5,2.5,—,0.0,0.0,50,-10.1,60,0,UNDER,draftkings -159,2026-10-28T18:25:19,2.0,win,0.85,2.5,-159.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tutu Atwell,rec yds,4.0,15.5,strong,0.65,11.5,65,14.6,50,288,OVER,draftkings -112,2026-10-28T18:25:19,0.0,loss,0.94,2.5,-112.0,draftkings,3.0,4.0
+2026,7,Week 7 Sunday,Matthew Stafford,pass TD,1.5,2.3,strong,0.67,0.8,65,5.6,59,52,OVER,draftkings -170,2026-10-28T18:25:19,3.0,win,0.87,1.5,-170.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Davis Allen,receptions,0.5,1.2,strong,0.57,0.8,63,-3.8,67,150,OVER,draftkings -236,2026-10-28T18:25:19,4.0,win,1.0,0.5,-236.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jalen Nailor,rec yds,15.5,25.1,solid,0.45,9.6,60,9.9,50,62,OVER,fanduel -113,2026-10-28T18:25:19,14.0,loss,0.96,15.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Puka Nacua,receptions,7.5,6.3,solid,-0.4,-1.2,59,8.0,51,-16,UNDER,draftkings -111,2026-10-28T18:25:19,8.0,loss,1.19,7.5,-111.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kirk Cousins,pass TD,1.5,1.9,solid,0.34,0.4,58,7.6,50,27,OVER,draftkings -113,2026-10-28T18:25:19,2.0,win,0.87,1.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tutu Atwell,receptions,0.5,1.2,solid,0.5,0.7,61,6.5,55,132,OVER,draftkings -139,2026-10-28T18:25:19,0.0,loss,0.94,0.5,-139.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Michael Mayer,receptions,3.5,4.2,solid,0.32,0.7,58,6.4,51,19,OVER,fanduel -114,2026-10-28T18:25:19,3.0,loss,0.88,3.5,-114.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Cody White,receptions,1.5,0.9,solid,-0.36,-0.6,58,-0.6,59,-37,UNDER,draftkings -164,2026-10-28T18:25:19,1.0,win,0.66,1.5,-164.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Michael Mayer,rec yds,31.5,39.2,lean,0.29,7.7,57,7.1,50,24,OVER,draftkings -109,2026-10-28T18:25:19,32.0,win,0.88,29.5,-113.0,fanduel,4.0,4.0
+2026,7,Week 7 Sunday,Matthew Stafford,pass yds,270.5,292.1,lean,0.28,21.6,57,6.7,50,8,OVER,draftkings -112,2026-10-28T18:25:19,195.0,loss,0.87,269.5,-112.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Ashton Jeanty,rec yds,26.0,33.1,lean,0.28,7.1,57,6.4,50,27,OVER,fanduel -113,2026-10-28T18:25:19,61.0,win,1.12,25.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Davis Allen,rec yds,8.5,13.4,lean,0.25,4.9,56,6.4,50,57,OVER,draftkings -108,2026-10-28T18:25:19,20.0,win,1.0,8.5,-108.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Blake Corum,rec yds,8.5,13.3,lean,0.25,4.8,56,6.1,50,57,OVER,draftkings -111,2026-10-28T18:25:19,8.0,loss,0.88,8.5,-111.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Mike Washington Jr.,rush yds,23.0,11.0,lean,-0.5,-12.0,55,5.3,50,-52,UNDER,draftkings -112,2026-10-28T18:25:19,27.0,loss,,24.5,-112.0,draftkings,3.0,4.0
+2026,7,Week 7 Sunday,Kirk Cousins,pass yds,242.5,255.8,lean,0.17,13.3,54,4.0,50,5,OVER,draftkings -113,2026-10-28T18:25:19,295.0,win,0.87,240.5,-113.0,fanduel,4.0,4.0
+2026,7,Week 7 Sunday,Puka Nacua,rec yds,88.0,80.7,lean,-0.16,-7.3,54,3.8,50,-8,UNDER,draftkings -112,2026-10-28T18:25:19,68.0,win,1.19,88.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Jordan Whittington,rec yds,7.0,9.8,lean,0.15,2.8,54,3.2,50,41,OVER,fanduel -113,2026-10-28T18:25:19,0.0,loss,1.05,6.5,-116.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Brock Bowers,receptions,6.5,5.9,lean,-0.22,-0.6,55,1.4,54,-9,UNDER,draftkings -118,2026-10-28T18:25:19,6.0,win,1.11,6.5,-118.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jalen Nailor,receptions,1.5,1.8,lean,0.2,0.3,55,-0.9,56,21,OVER,fanduel -144,2026-10-28T18:25:19,2.0,win,0.96,1.5,-144.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Konata Mumpfield,receptions,1.5,1.8,lean,0.21,0.3,55,-1.1,56,21,OVER,draftkings -147,2026-10-28T18:25:19,1.0,loss,1.15,1.5,-147.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kyren Williams,receptions,3.5,3.8,lean,0.16,0.3,54,-1.2,55,9,OVER,draftkings -139,2026-10-28T18:25:19,2.0,loss,1.03,3.5,-139.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tyler Higbee,receptions,3.5,3.9,lean,0.18,0.4,54,-3.6,58,11,OVER,draftkings -152,2026-10-28T18:25:19,2.0,loss,1.02,3.5,-152.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jordan Whittington,receptions,0.5,0.8,lean,0.23,0.3,56,-7.5,63,62,OVER,draftkings -189,2026-10-28T18:25:19,0.0,loss,1.05,0.5,-189.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Blake Corum,receptions,1.5,1.6,—,0.06,0.1,51,11.0,40,6,OVER,fanduel +134,2026-10-28T18:25:19,1.0,loss,0.88,1.5,134.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Matthew Stafford,rush yds,0.5,3.2,—,0.15,2.7,50,8.3,42,548,OVER,fanduel +126,2026-10-28T18:25:19,-3.0,loss,0.87,0.5,126.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Colby Parkinson,rec yds,23.0,26.1,—,0.13,3.1,53,3.3,50,13,OVER,draftkings -110,2026-10-28T18:25:19,48.0,win,1.07,22.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Konata Mumpfield,rec yds,21.5,24.4,—,0.12,2.9,53,3.1,50,14,OVER,draftkings -111,2026-10-28T18:25:19,15.0,loss,1.15,21.5,-111.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tre Tucker,rec yds,42.5,46.2,—,0.12,3.7,53,3.0,50,9,OVER,draftkings -111,2026-10-28T18:25:19,103.0,win,1.04,40.5,-113.0,fanduel,4.0,4.0
+2026,7,Week 7 Sunday,Brock Bowers,rec yds,71.5,67.3,—,-0.11,-4.2,53,2.3,50,-6,UNDER,fanduel -113,2026-10-28T18:25:19,73.0,loss,1.11,72.5,-114.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Cody White,rec yds,11.0,13.1,—,0.11,2.1,53,2.3,50,19,OVER,fanduel -113,2026-10-28T18:25:19,4.0,loss,0.66,10.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Tyler Higbee,rec yds,38.0,39.9,—,0.07,1.9,52,1.9,50,5,OVER,draftkings -109,2026-10-28T18:25:19,14.0,loss,1.02,37.5,-109.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Colby Parkinson,receptions,2.5,2.7,—,0.11,0.2,53,1.5,51,8,OVER,draftkings -117,2026-10-28T18:25:19,5.0,win,1.07,2.5,-117.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kyren Williams,rec yds,27.5,27.9,—,0.02,0.4,50,0.5,50,1,OVER,draftkings -111,2026-10-28T18:25:19,22.0,loss,1.03,26.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Ashton Jeanty,receptions,3.5,3.6,—,0.07,0.1,52,0.4,51,4,OVER,draftkings -119,2026-10-28T18:25:19,8.0,win,1.12,3.5,-119.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kyren Williams,rush yds,68.5,63.8,—,-0.13,-4.7,50,-0.2,50,-7,UNDER,fanduel -113,2026-10-28T18:25:19,99.0,loss,1.03,69.5,-114.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Ashton Jeanty,rush yds,50.5,55.5,—,0.16,5.0,50,-0.3,50,10,OVER,fanduel -113,2026-10-28T18:25:19,15.0,loss,1.12,50.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Blake Corum,rush yds,36.5,33.7,—,-0.1,-2.8,50,-0.3,50,-8,UNDER,fanduel -113,2026-10-28T18:25:19,93.0,loss,0.88,37.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Tre Tucker,receptions,3.5,3.5,—,-0.01,-0.0,50,-2.5,53,-1,UNDER,draftkings -117,2026-10-28T18:25:19,5.0,loss,1.04,3.5,-117.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Kirk Cousins,rush yds,1.0,-0.1,—,-0.06,-1.1,50,-2.8,53,-113,UNDER,draftkings -110,2026-10-28T18:25:19,6.0,loss,0.87,1.5,-146.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Cyrus Allen,rec yds,6.0,14.5,solid,0.47,8.5,61,10.6,50,142,OVER,fanduel -113,2026-10-28T18:25:19,18.0,win,0.62,5.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Emmett Johnson,rec yds,7.0,14.7,solid,0.41,7.7,60,9.5,50,109,OVER,draftkings -113,2026-10-28T18:25:19,17.0,win,0.98,6.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Tory Horton,rec yds,11.0,18.6,solid,0.38,7.6,59,9.4,50,69,OVER,draftkings -108,2026-10-28T18:25:19,0.0,loss,0.71,10.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Patrick Mahomes,pass yds,219.5,247.6,solid,0.36,28.1,58,8.6,50,13,OVER,draftkings -111,2026-10-28T18:25:19,165.0,loss,0.91,216.5,-113.0,fanduel,6.0,4.0
+2026,7,Week 7 Sunday,Kenneth Walker III,receptions,3.5,2.6,solid,-0.43,-0.9,60,4.3,56,-25,UNDER,draftkings -134,2026-10-28T18:25:19,4.0,loss,0.85,3.5,-134.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Cyrus Allen,receptions,0.5,1.1,solid,0.46,0.6,61,0.5,60,122,OVER,fanduel -172,2026-10-28T18:25:19,1.0,win,0.62,0.5,-172.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Noah Gray,receptions,1.5,2.1,solid,0.41,0.6,59,-1.3,61,42,OVER,draftkings -178,2026-10-28T18:25:19,3.0,win,0.88,1.5,-178.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Emanuel Wilson,rec yds,6.0,11.0,lean,0.27,5.0,56,8.1,48,83,OVER,fanduel -102,2026-10-28T18:25:19,15.0,win,1.15,5.5,-108.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Noah Gray,rec yds,16.5,22.5,lean,0.28,6.0,57,6.7,50,37,OVER,draftkings -111,2026-10-28T18:25:19,44.0,win,0.88,16.5,-111.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Cooper Kupp,rec yds,25.0,31.6,lean,0.27,6.6,56,6.5,50,26,OVER,draftkings -110,2026-10-28T18:25:19,20.0,loss,1.06,24.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Kenneth Walker III,rec yds,22.5,16.9,lean,-0.24,-5.6,56,5.7,50,-25,UNDER,draftkings -111,2026-10-28T18:25:19,21.0,win,0.85,23.5,-111.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Rashid Shaheed,rec yds,24.5,29.3,lean,0.2,4.8,55,5.1,50,20,OVER,draftkings -108,2026-10-28T18:25:19,1.0,loss,1.05,24.5,-108.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,AJ Barner,rec yds,25.5,29.7,lean,0.17,4.2,54,4.4,50,17,OVER,draftkings -109,2026-10-28T18:25:19,42.0,win,1.0,24.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Travis Kelce,receptions,4.5,3.9,lean,-0.25,-0.6,56,1.0,55,-12,UNDER,draftkings -131,2026-10-28T18:25:19,4.0,win,1.08,4.5,-131.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Sam Darnold,pass TD,1.5,1.3,lean,-0.17,-0.2,54,-0.2,54,-13,UNDER,fanduel -135,2026-10-28T18:25:19,1.0,win,1.12,1.5,-135.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,AJ Barner,receptions,2.5,3.0,lean,0.3,0.5,57,-0.3,57,21,OVER,draftkings -156,2026-10-28T18:25:19,4.0,win,1.0,2.5,-156.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jalen Royals,receptions,2.5,2.0,lean,-0.29,-0.5,57,-1.5,58,-21,UNDER,draftkings -155,2026-10-28T18:25:19,0.0,win,1.23,2.5,-155.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Patrick Mahomes,pass TD,1.5,1.2,lean,-0.24,-0.3,56,-6.7,62,-19,UNDER,draftkings -190,2026-10-28T18:25:19,0.0,win,0.91,1.5,-190.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Emanuel Wilson,receptions,1.5,1.6,—,0.07,0.1,52,11.1,41,7,OVER,draftkings +133,2026-10-28T18:25:19,1.0,loss,1.15,1.5,133.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Emmett Johnson,receptions,1.5,1.7,—,0.1,0.2,52,8.7,44,11,OVER,draftkings +124,2026-10-28T18:25:19,2.0,win,0.98,1.5,124.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Xavier Worthy,receptions,4.5,4.3,—,-0.1,-0.2,52,3.8,49,-5,UNDER,draftkings +100,2026-10-28T18:25:19,3.0,win,1.14,4.5,100.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,George Holani,receptions,1.5,1.4,—,-0.04,-0.1,51,3.8,47,-4,UNDER,draftkings +100,2026-10-28T18:25:19,1.0,win,1.11,1.5,100.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Cooper Kupp,receptions,2.5,2.6,—,0.07,0.1,52,3.4,48,5,OVER,fanduel -102,2026-10-28T18:25:19,2.0,loss,1.06,2.5,-102.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Travis Kelce,rec yds,46.5,50.5,—,0.13,4.0,53,2.9,50,9,OVER,draftkings -113,2026-10-28T18:25:19,44.0,loss,1.08,45.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Sunday,Kenneth Walker III,rush yds,79.5,94.8,—,0.39,15.2,53,2.7,50,19,OVER,draftkings -112,2026-10-28T18:25:19,36.0,loss,0.85,79.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Jaxon Smith-Njigba,rec yds,92.0,96.7,—,0.1,4.7,52,2.5,50,5,OVER,draftkings -111,2026-10-28T18:25:19,150.0,win,1.03,91.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Jalen Royals,rec yds,21.5,23.9,—,0.1,2.4,52,2.3,50,11,OVER,draftkings -113,2026-10-28T18:25:19,0.0,loss,1.23,21.5,-113.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,George Holani,rec yds,8.5,9.8,—,0.07,1.3,52,2.3,49,15,OVER,draftkings -106,2026-10-28T18:25:19,12.0,win,1.11,8.5,-106.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,George Holani,rush yds,9.5,17.2,—,0.38,7.7,52,1.7,51,81,OVER,fanduel -113,2026-10-28T18:25:19,11.0,win,1.11,9.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Emmett Johnson,rush yds,8.5,15.8,—,0.36,7.3,52,1.7,50,85,OVER,fanduel -113,2026-10-28T18:25:19,0.0,loss,0.98,8.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Sunday,Xavier Worthy,rec yds,50.0,52.1,—,0.06,2.1,52,1.3,50,4,OVER,fanduel -113,2026-10-28T18:25:19,11.0,loss,1.14,49.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Sam Darnold,pass yds,227.5,228.6,—,0.01,1.1,50,0.5,50,0,OVER,draftkings -111,2026-10-28T18:25:19,257.0,win,1.12,225.5,-113.0,fanduel,4.0,4.0
+2026,7,Week 7 Sunday,Patrick Mahomes,rush yds,17.5,15.9,—,-0.07,-1.6,50,0.0,50,-9,UNDER,draftkings -112,2026-10-28T18:25:19,14.0,win,0.91,17.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Emanuel Wilson,rush yds,52.5,46.8,—,-0.18,-5.7,50,-0.2,50,-11,UNDER,fanduel -113,2026-10-28T18:25:19,100.0,loss,1.15,53.5,-114.0,draftkings,2.0,4.0
+2026,7,Week 7 Sunday,Sam Darnold,rush yds,4.0,8.3,—,0.23,4.3,50,-0.4,50,108,OVER,fanduel -113,2026-10-28T18:25:19,17.0,win,1.12,3.5,-116.0,draftkings,1.0,4.0
+2026,7,Week 7 Sunday,Jaxon Smith-Njigba,receptions,7.0,7.1,—,0.02,0.1,51,-0.6,51,1,OVER,draftkings +107,2026-10-28T18:25:19,9.0,win,1.03,6.5,-154.0,fanduel,1.0,4.0
+2026,7,Week 7 Sunday,Rashid Shaheed,receptions,2.5,2.4,—,-0.06,-0.1,51,-5.6,57,-4,UNDER,draftkings -151,2026-10-28T18:25:19,2.0,win,1.05,2.5,-151.0,draftkings,0.0,4.0
+2026,7,Week 7 Sunday,Tory Horton,receptions,1.5,1.5,—,-0.01,-0.0,50,-8.8,59,-1,UNDER,draftkings -163,2026-10-28T18:25:19,0.0,win,0.71,1.5,-163.0,draftkings,0.0,4.0
+2026,7,Week 7 Monday,Ryan Flournoy,rec yds,35.5,44.9,solid,0.34,9.4,58,7.6,50,27,OVER,fanduel -113,2026-10-28T18:25:19,70.0,win,0.93,35.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Monday,Dameon Pierce,rec yds,1.5,7.0,solid,0.33,5.5,58,7.5,50,370,OVER,draftkings -108,2026-10-28T18:25:19,1.0,loss,0.58,1.5,-108.0,draftkings,0.0,4.0
+2026,7,Week 7 Monday,Elijah Moore,rec yds,10.0,14.6,lean,0.24,4.6,56,6.2,49,46,OVER,draftkings -107,2026-10-28T18:25:19,16.0,win,0.76,9.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Monday,Tanner McKee,pass yds,202.5,221.6,lean,0.24,19.1,56,5.9,50,9,OVER,draftkings -111,2026-10-28T18:25:19,211.0,win,1.16,201.5,-113.0,fanduel,2.0,4.0
+2026,7,Week 7 Monday,Makai Lemon,rec yds,39.0,46.3,lean,0.25,7.3,56,5.9,50,19,OVER,draftkings -112,2026-10-28T18:25:19,67.0,win,1.12,38.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Monday,Jake Ferguson,rec yds,18.0,22.5,lean,0.2,4.5,55,5.3,49,25,OVER,draftkings -107,2026-10-28T18:25:19,0.0,loss,1.1,17.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Monday,Dallas Goedert,rec yds,49.5,55.5,lean,0.18,6.0,54,4.6,50,12,OVER,draftkings -110,2026-10-28T18:25:19,48.0,loss,0.99,49.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Monday,Elijah Moore,receptions,1.5,1.1,lean,-0.23,-0.4,55,4.2,51,-23,UNDER,draftkings -110,2026-10-28T18:25:19,2.0,loss,0.76,1.5,-110.0,draftkings,0.0,4.0
+2026,7,Week 7 Monday,Darius Cooper,receptions,3.5,2.9,lean,-0.29,-0.6,57,0.7,56,-17,UNDER,fanduel -144,2026-10-28T18:25:19,1.0,win,1.16,3.5,-144.0,fanduel,0.0,4.0
+2026,7,Week 7 Monday,Brevyn Spann-Ford,receptions,1.5,1.2,lean,-0.16,-0.2,54,-0.9,55,-17,UNDER,fanduel -130,2026-10-28T18:25:19,2.0,loss,0.84,1.5,-130.0,fanduel,0.0,4.0
+2026,7,Week 7 Monday,Javonte Williams,receptions,2.5,2.2,lean,-0.15,-0.3,54,-1.5,55,-11,UNDER,fanduel -136,2026-10-28T18:25:19,0.0,win,1.0,2.5,-136.0,fanduel,0.0,4.0
+2026,7,Week 7 Monday,Tanner McKee,pass TD,1.5,1.7,—,0.15,0.2,53,17.2,36,11,OVER,draftkings +172,2026-10-28T18:25:19,1.0,loss,1.16,1.5,172.0,draftkings,0.0,4.0
+2026,7,Week 7 Monday,George Pickens,receptions,4.5,4.3,—,-0.08,-0.2,52,7.5,44,-4,UNDER,fanduel +116,2026-10-28T18:25:19,4.0,win,1.13,4.5,116.0,fanduel,0.0,4.0
+2026,7,Week 7 Monday,Ryan Flournoy,receptions,3.5,3.7,—,0.08,0.2,52,4.5,48,5,OVER,fanduel -102,2026-10-28T18:25:19,4.0,win,0.93,3.5,-102.0,fanduel,0.0,4.0
+2026,7,Week 7 Monday,CeeDee Lamb,rec yds,80.0,75.9,—,-0.1,-4.1,52,2.1,50,-5,UNDER,fanduel -113,2026-10-28T18:25:19,74.0,win,1.14,80.5,-114.0,draftkings,1.0,4.0
+2026,7,Week 7 Monday,Javonte Williams,rec yds,12.0,13.6,—,0.08,1.6,52,2.0,50,13,OVER,draftkings -111,2026-10-28T18:25:19,0.0,loss,1.0,11.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Monday,Saquon Barkley,rec yds,13.5,11.6,—,-0.09,-1.9,52,1.7,51,-14,UNDER,fanduel -113,2026-10-28T18:25:19,9.0,win,1.3,13.5,-113.0,fanduel,0.0,4.0
+2026,7,Week 7 Monday,Saquon Barkley,rush yds,65.0,53.6,—,-0.33,-11.4,51,1.3,50,-18,UNDER,draftkings -110,2026-10-28T18:25:19,62.0,win,1.3,65.5,-110.0,draftkings,1.0,4.0
+2026,7,Week 7 Monday,Brevyn Spann-Ford,rec yds,13.5,14.5,—,0.05,1.0,51,1.2,50,8,OVER,draftkings -112,2026-10-28T18:25:19,11.0,loss,0.84,13.5,-112.0,draftkings,0.0,4.0
+2026,7,Week 7 Monday,Dak Prescott,pass yds,264.0,266.4,—,0.03,2.4,51,0.9,50,1,OVER,draftkings -111,2026-10-28T18:25:19,212.0,loss,1.06,263.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Monday,Dak Prescott,rush yds,10.0,10.2,—,0.01,0.2,50,0.8,49,2,OVER,draftkings -105,2026-10-28T18:25:19,8.0,loss,1.06,9.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Monday,Jake Ferguson,receptions,2.5,2.5,—,-0.01,-0.0,50,0.4,50,-1,UNDER,fanduel -108,2026-10-28T18:25:19,0.0,win,1.1,2.5,-108.0,fanduel,0.0,4.0
+2026,7,Week 7 Monday,Dameon Pierce,rush yds,19.0,23.7,—,0.21,4.7,50,0.4,50,25,OVER,draftkings -109,2026-10-28T18:25:19,47.0,win,0.58,18.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Monday,Tanner McKee,rush yds,4.0,1.2,—,-0.15,-2.8,50,0.4,50,-69,UNDER,draftkings -108,2026-10-28T18:25:19,1.0,win,1.16,4.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Monday,George Pickens,rec yds,64.0,64.0,—,-0.0,-0.0,50,0.2,50,0,UNDER,draftkings -110,2026-10-28T18:25:19,57.0,win,1.13,64.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Monday,Makai Lemon,receptions,4.0,4.2,—,0.08,0.2,52,0.1,52,4,OVER,draftkings +123,2026-10-28T18:25:19,7.0,win,1.12,3.5,-188.0,fanduel,1.0,4.0
+2026,7,Week 7 Monday,Javonte Williams,rush yds,65.0,63.2,—,-0.05,-1.8,50,0.1,50,-3,UNDER,draftkings -111,2026-10-28T18:25:19,155.0,loss,1.0,65.5,-113.0,fanduel,1.0,4.0
+2026,7,Week 7 Monday,Darius Cooper,rec yds,39.0,39.3,—,0.01,0.3,50,0.0,50,1,OVER,fanduel -113,2026-10-28T18:25:19,17.0,loss,1.16,38.5,-114.0,draftkings,1.0,4.0
+2026,7,Week 7 Monday,Tyler Goodson,rush yds,13.0,12.1,—,-0.04,-0.9,50,-0.1,50,-7,UNDER,draftkings -113,2026-10-28T18:25:19,38.0,loss,1.18,13.5,-113.0,draftkings,1.0,4.0
+2026,7,Week 7 Monday,Saquon Barkley,receptions,2.5,2.4,—,-0.07,-0.1,52,-1.4,53,-5,UNDER,draftkings -125,2026-10-28T18:25:19,2.0,win,1.3,2.5,-125.0,draftkings,0.0,4.0
+2026,7,Week 7 Monday,CeeDee Lamb,receptions,6.5,6.6,—,0.04,0.1,51,-2.9,54,2,OVER,draftkings -133,2026-10-28T18:25:19,5.0,loss,1.14,6.5,-133.0,draftkings,0.0,4.0
+2026,7,Week 7 Monday,Dak Prescott,pass TD,1.5,1.5,—,0.03,0.0,51,-3.4,54,2,OVER,draftkings -134,2026-10-28T18:25:19,3.0,win,1.06,1.5,-134.0,draftkings,0.0,4.0
+2026,7,Week 7 Monday,Dallas Goedert,receptions,5.5,5.4,—,-0.03,-0.1,51,-3.7,55,-1,UNDER,fanduel -136,2026-10-28T18:25:19,5.0,win,0.99,5.5,-136.0,fanduel,0.0,4.0
