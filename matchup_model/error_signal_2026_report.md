@@ -1,4 +1,4 @@
-# Error-signal audit — 2026 weeks 1-7
+# Error-signal audit — 2026 weeks 1-8
 (all player-profile features built walk-forward from strictly-prior-week exports only -- see module docstring)
 
 ## Part A — defense faced that week
@@ -48,37 +48,37 @@ n=2521 props. 38 tests — expect ~1.9 false positives at p<0.05 by chance; trea
 
 ## Part B — trailing receiving profile (YPRR, aDOT, man-coverage share)
 
-n=211 player-weeks. 6 tests.
+n=220 player-weeks. 6 tests.
 
 | feature | vs | n | r | p |
 |---|---|--:|--:|--:|
-| man_tgt_share | mean_z_error | 211 | 0.166 | 0.0156 |
-| aDOT | mean_z_error | 208 | 0.136 | 0.0497 |
-| YPRR | mean_z_error | 211 | 0.09 | 0.1923 |
-| aDOT | mean_abs_z_error | 208 | 0.043 | 0.5368 |
-| man_tgt_share | mean_abs_z_error | 211 | -0.043 | 0.5307 |
-| YPRR | mean_abs_z_error | 211 | 0.027 | 0.6996 |
+| YPRR | mean_abs_z_error | 220 | 0.125 | 0.0632 |
+| aDOT | mean_z_error | 217 | 0.117 | 0.0848 |
+| man_tgt_share | mean_z_error | 220 | 0.115 | 0.0877 |
+| YPRR | mean_z_error | 220 | 0.065 | 0.3392 |
+| aDOT | mean_abs_z_error | 217 | 0.06 | 0.3768 |
+| man_tgt_share | mean_abs_z_error | 220 | 0.03 | 0.6556 |
 
 ## Part C — trailing rushing-efficiency profile (success rate, stuff rate, YBC/att, YACO/att, EPA/att, MTF/att, hit rate)
 
-n=85 player-weeks. 14 tests.
+n=89 player-weeks. 14 tests.
 
 | feature | vs | n | r | p |
 |---|---|--:|--:|--:|
-| SUCC % | mean_z_error | 85 | 0.253 | 0.0193 |
-| EPA/A | mean_z_error | 85 | 0.219 | 0.0441 |
-| STUFF % | mean_z_error | 85 | -0.177 | 0.1054 |
-| MTF/A | mean_abs_z_error | 85 | -0.148 | 0.1753 |
-| YACO/ATT | mean_z_error | 85 | 0.145 | 0.1844 |
-| STUFF % | mean_abs_z_error | 85 | 0.139 | 0.2033 |
-| YACO/ATT | mean_abs_z_error | 85 | -0.133 | 0.2258 |
-| SUCC % | mean_abs_z_error | 85 | -0.111 | 0.314 |
-| MTF/A | mean_z_error | 85 | 0.088 | 0.4249 |
-| YBC/ATT | mean_z_error | 85 | 0.065 | 0.5554 |
-| YBC/ATT | mean_abs_z_error | 85 | -0.054 | 0.6252 |
-| HIT % | mean_abs_z_error | 85 | -0.052 | 0.6358 |
-| HIT % | mean_z_error | 85 | 0.051 | 0.6453 |
-| EPA/A | mean_abs_z_error | 85 | 0.003 | 0.9777 |
+| SUCC % | mean_z_error | 89 | 0.241 | 0.0232 |
+| EPA/A | mean_z_error | 89 | 0.238 | 0.0248 |
+| STUFF % | mean_z_error | 89 | -0.17 | 0.1109 |
+| YACO/ATT | mean_z_error | 89 | 0.124 | 0.2468 |
+| MTF/A | mean_abs_z_error | 89 | -0.115 | 0.2814 |
+| YBC/ATT | mean_z_error | 89 | 0.075 | 0.4867 |
+| HIT % | mean_abs_z_error | 89 | -0.073 | 0.4963 |
+| YACO/ATT | mean_abs_z_error | 89 | -0.06 | 0.5735 |
+| EPA/A | mean_abs_z_error | 89 | 0.043 | 0.6905 |
+| YBC/ATT | mean_abs_z_error | 89 | -0.026 | 0.8058 |
+| STUFF % | mean_abs_z_error | 89 | -0.025 | 0.8162 |
+| HIT % | mean_z_error | 89 | -0.023 | 0.833 |
+| MTF/A | mean_z_error | 89 | 0.022 | 0.8374 |
+| SUCC % | mean_abs_z_error | 89 | -0.007 | 0.9465 |
 
 ## Not tested — needs a new Data Suite pull, not just new code
 

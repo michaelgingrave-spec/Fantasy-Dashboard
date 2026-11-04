@@ -1,4 +1,4 @@
-# Calibrated-conviction walk-forward — 2026 test weeks [3, 4, 5, 6, 7]
+# Calibrated-conviction walk-forward — 2026 test weeks [3, 4, 5, 6, 7, 8]
 
 Each test week is calibrated ONLY on earlier weeks; price-aware ROI at the best available price; shrink k=25, min calibrated p=0.55.
 
@@ -6,16 +6,16 @@ Each test week is calibrated ONLY on earlier weeks; price-aware ROI at the best 
 
 | method | K | n | win% | ROI |
 |---|--:|--:|--:|--:|
-| calibrated EV | 8 | 39 | 41.0 | -18.9% |
-| tier (high>strong>solid, then |z|) | 8 | 39 | 53.8 | -2.7% |
-| tier, Recommended only | 8 | 40 | 52.5 | -7.6% |
-| model p-edge | 8 | 39 | 53.8 | +25.2% |
-| calibrated EV | 16 | 79 | 48.1 | -7.5% |
-| tier (high>strong>solid, then |z|) | 16 | 79 | 59.5 | +5.1% |
-| tier, Recommended only | 16 | 80 | 56.2 | +0.9% |
-| model p-edge | 16 | 79 | 51.9 | +12.4% |
-| ALL labeled props (reference) | all | 1428 | 53.2 | -0.9% |
-| every calibrated pick (p>=p_min, +EV) | all | 197 | 49.7 | -6.9% |
+| calibrated EV | 8 | 47 | 42.6 | -16.6% |
+| tier (high>strong>solid, then |z|) | 8 | 47 | 53.2 | -4.9% |
+| tier, Recommended only | 8 | 48 | 52.1 | -9.1% |
+| model p-edge | 8 | 47 | 53.2 | +22.4% |
+| calibrated EV | 16 | 95 | 48.4 | -7.6% |
+| tier (high>strong>solid, then |z|) | 16 | 95 | 58.9 | +3.1% |
+| tier, Recommended only | 16 | 96 | 55.2 | -1.1% |
+| model p-edge | 16 | 95 | 51.6 | +11.2% |
+| ALL labeled props (reference) | all | 1671 | 53.1 | -1.3% |
+| every calibrated pick (p>=p_min, +EV) | all | 226 | 50.0 | -6.9% |
 
 ## Per week, top 8
 
@@ -41,15 +41,19 @@ Each test week is calibrated ONLY on earlier weeks; price-aware ROI at the best 
 | tier (high>strong>solid, then |z|) | 7 | 8 | 62.5 | +6.2% |
 | tier, Recommended only | 7 | 8 | 75.0 | +26.1% |
 | model p-edge | 7 | 8 | 50.0 | +12.4% |
+| calibrated EV | 8 | 8 | 50.0 | -5.3% |
+| tier (high>strong>solid, then |z|) | 8 | 8 | 50.0 | -15.9% |
+| tier, Recommended only | 8 | 8 | 50.0 | -16.5% |
+| model p-edge | 8 | 8 | 50.0 | +9.0% |
 
 ## Probability quality (Brier, lower is better) — every labeled prop in the test weeks
 
-n=1428; constant (training win rate)=0.2497, model p(hit)=0.2545, calibrated p=0.2512
+n=1671; constant (training win rate)=0.2496, model p(hit)=0.2542, calibrated p=0.2504
 
 | calibrated p | n | model said | calibrated said | actually won |
 |---|--:|--:|--:|--:|
-| <50 | 760 | 57.1% | 45.6% | 50.4% |
-| 50-55 | 366 | 59.7% | 52.3% | 57.9% |
-| 55-60 | 209 | 62.4% | 57.2% | 57.4% |
-| 60-65 | 72 | 65.3% | 61.8% | 44.4% |
-| 65+ | 21 | 72.8% | 69.0% | 57.1% |
+| <50 | 861 | 56.9% | 45.6% | 50.1% |
+| 50-55 | 443 | 59.5% | 52.2% | 56.7% |
+| 55-60 | 254 | 61.6% | 57.2% | 59.8% |
+| 60-65 | 86 | 64.5% | 61.9% | 45.3% |
+| 65+ | 27 | 72.6% | 69.0% | 51.9% |
