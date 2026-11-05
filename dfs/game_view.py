@@ -20,6 +20,10 @@ from dfs.names import normalize_name
 
 POS = ("QB", "RB", "WR", "TE")
 ROSTER_GAMES = 3                  # a player is on the team's roster here if he played in one of its last three games (and his latest game was for it)
+# A thin-history line (see project_players) only for players FantasyPoints projects at this many points or more. Checked on 2026 weeks 2-8 (116 player-weeks of players FantasyPoints projects
+# with 1-2 prior games, mostly rookies): the thin line ran +1.0 high against FantasyPoints' -0.4 (+1.3 under 3 points, where its squared error was worse than FantasyPoints'), and from 5 points
+# up (n = 32) it was level with FantasyPoints (bias +0.14 against +0.15, RMSE 6.97 against 6.80, both wide of the mark: rookies are volatile).
+THIN_MIN_FP = 5.0
 STAT_KEYS = ("pass_att", "pass_yds", "pass_td", "int", "rush_att", "rush_yds", "rush_td", "tgt", "rec", "rec_yds", "rec_td")
 # the stat columns each position's table shows: (key, label)
 _CATCHES = [("rec", "Rec"), ("rec_yds", "Rec yds"), ("rec_td", "Rec TD"), ("any_td", "Any TD %")]
@@ -133,13 +137,25 @@ def _blended(nk: str, pos: str, season: int, week: int) -> dict:
     return blend.blended_line(nk, pos, season, week)
 
 
-def project_players(cands: pd.DataFrame, season: int, week: int, line_fn=None) -> pd.DataFrame:
-    """Our projection for each candidate: `ours` (blended DK points), the opportunity-model and trailing pieces, the role ratio, the stat line, and how it was made."""
-    line_fn = line_fn or _blended
+def _thin(nk: str, pos: str, season: int, week: int) -> dict:
+    from matchup_model.opp import blend
+    return blend.blended_line(nk, pos, season, week, thin=True)
+
+
+def project_players(cands: pd.DataFrame, season: int, week: int, line_fn=None, thin_fn=None) -> pd.DataFrame:
+    """Our projection for each candidate: `ours` (blended DK points), the opportunity-model and trailing pieces, the role ratio, the stat line, and how it was made.
+
+    A player FantasyPoints projects at THIN_MIN_FP or more but our model cannot (a rookie or a new starter with fewer than MIN_GAMES games) gets `thin_fn`'s line instead, marked source
+    'opp_thin': only on this screen and in the simulator that reads its table, and only when a FantasyPoints export is loaded (`has_fp`), so past games rebuilt without one are
+    unchanged. With no `line_fn` given the real `_blended` / `_thin` pair is used; a test that injects `line_fn` injects `thin_fn` too or goes without."""
+    if line_fn is None:
+        line_fn, thin_fn = _blended, thin_fn or _thin
     rows = []
     for c in cands.itertuples():
         try:
             bl = line_fn(c.nk, c.pos, season, week) or {}
+            if bl.get("fp") is None and thin_fn is not None and c.has_fp and c.fp >= THIN_MIN_FP:
+                bl = thin_fn(c.nk, c.pos, season, week) or {}
         except Exception:  # noqa: BLE001 -- one player with thin data must not take the table down
             bl = {}
         ln = bl.get("line") or {}
@@ -150,12 +166,12 @@ def project_players(cands: pd.DataFrame, season: int, week: int, line_fn=None) -
     return pd.concat([cands.reset_index(drop=True), pd.DataFrame(rows)], axis=1)
 
 
-def game_table(away: str, home: str, season: int, week: int, fp: pd.DataFrame | None, line_fn=None) -> pd.DataFrame:
+def game_table(away: str, home: str, season: int, week: int, fp: pd.DataFrame | None, line_fn=None, thin_fn=None) -> pd.DataFrame:
     """One row per player in the game with everything the screen shows (filters are applied afterwards, so toggling them is instant)."""
     cands = game_candidates(away, home, season, week, fp)
     if cands.empty:
         return cands.assign(ours=[], inj=[], diff=[], sort_key=[], any_td=[])
-    t = project_players(cands, season, week, line_fn)
+    t = project_players(cands, season, week, line_fn, thin_fn)
     tags = injury_tags((away, home), season, week)
     t["inj"] = [tags.get((tm, nk), "") for tm, nk in zip(t["team"], t["nk"])]
     td = t["rush_td"].fillna(0.0) + t["rec_td"].fillna(0.0)
@@ -241,7 +257,8 @@ def _col_config(cols: list[tuple[str, str]], detail: bool) -> dict:
                                                   help="Chance of at least one rushing or receiving TD, from our expected TDs (1 - e^-x)." if label == "Any TD %" else None)
     if detail:
         cc.update({"Opp model": st.column_config.NumberColumn("Opp model", format="%.1f"), "Trailing": st.column_config.NumberColumn("Trailing", format="%.1f"),
-                   "FP ÷ ours": st.column_config.NumberColumn("FP ÷ ours", format="%.2f", help="FantasyPoints' number over our pre-nudge number (1.0 = they agree).")})
+                   "FP ÷ ours": st.column_config.NumberColumn("FP ÷ ours", format="%.2f", help="FantasyPoints' number over our pre-nudge number (1.0 = they agree)."),
+                   "Games": st.column_config.NumberColumn("Games", format="%d", help="Games of NFL history our model had for him. Fewer than 3 is a thin-history line (source 'opp_thin'): league priors do most of the work.")})
     return cc
 
 
@@ -255,7 +272,7 @@ def _show(t: pd.DataFrame, pos: str, detail: bool, has_salary: bool) -> None:
     for k, label in cols:
         out[label] = g[k]
     if detail:
-        out["Opp model"], out["Trailing"], out["FP ÷ ours"] = g["opp_fp"], g["trailing_fp"], g["role_ratio"]
+        out["Opp model"], out["Trailing"], out["FP ÷ ours"], out["Games"] = g["opp_fp"], g["trailing_fp"], g["role_ratio"], g["games"]
     st.subheader(f"{pos} ({len(g)})")
     st.dataframe(out, hide_index=True, width="stretch", column_config=_col_config(cols, detail))
 
@@ -309,7 +326,8 @@ def render(week: int, slate_df: pd.DataFrame | None = None) -> None:
     n_hidden = len(table) - len(view)
     st.caption(f"{len(view)} players shown" + (f", {n_hidden} hidden by the filters" if n_hidden else "") + ". Stat columns are our opportunity-model line, scaled to the FantasyPoints "
                "nudge; `Ours` also blends in the trailing DK average. A blank `Ours` means too little game history to project (a rookie or a new starter), and a blank `FP` "
-               "means FantasyPoints has no projection for him.")
+               f"means FantasyPoints has no projection for him. A new starter FantasyPoints projects at {THIN_MIN_FP:g}+ points with only 1-2 games of history still gets a thin-history line "
+               "(our opportunity model from the games he has, league priors for the rest, no trailing blend; `Games` in the model detail): a rough number, not the full model.")
 
 
 def _fp_path(week: int) -> Path:

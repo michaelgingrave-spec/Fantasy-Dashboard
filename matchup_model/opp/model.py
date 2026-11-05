@@ -163,6 +163,8 @@ def _priors(before_season: int) -> dict:
             "ypa": _wmean(pas.passing_yards, pas.attempts),
             "pass_td": _wmean(pas.passing_tds, pas.attempts),
             "int": _wmean(pas.passing_interceptions, pas.attempts),
+            "rush_yds_g": float(pas.rushing_yards.mean()) if len(pas) else np.nan,       # a passer's rushing per game: the prior for a quarterback with too few games of his own
+            "rush_td_g": float(pas.rushing_tds.mean()) if len(pas) else np.nan,
         }
     return out
 
@@ -323,12 +325,14 @@ def _trailing_yprr(name_key: str, pos: str, season: int, week: int) -> tuple:
 
 @lru_cache(maxsize=4096)
 def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
-             injury_adj: bool = False, yprr_adj: bool = False) -> dict:
+             injury_adj: bool = False, yprr_adj: bool = False, min_games: int | None = None) -> dict:
+    """`min_games` lowers the history a player needs (MIN_GAMES when None): the shrinkage to league priors then does what the missing games cannot. Only the thin-history
+    path of the game screens asks for it (`blend.blended_line(thin=True)`); the projections every other screen and every backtest use are unchanged."""
     pos = (pos or "").upper()
     if pos not in ("WR", "TE", "RB", "QB"):
         return {"dk_fp": None, "reason": f"pos {pos}"}
     h = _hist(key, pos, season, week, by=by)
-    if len(h) < MIN_GAMES:
+    if len(h) < (MIN_GAMES if min_games is None else min_games):
         return {"dk_fp": None, "reason": f"{len(h)} prior games"}
     pri = _priors(season)[pos]
     team = h.iloc[-1]["team"]
@@ -425,8 +429,11 @@ def opp_line(key: str, pos: str, season: int, week: int, by: str = "name",
         pass_td = att * ptd
         if np.isfinite(tv["team_total"]):
             pass_td *= float(np.clip(tv["team_total"] / 23.5, 0.85, 1.18))
-        rush_yds = _ewma(h["rushing_yards"].to_numpy())
-        rush_td = _ewma(h["rushing_tds"].to_numpy())
+        if n_g < MIN_GAMES:        # only reachable with min_games below MIN_GAMES: one game's rushing (a single scramble TD) is not a rate, so he gets the league's
+            rush_yds, rush_td = pri["rush_yds_g"], pri["rush_td_g"]
+        else:
+            rush_yds = _ewma(h["rushing_yards"].to_numpy())
+            rush_td = _ewma(h["rushing_tds"].to_numpy())
         line = {"pass_att": att, "pass_yds": att * ypa, "pass_td": pass_td,
                 "int": att * irt, "rush_yds": rush_yds if np.isfinite(rush_yds) else 0.0,
                 "rush_td": rush_td if np.isfinite(rush_td) else 0.0}

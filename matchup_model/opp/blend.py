@@ -156,15 +156,19 @@ def _fallback(name_key: str, pos: str, as_of_season, as_of_week) -> dict:
 
 
 def blended_line(name_key: str, pos: str, as_of_season: int | None = None,
-                 as_of_week: int | None = None) -> dict:
+                 as_of_week: int | None = None, thin: bool = False) -> dict:
     """Blended projected stat line + DK points. Falls back to `project_stats` when the
-    opportunity model has no line or the nflverse cache is unavailable."""
+    opportunity model has no line or the nflverse cache is unavailable.
+
+    `thin=True` is for a player with too little history for the normal path (a rookie or a new starter with 1-2 games): the opportunity model's own line from whatever games
+    he has, its league priors doing the work of the missing ones, no trailing-average blend (a cameo is not a trailing level), then the usual FantasyPoints nudge. source
+    'opp_thin'. Nothing else calls it with thin=True, so every other screen and backtest keeps projecting only players with MIN_GAMES of history."""
     pos = (pos or "").upper()
     season = int(as_of_season) if as_of_season else current_season()
     week = int(as_of_week) if as_of_week else 1
 
     if pos not in BLEND_W or not _ready():
-        return _fallback(name_key, pos, as_of_season, as_of_week)
+        return {} if thin else _fallback(name_key, pos, as_of_season, as_of_week)
 
     from dfs.names import normalize_name
     name_key = normalize_name(name_key)          # idempotent — callers usually pre-normalize
@@ -173,16 +177,16 @@ def blended_line(name_key: str, pos: str, as_of_season: int | None = None,
         from matchup_model.opp import model as M
         from matchup_model.opp.data import dk_points_from_line
 
-        o = M.opp_line(name_key, pos, season, week, by="name", injury_adj=INJURY_ADJ)
+        o = M.opp_line(name_key, pos, season, week, by="name", injury_adj=INJURY_ADJ, min_games=1 if thin else None)
         opp_fp = o.get("dk_fp")
         if opp_fp is None or not np.isfinite(opp_fp) or opp_fp <= 0.5:
-            return _fallback(name_key, pos, as_of_season, as_of_week)
+            return {} if thin else _fallback(name_key, pos, as_of_season, as_of_week)
 
         line = {k: round(v, 2) for k, v in o["line"].items()}
         line_fp = dk_points_from_line(line)     # the opp line's own DK total
-        naive = _naive_fp(name_key, pos, season, week)
+        naive = np.nan if thin else _naive_fp(name_key, pos, season, week)
         if not np.isfinite(naive):
-            base_fp, method, source = float(opp_fp), o.get("method", ""), "opp"
+            base_fp, method, source = float(opp_fp), o.get("method", ""), "opp_thin" if thin else "opp"
         else:
             w = BLEND_W[pos]
             base_fp = w * float(opp_fp) + (1.0 - w) * float(naive)
@@ -210,6 +214,6 @@ def blended_line(name_key: str, pos: str, as_of_season: int | None = None,
             out["fp_role_ratio"] = round(fp_role_ratio, 3)
         return out
     except Exception as e:  # noqa: BLE001 — never let the projection layer crash a screen
-        fb = _fallback(name_key, pos, as_of_season, as_of_week)
+        fb = {} if thin else _fallback(name_key, pos, as_of_season, as_of_week)
         fb.setdefault("reason", f"blend error: {e}")
         return fb

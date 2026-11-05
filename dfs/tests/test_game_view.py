@@ -156,6 +156,41 @@ def test_the_table_has_our_projection_the_fantasypoints_gap_and_the_derived_colu
     assert order[0] == "Alpha Passer" and order.index("Rookie Receiver") > order.index("Hotel Wideout")      # sorted by our number (FantasyPoints' where we have none)
 
 
+def test_a_thin_line_goes_only_to_players_the_model_cannot_project_and_fantasypoints_projects_at_five_or_more(league):
+    calls = []
+
+    def line(nk, pos, season, week):
+        return {"fp": None, "reason": "thin"} if nk in ("bravo wideout", "rookie receiver", "foxtrot tight") else _line(nk, pos, season, week)
+
+    def thin(nk, pos, season, week):
+        calls.append(nk)
+        return {"fp": 7.5, "line": {"tgt": 4.0, "rec": 2.5, "rec_yds": 30.0, "rec_td": 0.2}, "source": "opp_thin", "games": 1}
+
+    t = G.game_table("AAA", "BBB", 2026, 7, FP, line_fn=line, thin_fn=thin).set_index("name")
+    b = t.loc["Bravo Wideout Jr."]
+    assert b["ours"] == 7.5 and b["source"] == "opp_thin" and b["games"] == 1 and b["rec_yds"] == 30.0                       # FantasyPoints 12.0, no model line: a thin line
+    assert np.isnan(t.loc["Rookie Receiver", "ours"]) and np.isnan(t.loc["Foxtrot Tight", "ours"])                         # FantasyPoints 3.0 and 4.0: under THIN_MIN_FP, left blank
+    assert calls == ["bravo wideout"] and t.loc["Alpha Passer", "source"] == "opp_blend"                                   # asked once; players the model projects are untouched
+    calls.clear()
+    G.game_table("AAA", "BBB", 2026, 7, None, line_fn=line, thin_fn=thin)                                                   # no FantasyPoints export (past games): never asked
+    assert calls == []
+
+    def boom(nk, pos, season, week):
+        raise RuntimeError("no history at all")
+    assert np.isnan(G.game_table("AAA", "BBB", 2026, 7, FP, line_fn=line, thin_fn=boom).set_index("name").loc["Bravo Wideout Jr.", "ours"])        # a failure is a blank, not a crash
+
+
+def test_the_real_thin_path_is_used_only_when_no_line_function_is_injected(league, monkeypatch):
+    seen = []
+    monkeypatch.setattr(G, "_blended", lambda nk, pos, season, week: {"fp": None})
+    monkeypatch.setattr(G, "_thin", lambda nk, pos, season, week: seen.append(nk) or {"fp": 9.0, "line": {"tgt": 5.0}, "source": "opp_thin", "games": 2})
+    t = G.game_table("AAA", "BBB", 2026, 7, FP).set_index("name")
+    assert set(seen) == {"alpha passer", "bravo wideout", "hotel wideout", "golf passer"} and t.loc["Alpha Passer", "ours"] == 9.0      # FantasyPoints >= 5 and no model line
+    seen.clear()
+    G.game_table("AAA", "BBB", 2026, 7, FP, line_fn=lambda *a: {"fp": None})
+    assert seen == []                                                                                                              # an injected line function brings no thin path with it
+
+
 def test_a_player_whose_projection_blows_up_does_not_take_the_table_down(league):
     def flaky(nk, pos, season, week):
         if nk == "bravo wideout":
