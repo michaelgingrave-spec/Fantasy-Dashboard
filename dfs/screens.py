@@ -442,6 +442,11 @@ def render(screen: str) -> None:
         from dfs import game_view
         game_view.render(week, slate_df)             # slate_df is only used for the salary column; None (DK unreachable) just omits it
 
+    # ── Parlay Sim ─────────────────────────────────────────────────────────
+    elif screen == "Parlay Sim":
+        from dfs import sgp_view
+        sgp_view.render(week)
+
     # ── Matchup Finder ─────────────────────────────────────────────────────
     elif screen == "Matchup Finder":
         st.header("🎯 DFS Matchup Edge Finder")
