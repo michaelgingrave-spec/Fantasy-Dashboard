@@ -45,28 +45,32 @@ class Leg:
         return f"{who} {word} {self.line:g} {self.market.replace('_', ' ')}"
 
 
+def on_side(leg: Leg, x):
+    """Whether the number x (a player's stat, a team's margin or points, the game total; a scalar or an array) is on the leg's side of its line. A number exactly on the
+    line counts as a miss for both sides, the conservative treatment of a push; anytime TD is x > 0 (yes) or x == 0 (no); spread and moneyline read x as the team's margin."""
+    over = leg.side == "over"
+    if leg.market == "any_td":
+        return (x > 0.5) if over else (x < 0.5)
+    if leg.market == "spread":
+        return (x + leg.line > 0) if over else (x + leg.line < 0)
+    if leg.market == "moneyline":
+        return (x > 0) if over else (x < 0)
+    return (x > leg.line) if over else (x < leg.line)
+
+
 def leg_events(res: SimResult, leg: Leg) -> np.ndarray:
-    """Boolean (n,) array: the leg hits on each simulated path (a stat exactly on the number counts as a miss for both sides, the conservative treatment of a push)."""
+    """Boolean (n,) array: the leg hits on each simulated path (see `on_side` for a stat exactly on the number)."""
     m = leg.market
     if m in PLAYER_MARKETS:
         if leg.player not in res.stats:
             raise KeyError(f"{leg.player} is not in the simulated game")
-        x = res.stats[leg.player][PLAYER_MARKETS[m]].astype(float)
-        if m == "any_td":
-            return (x > 0.5) if leg.side == "over" else (x < 0.5)
-        return (x > leg.line) if leg.side == "over" else (x < leg.line)
-    if m == "spread":
-        margin = res.team[leg.team]["margin"]
-        return (margin + leg.line > 0) if leg.side == "over" else (margin + leg.line < 0)
-    if m == "moneyline":
-        margin = res.team[leg.team]["margin"]
-        return margin > 0 if leg.side == "over" else margin < 0
+        return on_side(leg, res.stats[leg.player][PLAYER_MARKETS[m]].astype(float))
+    if m in ("spread", "moneyline"):
+        return on_side(leg, res.team[leg.team]["margin"])
     if m == "team_total":
-        x = res.team[leg.team]["points"]
-        return (x > leg.line) if leg.side == "over" else (x < leg.line)
+        return on_side(leg, res.team[leg.team]["points"])
     if m == "total":
-        x = sum(v["points"] for v in res.team.values())
-        return (x > leg.line) if leg.side == "over" else (x < leg.line)
+        return on_side(leg, sum(v["points"] for v in res.team.values()))
     raise ValueError(f"unknown market {m!r}")
 
 
@@ -161,6 +165,27 @@ def price(res: SimResult, legs: list[Leg], mode: str = "market") -> dict:
     se = float(np.sqrt(max(joint * (1 - joint), 0.0) / n_eff))
     return {"legs": [l.label() for l in legs], "leg_prob": targets, "sim_leg_prob": own, "joint": joint, "se": se, "independent": indep, "lift": joint / indep if indep > 0 else float("nan"),
             "sim_joint": own_joint, "fair_decimal": 1.0 / joint if joint > 0 else float("inf"), "fair_american": to_american(joint), "corr": corr}
+
+
+def conditional(res: SimResult, given: list[Leg], candidates: list[Leg]) -> list[dict]:
+    """How often each candidate leg hits when every leg in `given` hits, in the market-pinned world of `price` (a leg with `p` is pinned to it, the others keep the simulator's number).
+
+    One dict per candidate: `alone` (its probability), `joint` (the given legs and this one all hit), `when_given` (joint over the chance the given legs all hit) and `lift` (when_given
+    over alone: above 1 the candidate tends to hit with the given legs). The given legs' table is built once; each candidate adds one more leg to it."""
+    if not given:
+        raise ValueError("conditional needs at least one given leg")
+    w = _weights(res)
+    eps = 0.5 * float((w ** 2).sum())
+    ev = [leg_events(res, l) for l in given]
+    t = [l.p if l.p is not None else float((e * w).sum()) for l, e in zip(given, ev)]
+    base = float(ipf_joint(cell_table(ev, w, eps), t)[(1,) * len(ev)]) if len(ev) > 1 else t[0]
+    out = []
+    for c in candidates:
+        e = leg_events(res, c)
+        alone = c.p if c.p is not None else float((e * w).sum())
+        joint = float(ipf_joint(cell_table(ev + [e], w, eps), t + [alone])[(1,) * (len(ev) + 1)])
+        out.append({"alone": alone, "joint": joint, "when_given": joint / max(base, 1e-12), "lift": joint / max(base * alone, 1e-12)})
+    return out
 
 
 def to_american(p: float) -> float:

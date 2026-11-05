@@ -220,6 +220,24 @@ def test_market_mode_pins_each_leg_to_the_book_and_own_mode_does_not(game):
     assert own["leg_prob"] == pytest.approx(own["sim_leg_prob"])
 
 
+def test_conditional_is_the_priced_joint_over_the_given_legs_chance_and_respects_the_pins(game):
+    _, _, r = game
+    qb = S.Leg("pass_yds", "over", 250.5, player="Home QB", p=0.40)
+    wr = S.Leg("rec_yds", "over", 70.5, player="Home WR1", p=0.45)
+    rb = S.Leg("rush_yds", "over", 70.5, player="Away RB")                                   # no price: the simulator's own number
+    out = S.conditional(r, [qb], [wr, rb])
+    for leg, o in zip((wr, rb), out):
+        priced = S.price(r, [qb, leg], mode="market")
+        assert o["joint"] == pytest.approx(priced["joint"], abs=1e-9)                        # the same table and the same pinning as the parlay price
+        assert o["when_given"] == pytest.approx(o["joint"] / 0.40) and o["lift"] == pytest.approx(o["when_given"] / o["alone"])
+    assert out[0]["alone"] == 0.45 and out[1]["alone"] == pytest.approx(S.leg_prob(r, rb))
+    assert out[0]["lift"] > 1.2                                                              # a quarterback and his wideout hit together
+    two = S.conditional(r, [qb, wr], [S.Leg("any_td", "over", player="HOM TE")])[0]         # given more than one leg: the denominator is their priced joint
+    assert two["joint"] / two["when_given"] == pytest.approx(S.price(r, [qb, wr], mode="market")["joint"], abs=1e-9)
+    with pytest.raises(ValueError):
+        S.conditional(r, [], [wr])
+
+
 def test_compact_shrinks_the_arrays_without_changing_the_numbers():
     home = _team("HOM", 25.0, "Home QB", ("Home WR1", "Home WR2"), "Home RB")
     away = _team("AWY", 20.0, "Away QB", ("Away WR1", "Away WR2"), "Away RB")

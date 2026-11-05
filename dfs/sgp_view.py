@@ -2,7 +2,9 @@
 
 Pick a game, take (or type) the legs with the book's odds, and the screen shows the parlay's fair price. Each leg is pinned to the book's no-vig probability, so the single
 legs are the market's and only the way they move together comes from the simulator (`matchup_model.sim`). Books price a same-game parlay with their own correlation and
-margin; the fair price is what to compare their offer with. The simulator is validated against past lines in `matchup_model/sim_report.md`.
+margin; the fair price is what to compare their offer with. The simulator is validated against past lines in `matchup_model/sim_report.md`. Under the price sits the legs'
+record: how often these players have hit these lines before, each alone and all together in one game (`matchup_model.sim.past`); under that, lines that tend to hit when the legs do,
+with a button to add them (`matchup_model.sim.recommend`).
 """
 from __future__ import annotations
 
@@ -16,6 +18,8 @@ from dfs import game_view as GV
 from dfs.names import normalize_name
 from matchup_model.sim import engine as E
 from matchup_model.sim import inputs as I
+from matchup_model.sim import past as P
+from matchup_model.sim import recommend as R
 from matchup_model.sim import sgp as S
 
 N_SIMS = 20000
@@ -136,29 +140,8 @@ def _idea_table(res: E.SimResult, cand: pd.DataFrame, players: set[str], min_joi
 
 def corr_map(res: E.SimResult, h: E.TeamSpec, a: E.TeamSpec, top: int = 12) -> pd.DataFrame:
     """The game's main player legs at the simulator's own medians (each about a coin flip) and how they move together: phi correlation and the chance both hit."""
-    legs, labels = [], []
-    for spec in (h, a):
-        ranked = sorted(spec.players, key=lambda p: -(p.rec_yds + p.rush_yds + p.pass_yds / 4))[:7]
-        for p in ranked:
-            for market in (("pass_yds", "rec_yds", "rush_yds", "rec", "any_td") if p.pos != "QB" else ("pass_yds", "pass_td", "rush_yds")):
-                if market not in res.stats[p.name]:
-                    continue
-                x = res.stats[p.name][market].astype(float)
-                if market == "any_td":
-                    line = 0.0
-                elif market in ("pass_td",):
-                    line = 1.5
-                else:
-                    med = float(np.median(x))
-                    if med < 1.0 or x.mean() < (3 if market == "rec" else 8):
-                        continue
-                    line = np.floor(med) + 0.5
-                if market in ("pass_yds",) and p.pos != "QB":
-                    continue
-                if market == "any_td" and float((x > 0.5).mean()) < 0.12:
-                    continue
-                legs.append(S.Leg(market, "over", float(line), player=p.name))
-                labels.append(legs[-1].label())
+    legs = R.median_legs(res, h, a)
+    labels = [l.label() for l in legs]
     ev = [S.leg_events(res, l) for l in legs]
     rows = []
     for i, j in itertools.combinations(range(len(legs)), 2):
@@ -178,6 +161,118 @@ def corr_map(res: E.SimResult, h: E.TeamSpec, a: E.TeamSpec, top: int = 12) -> p
 
 def _fmt_odds(x: float) -> str:
     return "n/a" if not np.isfinite(x) else f"{x:+.0f}"
+
+
+def _cell(k: int, n: int) -> str:
+    return "no games" if n == 0 else f"{k} of {n} ({k / n:.0%})"
+
+
+def _render_past(legs: list[S.Leg], joint: float, season: int, week: int, away: str, home: str) -> None:
+    """The legs' record in past games, each alone and all together, with the number of games behind every figure. A description: it does not enter the price."""
+    st.subheader("How often these legs have hit before")
+    try:
+        past = P.past_hits(legs, season, week, (away, home))
+    except Exception as exc:  # noqa: BLE001 -- the price above stands without the record
+        st.caption(f"The past-game record is not available right now ({exc}).")
+        return
+
+    def cells(pairs) -> dict:
+        return {w: _cell(hits, games) for w, (hits, games) in zip(past.windows, pairs)}
+
+    rows = [{"Leg": l["label"] + ("" if l["games"] else "  (no past games found)"), **cells(l["cells"])} for l in past.legs]
+    k, n = past.together[-1]                                                      # the widest window holds every game there is
+    if len(legs) > 1:
+        rows.append({"Leg": "All legs together, in one game", **cells(past.together)})
+        rows.append({"Leg": "   if they had been independent in those games", **{w: "" if p is None else f"{p:.0%}" for w, p in zip(past.windows, past.independent)}})
+    st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
+    if len(legs) > 1:
+        if n:
+            lo, hi = P.wilson(k, n)
+            st.markdown(f"**Together since {past.first}: {k} of {n} games ({k / n:.0%}).** With {n} games the real rate could be anywhere from about {lo:.0%} to {hi:.0%} (90% range). "
+                        f"The price above is {joint:.1%}.")
+        else:
+            st.caption(f"These players have not all been in a game together since {past.first} (or one of them is missing from the box scores), so there is no record for the parlay as a whole.")
+    st.caption(f"Regular-season games before this one, {past.first} on, judged on the lines above (not the lines those games were set at). The leg rows count every game that player played; the "
+               "last two rows count only the games in which all of the players were in the same game, with what independence would give from each leg's own rate in those games. A player counts "
+               "as having played with a stat line or an offensive snap, and a stat exactly on a whole-number line is a miss. This is the record, not a forecast, and it does not change the price: "
+               "lines, roles, quarterbacks and opponents differ from game to game.")
+    if n:
+        with st.expander(f"The {n} games these players were all in"):
+            st.dataframe(past.games.head(60), hide_index=True, width="stretch")
+
+
+def book_legs(cand: pd.DataFrame, players: set[str]) -> list[S.Leg]:
+    """The lines pulled from the books for this game, as over-side legs carrying the book's probability of the over."""
+    names = {normalize_name(p): p for p in players}
+    out = []
+    for r in cand.itertuples():
+        nm, stat = names.get(normalize_name(r.player)), PULL_MARKETS.get(r.market)
+        if nm is not None and stat is not None:
+            out.append(S.Leg(stat, "over", float(r.line), player=nm, p=float(r.p_over)))
+    return out
+
+
+def row_from_leg(leg: S.Leg) -> dict:
+    """The legs-table row for a leg. A leg with a probability gets the prices that give it back: a main spread or total -110 each way, anything else the no-vig prices of its two sides."""
+    label = next(k for k, v in MARKETS.items() if v == leg.market)
+    side = ("Yes" if leg.side == "over" else "No") if leg.market in ("any_td", "spread", "moneyline") else ("Over" if leg.side == "over" else "Under")
+    if leg.p is None:
+        odds = opposite = None
+    elif leg.market in S.TEAM_MARKETS:
+        odds = opposite = -110.0
+    else:
+        odds, opposite = (float(round(S.to_american(q))) for q in (leg.p, 1.0 - leg.p))
+    return {"Who": leg.player or leg.team or "Game", "Market": label, "Side": side, "Line": None if leg.market == "any_td" else float(leg.line), "Odds": odds, "Opposite odds": opposite}
+
+
+def _past_cells(legs: list[S.Leg], picks: pd.DataFrame, season: int, week: int, away: str, home: str) -> list[tuple[str, str]]:
+    """Per pick: how often it hit together with the legs in past games, and how often it hit in the games where the legs did (n/a for a spread or total: those games had other lines)."""
+    cells = []
+    for leg in picks["leg"]:
+        if leg.market in S.TEAM_MARKETS:
+            cells.append(("n/a", "n/a"))
+            continue
+        past = P.past_hits(legs + [leg], season, week, (away, home))
+        (k, n), (x, y) = past.together[-1], past.last_given_rest[-1]
+        cells.append((f"{k} of {n}" if n else "never together", f"{x} of {y} ({x / y:.0%})" if y else "n/a"))
+    return cells
+
+
+def _render_picks(res: E.SimResult, h: E.TeamSpec, a: E.TeamSpec, legs: list[S.Leg], cand: pd.DataFrame, table_now: pd.DataFrame, season: int, week: int, away: str, home: str, rows_key: str) -> None:
+    """Lines that tend to hit when all of the legs hit (`matchup_model.sim.recommend`), with their past record and a button that adds the ones picked to the legs table."""
+    st.subheader("Picks that tend to hit with your legs")
+    st.caption("Other lines that tend to hit when all of your legs above hit, the best one per player (players already in your parlay are left out). The chances come from the simulator's link between legs, "
+               "with every leg you gave odds for held at the book's number.")
+    rank = st.radio("Rank by", ["Hits when your legs hit", "Lift"], horizontal=True, key="sgp_rank",
+                    help="Hits when your legs hit: the share of the simulated games where all your legs hit in which the line also hits. Lift: that over the line's chance on its own, which favours lines that are less likely alone.")
+    info = I.game_row(season, week, away, home)
+    game = None if info is None else {"home": home, "away": away, "spread_home": info["spread_home"], "total": info["total"]}
+    options = R.candidate_legs(res, h, a, book_legs(cand, {p.name for p in h.players + a.players}), game)
+    picks = R.recommend(res, legs, options, rank="lift" if rank == "Lift" else "when_given")
+    if picks.empty:
+        st.caption(f"No line clears the filters: at least {R.MIN_LIFT - 1:.0%} likelier to hit with your legs than alone, and between {R.BAND[0]:.0%} and {R.BAND[1]:.0%} on its own.")
+        return
+    try:
+        past = _past_cells(legs, picks, season, week, away, home)
+    except Exception:  # noqa: BLE001 -- the suggestions stand without their record
+        past = [("n/a", "n/a")] * len(picks)
+    shown = pd.DataFrame({"Pick": [l.label() for l in picks["leg"]], "Chance alone": picks["alone"], "Hits when your legs hit": picks["when_given"], "Lift": picks["lift"],
+                          "Parlay with it": picks["joint"], "Fair odds": picks["fair_odds"], "Line": picks["source"], "Hit together before": [c[0] for c in past],
+                          "When your legs hit, before": [c[1] for c in past]})
+    st.dataframe(shown, hide_index=True, width="stretch", column_config={
+        "Chance alone": st.column_config.NumberColumn(format="percent"), "Hits when your legs hit": st.column_config.NumberColumn(format="percent"),
+        "Lift": st.column_config.NumberColumn(format="%.2fx"), "Parlay with it": st.column_config.NumberColumn(format="percent"), "Fair odds": st.column_config.NumberColumn(format="%+d")})
+    st.caption("Lines marked 'simulator median' are not book lines (each is set where the simulator thinks the stat is a coin flip): look up the book's number and enter it above. The last two columns are "
+               "the record since 2021 in the games where all the players played, judged on these lines (not shown for a spread or total, whose lines differ from game to game). These are lines that "
+               "go together, not bets with an edge: the book's price for the parlay may already charge for the link, so compare its offer with the fair odds. The simulator's link was confirmed on "
+               "past lines for a quarterback and his receivers only (`matchup_model/sim_report.md`); for other pairs it is weak evidence, and spread, total and touchdown links were checked only against correlations.")
+    chosen = st.multiselect("Add to my legs", list(shown["Pick"]), key="sgp_picks_pick")
+    if st.button("Add these legs", key="sgp_picks_add") and chosen:
+        new = pd.DataFrame([row_from_leg(l) for l in picks["leg"] if l.label() in chosen], columns=COLS)
+        now = table_now[table_now[["Who", "Market", "Line"]].notna().any(axis=1)]                    # the table as it shows now, edits included
+        st.session_state[rows_key] = pd.concat([now, new], ignore_index=True)
+        st.session_state["sgp_editor_v"] = st.session_state.get("sgp_editor_v", 0) + 1                # a fresh editor: the old one's edits are already in the table
+        st.rerun()
 
 
 def render(week: int) -> None:
@@ -245,7 +340,7 @@ def render(week: int) -> None:
                f"{(ASSUMED_VIG - 1):.1%} vig; none falls back on the simulator's own number, which runs low on overs, so give odds for every leg). For spread: Who = the team, Line = its handicap (-3.5 or +7). Game total: Who can be blank.")
     who_opts = sorted(players) + sorted(teams) + ["Game"]
     edited = st.data_editor(
-        st.session_state[rows_key], num_rows="dynamic", hide_index=True, width="stretch", key="sgp_editor",
+        st.session_state[rows_key], num_rows="dynamic", hide_index=True, width="stretch", key=f"sgp_editor_{st.session_state.get('sgp_editor_v', 0)}",
         column_config={"Who": st.column_config.SelectboxColumn("Who", options=who_opts), "Market": st.column_config.SelectboxColumn("Market", options=list(MARKETS)),
                        "Side": st.column_config.SelectboxColumn("Side", options=SIDES), "Line": st.column_config.NumberColumn("Line", format="%g"),
                        "Odds": st.column_config.NumberColumn("Odds", format="%+d", help="American odds of the side you bet, e.g. -115 or +120"),
@@ -290,6 +385,8 @@ def render(week: int) -> None:
             st.caption("No odds were entered, so these are the simulator's own probabilities. They ran about 4 points low on overs in testing (`matchup_model/sim_report.md`): enter the book's odds to pin each leg to the market.")
         if any(float(l.line).is_integer() for l in legs if l.market not in ("any_td", "moneyline")):
             st.caption("A whole-number line can push; a push counts as a miss here, so the true chance is slightly higher.")
+        _render_past(legs, out["joint"], season, week, away, home)
+        _render_picks(res, h, a, legs, cand, edited, season, week, away, home, rows_key)
 
     with st.expander("Correlation map for this game"):
         cm_tab = corr_map(res, h, a)
