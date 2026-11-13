@@ -4,12 +4,13 @@
 
 Every graded 2026 line in line_history.csv is pushed through `dfs.props.edges_from_raw` -- the exact code the Prop Edges screen
 runs (blend with the trailing average, FantasyPoints nudge, z, tier, role_ratio) -- once per model version: v1 (the original
-constants and hand-set team volume), v2 (the 2026-10-15 WR/TE recalibration, still on the hand-set volume) and the current model in
-matchup_model/opp/model.py. The leans are then scored against the real results and the tier tables rebuilt. Every constant of v1-v3 was fixed
+constants and hand-set team volume), v2 (the 2026-10-15 WR/TE recalibration, still on the hand-set volume), v3 (fitted team volume), v4 (the scaled injury
+rule) and the current model in matchup_model/opp/model.py. The leans are then scored against the real results and the tier tables rebuilt. Every constant of v1-v3 was fixed
 from 2023-25 box scores before it met a 2026 line, so nothing there was fitted on 2026; v4's injury scales (model.INJ_REDIST) were fitted on
 2022-26 box scores, a small share of which is 2026 (injury_absorption_report.md shows the fit with 2026 left out), so v4's lift here is not a
-clean out-of-sample test. v1 reproducing what the screen stored when the lines were pulled is the check that the harness is sound. Prices are
-not stored with each line, so ROI is the flat -110 one the tier tables use.
+clean out-of-sample test. v5 (the median correction, median_cal.py) learns its factors for each week from the graded lines of the weeks before it only, so its lift is out of sample in
+that sense, but the rule itself was chosen after looking at weeks 1-8 of 2026: week 9 onward is the clean test. v1 reproducing what the screen stored when the lines were pulled is the
+check that the harness is sound. Prices are not stored with each line, so ROI is the flat -110 one the tier tables use.
 """
 from __future__ import annotations
 
@@ -34,7 +35,7 @@ BE = {"lean": 52.4, "solid": 53.0, "strong": 53.7, "high": 55.4}                
 
 def shipped() -> dict:
     return dict(K_SHARE_REC=M.K_SHARE_REC, K_YPT=M.K_YPT, DEF_TGT_B=M.DEF_TGT_B, REC_SCALE=M.REC_SCALE,
-                TEAM_VOLUME_MODEL=M.TEAM_VOLUME_MODEL, INJ_REDIST=copy.deepcopy(M.INJ_REDIST), **{k: getattr(M, k) for k in RB_KEYS})
+                TEAM_VOLUME_MODEL=M.TEAM_VOLUME_MODEL, INJ_REDIST=copy.deepcopy(M.INJ_REDIST), MEDIAN_CAL=M.MEDIAN_CAL, **{k: getattr(M, k) for k in RB_KEYS})
 
 
 def _set(params: dict) -> None:
@@ -148,7 +149,8 @@ def build_report(lh: pd.DataFrame, frames: dict[str, pd.DataFrame]) -> str:
          f"{len(lh)} graded lines, weeks {int(lh.week.min())}-{int(lh.week.max())}, run through `dfs.props.edges_from_raw` under each version: "
          + "; ".join(names) + ". Every constant of v1-v3 was fixed from 2023-25 box scores; nothing there was fitted on 2026. v4's injury scales (`INJ_REDIST`) "
          "were fitted on 2022-26 box scores, of which 2026 is a small share (`injury_absorption_report.md` lists the fit with each season left out, 2026 included), so v4's "
-         "lift on these lines is not a clean out-of-sample test. ROI is at a flat -110 (prices are not stored per line).", "",
+         "lift on these lines is not a clean out-of-sample test. v5's median factors (`median_cal.py`) are learned for each week from the graded lines of the weeks before it, so "
+         "they never see the week they are applied to, but the rule was chosen after looking at weeks 1-8: week 9 onward is the clean test. ROI is at a flat -110 (prices are not stored per line).", "",
          f"**Harness check** -- {first} reproduces what the screen stored when the lines were pulled: "
          f"our proj within 0.15 on {100 * ((chk['our proj'] - chk['our proj_stored']).abs() <= 0.15).mean():.0f}% of rows, same lean "
          f"{100 * (chk.lean == chk.lean_stored).mean():.0f}%, same tier {100 * (chk.conf == chk.conf_stored).mean():.0f}%, "
@@ -208,7 +210,8 @@ def build_report(lh: pd.DataFrame, frames: dict[str, pd.DataFrame]) -> str:
 
 def main() -> None:
     lh = graded_lines()
-    versions = {"v1 (original)": BEFORE, "v2 (WR/TE recalibration)": V2, "v3 (fitted team volume, full injury boost)": V3, f"v{M.MODEL_VERSION} (current)": shipped()}
+    versions = {"v1 (original)": BEFORE, "v2 (WR/TE recalibration)": V2, "v3 (fitted team volume, full injury boost)": V3,
+                "v4 (injury redistribution scaled)": {**shipped(), "MEDIAN_CAL": False}, f"v{M.MODEL_VERSION} (current: median correction)": shipped()}
     frames = restate_versions(lh, versions)
     txt = build_report(lh, frames)
     REPORT.write_text(txt, encoding="utf-8")

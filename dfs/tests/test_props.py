@@ -369,6 +369,75 @@ def test_edges_from_raw_says_where_to_place_each_lean(monkeypatch):
     assert wr["best"] in ("fanduel -108", "draftkings -110") and wr["line"] == 50.0                                           # the consensus-line columns are unchanged
 
 
+def _fake_projections(monkeypatch):
+    import dfs.projections as pj
+    import matchup_model.opp.blend as blend
+    import matchup_model.project_stats as ps
+
+    monkeypatch.setattr(pj, "load_weekly_projections", lambda *_a, **_k: (_ for _ in ()).throw(RuntimeError("no file")))
+
+    def fake_line(name_key, pos, *a, **k):
+        if name_key == props.normalize_name("Test Wr"):
+            return {"line": {"rec_yds": 62.0, "rec": 4.6}, "fp": 12.0, "games": 6}
+        if name_key == props.normalize_name("Test Rb"):
+            return {"line": {"rush_yds": 78.0}, "fp": 14.0, "games": 6}
+        return {"fp": None, "reason": "x"}
+    monkeypatch.setattr(blend, "blended_line", fake_line)
+    monkeypatch.setattr(ps, "projected_line", fake_line)
+
+
+def test_edges_from_raw_measures_the_lean_from_the_median_corrected_projection(monkeypatch):
+    import numpy as np
+    _fake_projections(monkeypatch)
+    none = {"rec yds": (np.array([30.0, 60.0]), 0.8, {0: None, 1: None, 2: None})}                     # every rec yds projection x 0.8; no factors for rush yds
+    monkeypatch.setattr(props, "_median_factors", lambda season, week: none)
+    df = props.edges_from_raw(_raw(), week=10).set_index("player")
+    wr, rb = df.loc["Test Wr"], df.loc["Test Rb"]
+    assert wr["our proj"] == 62.0 and wr["our med"] == 49.6                                              # the mean stays; the median is what meets the line (consensus 50.0)
+    assert wr["edge"] == pytest.approx(-0.4) and wr["lean"] == "UNDER" and wr["z"] < 0 and wr["conf"] == "—"      # 62 > 50 would have been an OVER lean of +12
+    assert rb["our med"] == rb["our proj"] == 78.0 and rb["lean"] == "UNDER" and rb["edge"] == pytest.approx(-2.5)   # a market without factors is untouched
+    monkeypatch.setattr(props, "_median_factors", lambda season, week: {})
+    old = props.edges_from_raw(_raw(), week=10).set_index("player").loc["Test Wr"]
+    assert old["lean"] == "OVER" and old["edge"] == pytest.approx(12.0) and old["our med"] == old["our proj"] == 62.0   # no factors: v4's numbers exactly
+    assert old["bet line"] == 49.5 and wr["bet line"] == 50.5 and wr["bet at"].startswith("draftkings")  # placement follows the lean: an OVER wants the lowest number (FanDuel 49.5), an UNDER the highest (DraftKings 50.5)
+
+
+def test_median_factors_come_from_the_graded_lines_before_the_week_and_only_when_the_correction_is_on(tmp_path, monkeypatch):
+    import os
+    import numpy as np
+    from matchup_model.opp import model as M
+    path = tmp_path / "line_history.csv"
+    monkeypatch.setattr(props, "LINE_HISTORY_PATH", path)
+    props._median_factors_cached.cache_clear()
+    proj = np.linspace(10, 100, 120)
+
+    def history(ratio):
+        return pd.DataFrame({"season": 2026, "week": np.resize([1, 2, 3], 120), "player": [f"P{i}" for i in range(120)], "market": "rec yds", "our proj": proj,
+                             "actual": proj * ratio, "result": "win", "line": 50.0})
+    assert props._median_factors(2026, 4) == {}                                                          # no history file yet
+    history(0.8).to_csv(path, index=False)
+    f = props._median_factors(2026, 4)
+    assert f["rec yds"][1] == pytest.approx(0.8)
+    assert props._median_factors(2026, 2) == {} and props._median_factors(None, 4) == {}                 # not enough weeks; the fallback projections (no season)
+    assert set(props._median_factors(2026, 3)) == {"rec yds"}                                            # weeks 1 and 2 are behind a week 3 pull
+    monkeypatch.setattr(M, "MEDIAN_CAL", False)
+    assert props._median_factors(2026, 4) == {}                                                          # switched off (restate does this for v1-v4)
+    monkeypatch.setattr(M, "MEDIAN_CAL", True)
+    history(0.5).to_csv(path, index=False)
+    os.utime(path, ns=(path.stat().st_atime_ns, path.stat().st_mtime_ns + 5_000_000_000))                # a newer file: the cached factors must not be served
+    assert props._median_factors(2026, 4)["rec yds"][1] == pytest.approx(0.5)
+    props._median_factors_cached.cache_clear()
+
+
+def test_snapshot_lines_keeps_our_median_next_to_our_projection(tmp_path, monkeypatch):
+    path = tmp_path / "line_history.csv"
+    monkeypatch.setattr(props, "LINE_HISTORY_PATH", path)
+    edges = pd.DataFrame({"player": ["A"], "market": ["rec yds"], "line": [50.0], "our proj": [62.0], "our med": [49.6], "lean": ["UNDER"], "best": ["fanduel -108"]})
+    assert props.snapshot_lines(edges, 2026, 10, "G1") == 1
+    row = pd.read_csv(path).iloc[0]
+    assert row["our proj"] == 62.0 and row["our med"] == 49.6 and row["lean"] == "UNDER"
+
+
 def test_under_first_drops_only_the_over_leans_of_the_markets_where_they_lose():
     df = pd.DataFrame({"market": ["rec yds", "rec yds", "receptions", "rush yds", "pass yds", "pass yds", "pass TD"],
                        "lean": ["OVER", "UNDER", "OVER", "UNDER", "OVER", "UNDER", "OVER"], "player": list("abcdefg")})

@@ -302,16 +302,41 @@ def event_prop_edges(event_id: str, markets: list[str], week: int) -> tuple[pd.D
     return edges_from_raw(raw, week), rem
 
 
+@lru_cache(maxsize=32)
+def _median_factors_cached(season: int, week: int, path: str, mtime_ns: int, min_cell: int, min_weeks: int) -> dict:
+    from dfs import bets
+    from matchup_model.opp import median_cal
+    return median_cal.learn_as_of(bets.load_line_history(), season, week, min_cell, min_weeks)
+
+
+def _median_factors(season: int | None, week: int) -> dict:
+    """The median correction's factors for a pull in `week` (matchup_model.opp.median_cal): learned from the graded lines of the weeks before it, so a line is never judged by a
+    rule that has seen its own result. {} (no correction) with the fallback projections, with model.MEDIAN_CAL off, before two weeks are graded, or without a line history."""
+    from matchup_model.opp import median_cal, model as M
+    if season is None or not M.MEDIAN_CAL or int(week) <= M.MEDIAN_MIN_WEEKS:
+        return {}
+    try:
+        mtime = LINE_HISTORY_PATH.stat().st_mtime_ns
+    except OSError:
+        return {}
+    return _median_factors_cached(int(season), int(week), str(LINE_HISTORY_PATH), mtime, M.MEDIAN_MIN_CELL, M.MEDIAN_MIN_WEEKS)
+
+
 def edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
     """One row per (player, market): consensus line, our projection, edge, the side we
-    lean, the book's no-vig probability for that side, and a rough EV%."""
+    lean, the book's no-vig probability for that side, and a rough EV%.
+
+    From model v5 the edge, the lean, `z`, the tier and p(hit) are measured from `our med` -- `our proj` (the mean) rescaled to the typical (median) outcome of that kind of
+    prop, learned from earlier weeks' graded lines -- because the book's line sits near the median of a right-skewed outcome (matchup_model.opp.median_cal). `our proj` stays the mean."""
     from dfs.projections import load_weekly_projections
+    from matchup_model.opp import median_cal
     try:
         from matchup_model.opp.blend import blended_line as projected_line, current_season
         _season = current_season()
     except Exception:  # noqa: BLE001
         from matchup_model.project_stats import projected_line
         _season = None
+    factors = _median_factors(_season, week)
 
     # (player, market) -> {"points": [...], "over": [(price, book)], "under": [(price, book)]}
     acc: dict = {}
@@ -353,7 +378,8 @@ def edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
         if our is None:
             continue
         our = float(our)
-        edge = our - line
+        our_med = median_cal.apply(factors, _NICE.get(comp, comp), our)      # = our when there are no factors for this market yet
+        edge = our_med - line
         lean = "OVER" if edge > 0 else "UNDER"
 
         # standardized edge: how many outcome-SDs our projection sits past the line.
@@ -381,7 +407,7 @@ def edges_from_raw(raw: dict, week: int) -> pd.DataFrame:
         bet = place_bet(d["quotes"], lean)
         rows.append({
             "player": player, "market": _NICE.get(comp, comp),
-            "line": round(line, 1), "our proj": round(our, 1),
+            "line": round(line, 1), "our proj": round(our, 1), "our med": round(our_med, 1),
             "conf": conf,
             "z": round(z, 2),
             "edge": round(edge, 1),
@@ -595,7 +621,7 @@ def snapshot_lines(edges: pd.DataFrame, season: int, week: int, event: str) -> i
     Each row is stamped with the projection model's version (`model_ver`)."""
     if edges is None or edges.empty:
         return 0
-    keep = ["player", "market", "line", "our proj", "conf", "z", "edge", "p(hit)%", "p edge",
+    keep = ["player", "market", "line", "our proj", "our med", "conf", "z", "edge", "p(hit)%", "p edge",
             "book %", "edge %", "lean", "best", "bet line", "bet price", "bet book", "num edge", "role_ratio"]
     snap = edges[[c for c in keep if c in edges.columns]].copy()
     snap.insert(0, "season", int(season))

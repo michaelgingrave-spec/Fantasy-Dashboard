@@ -41,7 +41,12 @@ K_YDS = 28.0             # targets or carries, for yds/opportunity
 #   3 = fitted team-volume model (team_volume.py) replacing the hand-set formula, whose spread term was backwards,
 #       plus the RB recalibration (carry-share shrinkage, scales) and WR/TE constants re-learned on the new volume
 #   4 = the injury usage boost scaled to what teammates really absorb (INJ_REDIST below)
-MODEL_VERSION = 4
+#   5 = the median correction (median_cal.py): a lean is decided against our projection rescaled to the median outcome of that kind of prop, learned from earlier weeks' graded lines.
+#       The projections themselves (`our proj`, the stat lines, the DFS tools, the simulator) are unchanged: v5 changes only the edge, z, lean, tier and p(hit) of the Prop Edges table.
+MODEL_VERSION = 5
+MEDIAN_CAL = True          # False reproduces v1-v4 (restate.py sets it per version)
+MEDIAN_MIN_CELL = 25       # graded lines a market (or one projection tercile of it) needs before its median ratio is used
+MEDIAN_MIN_WEEKS = 2       # prior graded weeks needed before any correction applies
 TEAM_VOLUME_MODEL = "fitted"   # "legacy" = the pre-v3 hand-set formula with its reversed spread sign, kept only to reproduce old backtests
 
 # Injury usage redistribution (matchup_model/opp/injuries.py). When a rotation player is Out / Doubtful / Questionable the model used to hand his

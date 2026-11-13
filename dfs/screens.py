@@ -884,7 +884,10 @@ def render(screen: str) -> None:
         st.caption(
             "Player-prop lines from US sportsbooks (The Odds API) next to our projection — "
             "a backtested blend of an opportunity model (team pace × pass rate × Vegas × "
-            "usage share) and the player's trailing average. **Edge = our proj − line**; "
+            "usage share) and the player's trailing average. **Edge = our median − line**: "
+            "`our med` is that projection (a mean) rescaled to the typical outcome of this kind of prop, "
+            "because the book's line sits near the *median* of a right-skewed outcome, so a mean above the "
+            "line is not an OVER edge by itself (model v5; the rescaling is learned from graded weeks). "
             "`lean` is the side that implies. ⚠️ Early season the model leans on 2025 usage, "
             "so a changed 2026 role can still show a false edge — the confidence filter "
             "(on by default) hides the worst of those."
@@ -902,8 +905,10 @@ def render(screen: str) -> None:
                        "directionally.")
             _vnote = _bets0.version_note()
             if _vnote:
-                st.caption(f"⚠️ These records pool two projection models ({_vnote}). v2 is the "
-                           "recalibrated WR/TE receiving model; its own record is still small.")
+                st.caption(f"⚠️ These records pool several versions of the model ({_vnote}); each line keeps the lean "
+                           "its own version made. v5 (the median correction) measures every lean from the "
+                           "median-corrected projection `our med`, so its leans are not the same bets as the "
+                           "older versions'; its own record is still small.")
             t_all, t_rec, t_cal = st.columns(3)
             with t_all:
                 st.markdown("**All bets**")
@@ -1179,6 +1184,9 @@ def render(screen: str) -> None:
             table = view
         st.dataframe(table, hide_index=True, width="stretch")
         st.caption(
+            "`our proj` = our mean projection · `our med` = the median-corrected number the edge, `z`, "
+            "`conf` and `p(hit)%` are measured from (the same as `our proj` until two weeks are graded, "
+            "or for a market with too few graded lines) · "
             "`conf` = confidence tier from |z| (standardized edge = SDs past the line, "
             "comparable across markets). `z` = the raw number · `p(hit)%` = our shrunk "
             "probability the bet lands · `book %` = de-vigged book prob · `p edge` = "
@@ -1295,7 +1303,7 @@ def render(screen: str) -> None:
                     event=str(br.get("game", cache["game"])).split("  ·")[0],
                     player=br["player"], market=br["market"],
                     side=br["lean"], line=pl_line, odds=int(odds_in), book=book_in,
-                    stake=float(stake_in), our_proj=float(br["our proj"]),
+                    stake=float(stake_in), our_proj=float(br["our med"] if br.get("our med") is not None and br["our med"] == br["our med"] else br["our proj"]),   # the number the lean was measured from
                     ev_pct=(float(br["p edge"]) if br.get("p edge") is not None else None),
                 )
                 st.success(f"Logged ({bid}). Grade it on the **Bet Log** screen after the game.")

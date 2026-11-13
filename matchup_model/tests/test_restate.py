@@ -126,6 +126,22 @@ def test_the_differs_section_looks_only_at_the_lines_the_new_version_changed():
     assert "## Where" not in RS.build_report(lh, {"vA (before)": old})
 
 
+def test_the_median_correction_is_off_for_every_older_version_during_its_pull_and_back_on_afterwards(monkeypatch):
+    seen = []
+
+    def fake_edges(raw, week):
+        seen.append(M.MEDIAN_CAL)
+        return pd.DataFrame([{"player": "A", "market": "rec yds", "line": 50.0, "lean": "OVER", "conf": "solid", "role_ratio": 1.0, "our proj": 55.0}])
+
+    monkeypatch.setattr(props, "edges_from_raw", fake_edges)
+    lh = pd.DataFrame({"week": [1], "player": ["A"], "market": ["rec yds"], "line": [50.0], "actual": [60.0]})
+    assert M.MEDIAN_CAL is True and RS.shipped()["MEDIAN_CAL"] is True                      # v5 is the shipped model
+    for params in (RS.BEFORE, RS.V2, RS.V3, {**RS.shipped(), "MEDIAN_CAL": False}):          # v1, v2, v3 and v4
+        RS.restate(lh, params)
+    RS.restate(lh, RS.shipped())                                                              # v5
+    assert seen == [False, False, False, False, True] and M.MEDIAN_CAL is True
+
+
 def test_every_past_version_sets_every_constant_so_none_of_the_current_ones_leak_into_it():
     keys = set(RS.shipped())
     for name, v in (("v1", RS.BEFORE), ("v2", RS.V2), ("v3", RS.V3)):

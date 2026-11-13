@@ -43,12 +43,12 @@ UNIT = {"tgt": 1.0, "rec": 1.0, "rec_yds": 1.0, "td": 1.0}
 RB_ORIGINAL = dict(K_CARRY=3.0, RB_CARRY_PRIOR=0.42, K_RB_TGT=3.0, RB_TGT_PRIOR=0.09, K_YPC=28.0, K_RB_YPT=28.0, RB_CATCH=0.75,
                    RB_YDS_CATCH_FACTOR=True, RB_SCALE={"rush_att": 1.0, "rush_yds": 1.0, "rec": 1.0, "rec_yds": 1.0, "td": 1.0})
 RB_KEYS = tuple(RB_ORIGINAL)
-BEFORE = {**OLD, **RB_ORIGINAL, "INJ_REDIST": INJ_LEGACY, "DEF_TGT_B": 0.0, "REC_SCALE": {"WR": dict(UNIT), "TE": dict(UNIT)}}   # every constant as it was before v2 (the original model)
-V2 = {**MID, **RB_ORIGINAL, "INJ_REDIST": INJ_LEGACY, "DEF_TGT_B": 0.22, "REC_SCALE": {"WR": {"tgt": 0.826, "rec": 0.820, "rec_yds": 0.827, "td": 0.922},
+BEFORE = {**OLD, **RB_ORIGINAL, "INJ_REDIST": INJ_LEGACY, "DEF_TGT_B": 0.0, "MEDIAN_CAL": False, "REC_SCALE": {"WR": dict(UNIT), "TE": dict(UNIT)}}   # every constant as it was before v2 (the original model)
+V2 = {**MID, **RB_ORIGINAL, "INJ_REDIST": INJ_LEGACY, "DEF_TGT_B": 0.22, "MEDIAN_CAL": False, "REC_SCALE": {"WR": {"tgt": 0.826, "rec": 0.820, "rec_yds": 0.827, "td": 0.922},
                                                               "TE": {"tgt": 0.844, "rec": 0.860, "rec_yds": 0.869, "td": 0.992}}}   # as shipped 2026-10-15
 V3 = {**NEW, **{k: v for k, v in RB_ORIGINAL.items() if k not in ("K_CARRY", "RB_CARRY_PRIOR", "RB_YDS_CATCH_FACTOR", "RB_SCALE")}, "K_CARRY": 1.0, "RB_CARRY_PRIOR": 0.25,
       "RB_YDS_CATCH_FACTOR": False, "RB_SCALE": {"rush_att": 0.969, "rush_yds": 0.973, "rec": 0.911, "rec_yds": 0.872, "td": 1.017}, "INJ_REDIST": INJ_LEGACY, "DEF_TGT_B": 0.09,
-      "REC_SCALE": {"WR": {"tgt": 0.847, "rec": 0.840, "rec_yds": 0.848, "td": 0.933}, "TE": {"tgt": 0.867, "rec": 0.883, "rec_yds": 0.893, "td": 1.010}}}   # as shipped through MODEL_VERSION 3
+      "MEDIAN_CAL": False, "REC_SCALE": {"WR": {"tgt": 0.847, "rec": 0.840, "rec_yds": 0.848, "td": 0.933}, "TE": {"tgt": 0.867, "rec": 0.883, "rec_yds": 0.893, "td": 1.010}}}   # as shipped through MODEL_VERSION 3
 STATS = {"tgt": "targets", "rec": "receptions", "rec_yds": "receiving_yards"}
 MIN_PROJ_TGT = 3.0
 KEY = ["season", "week", "nk"]
