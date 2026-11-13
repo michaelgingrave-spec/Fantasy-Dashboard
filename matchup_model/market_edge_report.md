@@ -5,7 +5,7 @@ Logistic regression of 'went over' on the book's no-vig P(over) and our edge in 
 | model version | graded lines | went over | market said | market-price coefficient | z coefficient (per SD) | +1 SD moves P(over) by |
 |---|--:|--:|--:|--:|--:|--:|
 | v1 | 2439 | 48.1% | 49.5% | +0.64 [+0.21, +1.13] | +0.055 [-0.211, +0.348] | +1.4 pts [-5.3, +8.6] |
-| v4 | 1479 | 46.2% | 49.5% | +1.19 [+0.51, +1.81] | +0.201 [-0.216, +0.688] | +5.0 pts [-5.4, +16.6] |
+| v4 | 1992 | 46.2% | 49.4% | +0.99 [+0.44, +1.59] | +0.358 [-0.069, +0.867] | +8.9 pts [-1.7, +20.4] |
 
 A market-price coefficient below 1 means prices are more extreme than results (the books' favourites win less often than priced); a z coefficient whose interval spans 0 means the sample cannot yet tell our edge from none.
 
@@ -13,15 +13,15 @@ A market-price coefficient below 1 means prices are more extreme than results (t
 
 | market | graded lines | went over | z coefficient (per SD) |
 |---|--:|--:|--:|
-| pass TD | 233 | 48.9% | +0.591 [-0.501, +1.446] |
-| pass yds | 232 | 55.2% | -0.250 [-1.170, +0.443] |
-| rec yds | 1410 | 47.3% | +0.225 [-0.048, +0.622] |
-| receptions | 1374 | 47.4% | +0.222 [-0.122, +0.602] |
-| rush yds | 669 | 44.5% | -0.314 [-0.811, +0.124] |
+| pass TD | 262 | 47.3% | +0.672 [-0.338, +1.385] |
+| pass yds | 261 | 54.0% | -0.137 [-0.992, +0.493] |
+| rec yds | 1600 | 47.3% | +0.275 [-0.044, +0.710] |
+| receptions | 1559 | 47.3% | +0.299 [-0.077, +0.660] |
+| rush yds | 749 | 44.7% | -0.329 [-0.712, +0.128] |
 
 ## Win rate by the side we leaned (as logged)
 
 | side | lines | win | ROI at -110 |
 |---|--:|--:|--:|
-| OVER | 2691 | 48.8% | -6.9% |
-| UNDER | 1227 | 55.6% | +6.1% |
+| OVER | 3032 | 49.0% | -6.5% |
+| UNDER | 1399 | 56.4% | +7.7% |
