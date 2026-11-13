@@ -44,7 +44,7 @@ def _empty() -> pd.DataFrame:
 def load() -> pd.DataFrame:
     if not LOG_PATH.exists():
         return _empty()
-    df = pd.read_csv(LOG_PATH, dtype={"season": "Int64", "week": "Int64"})
+    df = pd.read_csv(LOG_PATH, dtype={"season": "Int64", "week": "Int64", "bet_id": str})       # a hex id like 12345678 or 8255e036 would otherwise be read (and saved back) as a number
     for c in COLUMNS:
         if c not in df.columns:
             df[c] = np.nan

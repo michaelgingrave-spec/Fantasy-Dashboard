@@ -43,6 +43,19 @@ def test_delete(tmp_log):
     assert len(df) == 1 and df.iloc[0]["player"] == "B"
 
 
+def test_ids_that_look_like_numbers_stay_text_so_a_bet_can_still_be_deleted(tmp_log, monkeypatch):
+    class _Id:
+        def __init__(self, hex):
+            self.hex = hex + "0000000000000000000000"
+    ids = iter(["12345678", "8255e036", "ab12cd34"])                              # all digits, digits around one 'e' (a float to pandas), and an ordinary one
+    monkeypatch.setattr(B.uuid, "uuid4", lambda: _Id(next(ids)))
+    made = [B.add_bet(season=2025, week=1, event="x", player=p, market="rec yds", side="OVER", line=50, odds=-110, our_proj=60) for p in "ABC"]
+    assert made == ["12345678", "8255e036", "ab12cd34"] and list(B.load()["bet_id"]) == made
+    B.delete_bet("8255e036")
+    B.delete_bet("12345678")
+    assert list(B.load()["player"]) == ["C"] and list(B.load()["bet_id"]) == ["ab12cd34"]
+
+
 def test_edge_bucket_analysis(tmp_log):
     # rec yds sigma at a 100 line ~= 49.5, so edge 6 -> z~0.12 ("—"), edge 30 -> z~0.61 ("strong")
     B.add_bet(season=2025, week=1, event="x", player="A", market="rec yds",
