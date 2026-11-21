@@ -22,7 +22,7 @@ from dfs.dk_client import (
     DKError,
     classic_slates,
     get_salaries,
-    pick_main_slate,
+    pick_validated_default_slate,
     slate_types_present,
     this_week,
 )
@@ -262,9 +262,12 @@ def render(screen: str) -> None:
                          "connection, or (on the deployed site) drop a saved draftables JSON "
                          "in data/dfs/dk/.")
         else:
-            default_slate = pick_main_slate(all_slates)
             widest = max(all_slates, key=lambda s: s.game_count)
             if _slate_pickers_here:
+                default_slate, verified_salaries, skipped_default = pick_validated_default_slate(
+                    all_slates, lambda gid: _salaries(gid, nonce),
+                )
+
                 types = ["All"] + slate_types_present(all_slates)
                 default_type = default_slate.slate_type if default_slate else "All"
                 type_idx = types.index(default_type) if default_type in types else 0
@@ -283,7 +286,14 @@ def render(screen: str) -> None:
                 st.sidebar.caption(
                     f"{chosen.slate_type} · {chosen.game_count} games · dg {chosen.draft_group_id}"
                 )
-                salaries = _salaries(chosen.draft_group_id, nonce)
+                if skipped_default:
+                    st.sidebar.caption(
+                        "⚠️ DraftKings' usual main slate has no salaries published yet — "
+                        "showing the next-largest classic slate instead."
+                    )
+                salaries = (verified_salaries
+                            if verified_salaries is not None and chosen.draft_group_id == default_slate.draft_group_id
+                            else _salaries(chosen.draft_group_id, nonce))
             else:
                 # every DFS screen except the Optimizer sees the full week: union of
                 # every classic slate's player pool, deduped by DK id.

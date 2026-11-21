@@ -289,6 +289,45 @@ def pick_main_slate(slates: list[Slate], now: datetime | None = None) -> Slate |
     return max(same_day or pool, key=lambda s: s.game_count)
 
 
+def pick_validated_default_slate(
+    slates: list[Slate],
+    fetch_salaries,
+    now: datetime | None = None,
+) -> tuple[Slate | None, pd.DataFrame | None, bool]:
+    """`pick_main_slate`, but verified: DK sometimes lists a placeholder draft group
+    for the week -- right day/type/game-count -- before it has actually published
+    salaries for it (see `this_week`'s docstring: a stale 'Main' with no salaries
+    can sit in the lobby for weeks). Calling code that trusted `pick_main_slate`'s
+    guess as-is would hard-fail a fresh session on DK's own placeholder.
+
+    Tries the normal pick_main_slate() choice first, then the rest of this week's
+    classic slates by game-count descending, calling `fetch_salaries(draft_group_id)`
+    on each until one succeeds (anything it raises is treated as "this slate isn't
+    usable yet" and skipped).
+
+    Returns (slate, salaries_df, skipped_default):
+      slate           -- the first slate that validated, or the original
+                         pick_main_slate() choice if none did (unchanged behavior
+                         for callers: they just re-fetch and surface the real error).
+      salaries_df     -- that slate's fetched salaries, or None if nothing validated.
+      skipped_default -- True if the normal default had to be passed over.
+    """
+    default_slate = pick_main_slate(slates, now)
+    classic_this_week = this_week([s for s in slates if s.is_classic], now)
+    ordered = ([default_slate] if default_slate else []) + sorted(
+        [s for s in classic_this_week if s is not default_slate],
+        key=lambda s: -s.game_count,
+    )
+    for cand in ordered:
+        try:
+            salaries = fetch_salaries(cand.draft_group_id)
+        except Exception:
+            continue
+        skipped = bool(default_slate) and cand.draft_group_id != default_slate.draft_group_id
+        return cand, salaries, skipped
+    return default_slate, None, False
+
+
 # ── Draftables (salaries) ────────────────────────────────────────────────────
 _GAME_INFO_RE = re.compile(
     r"^([A-Za-z]{2,3})@([A-Za-z]{2,3})\s+(\d{1,2}/\d{1,2}/\d{4})\s+(\d{1,2}:\d{2})(AM|PM)\s*ET",

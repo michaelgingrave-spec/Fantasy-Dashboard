@@ -6,7 +6,9 @@ from dfs.dk_client import (
     parse_draftables,
     parse_slates,
     pick_main_slate,
+    pick_validated_default_slate,
     slate_types_present,
+    this_week,
 )
 
 
@@ -33,6 +35,69 @@ def test_pick_main_slate_prefers_sunday_main_type(getcontests_json):
     # the bigger slate over the 1pm/4pm-only one.
     assert main.slate_type == "Sunday main"
     assert main.draft_group_id in (153096, 151307)
+
+
+def test_pick_validated_default_slate_returns_default_when_it_has_salaries(getcontests_json):
+    slates = parse_slates(getcontests_json)
+    default = pick_main_slate(slates)
+    calls = []
+
+    def fetch(gid):
+        calls.append(gid)
+        return f"salaries-for-{gid}"
+
+    chosen, salaries, skipped = pick_validated_default_slate(slates, fetch)
+    assert chosen.draft_group_id == default.draft_group_id
+    assert salaries == f"salaries-for-{default.draft_group_id}"
+    assert skipped is False
+    assert calls == [default.draft_group_id]  # never tries another slate once the default works
+
+
+def test_pick_validated_default_slate_falls_back_when_default_has_no_salaries_yet(getcontests_json):
+    """Reproduces the real-world bug: DK's lobby lists the usual 'Sunday main' draft
+    group for the week, but its draftables endpoint has no salaries published yet
+    (a pre-created placeholder -- see this_week()'s docstring). The picker must skip
+    it rather than hand the caller a slate that will blow up with 'doesn't look like
+    a Classic slate (no salaries or no DST)'."""
+    slates = parse_slates(getcontests_json)
+    default = pick_main_slate(slates)
+
+    def fetch(gid):
+        if gid == default.draft_group_id:
+            raise dk.DKError(
+                f"Draft group {gid} doesn't look like a Classic slate (no salaries or no DST)."
+            )
+        return f"salaries-for-{gid}"
+
+    chosen, salaries, skipped = pick_validated_default_slate(slates, fetch)
+    assert skipped is True
+    assert chosen.draft_group_id != default.draft_group_id
+    assert chosen.is_classic
+    assert salaries == f"salaries-for-{chosen.draft_group_id}"
+
+    # falls back to the next-largest classic slate this week specifically, not just
+    # any remaining slate
+    classic_this_week = this_week([s for s in slates if s.is_classic])
+    remaining = sorted(
+        (s for s in classic_this_week if s.draft_group_id != default.draft_group_id),
+        key=lambda s: -s.game_count,
+    )
+    assert chosen.draft_group_id == remaining[0].draft_group_id
+
+
+def test_pick_validated_default_slate_keeps_default_when_nothing_validates(getcontests_json):
+    """If DK is unreachable for every slate, behave exactly as before: hand back the
+    normal default (and no salaries), so the caller's existing error path is unchanged."""
+    slates = parse_slates(getcontests_json)
+    default = pick_main_slate(slates)
+
+    def fetch(gid):
+        raise dk.DKError("DraftKings request failed")
+
+    chosen, salaries, skipped = pick_validated_default_slate(slates, fetch)
+    assert chosen.draft_group_id == default.draft_group_id
+    assert salaries is None
+    assert skipped is False
 
 
 def test_slate_type_classification(getcontests_json):
