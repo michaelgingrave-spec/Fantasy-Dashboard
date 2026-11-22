@@ -54,8 +54,11 @@ DRAFTABLES_URL = "https://api.draftkings.com/draftgroups/v1/draftgroups/{gid}/dr
 # the JSON endpoint above is bot-blocked but the site itself isn't.
 CSV_URL = "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId={gid}"
 
-# ContestTypeIds that are salary-cap Classic (not showdown / snake / tiers / novelty).
-CLASSIC_CONTEST_TYPE_IDS = {21, 189}
+# ContestTypeIds that are salary-cap Classic (not showdown / snake / tiers / novelty). 21 only. DraftKings also lists a parallel set of type-189 draft groups that
+# mirror each Classic slate's timing and labels ('Main', '(Afternoon Only)', '(Wed-Mon)') but are a bench-style product: roster slots 'QB/BENCH', 'RB/FLEX/BENCH',
+# the 'salary' is a 1..N rank number, and there is no DST. Seen in week 1 (153095-153097, 153456-153458) and week 11 (156798, 156799), never a Classic pool. Counting
+# them as Classic let the 189 'Main' tie the real one on game count and win on list order, and a pick of it died with "no salaries or no DST".
+CLASSIC_CONTEST_TYPE_IDS = {21}
 # roster-slot -> base position is not needed; `position` field is authoritative.
 INJURY_OUT_STATUSES = {"O", "OUT", "IR", "PUP", "NFI", "SUSP", "D"}
 
@@ -289,43 +292,20 @@ def pick_main_slate(slates: list[Slate], now: datetime | None = None) -> Slate |
     return max(same_day or pool, key=lambda s: s.game_count)
 
 
-def pick_validated_default_slate(
-    slates: list[Slate],
-    fetch_salaries,
-    now: datetime | None = None,
-) -> tuple[Slate | None, pd.DataFrame | None, bool]:
-    """`pick_main_slate`, but verified: DK sometimes lists a placeholder draft group
-    for the week -- right day/type/game-count -- before it has actually published
-    salaries for it (see `this_week`'s docstring: a stale 'Main' with no salaries
-    can sit in the lobby for weeks). Calling code that trusted `pick_main_slate`'s
-    guess as-is would hard-fail a fresh session on DK's own placeholder.
-
-    Tries the normal pick_main_slate() choice first, then the rest of this week's
-    classic slates by game-count descending, calling `fetch_salaries(draft_group_id)`
-    on each until one succeeds (anything it raises is treated as "this slate isn't
-    usable yet" and skipped).
-
-    Returns (slate, salaries_df, skipped_default):
-      slate           -- the first slate that validated, or the original
-                         pick_main_slate() choice if none did (unchanged behavior
-                         for callers: they just re-fetch and surface the real error).
-      salaries_df     -- that slate's fetched salaries, or None if nothing validated.
-      skipped_default -- True if the normal default had to be passed over.
-    """
-    default_slate = pick_main_slate(slates, now)
-    classic_this_week = this_week([s for s in slates if s.is_classic], now)
-    ordered = ([default_slate] if default_slate else []) + sorted(
-        [s for s in classic_this_week if s is not default_slate],
-        key=lambda s: -s.game_count,
-    )
-    for cand in ordered:
+def split_ready_slates(slates: list[Slate], fetch_salaries) -> tuple[list[Slate], dict[int, str]]:
+    """Which of `slates` can be built today? DraftKings lists a draft group the day it creates it -- a Thanksgiving week's Thursday and Mon-Wed slates sit in the lobby
+    days before their salaries -- and picking one of those dies with "has no draftables" (or "no salaries or no DST"). `fetch_salaries(draft_group_id)` is tried on each;
+    anything it raises marks that slate as not ready. Order is kept. Returns (ready, {draft_group_id: why it is not ready})."""
+    ready: list[Slate] = []
+    not_ready: dict[int, str] = {}
+    for s in slates:
         try:
-            salaries = fetch_salaries(cand.draft_group_id)
-        except Exception:
-            continue
-        skipped = bool(default_slate) and cand.draft_group_id != default_slate.draft_group_id
-        return cand, salaries, skipped
-    return default_slate, None, False
+            fetch_salaries(s.draft_group_id)
+        except Exception as e:  # noqa: BLE001 -- whatever the reason, do not offer it
+            not_ready[s.draft_group_id] = f"{type(e).__name__}: {e}"
+        else:
+            ready.append(s)
+    return ready, not_ready
 
 
 # ── Draftables (salaries) ────────────────────────────────────────────────────

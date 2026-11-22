@@ -6,9 +6,8 @@ from dfs.dk_client import (
     parse_draftables,
     parse_slates,
     pick_main_slate,
-    pick_validated_default_slate,
     slate_types_present,
-    this_week,
+    split_ready_slates,
 )
 
 
@@ -30,74 +29,54 @@ def test_pick_main_slate_prefers_sunday_main_type(getcontests_json):
     assert main.is_classic
     if main.start:
         assert main.start.weekday() == 6  # Sunday
-    # 153069 (Sunday-Monday, 14 games) outnumbers 153096/151307 (Sunday main, 12 games
-    # each) in this fixture -- pick_main_slate must not be fooled by MNF into picking
-    # the bigger slate over the 1pm/4pm-only one.
+    # 153069 (Sunday-Monday, 14 games) outnumbers 151307 (Sunday main, 12 games) in this
+    # fixture -- pick_main_slate must not be fooled by MNF into picking the bigger slate
+    # over the 1pm/4pm-only one. (153096 is the same 12 games as a type-189 bench-style group.)
     assert main.slate_type == "Sunday main"
-    assert main.draft_group_id in (153096, 151307)
+    assert main.draft_group_id == 151307
 
 
-def test_pick_validated_default_slate_returns_default_when_it_has_salaries(getcontests_json):
+def test_contest_type_189_is_not_a_classic_slate(getcontests_json):
+    """DraftKings lists a bench-style type-189 mirror of each Classic slate (roster slots 'QB/BENCH', rank numbers
+    for salaries, no DST). Counting it as Classic let the 189 'Main' tie the real one on game count and win on list
+    order -- week 11, dg 156798 over 156561 -- and every pick of it died with 'doesn't look like a Classic slate'."""
     slates = parse_slates(getcontests_json)
-    default = pick_main_slate(slates)
-    calls = []
+    mirrors = [s for s in slates if s.contest_type_id == 189]
+    assert {s.draft_group_id for s in mirrors} == {153095, 153096, 153097}, "the fixture lobby carries three type-189 groups"
+    assert not any(s.is_classic for s in mirrors)
+    flipped = sorted(slates, key=lambda s: s.contest_type_id != 189)          # the 189 groups listed FIRST
+    assert flipped[0].contest_type_id == 189
+    assert pick_main_slate(flipped).draft_group_id == 151307
+
+
+def test_split_ready_slates_hides_the_ones_without_salaries(getcontests_json):
+    """A draft group DraftKings has listed but not populated (a Thanksgiving week's Thursday slate, a pre-created
+    'Main') must not be offered: picking it used to replace the whole Optimizer screen with an error."""
+    slates = [s for s in parse_slates(getcontests_json) if s.is_classic]
+    placeholder = pick_main_slate(slates)                                       # pretend its salaries are not published yet
 
     def fetch(gid):
-        calls.append(gid)
+        if gid == placeholder.draft_group_id:
+            raise dk.DKError(f"Draft group {gid} has no draftables.")
         return f"salaries-for-{gid}"
 
-    chosen, salaries, skipped = pick_validated_default_slate(slates, fetch)
-    assert chosen.draft_group_id == default.draft_group_id
-    assert salaries == f"salaries-for-{default.draft_group_id}"
-    assert skipped is False
-    assert calls == [default.draft_group_id]  # never tries another slate once the default works
+    ready, not_ready = split_ready_slates(slates, fetch)
+    assert [s.draft_group_id for s in ready] == [s.draft_group_id for s in slates if s.draft_group_id != placeholder.draft_group_id]   # order kept
+    assert list(not_ready) == [placeholder.draft_group_id] and "no draftables" in not_ready[placeholder.draft_group_id]
+    nxt = pick_main_slate(ready)                                                # the default moves on instead of dying on the placeholder
+    assert nxt is not None and nxt.draft_group_id != placeholder.draft_group_id
 
 
-def test_pick_validated_default_slate_falls_back_when_default_has_no_salaries_yet(getcontests_json):
-    """Reproduces the real-world bug: DK's lobby lists the usual 'Sunday main' draft
-    group for the week, but its draftables endpoint has no salaries published yet
-    (a pre-created placeholder -- see this_week()'s docstring). The picker must skip
-    it rather than hand the caller a slate that will blow up with 'doesn't look like
-    a Classic slate (no salaries or no DST)'."""
-    slates = parse_slates(getcontests_json)
-    default = pick_main_slate(slates)
+def test_split_ready_slates_all_ready_and_none_ready(getcontests_json):
+    slates = [s for s in parse_slates(getcontests_json) if s.is_classic]
+    ready, not_ready = split_ready_slates(slates, lambda gid: f"salaries-for-{gid}")
+    assert ready == slates and not_ready == {}
 
-    def fetch(gid):
-        if gid == default.draft_group_id:
-            raise dk.DKError(
-                f"Draft group {gid} doesn't look like a Classic slate (no salaries or no DST)."
-            )
-        return f"salaries-for-{gid}"
-
-    chosen, salaries, skipped = pick_validated_default_slate(slates, fetch)
-    assert skipped is True
-    assert chosen.draft_group_id != default.draft_group_id
-    assert chosen.is_classic
-    assert salaries == f"salaries-for-{chosen.draft_group_id}"
-
-    # falls back to the next-largest classic slate this week specifically, not just
-    # any remaining slate
-    classic_this_week = this_week([s for s in slates if s.is_classic])
-    remaining = sorted(
-        (s for s in classic_this_week if s.draft_group_id != default.draft_group_id),
-        key=lambda s: -s.game_count,
-    )
-    assert chosen.draft_group_id == remaining[0].draft_group_id
-
-
-def test_pick_validated_default_slate_keeps_default_when_nothing_validates(getcontests_json):
-    """If DK is unreachable for every slate, behave exactly as before: hand back the
-    normal default (and no salaries), so the caller's existing error path is unchanged."""
-    slates = parse_slates(getcontests_json)
-    default = pick_main_slate(slates)
-
-    def fetch(gid):
+    def unreachable(gid):
         raise dk.DKError("DraftKings request failed")
 
-    chosen, salaries, skipped = pick_validated_default_slate(slates, fetch)
-    assert chosen.draft_group_id == default.draft_group_id
-    assert salaries is None
-    assert skipped is False
+    ready, not_ready = split_ready_slates(slates, unreachable)
+    assert ready == [] and set(not_ready) == {s.draft_group_id for s in slates}
 
 
 def test_slate_type_classification(getcontests_json):
