@@ -29,7 +29,7 @@ from dfs.dk_client import (
 )
 from dfs.datasuite.features import inventory
 from dfs.edge import player_boosts, weekly_edges
-from dfs.optimizer import OptimizerError, optimize, to_dk_upload
+from dfs.optimizer import OptimizerError, ideal_lineup, optimize, to_dk_upload
 from dfs.projections import ProjectionError, load_weekly_projections
 from dfs.slate import build_slate
 from dfs import conviction as _conviction
@@ -104,6 +104,20 @@ def _salaries(draft_group_id: int, _nonce: int):
 @st.cache_data(show_spinner=False)
 def _projections(week: int, file_hash: str):
     return load_weekly_projections(week)
+
+
+@st.cache_data(show_spinner=False)
+def _ideal(slate: pd.DataFrame, excludes: tuple):
+    """The highest-projection lineup the slate allows (DraftKings' rules only, see optimizer.ideal_lineup). The solve takes about a third of a second and the screen
+    reruns on every click, so it is cached per slate and exclude list."""
+    return ideal_lineup(slate, list(excludes))
+
+
+def _show_lineup(lu) -> None:
+    show = lu.players.copy()
+    show["salary"] = show["salary"].map("${:,.0f}".format)
+    show["proj"] = show["proj"].round(1)
+    st.dataframe(show, hide_index=True, width="stretch")
 
 
 @st.cache_data(ttl=1800, show_spinner=False)
@@ -414,6 +428,18 @@ def render(screen: str) -> None:
                 st.session_state.pop("dfs_lineups", None)
                 st.error(str(e))
 
+        # The ceiling to measure the lineups against: the best projection this slate allows under DraftKings' rules alone.
+        try:
+            ideal = _ideal(slate_df, tuple(excludes))
+        except OptimizerError as e:
+            ideal = None
+            st.caption(f"Ideal lineup unavailable: {e}")
+        if ideal is not None:
+            with st.expander(f"⭐ Ideal lineup · {ideal.proj:.1f} pts · \\${ideal.salary:,} · {ideal.stack}", expanded=True):
+                st.caption("The highest projection possible on this slate under DraftKings' rules alone: $50,000 cap, nine roster slots. "
+                           "It ignores locks, stacking, variance and the other settings above; players you exclude are left out.")
+                _show_lineup(ideal)
+
         lineups = st.session_state.get("dfs_lineups")
         if lineups:
             projs = [lu.proj for lu in lineups]
@@ -428,10 +454,7 @@ def render(screen: str) -> None:
             for i, lu in enumerate(lineups, 1):
                 with st.expander(f"#{i} · {lu.proj:.1f} pts · \\${lu.salary:,} · {lu.stack}",
                                  expanded=(i == 1)):
-                    show = lu.players.copy()
-                    show["salary"] = show["salary"].map("${:,.0f}".format)
-                    show["proj"] = show["proj"].round(1)
-                    st.dataframe(show, hide_index=True, width="stretch")
+                    _show_lineup(lu)
 
             if len(lineups) > 1:
                 exp_df = (
