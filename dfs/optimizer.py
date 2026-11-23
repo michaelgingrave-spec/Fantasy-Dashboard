@@ -4,6 +4,8 @@ Supports: player locks (force-in) and excludes, min-salary floor, per-team caps,
 QB stacking + optional bring-back, DST-vs-QB avoidance, generating N diverse
 lineups with a per-player exposure cap, forbidding same-team RB pairs, and
 concentrating the roster into one specific game (game_stack_teams/game_stack_min).
+Lineups come back best projection first; `ideal_lineup` is the highest projection
+the slate allows under DraftKings' rules alone.
 """
 from __future__ import annotations
 
@@ -218,7 +220,22 @@ def optimize(
                 banned.add(i)
         lineups.append(_build_lineup(pool.set_index("dk_id").loc[chosen].reset_index(), opp))
 
+    # Best projection first. The order the solver produced them in is not one: variance jitters every solve, and the exposure cap, the uniqueness rule and the banned
+    # players let a later solve score above an earlier one. Stable, so equal projections keep the order they were built in.
+    lineups.sort(key=lambda lu: -lu.proj)
     return lineups
+
+
+def ideal_lineup(slate: pd.DataFrame, excludes: list[str] | None = None) -> Lineup:
+    """The highest-projection lineup the slate allows under DraftKings' own rules alone: the nine roster slots and the $50,000 cap. Every strategy setting is off (no QB
+    stack, salary floor, team cap, DST-vs-QB rule, variance, ceiling lean, regression tilt or locks), so its projection is the most any lineup from this pool can reach.
+    `excludes` (players the user took out) are honoured: an excluded player is not available."""
+    cfg = OptimizerConfig(
+        n_lineups=1, lean=0.0, variance=0.0, min_salary=0, max_from_team=ROSTER_SIZE, min_uniques=1, max_exposure=1.0,
+        stack_qb=False, stack_min=0, bring_back=False, avoid_dst_vs_qb=False, apply_matchup_boost=False,
+        locks=[], excludes=list(excludes or []),
+    )
+    return optimize(slate, cfg)[0]
 
 
 def _build_lineup(rows: pd.DataFrame, opp: dict[str, str]) -> Lineup:

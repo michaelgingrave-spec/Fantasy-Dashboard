@@ -22,13 +22,14 @@ from dfs.dk_client import (
     DKError,
     classic_slates,
     get_salaries,
-    pick_validated_default_slate,
+    pick_main_slate,
     slate_types_present,
+    split_ready_slates,
     this_week,
 )
 from dfs.datasuite.features import inventory
 from dfs.edge import player_boosts, weekly_edges
-from dfs.optimizer import OptimizerError, optimize, to_dk_upload
+from dfs.optimizer import OptimizerError, ideal_lineup, optimize, to_dk_upload
 from dfs.projections import ProjectionError, load_weekly_projections
 from dfs.slate import build_slate
 from dfs import conviction as _conviction
@@ -103,6 +104,20 @@ def _salaries(draft_group_id: int, _nonce: int):
 @st.cache_data(show_spinner=False)
 def _projections(week: int, file_hash: str):
     return load_weekly_projections(week)
+
+
+@st.cache_data(show_spinner=False)
+def _ideal(slate: pd.DataFrame, excludes: tuple):
+    """The highest-projection lineup the slate allows (DraftKings' rules only, see optimizer.ideal_lineup). The solve takes about a third of a second and the screen
+    reruns on every click, so it is cached per slate and exclude list."""
+    return ideal_lineup(slate, list(excludes))
+
+
+def _show_lineup(lu) -> None:
+    show = lu.players.copy()
+    show["salary"] = show["salary"].map("${:,.0f}".format)
+    show["proj"] = show["proj"].round(1)
+    st.dataframe(show, hide_index=True, width="stretch")
 
 
 @st.cache_data(ttl=1800, show_spinner=False)
@@ -314,36 +329,39 @@ def render(screen: str) -> None:
         else:
             widest = max(all_slates, key=lambda s: s.game_count)
             if _slate_pickers_here:
-                default_slate, verified_salaries, skipped_default = pick_validated_default_slate(
-                    all_slates, lambda gid: _salaries(gid, nonce),
-                )
+                # Offer only the slates DraftKings has published salaries for: it lists a draft group the day it creates it,
+                # and a pick of one without salaries used to replace the whole screen with an error.
+                ready, not_ready = split_ready_slates(all_slates, lambda gid: _salaries(gid, nonce))
+                if not ready:
+                    raise DKError(f"None of this week's {len(all_slates)} DraftKings Classic slates has salaries yet "
+                                  f"({next(iter(not_ready.values()), 'no reason given')}). Try Refresh in a bit.")
+                default_slate = pick_main_slate(ready) or ready[0]
 
-                types = ["All"] + slate_types_present(all_slates)
-                default_type = default_slate.slate_type if default_slate else "All"
+                types = ["All"] + slate_types_present(ready)
+                default_type = default_slate.slate_type
                 type_idx = types.index(default_type) if default_type in types else 0
+                if st.session_state.get("dfs_stype") not in types:          # a choice from before this list changed
+                    st.session_state.pop("dfs_stype", None)
                 stype = st.sidebar.selectbox(
                     "Slate type", types, index=type_idx, key="dfs_stype",
                     help="DraftKings runs several classic slates per week — the whole week "
                          "(Thu–Mon), Sunday + Monday, Sunday 1pm only, and so on. "
                          "Only affects the Optimizer.",
                 )
-                slates = all_slates if stype == "All" else [s for s in all_slates if s.slate_type == stype]
+                slates = ready if stype == "All" else [s for s in ready if s.slate_type == stype]
                 labels = [s.label for s in slates]
-                d_idx = next((i for i, s in enumerate(slates)
-                              if default_slate and s.draft_group_id == default_slate.draft_group_id), 0)
+                if st.session_state.get("dfs_slate") not in labels:
+                    st.session_state.pop("dfs_slate", None)
+                d_idx = next((i for i, s in enumerate(slates) if s.draft_group_id == default_slate.draft_group_id), 0)
                 pick = st.sidebar.selectbox("Slate", labels, index=d_idx, key="dfs_slate")
                 chosen = slates[labels.index(pick)]
                 st.sidebar.caption(
                     f"{chosen.slate_type} · {chosen.game_count} games · dg {chosen.draft_group_id}"
                 )
-                if skipped_default:
-                    st.sidebar.caption(
-                        "⚠️ DraftKings' usual main slate has no salaries published yet — "
-                        "showing the next-largest classic slate instead."
-                    )
-                salaries = (verified_salaries
-                            if verified_salaries is not None and chosen.draft_group_id == default_slate.draft_group_id
-                            else _salaries(chosen.draft_group_id, nonce))
+                if not_ready:
+                    st.sidebar.caption("Not listed, DraftKings has no salaries for them yet: "
+                                       + ", ".join(f"dg {gid}" for gid in not_ready))
+                salaries = _salaries(chosen.draft_group_id, nonce)
             else:
                 # every DFS screen except the Optimizer sees the full week: union of
                 # every classic slate's player pool, deduped by DK id.
@@ -459,6 +477,18 @@ def render(screen: str) -> None:
             except OptimizerError as e:
                 st.session_state.pop("dfs_lineups", None)
                 st.error(str(e))
+
+        # The ceiling to measure the lineups against: the best projection this slate allows under DraftKings' rules alone.
+        try:
+            ideal = _ideal(slate_df, tuple(excludes))
+        except OptimizerError as e:
+            ideal = None
+            st.caption(f"Ideal lineup unavailable: {e}")
+        if ideal is not None:
+            with st.expander(f"⭐ Ideal lineup · {ideal.proj:.1f} pts · \\${ideal.salary:,} · {ideal.stack}", expanded=True):
+                st.caption("The highest projection possible on this slate under DraftKings' rules alone: $50,000 cap, nine roster slots. "
+                           "It ignores locks, stacking, variance and the other settings above; players you exclude are left out.")
+                _show_lineup(ideal)
 
         lineups = st.session_state.get("dfs_lineups")
         if lineups:
