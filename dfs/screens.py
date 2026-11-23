@@ -192,6 +192,56 @@ def _player_labels(df: pd.DataFrame) -> dict[str, str]:
     }
 
 
+def _render_lineup_results(lineups: list, week: int, key_prefix: str,
+                           file_prefix: str = "dk_lineups", own_lookup: dict | None = None) -> None:
+    """Shared lineup display for the Optimizer and Milly Builder screens: one expander per
+    lineup, exposure chart across multiple lineups, and a DK bulk-upload CSV download.
+    `own_lookup` (dk_id -> own_pct), when given, adds a per-lineup total projected
+    ownership figure — a cheap GPP leverage check (low total = more differentiated)."""
+    projs = [lu.proj for lu in lineups]
+    exposure: dict[str, int] = {}
+    for lu in lineups:
+        for _, r in lu.players.iterrows():
+            exposure[r["name"]] = exposure.get(r["name"], 0) + 1
+    st.success(
+        f"{len(lineups)} lineups · {len(exposure)} unique players · "
+        f"proj {min(projs):.1f}–{max(projs):.1f}"
+    )
+    for i, lu in enumerate(lineups, 1):
+        own_bit = ""
+        show = lu.players.copy()
+        if own_lookup:
+            show["own%"] = show["dk_id"].map(own_lookup)
+            total_own = show["own%"].sum()
+            if total_own:
+                own_bit = f" · {total_own:.0f}% cum. own"
+        with st.expander(f"#{i} · {lu.proj:.1f} pts · \\${lu.salary:,} · {lu.stack}{own_bit}",
+                         expanded=(i == 1)):
+            show["salary"] = show["salary"].map("${:,.0f}".format)
+            show["proj"] = show["proj"].round(1)
+            if "own%" in show.columns:
+                show["own%"] = show["own%"].round(1)
+            st.dataframe(show, hide_index=True, width="stretch")
+
+    if len(lineups) > 1:
+        exp_df = (
+            pd.DataFrame({"player": exposure.keys(), "lineups": exposure.values()})
+            .assign(pct=lambda d: (d["lineups"] / len(lineups) * 100).round(0))
+            .sort_values("lineups", ascending=False)
+            .head(30)
+        )
+        st.plotly_chart(
+            px.bar(exp_df, x="pct", y="player", orientation="h", height=650,
+                   labels={"pct": "% of lineups"}),
+            use_container_width=True,
+        )
+
+    csv = to_dk_upload(lineups).to_csv(index=False).encode()
+    st.download_button("⬇️ Download DK upload CSV", csv,
+                       file_name=f"{file_prefix}_week{week}.csv", mime="text/csv",
+                       key=f"{key_prefix}_dl")
+
+
 def _cur_season() -> int:
     try:
         from matchup_model.opp.blend import current_season
@@ -247,10 +297,10 @@ def render(screen: str) -> None:
 
     nonce = st.session_state.setdefault("dfs_nonce", 0)
 
-    # The slate-type / slate pickers only matter for the Optimizer (it builds one
-    # specific lineup). Every other DFS screen uses the widest slate so it sees the whole
-    # player pool regardless of what the Optimizer is set to.
-    _slate_pickers_here = (screen == "Optimizer")
+    # The slate-type / slate pickers only matter for screens that build one specific
+    # lineup (Optimizer, Milly Builder). Every other DFS screen uses the widest slate so
+    # it sees the whole player pool regardless of what those are set to.
+    _slate_pickers_here = screen in ("Optimizer", "Milly Builder")
 
     slate_df = unmatched = None
     slate_err = None
@@ -412,40 +462,118 @@ def render(screen: str) -> None:
 
         lineups = st.session_state.get("dfs_lineups")
         if lineups:
-            projs = [lu.proj for lu in lineups]
-            exposure: dict[str, int] = {}
-            for lu in lineups:
-                for _, r in lu.players.iterrows():
-                    exposure[r["name"]] = exposure.get(r["name"], 0) + 1
-            st.success(
-                f"{len(lineups)} lineups · {len(exposure)} unique players · "
-                f"proj {min(projs):.1f}–{max(projs):.1f}"
+            _render_lineup_results(lineups, week, key_prefix="dfs", file_prefix="dk_lineups")
+
+    # ── Milly Builder ──────────────────────────────────────────────────────
+    elif screen == "Milly Builder":
+        st.header("🏆 Milly Maker Builder")
+        st.caption(
+            "The Millionaire Maker's real target is ~225–250+, not a safe median lineup. Pick the "
+            "week's best game to build around, then generate correlated, ceiling-leaning lineups "
+            "concentrated on it — QB stack, bring-back, no same-team RB pairs, and a minimum "
+            "headcount from that one game."
+        )
+        if _need_slate():
+            st.stop()
+
+        from dfs.ownership import chalk_ownership
+        edges = _edges(str(week) + pick, slate_df, _ds_hash())
+        pool = chalk_ownership(slate_df, week)
+        edge_cols = [c for c in ("implied_total", "game_total", "pace_tier") if c in edges.columns]
+        if not edges.empty and edge_cols:
+            pool = pool.merge(edges[["dk_id", *edge_cols]], on="dk_id", how="left")
+
+        skill = pool[pool["pos"].isin(["QB", "RB", "WR", "TE"])].copy()
+        skill["_opp_clean"] = skill["opp"].astype(str).str.lstrip("@")
+        skill["_game_key"] = [tuple(sorted((t, o))) for t, o in zip(skill["team"], skill["_opp_clean"])]
+        agg = {"proj": "sum"}
+        if "game_total" in skill.columns:
+            agg["game_total"] = "max"
+        games_tbl = skill.groupby("_game_key").agg(agg).rename(columns={"proj": "total_proj"}).reset_index()
+
+        if games_tbl.empty:
+            st.info("No games with skill-position players on this slate.")
+            st.stop()
+
+        has_odds = "game_total" in games_tbl.columns and games_tbl["game_total"].notna().any()
+        sort_col = "game_total" if has_odds else "total_proj"
+        games_tbl = games_tbl.sort_values(sort_col, ascending=False).reset_index(drop=True)
+        if not has_odds:
+            st.caption("⚠️ No Odds API key configured — ranking games by combined slate "
+                       "projection instead of Vegas total.")
+
+        def _game_label(row) -> str:
+            t1, t2 = row["_game_key"]
+            bit = f"total {row['game_total']:.1f}" if has_odds and pd.notna(row.get("game_total")) \
+                else f"proj {row['total_proj']:.1f} pts"
+            return f"{t1} vs {t2} · {bit}"
+
+        game_idx = st.selectbox(
+            "Build around this game", list(range(len(games_tbl))),
+            format_func=lambda i: _game_label(games_tbl.loc[i]), key="milly_game",
+        )
+        team_a, team_b = games_tbl.loc[game_idx, "_game_key"]
+
+        game_pool = pool[pool["team"].isin([team_a, team_b])].sort_values("proj", ascending=False)
+        show_cols = [c for c in ["name", "pos", "team", "opp", "salary", "proj", "own_pct"]
+                     if c in game_pool.columns]
+        st.dataframe(game_pool[show_cols].round(1), hide_index=True, width="stretch",
+                    height=min(45 + 35 * len(game_pool), 420))
+
+        qb_opts = game_pool[game_pool["pos"] == "QB"]
+        anchor_qb_id = None
+        if qb_opts.empty:
+            st.warning("No QB from this game is on the slate — building without a locked anchor QB.")
+        else:
+            qb_map = {
+                f'{r["name"]} ({r["team"]}) · ${r["salary"]:,} · {r["proj"]:.1f} pts'
+                + (f' · {r["own_pct"]:.0f}% own' if pd.notna(r.get("own_pct")) else ""): r["dk_id"]
+                for _, r in qb_opts.iterrows()
+            }
+            qb_label = st.selectbox("Anchor QB (locked into every lineup)", list(qb_map), key="milly_qb")
+            anchor_qb_id = qb_map[qb_label]
+
+        st.markdown("##### GPP settings")
+        g1, g2, g3 = st.columns(3)
+        m_lean = g1.slider("Ceiling lean", 0.0, 1.0, 0.7, 0.05, key="milly_lean",
+                           help="How hard to bias toward upside over median projection.")
+        m_variance = g2.slider("Variance", 0, 100, 40, key="milly_var") / 100.0
+        m_n = int(g3.number_input("Lineups", 1, 150, 3, key="milly_n"))
+
+        s1, s2, s3 = st.columns(3)
+        m_stack_min = s1.selectbox("Stack size", [1, 2], index=1, key="milly_stackmin")
+        m_bring_back = s2.checkbox("Bring-back", value=True, key="milly_bring")
+        m_game_min = s3.slider("Min players from this game", 2, 7, 4, key="milly_gstack",
+                               help="Total QB/RB/WR/TE roster spots required from either team "
+                                    "in the game selected above.")
+        m_no_rb_pair = st.checkbox("Never pair this game's two RBs on the same team", value=True,
+                                   key="milly_norb")
+
+        with st.expander("Advanced"):
+            a1, a2, a3 = st.columns(3)
+            m_min_salary = a1.slider("Min salary", 45000, 50000, 49000, 250, key="milly_minsal")
+            m_max_exp = a2.slider("Max exposure", 0.1, 1.0, 0.6, 0.05, key="milly_maxexp")
+            m_min_uniq = a3.slider("Min differences between lineups", 1, 5, 2, key="milly_uniq")
+
+        if st.button("🏆 Build Milly Maker lineups", type="primary", key="milly_build"):
+            cfg = OptimizerConfig(
+                n_lineups=m_n, lean=m_lean, variance=m_variance, min_salary=m_min_salary,
+                max_exposure=m_max_exp, min_uniques=m_min_uniq, stack_qb=True,
+                stack_min=m_stack_min, bring_back=m_bring_back, no_rb_pair=m_no_rb_pair,
+                game_stack_teams=(team_a, team_b), game_stack_min=m_game_min,
+                locks=[anchor_qb_id] if anchor_qb_id else [],
             )
-            for i, lu in enumerate(lineups, 1):
-                with st.expander(f"#{i} · {lu.proj:.1f} pts · \\${lu.salary:,} · {lu.stack}",
-                                 expanded=(i == 1)):
-                    show = lu.players.copy()
-                    show["salary"] = show["salary"].map("${:,.0f}".format)
-                    show["proj"] = show["proj"].round(1)
-                    st.dataframe(show, hide_index=True, width="stretch")
+            try:
+                st.session_state["milly_lineups"] = optimize(slate_df, cfg)
+            except OptimizerError as e:
+                st.session_state.pop("milly_lineups", None)
+                st.error(str(e))
 
-            if len(lineups) > 1:
-                exp_df = (
-                    pd.DataFrame({"player": exposure.keys(), "lineups": exposure.values()})
-                    .assign(pct=lambda d: (d["lineups"] / len(lineups) * 100).round(0))
-                    .sort_values("lineups", ascending=False)
-                    .head(30)
-                )
-                st.plotly_chart(
-                    px.bar(exp_df, x="pct", y="player", orientation="h", height=650,
-                           labels={"pct": "% of lineups"}),
-                    use_container_width=True,
-                )
-
-            csv = to_dk_upload(lineups).to_csv(index=False).encode()
-            st.download_button("⬇️ Download DK upload CSV", csv,
-                               file_name=f"dk_lineups_week{week}.csv", mime="text/csv",
-                               key="dfs_dl")
+        lineups = st.session_state.get("milly_lineups")
+        if lineups:
+            own_lookup = dict(zip(pool["dk_id"], pool["own_pct"])) if "own_pct" in pool.columns else None
+            _render_lineup_results(lineups, week, key_prefix="milly", file_prefix="milly_maker",
+                                   own_lookup=own_lookup)
 
     # ── Game Projections ───────────────────────────────────────────────────
     elif screen == "Game Projections":
