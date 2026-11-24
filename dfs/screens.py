@@ -262,14 +262,14 @@ def render(screen: str) -> None:
 
     nonce = st.session_state.setdefault("dfs_nonce", 0)
 
-    # The slate-type / slate pickers only matter for the Optimizer (it builds one
-    # specific lineup). Every other DFS screen uses the widest slate so it sees the whole
-    # player pool regardless of what the Optimizer is set to.
-    _slate_pickers_here = (screen == "Optimizer")
+    # The slate-type / slate pickers only matter for the screens that build lineups (the
+    # Optimizer and the Millionaire Maker builder). Every other DFS screen uses the widest
+    # slate so it sees the whole player pool regardless of what they are set to.
+    _slate_pickers_here = screen in ("Optimizer", "Millionaire Maker")
 
     slate_df = unmatched = None
     slate_err = None
-    pick = ""
+    pick = pick_type = ""
     try:
         all_slates = _slates(nonce)
         if not all_slates:
@@ -296,7 +296,7 @@ def render(screen: str) -> None:
                     "Slate type", types, index=type_idx, key="dfs_stype",
                     help="DraftKings runs several classic slates per week — the whole week "
                          "(Thu–Mon), Sunday + Monday, Sunday 1pm only, and so on. "
-                         "Only affects the Optimizer.",
+                         "Only affects the Optimizer and the Millionaire Maker builder.",
                 )
                 slates = ready if stype == "All" else [s for s in ready if s.slate_type == stype]
                 labels = [s.label for s in slates]
@@ -305,6 +305,7 @@ def render(screen: str) -> None:
                 d_idx = next((i for i, s in enumerate(slates) if s.draft_group_id == default_slate.draft_group_id), 0)
                 pick = st.sidebar.selectbox("Slate", labels, index=d_idx, key="dfs_slate")
                 chosen = slates[labels.index(pick)]
+                pick_type = chosen.slate_type
                 st.sidebar.caption(
                     f"{chosen.slate_type} · {chosen.game_count} games · dg {chosen.draft_group_id}"
                 )
@@ -327,7 +328,7 @@ def render(screen: str) -> None:
                             if frames else _salaries(widest.draft_group_id, nonce))
                 pick = "Full week (all slates)"
                 st.sidebar.caption(f"Player pool: all {len(all_slates)} classic slates merged "
-                                   "(Slate-type picker is on the Optimizer tab)")
+                                   "(Slate-type picker is on the Optimizer and Millionaire Maker tabs)")
             proj_p = projection_path(week)
             projections = _projections(week, _hash_path(proj_p))
             slate_df, unmatched = build_slate(salaries, projections)
@@ -473,6 +474,13 @@ def render(screen: str) -> None:
             st.download_button("⬇️ Download DK upload CSV", csv,
                                file_name=f"dk_lineups_week{week}.csv", mime="text/csv",
                                key="dfs_dl")
+
+    # ── Millionaire Maker ──────────────────────────────────────────────────
+    elif screen == "Millionaire Maker":
+        if _need_slate():
+            st.stop()
+        from dfs import mm_view
+        mm_view.render(week, slate_df, pick, pick_type)
 
     # ── Game Projections ───────────────────────────────────────────────────
     elif screen == "Game Projections":

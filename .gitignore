@@ -35,3 +35,8 @@ data/dfs/nflverse/
 matchup_model/opp_edge_calibration.csv
 matchup_model/opp_td_calibration.csv
 matchup_model/matchup_study_report_quick.md
+
+# historical salary archive (2014-2021): third-party compiled data, kept on this machine only; the study derives its aggregates from it
+data/dfs/history/archive_salaries.csv
+data/dfs/history/rotoguru_raw/
+data/dfs/history/*_local.csv

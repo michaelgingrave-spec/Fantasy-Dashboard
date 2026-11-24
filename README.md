@@ -23,6 +23,16 @@ Sidebar nav (`dashboard.py` → `_SCREENS` / `dfs/screens.py`):
   the injury tag and the game's spread / implied totals. By default only players FantasyPoints also
   projects (above 0) are shown, so depth players stay out; a min-FP box, "hide players ruled Out" and a
   position picker narrow it further.
+- **🏆 DFS Millionaire Maker** — a lineup builder for DraftKings' NFL Millionaire Maker (the Sunday main slate),
+  built from a study of 138 past main slates: the best possible lineup of each week (exact MILP over the real
+  salaries and scores), what those lineups share, and a forward test of which of those traits pay when lineups are
+  built before kickoff. The screen shows the evidence tables (stacks, spending by position, game totals and
+  opposing defenses) next to the controls. Code: `dfs/history.py` (salaries + scores 2014-21 from the Rotoguru
+  archive, 2026 from DraftKings), `dfs/hindsight.py`, `dfs/team_form.py`, `dfs/mm_study.py`, `dfs/mm_spend.py`,
+  `dfs/millionaire.py`, `dfs/mm_view.py`; write-up in `dfs/mm_report.md`. Rebuild the study with
+  `python -m dfs.hindsight`, then `python -m dfs.mm_study --grid main --n 40` and `--grid env --n 40`, the same two
+  with `--source fp --n 60` for the 2026 weeks, and `python -m dfs.mm_study --evidence` to write the file the screen
+  reads (about an hour and a half on 6 cores in all; the steps are listed at the top of `dfs/mm_study.py`).
 - **🎯 DFS Matchup Edge**, **💡 DFS Suggestions**, **🔍 DFS Data Check**.
 - **🔎 DFS Player Lookup** — per-player research: FantasyPoints projection vs regression lean,
   recent usage, FP-vs-xFP regression flag, historical coverage splits, opponent scheme
