@@ -123,6 +123,66 @@ def test_variance_zero_matches_default(slate_df):
     assert sig(a) == sig(b)
 
 
+def _two_rb_temptation_slate() -> pd.DataFrame:
+    """A tiny synthetic slate where team A's two RBs are clearly the two best RBs
+    overall, so an unconstrained optimizer wants both — the scenario no_rb_pair exists
+    to forbid (same-team RBs split touches and rarely both pay off)."""
+    rows = [
+        ("qbA", "QB A", "QB", "A", "B", 6000, 20.0),
+        ("qbB", "QB B", "QB", "B", "A", 6000, 18.0),
+        ("rbA1", "RB A1", "RB", "A", "B", 7000, 18.0),
+        ("rbA2", "RB A2", "RB", "A", "B", 6500, 17.0),
+        ("rbB1", "RB B1", "RB", "B", "A", 5000, 12.0),
+        ("rbC1", "RB C1", "RB", "C", "D", 4500, 11.0),
+        ("wrA1", "WR A1", "WR", "A", "B", 6000, 15.0),
+        ("wrB1", "WR B1", "WR", "B", "A", 5500, 14.0),
+        ("wrC1", "WR C1", "WR", "C", "D", 5000, 13.0),
+        ("wrD1", "WR D1", "WR", "D", "C", 4500, 12.0),
+        ("teA1", "TE A1", "TE", "A", "B", 4000, 10.0),
+        ("teB1", "TE B1", "TE", "B", "A", 3500, 9.0),
+        ("dstA", "DST A", "DST", "A", "B", 3000, 8.0),
+        ("dstE", "DST E", "DST", "E", "F", 2500, 7.0),
+    ]
+    df = pd.DataFrame(rows, columns=["dk_id", "name", "pos", "team", "opp", "salary", "proj"])
+    df["playable"] = True
+    return df
+
+
+def test_no_rb_pair_forbids_same_team_rbs():
+    slate = _two_rb_temptation_slate()
+    # Precondition: without the constraint, the optimal lineup really does pair team A's
+    # two RBs (otherwise this test wouldn't be exercising anything).
+    unconstrained = optimize(slate, OptimizerConfig(n_lineups=1, min_salary=0, stack_qb=False))[0]
+    rbs = unconstrained.players[unconstrained.players["pos"] == "RB"]
+    assert rbs["team"].value_counts().max() == 2
+
+    constrained = optimize(
+        slate, OptimizerConfig(n_lineups=1, min_salary=0, stack_qb=False, no_rb_pair=True)
+    )[0]
+    rbs = constrained.players[constrained.players["pos"] == "RB"]
+    assert rbs["team"].value_counts().max() <= 1
+    # still picks team A's better RB over sitting it entirely
+    assert "rbA1" in set(constrained.players["dk_id"])
+
+
+def test_game_stack_min_concentrates_in_one_game(slate_df):
+    # DET and NO play each other in the fixture slate; use them as the target game.
+    cfg = OptimizerConfig(n_lineups=1, min_salary=45000, stack_qb=False,
+                          game_stack_teams=("DET", "NO"), game_stack_min=4)
+    lu = optimize(slate_df, cfg)[0]
+    in_game = lu.players[lu.players["team"].isin(["DET", "NO"]) & (lu.players["pos"] != "DST")]
+    assert len(in_game) >= 4
+
+
+def test_game_stack_min_zero_is_a_no_op(slate_df):
+    """game_stack_teams set but game_stack_min=0 (the default) must not constrain anything."""
+    with_zero = optimize(slate_df, OptimizerConfig(
+        n_lineups=1, min_salary=45000, stack_qb=False, game_stack_teams=("DET", "NO")))
+    without = optimize(slate_df, OptimizerConfig(n_lineups=1, min_salary=45000, stack_qb=False))
+    sig = lambda lus: [tuple(sorted(lu.players["dk_id"])) for lu in lus]
+    assert sig(with_zero) == sig(without)
+
+
 # ── order: best projection first ───────────────────────────────────────────────────────────────────────────
 def test_lineups_come_back_best_projection_first(slate_df):
     """Variance jitters each solve and the exposure cap / uniqueness rule shape the later ones, so the solver's own order

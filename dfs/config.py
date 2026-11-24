@@ -71,6 +71,10 @@ class OptimizerConfig:
     stack_min: int = 1
     bring_back: bool = False          # also require >= 1 opposing WR/TE
     avoid_dst_vs_qb: bool = True      # don't roster a DST facing a rostered QB
+    no_rb_pair: bool = False          # never roster both RBs from the same team (GPP correlation
+                                      # hygiene — same-team RBs split touches and rarely both pay off)
+    game_stack_teams: tuple[str, str] | None = None  # concentrate the roster into one specific game
+    game_stack_min: int = 0          # min QB/RB/WR/TE (non-DST) players from those two teams combined
     apply_matchup_boost: bool = False # tilt objective toward Edge Finder spots (Phase 2)
     boost_weight: float = 0.05
     locks: list[str] = field(default_factory=list)     # dk_id strings

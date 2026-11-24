@@ -1,9 +1,11 @@
 """DraftKings NFL Classic lineup optimizer (MILP, via PuLP/CBC).
 
 Supports: player locks (force-in) and excludes, min-salary floor, per-team caps,
-QB stacking + optional bring-back, DST-vs-QB avoidance, and generating N diverse
-lineups with a per-player exposure cap. Lineups come back best projection first;
-`ideal_lineup` is the highest projection the slate allows under DraftKings' rules alone.
+QB stacking + optional bring-back, DST-vs-QB avoidance, generating N diverse
+lineups with a per-player exposure cap, forbidding same-team RB pairs, and
+concentrating the roster into one specific game (game_stack_teams/game_stack_min).
+Lineups come back best projection first; `ideal_lineup` is the highest projection
+the slate allows under DraftKings' rules alone.
 """
 from __future__ import annotations
 
@@ -185,6 +187,18 @@ def optimize(
                 opp_qb = [x[i] for i in qb_ids if P.at[i, "team"] == o]
                 if opp_qb:
                     prob += x[d] + pulp.lpSum(opp_qb) <= 1
+
+        if cfg.no_rb_pair:
+            for t in teams:
+                rb_t = [x[i] for i in skill_ids if P.at[i, "pos"] == "RB" and P.at[i, "team"] == t]
+                if len(rb_t) > 1:
+                    prob += pulp.lpSum(rb_t) <= 1
+
+        if cfg.game_stack_teams and cfg.game_stack_min > 0:
+            gt = set(cfg.game_stack_teams)
+            game_ids = [i for i in ids if P.at[i, "team"] in gt and P.at[i, "pos"] != "DST"]
+            if game_ids:
+                prob += pulp.lpSum(x[i] for i in game_ids) >= cfg.game_stack_min
 
         for s in used_sets:
             prob += pulp.lpSum(x[i] for i in s if i in x) <= ROSTER_SIZE - cfg.min_uniques
