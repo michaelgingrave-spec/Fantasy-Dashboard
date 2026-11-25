@@ -809,11 +809,11 @@ def compute_all_playoff_scores():
 _BEST_BALL_SCREENS = ["📊 Player Projections", "🛡️ Defense Matchups", "📈 Schedule Rankings",
                       "📅 Schedule Viewer", "📉 Weekly Projections", "🧩 Roster Optimizer",
                       "🎯 Draft Room"]
-_DFS_SCREENS = ["🏈 DFS Optimizer", "🏆 DFS Milly Builder", "🏆 DFS Millionaire Maker", "🎮 DFS Game Projections",
+_DFS_SCREENS = ["🏈 DFS Optimizer", "🏆 DFS Millionaire Maker", "🎮 DFS Game Projections",
                 "🎯 DFS Matchup Edge", "💡 DFS Suggestions", "🧬 DFS Matchup Machine", "🔎 DFS Player Lookup",
                 "🎰 DFS Prop Edges", "🎲 DFS Parlay Sim", "🧾 DFS Bet Log", "🔍 DFS Data Check"]
 _DFS_SCREEN_MAP = {
-    "🏈 DFS Optimizer": "Optimizer", "🏆 DFS Milly Builder": "Milly Builder", "🏆 DFS Millionaire Maker": "Millionaire Maker",
+    "🏈 DFS Optimizer": "Optimizer", "🏆 DFS Millionaire Maker": "Millionaire Maker",
     "🎮 DFS Game Projections": "Game Projections", "🎯 DFS Matchup Edge": "Matchup Finder",
     "💡 DFS Suggestions": "Suggestions", "🧬 DFS Matchup Machine": "Matchup Machine",
     "🔎 DFS Player Lookup": "Player Lookup", "🎰 DFS Prop Edges": "Prop Edges", "🎲 DFS Parlay Sim": "Parlay Sim",
