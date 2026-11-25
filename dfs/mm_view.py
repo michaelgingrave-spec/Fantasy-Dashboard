@@ -12,7 +12,7 @@ import streamlit as st
 
 from dfs.config import DATA
 from dfs.millionaire import MMConfig, build_portfolio, portfolio_summary, profile, read_ownership_file
-from dfs.optimizer import OptimizerError, to_dk_upload
+from dfs.optimizer import SLOT_ORDER, OptimizerError, to_dk_upload
 
 EVIDENCE_FILE = DATA / "history" / "mm_evidence.json"
 
@@ -172,10 +172,13 @@ def _evidence_panel() -> None:
 
 
 def _lineup_table(lineups, slate_df: pd.DataFrame) -> pd.DataFrame:
+    """One row per lineup, whole: all nine roster slots in DraftKings' order (player and team), then the salary, projection, stack and build profile."""
     rows = []
     for i, lu in enumerate(lineups, 1):
         pr = profile(lu, slate_df)
-        rows.append({"#": i, "proj": round(lu.proj, 1), "ceiling": round(lu.ceiling, 1), "salary": lu.salary, "left": pr["salary_left"], "stack": lu.stack,
+        by_slot = {r["slot"]: f"{r['name']} ({r['team']})" for _, r in lu.players.iterrows()}
+        rows.append({"#": i, **{slot: by_slot.get(slot, "") for slot in SLOT_ORDER},
+                     "salary": lu.salary, "left": pr["salary_left"], "proj": round(lu.proj, 1), "ceiling": round(lu.ceiling, 1), "stack": lu.stack,
                      "teams": pr["teams"], "games": pr["games"], "own %": None if pd.isna(pr.get("own_sum", float("nan"))) else round(pr["own_sum"], 0)})
     return pd.DataFrame(rows)
 
@@ -277,8 +280,9 @@ def render(week: int, slate_df: pd.DataFrame, pick: str, pick_type: str) -> None
     s = portfolio_summary(lineups, shown_slate)
     st.success(f"{s['lineups']} lineups · {s['unique_players']} unique players · proj {s['proj_min']:.1f}–{s['proj_max']:.1f} (mean {s['proj_mean']:.1f}) · "
                f"{100 * s['with_stack']:.0f}% stacked · {100 * s['with_back']:.0f}% with a bring-back · {s['mean_teams']:.1f} teams / {s['mean_games']:.1f} games per lineup")
+    st.caption("Each row is a whole lineup in DraftKings' roster order (the table scrolls sideways). Open Lineup detail below for every player's opponent, salary and projection.")
     st.dataframe(_lineup_table(lineups, shown_slate), hide_index=True, width="stretch")
-    with st.expander("Lineup detail"):
+    with st.expander("Lineup detail (every player's opponent, salary and projection)"):
         for i, lu in enumerate(lineups, 1):
             st.markdown(f"**#{i} · {lu.proj:.1f} pts · ${lu.salary:,} · {lu.stack}**")
             _show_lineup(lu)

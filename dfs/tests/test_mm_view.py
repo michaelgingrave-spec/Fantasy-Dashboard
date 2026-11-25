@@ -71,3 +71,54 @@ def test_panel_tolerates_an_older_evidence_file_without_groups(monkeypatch):
     monkeypatch.setenv("MM_EVIDENCE", json.dumps(ev))
     at = AppTest.from_function(_panel, default_timeout=60).run()
     assert not at.exception, [e.value for e in at.exception]
+
+
+# ------------------------------------------------------------------------------------------------------------------------------------------------ the lineups the screen prints
+SLOTS = ["QB", "RB1", "RB2", "WR1", "WR2", "WR3", "TE", "FLEX", "DST"]
+
+
+def _cell_name(cell: str) -> str:
+    return cell.rsplit(" (", 1)[0]
+
+
+def test_lineup_table_prints_every_roster_slot_of_every_lineup():
+    from test_millionaire import make_slate
+
+    from dfs import mm_view as V
+    from dfs.millionaire import MMConfig, build_portfolio
+    slate = make_slate()
+    lineups = build_portfolio(slate, MMConfig(n_lineups=4, seed=5))
+    table = V._lineup_table(lineups, slate)
+    assert list(table.columns[:10]) == ["#", *SLOTS]                                  # the whole lineup, left to right, in DraftKings' order
+    assert {"salary", "left", "proj", "ceiling", "stack", "teams", "games", "own %"} <= set(table.columns)
+    assert len(table) == len(lineups)
+    for lu, row in zip(lineups, table.to_dict("records")):
+        assert [_cell_name(row[s]) for s in SLOTS] == list(lu.players["name"])               # all nine players, none dropped or reordered
+        assert all(row[s].endswith(f"({t})") for s, t in zip(SLOTS, lu.players["team"]))
+        assert row["salary"] == lu.salary and row["proj"] == round(lu.proj, 1)
+        assert row["stack"] == lu.stack
+
+
+def _screen():
+    from test_millionaire import make_slate
+
+    from dfs import mm_view as V
+    V._evidence = lambda: None                                                              # the evidence panel is tested above
+    V.render(11, make_slate(), "Main · 5 games", V.MAIN_SLATE_TYPE)
+
+
+def test_the_built_screen_shows_full_lineups_not_just_the_stack():
+    at = AppTest.from_function(_screen, default_timeout=180).run()
+    assert not at.exception, [e.value for e in at.exception]
+    at.number_input(key="mm_n").set_value(4).run()
+    at.button(key="mm_build").click().run()
+    assert not at.exception, [e.value for e in at.exception]
+    lineups = at.session_state["mm_lineups"]
+    assert len(lineups) == 4
+    grids = [df.value for df in at.dataframe if set(SLOTS) <= set(df.value.columns)]
+    assert len(grids) == 1, "the lineup table must carry one column per roster slot"
+    grid = grids[0]
+    assert len(grid) == 4
+    for lu, row in zip(lineups, grid.to_dict("records")):
+        assert {_cell_name(row[s]) for s in SLOTS} == set(lu.players["name"]) and len(set(row[s] for s in SLOTS)) == 9
+    assert any("whole lineup" in c.value for c in at.caption)
