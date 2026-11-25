@@ -4997,3 +4997,470 @@ season,week,event,player,market,line,our proj,conf,z,edge,p(hit)%,p edge,book %,
 2026,10,Week 10 Monday,Justice Hill,rush yds,12.5,22.5,—,0.12,2.6,50,-0.2,50,20,OVER,fanduel -113,2026-11-17T19:07:07,4.0,loss,0.83,12.5,-113.0,fanduel,0.0,5.0,15.1
 2026,10,Week 10 Monday,Mark Andrews,receptions,2.5,3.1,—,0.05,0.1,51,-4.7,56,3,OVER,draftkings -145,2026-11-17T19:07:07,8.0,win,1.11,2.5,-145.0,draftkings,0.0,5.0,2.6
 2026,10,Week 10 Monday,Omarion Hampton,receptions,1.5,1.6,—,-0.05,-0.1,51,-11.5,63,-5,UNDER,draftkings -190,2026-11-17T19:07:07,1.0,win,0.86,1.5,-190.0,draftkings,0.0,5.0,1.4
+2026,11,Week 11 Thursday,Anthony Gould,receptions,2.5,1.6,strong,-0.67,-1.2,65,5.3,60,-48,UNDER,draftkings -168,2026-11-25T18:14:35,2.0,win,1.49,2.5,-168.0,draftkings,0.0,5.0,1.3
+2026,11,Week 11 Thursday,Anthony Gould,rec yds,21.5,19.1,solid,-0.38,-9.0,59,9.0,50,-42,UNDER,draftkings -112,2026-11-25T18:14:35,48.0,loss,1.49,21.5,-112.0,draftkings,0.0,5.0,12.5
+2026,11,Week 11 Thursday,Foster Moreau,rec yds,3.0,12.6,solid,0.3,5.2,57,8.4,49,175,OVER,fanduel +102,2026-11-25T18:14:35,8.0,win,0.61,2.5,-116.0,draftkings,1.0,5.0,8.2
+2026,11,Week 11 Thursday,Tank Dell,rec yds,39.0,56.6,solid,0.33,9.7,58,8.1,50,25,OVER,draftkings -109,2026-11-25T18:14:35,27.0,loss,0.92,38.5,-113.0,fanduel,1.0,5.0,48.7
+2026,11,Week 11 Thursday,Nico Collins,rec yds,72.0,67.4,solid,-0.35,-14.0,58,7.9,50,-19,UNDER,fanduel -113,2026-11-25T18:14:35,58.0,win,1.11,72.5,-114.0,draftkings,1.0,5.0,58.0
+2026,11,Week 11 Thursday,Jonathan Taylor,receptions,3.5,3.2,solid,-0.37,-0.7,59,5.9,53,-21,UNDER,draftkings -126,2026-11-25T18:14:35,4.0,loss,1.0,3.5,-126.0,draftkings,0.0,5.0,2.8
+2026,11,Week 11 Thursday,Foster Moreau,receptions,0.5,1.4,solid,0.5,0.7,61,5.0,56,132,OVER,fanduel -148,2026-11-25T18:14:35,1.0,win,0.61,0.5,-148.0,fanduel,0.0,5.0,1.2
+2026,11,Week 11 Thursday,Dalton Schultz,receptions,3.5,3.3,solid,-0.34,-0.7,58,1.9,56,-20,UNDER,draftkings -148,2026-11-25T18:14:35,1.0,win,0.97,3.5,-148.0,draftkings,0.0,5.0,2.8
+2026,11,Week 11 Thursday,Daniel Jones,pass TD,0.5,0.8,solid,0.31,0.3,57,1.3,56,64,OVER,fanduel -144,2026-11-25T18:14:35,0.0,loss,1.13,0.5,-144.0,fanduel,0.0,5.0,0.8
+2026,11,Week 11 Thursday,Kayshon Boutte,receptions,2.5,2.0,solid,-0.48,-0.9,61,-1.0,62,-34,UNDER,fanduel -194,2026-11-25T18:14:35,2.0,win,1.03,2.5,-194.0,fanduel,0.0,5.0,1.6
+2026,11,Week 11 Thursday,Ashton Dulin,receptions,1.5,1.2,solid,-0.33,-0.5,58,-2.4,60,-34,UNDER,fanduel -166,2026-11-25T18:14:35,2.0,loss,0.87,1.5,-166.0,fanduel,0.0,5.0,1.0
+2026,11,Week 11 Thursday,Deion Burks,receptions,1.5,1.4,lean,-0.19,-0.3,55,9.8,45,-20,UNDER,fanduel +112,2026-11-25T18:14:35,0.0,win,1.14,1.5,112.0,fanduel,0.0,5.0,1.2
+2026,11,Week 11 Thursday,Tyler Warren,rec yds,38.5,40.2,lean,-0.29,-8.4,57,6.6,50,-22,UNDER,fanduel -113,2026-11-25T18:14:35,22.0,win,1.14,39.5,-114.0,draftkings,2.0,5.0,30.1
+2026,11,Week 11 Thursday,Daniel Jones,pass yds,180.5,182.6,lean,0.27,21.3,56,6.4,50,12,OVER,draftkings -112,2026-11-25T18:14:35,144.0,loss,1.13,180.5,-112.0,draftkings,0.0,5.0,201.8
+2026,11,Week 11 Thursday,Jonathan Taylor,rec yds,23.5,23.6,lean,-0.24,-5.9,56,5.8,50,-25,UNDER,draftkings -112,2026-11-25T18:14:35,6.0,win,1.0,23.5,-112.0,draftkings,0.0,5.0,17.6
+2026,11,Week 11 Thursday,Deion Burks,rec yds,16.0,17.0,lean,-0.23,-4.9,55,5.0,50,-30,UNDER,fanduel -113,2026-11-25T18:14:35,0.0,win,1.14,16.5,-115.0,draftkings,1.0,5.0,11.1
+2026,11,Week 11 Thursday,Laquon Treadwell,rec yds,27.5,30.0,lean,-0.2,-5.0,55,4.5,50,-18,UNDER,fanduel -113,2026-11-25T18:14:35,0.0,win,1.14,27.5,-113.0,fanduel,0.0,5.0,22.5
+2026,11,Week 11 Thursday,Kayshon Boutte,rec yds,27.0,29.4,lean,-0.2,-5.0,55,4.4,50,-18,UNDER,fanduel -113,2026-11-25T18:14:35,40.0,loss,1.03,27.5,-113.0,fanduel,1.0,5.0,22.0
+2026,11,Week 11 Thursday,Laquon Treadwell,receptions,2.5,2.4,lean,-0.26,-0.5,56,4.1,52,-19,UNDER,draftkings -120,2026-11-25T18:14:35,0.0,win,1.14,2.5,-120.0,draftkings,0.0,5.0,2.0
+2026,11,Week 11 Thursday,David Montgomery,receptions,1.5,1.5,lean,-0.15,-0.2,54,3.9,50,-16,UNDER,fanduel -108,2026-11-25T18:14:35,3.0,loss,1.26,1.5,-108.0,fanduel,0.0,5.0,1.3
+2026,11,Week 11 Thursday,Tank Dell,receptions,2.5,3.4,lean,0.25,0.4,56,2.0,54,18,OVER,draftkings -131,2026-11-25T18:14:35,3.0,win,0.92,2.5,-131.0,draftkings,0.0,5.0,2.9
+2026,11,Week 11 Thursday,Xavier Hutchinson,receptions,3.5,3.5,lean,-0.25,-0.5,56,-3.2,59,-15,UNDER,draftkings -161,2026-11-25T18:14:35,2.0,win,0.92,3.5,-161.0,draftkings,0.0,5.0,3.0
+2026,11,Week 11 Thursday,C.J. Stroud,pass TD,2.5,2.6,—,0.11,0.1,53,16.8,36,6,OVER,draftkings +165,2026-11-25T18:14:35,3.0,win,0.88,2.5,165.0,draftkings,0.0,5.0,2.6
+2026,11,Week 11 Thursday,Nico Collins,receptions,4.5,5.0,—,-0.08,-0.2,52,8.0,44,-4,UNDER,draftkings +117,2026-11-25T18:14:35,3.0,win,1.11,4.5,117.0,draftkings,0.0,5.0,4.3
+2026,11,Week 11 Thursday,Tyler Warren,receptions,4.5,4.8,—,-0.15,-0.3,53,7.7,46,-7,UNDER,draftkings +108,2026-11-25T18:14:35,1.0,win,1.14,4.5,108.0,draftkings,0.0,5.0,4.2
+2026,11,Week 11 Thursday,Dalton Schultz,rec yds,29.5,35.4,—,-0.12,-3.0,53,2.5,50,-10,UNDER,fanduel -113,2026-11-25T18:14:35,11.0,win,0.97,29.5,-113.0,fanduel,0.0,5.0,26.5
+2026,11,Week 11 Thursday,David Montgomery,rec yds,10.5,12.3,—,-0.12,-2.4,53,2.2,51,-23,UNDER,fanduel -113,2026-11-25T18:14:35,17.0,loss,1.26,10.5,-113.0,fanduel,0.0,5.0,8.1
+2026,11,Week 11 Thursday,C.J. Stroud,pass yds,255.0,261.1,—,-0.04,-3.1,51,1.1,50,-1,UNDER,draftkings -111,2026-11-25T18:14:35,194.0,win,0.88,255.5,-113.0,fanduel,1.0,5.0,251.9
+2026,11,Week 11 Thursday,Xavier Hutchinson,rec yds,37.0,43.8,—,0.02,0.7,51,0.9,50,2,OVER,draftkings -109,2026-11-25T18:14:35,13.0,loss,0.92,36.5,-113.0,fanduel,1.0,5.0,37.7
+2026,11,Week 11 Thursday,David Montgomery,rush yds,56.5,73.8,—,0.3,9.9,51,0.8,50,18,OVER,draftkings -110,2026-11-25T18:14:35,107.0,win,1.26,56.5,-110.0,draftkings,0.0,5.0,66.4
+2026,11,Week 11 Thursday,Ashton Dulin,rec yds,13.5,19.9,—,-0.02,-0.5,51,0.6,50,-4,UNDER,draftkings -112,2026-11-25T18:14:35,30.0,loss,0.87,14.5,-112.0,draftkings,2.0,5.0,13.0
+2026,11,Week 11 Thursday,Seth McGowan,rush yds,27.0,29.3,—,-0.3,-7.4,50,0.4,50,-27,UNDER,draftkings -112,2026-11-25T18:14:35,7.0,win,0.87,27.5,-113.0,fanduel,1.0,5.0,19.6
+2026,11,Week 11 Thursday,C.J. Stroud,rush yds,9.5,13.0,—,0.05,1.1,50,0.2,50,12,OVER,draftkings -110,2026-11-25T18:14:35,27.0,win,0.88,9.5,-110.0,draftkings,0.0,5.0,10.6
+2026,11,Week 11 Thursday,Jonathan Taylor,rush yds,52.0,56.7,—,-0.03,-1.0,50,-0.2,50,-2,UNDER,fanduel -113,2026-11-25T18:14:35,21.0,win,1.0,52.5,-114.0,draftkings,1.0,5.0,51.0
+2026,11,Week 11 Thursday,Emari Demercado,rush yds,20.5,39.7,—,0.26,6.0,50,-0.5,51,29,OVER,fanduel -113,2026-11-25T18:14:35,33.0,win,0.98,20.5,-113.0,fanduel,0.0,5.0,26.5
+2026,11,Week 11 Thursday,Daniel Jones,rush yds,8.0,10.3,—,0.02,0.4,50,-0.9,51,5,OVER,draftkings -114,2026-11-25T18:14:35,3.0,loss,1.13,7.5,-120.0,fanduel,1.0,5.0,8.4
+2026,11,Week 11 Sunday,Emmett Johnson,receptions,3.5,2.9,strong,-0.51,-1.0,62,11.6,50,-29,UNDER,draftkings -113,2026-11-25T18:14:35,4.0,loss,1.24,3.5,-113.0,draftkings,0.0,5.0,2.5
+2026,11,Week 11 Sunday,Patrick Mahomes,pass TD,1.5,2.3,strong,0.71,0.8,66,4.8,61,55,OVER,fanduel -168,2026-11-25T18:14:35,3.0,win,0.92,1.5,-168.0,fanduel,0.0,5.0,2.3
+2026,11,Week 11 Sunday,Josh Johnson,pass yds,163.5,180.6,solid,0.45,36.0,60,10.5,50,22,OVER,draftkings -112,2026-11-25T18:14:35,155.0,loss,1.16,160.5,-112.0,draftkings,6.0,5.0,199.5
+2026,11,Week 11 Sunday,Josh Johnson,pass TD,0.5,0.9,solid,0.37,0.4,59,9.5,49,78,OVER,draftkings +100,2026-11-25T18:14:35,1.0,win,1.16,0.5,100.0,draftkings,0.0,5.0,0.9
+2026,11,Week 11 Sunday,Simi Fehoko,receptions,1.5,1.2,solid,-0.34,-0.5,58,4.0,54,-36,UNDER,draftkings -131,2026-11-25T18:14:35,1.0,win,1.27,1.5,-131.0,draftkings,0.0,5.0,1.0
+2026,11,Week 11 Sunday,Josh Downs,receptions,3.5,3.4,solid,-0.31,-0.6,57,2.7,55,-18,UNDER,fanduel -136,2026-11-25T18:14:35,4.0,loss,0.9,3.5,-136.0,fanduel,0.0,5.0,2.9
+2026,11,Week 11 Sunday,Josh Downs,rec yds,37.5,38.6,lean,-0.3,-8.6,57,6.9,50,-23,UNDER,draftkings -113,2026-11-25T18:14:35,59.0,loss,0.9,37.5,-113.0,draftkings,0.0,5.0,28.9
+2026,11,Week 11 Sunday,Reggie Virgil,rec yds,13.0,22.2,lean,0.17,3.6,54,4.6,50,28,OVER,draftkings -108,2026-11-25T18:14:35,0.0,loss,0.76,12.5,-108.0,draftkings,1.0,5.0,16.6
+2026,11,Week 11 Sunday,Emmett Johnson,rec yds,29.5,32.8,lean,-0.19,-5.0,55,4.3,50,-17,UNDER,fanduel -113,2026-11-25T18:14:35,38.0,loss,1.24,31.5,-114.0,draftkings,4.0,5.0,24.5
+2026,11,Week 11 Sunday,Simi Fehoko,rec yds,13.5,15.4,lean,-0.16,-3.4,54,4.2,50,-25,UNDER,draftkings -109,2026-11-25T18:14:35,2.0,win,1.27,13.5,-109.0,draftkings,0.0,5.0,10.1
+2026,11,Week 11 Sunday,Devin Duvernay,rec yds,8.5,17.9,lean,0.17,3.2,54,3.5,51,38,OVER,fanduel -113,2026-11-25T18:14:35,0.0,loss,1.14,8.5,-113.0,fanduel,0.0,5.0,11.7
+2026,11,Week 11 Sunday,Devin Duvernay,receptions,1.0,1.5,lean,0.19,0.3,55,-0.9,55,28,OVER,draftkings +139,2026-11-25T18:14:35,0.0,loss,1.14,0.5,-320.0,fanduel,1.0,5.0,1.3
+2026,11,Week 11 Sunday,Reggie Virgil,receptions,1.5,1.5,lean,-0.16,-0.2,54,-2.7,56,-16,UNDER,draftkings -147,2026-11-25T18:14:35,0.0,win,0.76,1.5,-147.0,draftkings,0.0,5.0,1.3
+2026,11,Week 11 Sunday,Cyrus Allen,receptions,1.5,1.3,lean,-0.25,-0.4,56,-7.9,64,-26,UNDER,fanduel -210,2026-11-25T18:14:35,2.0,loss,0.85,1.5,-210.0,fanduel,0.0,5.0,1.1
+2026,11,Week 11 Sunday,Noah Gray,receptions,1.5,1.9,—,0.06,0.1,52,4.3,47,7,OVER,draftkings +100,2026-11-25T18:14:35,3.0,win,0.84,1.5,100.0,draftkings,0.0,5.0,1.6
+2026,11,Week 11 Sunday,Xavier Worthy,receptions,2.5,3.0,—,0.02,0.0,50,3.9,46,1,OVER,draftkings +106,2026-11-25T18:14:35,2.0,loss,0.96,2.5,106.0,draftkings,0.0,5.0,2.5
+2026,11,Week 11 Sunday,Bam Knight,rec yds,8.5,13.2,—,0.01,0.2,50,2.6,48,2,OVER,fanduel -102,2026-11-25T18:14:35,10.0,win,1.14,8.5,-102.0,fanduel,0.0,5.0,8.7
+2026,11,Week 11 Sunday,Trey McBride,rec yds,50.0,60.5,—,0.06,2.1,52,1.3,50,4,OVER,fanduel -113,2026-11-25T18:14:35,54.0,win,0.97,49.5,-113.0,fanduel,1.0,5.0,52.1
+2026,11,Week 11 Sunday,Travis Kelce,rec yds,40.0,48.7,—,0.06,1.9,52,1.3,50,5,OVER,fanduel -113,2026-11-25T18:14:35,74.0,win,1.09,39.5,-113.0,fanduel,1.0,5.0,41.9
+2026,11,Week 11 Sunday,Noah Gray,rec yds,12.0,20.1,—,0.06,1.2,51,1.0,50,10,OVER,fanduel -113,2026-11-25T18:14:35,21.0,win,0.84,11.5,-116.0,draftkings,1.0,5.0,13.2
+2026,11,Week 11 Sunday,Patrick Mahomes,pass yds,247.5,259.1,—,0.03,2.5,51,0.9,50,1,OVER,draftkings -111,2026-11-25T18:14:35,324.0,win,0.92,246.5,-111.0,draftkings,2.0,5.0,250.0
+2026,11,Week 11 Sunday,Elijah Higgins,rec yds,12.0,18.8,—,0.02,0.3,50,0.7,50,3,OVER,draftkings -109,2026-11-25T18:14:35,4.0,loss,1.02,11.5,-113.0,fanduel,1.0,5.0,12.3
+2026,11,Week 11 Sunday,Rashee Rice,rec yds,50.5,59.8,—,0.03,1.0,51,0.6,50,2,OVER,draftkings -113,2026-11-25T18:14:35,53.0,win,0.95,50.5,-113.0,draftkings,0.0,5.0,51.5
+2026,11,Week 11 Sunday,Xavier Worthy,rec yds,25.0,32.5,—,-0.03,-0.7,51,0.6,50,-3,UNDER,draftkings -112,2026-11-25T18:14:35,38.0,loss,0.96,25.5,-112.0,draftkings,1.0,5.0,24.3
+2026,11,Week 11 Sunday,Cyrus Allen,rec yds,12.0,18.8,—,0.02,0.3,50,0.4,50,3,OVER,draftkings -112,2026-11-25T18:14:35,41.0,win,0.85,11.5,-113.0,fanduel,1.0,5.0,12.3
+2026,11,Week 11 Sunday,Trey McBride,receptions,6.0,6.9,—,0.0,0.0,50,0.2,50,0,OVER,draftkings +115,2026-11-25T18:14:35,9.0,win,0.97,5.5,-148.0,fanduel,1.0,5.0,6.0
+2026,11,Week 11 Sunday,Emmett Johnson,rush yds,87.5,103.4,—,0.14,5.5,50,0.2,50,6,OVER,draftkings -110,2026-11-25T18:14:35,105.0,win,1.24,87.5,-110.0,draftkings,0.0,5.0,93.0
+2026,11,Week 11 Sunday,Tyler Allgeier,rush yds,28.0,40.3,—,-0.04,-1.1,50,0.1,50,-4,UNDER,draftkings -111,2026-11-25T18:14:35,23.0,win,0.87,28.5,-113.0,fanduel,1.0,5.0,26.9
+2026,11,Week 11 Sunday,Josh Johnson,rush yds,14.0,13.1,—,-0.15,-3.3,50,0.1,50,-23,UNDER,draftkings -111,2026-11-25T18:14:35,5.0,win,1.16,14.5,-113.0,fanduel,1.0,5.0,10.7
+2026,11,Week 11 Sunday,Bam Knight,rush yds,24.5,34.0,—,-0.07,-1.8,50,0.0,50,-7,UNDER,fanduel -113,2026-11-25T18:14:35,35.0,loss,1.14,24.5,-113.0,fanduel,0.0,5.0,22.7
+2026,11,Week 11 Sunday,Tyler Allgeier,receptions,1.5,1.9,—,0.05,0.1,51,-0.2,51,6,OVER,draftkings -118,2026-11-25T18:14:35,0.0,loss,0.87,1.5,-118.0,draftkings,0.0,5.0,1.6
+2026,11,Week 11 Sunday,Patrick Mahomes,rush yds,11.0,10.9,—,-0.1,-2.0,50,-0.2,50,-19,UNDER,fanduel -113,2026-11-25T18:14:35,0.0,win,0.92,11.5,-113.0,fanduel,1.0,5.0,9.0
+2026,11,Week 11 Sunday,Tyler Allgeier,rec yds,7.5,11.9,—,0.02,0.3,50,-0.5,51,4,OVER,fanduel -113,2026-11-25T18:14:35,0.0,loss,0.87,7.5,-113.0,fanduel,0.0,5.0,7.8
+2026,11,Week 11 Sunday,Travis Kelce,receptions,3.5,3.8,—,-0.11,-0.2,53,-0.9,53,-6,UNDER,draftkings -120,2026-11-25T18:14:35,6.0,loss,1.09,3.5,-120.0,draftkings,0.0,5.0,3.3
+2026,11,Week 11 Sunday,Bam Knight,receptions,1.5,2.0,—,0.12,0.2,53,-1.0,54,12,OVER,fanduel -136,2026-11-25T18:14:35,1.0,loss,1.14,1.5,-136.0,fanduel,0.0,5.0,1.7
+2026,11,Week 11 Sunday,Elijah Higgins,receptions,1.5,2.0,—,0.11,0.2,53,-2.5,55,11,OVER,fanduel -138,2026-11-25T18:14:35,1.0,loss,1.02,1.5,-138.0,fanduel,0.0,5.0,1.7
+2026,11,Week 11 Sunday,Rashee Rice,receptions,4.5,5.0,—,-0.08,-0.2,52,-3.3,55,-4,UNDER,draftkings -133,2026-11-25T18:14:35,6.0,loss,0.95,4.5,-133.0,draftkings,0.0,5.0,4.3
+2026,11,Week 11 Sunday,Zay Flowers,receptions,6.5,5.1,strong,-0.76,-2.1,67,11.4,55,-32,UNDER,draftkings -133,2026-11-25T18:14:35,8.0,loss,1.15,6.5,-133.0,draftkings,0.0,5.0,4.4
+2026,11,Week 11 Sunday,Jacoby Brissett,pass TD,1.5,0.9,strong,-0.52,-0.6,62,2.2,60,-40,UNDER,draftkings -172,2026-11-25T18:14:35,1.0,win,1.12,1.5,-172.0,draftkings,0.0,5.0,0.9
+2026,11,Week 11 Sunday,Ja'Kobi Lane,rec yds,35.5,29.7,solid,-0.47,-13.2,61,11.2,50,-37,UNDER,draftkings -109,2026-11-25T18:14:35,0.0,win,1.11,36.5,-109.0,draftkings,2.0,5.0,22.3
+2026,11,Week 11 Sunday,Jalen Coker,receptions,3.5,3.2,solid,-0.37,-0.7,59,11.0,48,-21,UNDER,draftkings +102,2026-11-25T18:14:35,4.0,loss,1.15,3.5,102.0,draftkings,0.0,5.0,2.8
+2026,11,Week 11 Sunday,Jalen Coker,rec yds,44.5,40.1,solid,-0.47,-14.5,61,10.6,50,-32,UNDER,draftkings -113,2026-11-25T18:14:35,47.0,loss,1.15,45.5,-113.0,draftkings,2.0,5.0,30.0
+2026,11,Week 11 Sunday,Darren Waller,receptions,2.5,2.3,solid,-0.31,-0.5,57,8.0,49,-22,UNDER,draftkings -103,2026-11-25T18:14:35,3.0,loss,1.18,2.5,-103.0,draftkings,0.0,5.0,2.0
+2026,11,Week 11 Sunday,Tetairoa McMillan,rec yds,64.0,59.6,solid,-0.34,-12.6,58,7.7,50,-20,UNDER,fanduel -113,2026-11-25T18:14:35,71.0,loss,1.14,64.5,-114.0,draftkings,1.0,5.0,51.4
+2026,11,Week 11 Sunday,Mark Andrews,receptions,4.0,3.8,solid,-0.32,-0.7,57,5.4,52,-17,UNDER,draftkings +111,2026-11-25T18:14:35,2.0,win,1.07,4.5,-174.0,fanduel,1.0,5.0,3.3
+2026,11,Week 11 Sunday,Chuba Hubbard,receptions,3.5,3.1,solid,-0.41,-0.8,60,4.4,55,-24,UNDER,draftkings -136,2026-11-25T18:14:35,0.0,win,0.98,3.5,-136.0,draftkings,0.0,5.0,2.7
+2026,11,Week 11 Sunday,Rashod Bateman,receptions,2.5,2.1,solid,-0.42,-0.7,60,3.4,56,-30,UNDER,draftkings -143,2026-11-25T18:14:35,2.0,win,1.14,2.5,-143.0,draftkings,0.0,5.0,1.8
+2026,11,Week 11 Sunday,Matthew Hibner,receptions,0.5,1.2,solid,0.39,0.5,59,3.2,56,103,OVER,draftkings -145,2026-11-25T18:14:35,2.0,win,0.61,0.5,-145.0,draftkings,0.0,5.0,1.0
+2026,11,Week 11 Sunday,Tommy Tremble,receptions,2.5,2.0,solid,-0.46,-0.8,61,3.1,58,-33,UNDER,fanduel -154,2026-11-25T18:14:35,1.0,win,1.13,2.5,-154.0,fanduel,0.0,5.0,1.7
+2026,11,Week 11 Sunday,Ja'Kobi Lane,receptions,2.5,2.3,lean,-0.28,-0.5,57,11.8,45,-20,UNDER,draftkings +117,2026-11-25T18:14:35,0.0,win,1.11,2.5,117.0,draftkings,0.0,5.0,2.0
+2026,11,Week 11 Sunday,Matthew Hibner,rec yds,3.5,13.2,lean,0.29,5.1,57,8.4,48,146,OVER,fanduel -102,2026-11-25T18:14:35,12.0,win,0.61,3.5,-102.0,fanduel,0.0,5.0,8.6
+2026,11,Week 11 Sunday,Zay Flowers,rec yds,70.0,67.5,lean,-0.3,-11.9,57,6.9,50,-17,UNDER,fanduel -113,2026-11-25T18:14:35,97.0,loss,1.15,71.5,-114.0,draftkings,3.0,5.0,58.1
+2026,11,Week 11 Sunday,Tetairoa McMillan,receptions,4.5,4.5,lean,-0.25,-0.6,56,6.7,49,-12,UNDER,draftkings -105,2026-11-25T18:14:35,6.0,loss,1.14,4.5,-105.0,draftkings,0.0,5.0,3.9
+2026,11,Week 11 Sunday,Mark Andrews,rec yds,33.5,35.1,lean,-0.26,-7.3,56,6.2,50,-22,UNDER,draftkings -113,2026-11-25T18:14:35,14.0,win,1.07,33.5,-113.0,draftkings,0.0,5.0,26.2
+2026,11,Week 11 Sunday,Bryce Young,pass TD,1.5,1.5,lean,-0.22,-0.3,55,5.7,50,-17,UNDER,draftkings -108,2026-11-25T18:14:35,2.0,loss,1.02,1.5,-108.0,draftkings,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Darren Waller,rec yds,27.5,29.2,lean,-0.22,-5.6,55,5.5,50,-20,UNDER,draftkings -110,2026-11-25T18:14:35,42.0,loss,1.18,28.5,-110.0,draftkings,2.0,5.0,21.9
+2026,11,Week 11 Sunday,Derrick Henry,rush yds,66.5,54.5,lean,-0.49,-17.5,55,5.3,50,-26,UNDER,draftkings -110,2026-11-25T18:14:35,94.0,loss,0.99,67.5,-110.0,draftkings,2.0,5.0,49.0
+2026,11,Week 11 Sunday,Justice Hill,rec yds,17.0,19.7,lean,-0.19,-4.1,54,4.3,50,-24,UNDER,fanduel -113,2026-11-25T18:14:35,27.0,loss,0.87,17.5,-114.0,draftkings,1.0,5.0,12.9
+2026,11,Week 11 Sunday,Rashod Bateman,rec yds,26.0,29.5,lean,-0.16,-3.9,54,3.8,50,-15,UNDER,draftkings -111,2026-11-25T18:14:35,67.0,loss,1.14,26.5,-111.0,draftkings,1.0,5.0,22.1
+2026,11,Week 11 Sunday,Tommy Tremble,rec yds,17.5,20.7,lean,-0.18,-3.9,54,3.8,50,-22,UNDER,fanduel -113,2026-11-25T18:14:35,18.0,loss,1.13,18.5,-116.0,draftkings,2.0,5.0,13.6
+2026,11,Week 11 Sunday,Josh Cuevas,receptions,1.5,1.5,lean,-0.17,-0.3,54,-5.9,60,-17,UNDER,draftkings -172,2026-11-25T18:14:35,1.0,win,0.81,1.5,-172.0,draftkings,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Derrick Henry,receptions,1.5,1.6,—,-0.12,-0.2,53,7.1,46,-12,UNDER,draftkings +107,2026-11-25T18:14:35,4.0,loss,0.99,1.5,107.0,draftkings,0.0,5.0,1.3
+2026,11,Week 11 Sunday,Jacoby Brissett,pass yds,229.0,222.2,—,-0.13,-10.1,53,3.2,50,-4,UNDER,draftkings -111,2026-11-25T18:14:35,276.0,loss,1.12,230.5,-111.0,draftkings,3.0,5.0,218.9
+2026,11,Week 11 Sunday,Derrick Henry,rec yds,8.5,10.2,—,-0.1,-1.8,52,2.0,50,-21,UNDER,fanduel -113,2026-11-25T18:14:35,17.0,loss,0.99,8.5,-113.0,fanduel,0.0,5.0,6.7
+2026,11,Week 11 Sunday,Bryce Young,pass yds,237.0,243.5,—,0.04,2.8,51,1.0,50,1,OVER,draftkings -111,2026-11-25T18:14:35,254.0,win,1.02,232.5,-113.0,fanduel,9.0,5.0,239.8
+2026,11,Week 11 Sunday,Chuba Hubbard,rec yds,19.5,25.3,—,-0.02,-0.6,51,0.6,50,-3,UNDER,draftkings -112,2026-11-25T18:14:35,0.0,win,0.98,20.5,-112.0,draftkings,2.0,5.0,18.9
+2026,11,Week 11 Sunday,Bryce Young,rush yds,6.5,5.0,—,-0.13,-2.4,50,0.2,50,-38,UNDER,fanduel -106,2026-11-25T18:14:35,-2.0,win,1.02,6.5,-106.0,fanduel,0.0,5.0,4.1
+2026,11,Week 11 Sunday,Justice Hill,rush yds,14.5,21.1,—,0.13,2.8,50,0.1,50,19,OVER,draftkings -111,2026-11-25T18:14:35,69.0,win,0.87,14.5,-111.0,draftkings,0.0,5.0,17.3
+2026,11,Week 11 Sunday,Josh Cuevas,rec yds,10.5,16.3,—,0.01,0.2,50,-0.2,50,2,OVER,fanduel -113,2026-11-25T18:14:35,8.0,loss,0.81,10.5,-113.0,fanduel,0.0,5.0,10.7
+2026,11,Week 11 Sunday,Chuba Hubbard,rush yds,75.0,76.8,—,-0.16,-5.9,50,-0.2,50,-8,UNDER,fanduel -113,2026-11-25T18:14:35,120.0,loss,0.98,75.5,-113.0,fanduel,1.0,5.0,69.1
+2026,11,Week 11 Sunday,Jacoby Brissett,rush yds,6.0,9.4,—,0.09,1.7,50,-0.8,51,28,OVER,fanduel -113,2026-11-25T18:14:35,7.0,win,1.12,5.5,-120.0,draftkings,1.0,5.0,7.7
+2026,11,Week 11 Sunday,Trevor Etienne,rush yds,7.5,8.5,—,-0.03,-0.5,50,-0.9,51,-7,UNDER,fanduel -113,2026-11-25T18:14:35,29.0,loss,1.16,7.5,-113.0,fanduel,0.0,5.0,7.0
+2026,11,Week 11 Sunday,Justice Hill,receptions,2.5,3.1,—,0.1,0.2,52,-6.1,59,7,OVER,fanduel -158,2026-11-25T18:14:35,4.0,win,0.87,2.5,-158.0,fanduel,0.0,5.0,2.7
+2026,11,Week 11 Sunday,Ollie Gordon II,receptions,2.5,1.8,strong,-0.57,-1.0,63,16.7,46,-41,UNDER,draftkings +108,2026-11-25T18:14:35,2.0,win,1.12,2.5,108.0,draftkings,0.0,5.0,1.5
+2026,11,Week 11 Sunday,Ollie Gordon II,rec yds,16.5,11.7,solid,-0.41,-8.8,59,9.3,50,-54,UNDER,draftkings -113,2026-11-25T18:14:35,-2.0,win,1.12,16.5,-113.0,draftkings,0.0,5.0,7.7
+2026,11,Week 11 Sunday,Kevin Coleman Jr.,rec yds,4.0,16.5,solid,0.39,6.8,59,9.2,50,170,OVER,draftkings -110,2026-11-25T18:14:35,0.0,loss,0.49,3.5,-110.0,draftkings,1.0,5.0,10.8
+2026,11,Week 11 Sunday,Kevin Coleman Jr.,receptions,0.5,1.2,solid,0.36,0.5,58,2.2,56,95,OVER,fanduel -148,2026-11-25T18:14:35,0.0,loss,0.49,0.5,-148.0,fanduel,0.0,5.0,1.0
+2026,11,Week 11 Sunday,Josh Allen,pass TD,1.5,1.6,lean,-0.18,-0.2,54,10.2,44,-14,UNDER,draftkings +122,2026-11-25T18:14:35,1.0,win,0.97,1.5,122.0,draftkings,0.0,5.0,1.3
+2026,11,Week 11 Sunday,Keon Coleman,rec yds,30.5,30.7,lean,-0.28,-7.5,57,6.5,50,-25,UNDER,fanduel -113,2026-11-25T18:14:35,17.0,win,1.01,30.5,-113.0,fanduel,0.0,5.0,23.0
+2026,11,Week 11 Sunday,Malik Washington,rec yds,33.0,46.2,lean,0.25,6.8,56,5.6,50,21,OVER,fanduel -113,2026-11-25T18:14:35,30.0,loss,0.99,32.5,-115.0,draftkings,1.0,5.0,39.8
+2026,11,Week 11 Sunday,Khalil Shakir,receptions,3.5,3.4,lean,-0.3,-0.6,57,1.6,55,-17,UNDER,draftkings -140,2026-11-25T18:14:35,5.0,loss,1.09,3.5,-140.0,draftkings,0.0,5.0,2.9
+2026,11,Week 11 Sunday,Keon Coleman,receptions,2.5,2.4,lean,-0.26,-0.5,56,0.6,55,-18,UNDER,draftkings -140,2026-11-25T18:14:35,2.0,win,1.01,2.5,-140.0,draftkings,0.0,5.0,2.0
+2026,11,Week 11 Sunday,DJ Moore,receptions,3.5,3.7,—,-0.14,-0.3,53,4.4,49,-8,UNDER,fanduel -106,2026-11-25T18:14:35,8.0,loss,1.18,3.5,-106.0,fanduel,0.0,5.0,3.2
+2026,11,Week 11 Sunday,Chris Bell,rec yds,15.5,24.8,—,0.14,3.1,53,3.4,50,20,OVER,draftkings -112,2026-11-25T18:14:35,8.0,loss,1.12,14.5,-112.0,draftkings,2.0,5.0,18.6
+2026,11,Week 11 Sunday,Greg Dulcich,receptions,2.5,3.1,—,0.09,0.2,52,3.3,49,6,OVER,draftkings -108,2026-11-25T18:14:35,2.0,loss,0.97,2.5,-108.0,draftkings,0.0,5.0,2.7
+2026,11,Week 11 Sunday,Josh Allen,pass yds,228.0,239.6,—,0.1,8.0,52,2.4,50,3,OVER,draftkings -113,2026-11-25T18:14:35,304.0,win,0.97,227.5,-113.0,fanduel,1.0,5.0,236.0
+2026,11,Week 11 Sunday,DJ Moore,rec yds,49.0,53.9,—,-0.08,-2.6,52,2.1,50,-5,UNDER,draftkings -110,2026-11-25T18:14:35,91.0,loss,1.18,49.5,-110.0,draftkings,1.0,5.0,46.4
+2026,11,Week 11 Sunday,James Cook,rec yds,8.5,10.6,—,-0.08,-1.6,52,2.1,50,-19,UNDER,draftkings -111,2026-11-25T18:14:35,3.0,win,0.88,8.5,-111.0,draftkings,0.0,5.0,6.9
+2026,11,Week 11 Sunday,Ray Davis,rush yds,18.5,11.8,—,-0.39,-8.8,53,2.1,51,-48,UNDER,fanduel -113,2026-11-25T18:14:35,3.0,win,0.93,18.5,-113.0,fanduel,0.0,5.0,9.7
+2026,11,Week 11 Sunday,Caleb Douglas,rec yds,48.5,59.1,—,0.07,2.4,52,2.0,50,5,OVER,draftkings -110,2026-11-25T18:14:35,30.0,loss,0.93,48.5,-110.0,draftkings,0.0,5.0,50.9
+2026,11,Week 11 Sunday,Dawson Knox,rec yds,19.5,24.6,—,-0.05,-1.1,51,0.9,50,-6,UNDER,fanduel -113,2026-11-25T18:14:35,31.0,loss,1.18,19.5,-113.0,fanduel,0.0,5.0,18.4
+2026,11,Week 11 Sunday,Chris Bell,receptions,1.5,1.8,—,-0.01,-0.0,50,0.5,50,-1,UNDER,draftkings -109,2026-11-25T18:14:35,1.0,win,1.12,1.5,-109.0,draftkings,0.0,5.0,1.5
+2026,11,Week 11 Sunday,Jaylen Wright,rush yds,5.0,9.9,—,0.16,3.1,50,0.4,50,62,OVER,draftkings -108,2026-11-25T18:14:35,10.0,win,0.83,4.5,-113.0,fanduel,1.0,5.0,8.1
+2026,11,Week 11 Sunday,Khalil Shakir,rec yds,38.0,43.5,—,-0.02,-0.6,50,0.3,50,-2,UNDER,fanduel -113,2026-11-25T18:14:35,101.0,loss,1.09,38.5,-114.0,draftkings,1.0,5.0,37.4
+2026,11,Week 11 Sunday,Ty Johnson,rec yds,13.0,19.5,—,-0.01,-0.2,50,0.2,50,-2,UNDER,draftkings -112,2026-11-25T18:14:35,55.0,loss,0.93,13.5,-113.0,fanduel,1.0,5.0,12.8
+2026,11,Week 11 Sunday,Greg Dulcich,rec yds,26.0,34.4,—,-0.01,-0.2,50,-0.1,50,-1,UNDER,fanduel -113,2026-11-25T18:14:35,12.0,win,0.97,26.5,-115.0,draftkings,1.0,5.0,25.8
+2026,11,Week 11 Sunday,James Cook,rush yds,93.5,100.0,—,-0.08,-3.5,50,-0.2,50,-4,UNDER,fanduel -113,2026-11-25T18:14:35,89.0,win,0.88,94.5,-114.0,draftkings,2.0,5.0,90.0
+2026,11,Week 11 Sunday,Ollie Gordon II,rush yds,56.0,57.4,—,-0.13,-4.4,50,-0.2,50,-8,UNDER,fanduel -113,2026-11-25T18:14:35,69.0,loss,1.12,57.5,-114.0,draftkings,3.0,5.0,51.6
+2026,11,Week 11 Sunday,Josh Allen,rush yds,23.5,27.3,—,-0.22,-5.2,50,-0.2,50,-22,UNDER,fanduel -113,2026-11-25T18:14:35,0.0,win,0.97,24.5,-114.0,draftkings,2.0,5.0,18.3
+2026,11,Week 11 Sunday,Malik Washington,receptions,3.5,4.0,—,0.01,0.0,50,-0.8,51,1,OVER,draftkings -116,2026-11-25T18:14:35,3.0,loss,0.99,3.5,-116.0,draftkings,0.0,5.0,3.5
+2026,11,Week 11 Sunday,Ty Johnson,receptions,1.5,1.9,—,0.08,0.1,52,-2.0,54,8,OVER,fanduel -130,2026-11-25T18:14:35,7.0,win,0.93,1.5,-130.0,fanduel,0.0,5.0,1.6
+2026,11,Week 11 Sunday,James Cook,receptions,1.5,1.6,—,-0.12,-0.2,53,-2.1,55,-13,UNDER,draftkings -135,2026-11-25T18:14:35,2.0,loss,0.88,1.5,-135.0,draftkings,0.0,5.0,1.3
+2026,11,Week 11 Sunday,Caleb Douglas,receptions,3.5,4.0,—,0.01,0.0,50,-4.0,54,1,OVER,draftkings -134,2026-11-25T18:14:35,2.0,loss,0.93,3.5,-134.0,draftkings,0.0,5.0,3.5
+2026,11,Week 11 Sunday,Dawson Knox,receptions,2.5,2.7,—,-0.12,-0.2,53,-7.4,60,-9,UNDER,draftkings -180,2026-11-25T18:14:35,2.0,win,1.18,2.5,-180.0,draftkings,0.0,5.0,2.3
+2026,11,Week 11 Sunday,Kyle Monangai,receptions,0.5,1.4,strong,0.52,0.7,62,-2.4,64,137,OVER,draftkings -207,2026-11-25T18:14:35,0.0,loss,0.82,0.5,-207.0,draftkings,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Chris Olave,rec yds,68.5,61.6,solid,-0.4,-15.5,59,9.0,50,-23,UNDER,fanduel -113,2026-11-25T18:14:35,102.0,loss,1.11,68.5,-113.0,fanduel,0.0,5.0,53.0
+2026,11,Week 11 Sunday,Chris Olave,receptions,5.5,5.0,solid,-0.45,-1.1,60,7.1,53,-20,UNDER,fanduel -130,2026-11-25T18:14:35,9.0,loss,1.11,5.5,-130.0,fanduel,0.0,5.0,4.4
+2026,11,Week 11 Sunday,Alvin Kamara,receptions,2.5,2.2,solid,-0.38,-0.7,59,5.6,53,-27,UNDER,draftkings -123,2026-11-25T18:14:35,1.0,win,0.69,2.5,-123.0,draftkings,0.0,5.0,1.8
+2026,11,Week 11 Sunday,Sam Roush,receptions,0.5,1.2,solid,0.4,0.5,59,1.8,57,105,OVER,draftkings -157,2026-11-25T18:14:35,1.0,win,0.87,0.5,-157.0,draftkings,0.0,5.0,1.0
+2026,11,Week 11 Sunday,D'Andre Swift,receptions,2.5,2.3,solid,-0.3,-0.5,57,-2.1,59,-21,UNDER,draftkings -161,2026-11-25T18:14:35,2.0,win,1.04,2.5,-161.0,draftkings,0.0,5.0,2.0
+2026,11,Week 11 Sunday,Tyler Shough,pass TD,1.5,1.2,solid,-0.41,-0.5,60,-6.4,66,-32,UNDER,draftkings -233,2026-11-25T18:14:35,1.0,win,0.96,1.5,-233.0,draftkings,0.0,5.0,1.0
+2026,11,Week 11 Sunday,Noah Fant,receptions,0.5,1.2,solid,0.36,0.5,58,-7.3,66,95,OVER,fanduel -225,2026-11-25T18:14:35,2.0,win,0.83,0.5,-225.0,fanduel,0.0,5.0,1.0
+2026,11,Week 11 Sunday,Devaughn Vele,receptions,2.5,3.3,lean,0.16,0.3,54,14.0,40,12,OVER,draftkings +141,2026-11-25T18:14:35,7.0,win,0.86,2.5,141.0,draftkings,0.0,5.0,2.8
+2026,11,Week 11 Sunday,Travis Etienne Jr.,rush yds,37.5,32.9,lean,-0.56,-15.5,57,7.0,50,-41,UNDER,draftkings -109,2026-11-25T18:14:35,76.0,loss,0.86,37.5,-109.0,draftkings,0.0,5.0,22.0
+2026,11,Week 11 Sunday,D'Andre Swift,rec yds,15.0,14.3,lean,-0.26,-5.6,56,5.8,50,-37,UNDER,fanduel -113,2026-11-25T18:14:35,8.0,win,1.04,15.5,-116.0,draftkings,1.0,5.0,9.4
+2026,11,Week 11 Sunday,Devaughn Vele,rec yds,21.5,35.0,lean,0.2,4.7,55,4.9,50,22,OVER,draftkings -111,2026-11-25T18:14:35,76.0,win,0.86,21.5,-111.0,draftkings,0.0,5.0,26.2
+2026,11,Week 11 Sunday,Travis Etienne Jr.,receptions,2.5,2.3,lean,-0.28,-0.5,57,4.6,52,-20,UNDER,fanduel -122,2026-11-25T18:14:35,0.0,win,0.86,2.5,-122.0,fanduel,0.0,5.0,2.0
+2026,11,Week 11 Sunday,Colston Loveland,rec yds,49.5,50.4,lean,-0.19,-6.1,54,4.5,50,-12,UNDER,draftkings -111,2026-11-25T18:14:35,29.0,win,1.12,49.5,-111.0,draftkings,0.0,5.0,43.4
+2026,11,Week 11 Sunday,Alvin Kamara,rec yds,12.5,13.8,lean,-0.17,-3.5,54,4.1,50,-28,UNDER,draftkings -105,2026-11-25T18:14:35,1.0,win,0.69,12.5,-105.0,draftkings,0.0,5.0,9.0
+2026,11,Week 11 Sunday,Caleb Williams,pass yds,239.0,259.9,lean,0.15,11.8,54,3.8,50,5,OVER,draftkings -111,2026-11-25T18:14:35,181.0,loss,1.05,237.5,-113.0,fanduel,3.0,5.0,250.8
+2026,11,Week 11 Sunday,D'Andre Swift,rush yds,66.0,56.1,lean,-0.44,-15.5,54,3.7,50,-23,UNDER,draftkings -113,2026-11-25T18:14:35,51.0,win,1.04,66.5,-113.0,draftkings,1.0,5.0,50.5
+2026,11,Week 11 Sunday,Colston Loveland,receptions,4.5,4.8,lean,-0.15,-0.3,54,2.6,51,-8,UNDER,fanduel -118,2026-11-25T18:14:35,3.0,win,1.12,4.5,-118.0,fanduel,0.0,5.0,4.2
+2026,11,Week 11 Sunday,Juwan Johnson,receptions,2.5,2.5,lean,-0.2,-0.3,55,-3.8,58,-14,UNDER,draftkings -163,2026-11-25T18:14:35,0.0,win,0.94,2.5,-163.0,draftkings,0.0,5.0,2.2
+2026,11,Week 11 Sunday,Caleb Williams,pass TD,1.5,1.8,lean,0.26,0.3,56,-6.9,63,20,OVER,fanduel -196,2026-11-25T18:14:35,2.0,win,1.05,1.5,-196.0,fanduel,0.0,5.0,1.8
+2026,11,Week 11 Sunday,Kyle Monangai,rec yds,5.0,10.9,—,0.12,2.1,53,3.8,49,43,OVER,fanduel -102,2026-11-25T18:14:35,0.0,loss,0.82,4.5,-114.0,draftkings,1.0,5.0,7.1
+2026,11,Week 11 Sunday,Tyler Shough,pass yds,233.0,225.8,—,-0.14,-10.6,53,3.2,50,-5,UNDER,draftkings -113,2026-11-25T18:14:35,222.0,win,0.96,233.5,-113.0,draftkings,1.0,5.0,222.4
+2026,11,Week 11 Sunday,Travis Etienne Jr.,rec yds,13.5,17.2,—,-0.11,-2.2,53,2.6,50,-16,UNDER,draftkings -111,2026-11-25T18:14:35,0.0,win,0.86,13.5,-111.0,draftkings,0.0,5.0,11.3
+2026,11,Week 11 Sunday,Luther Burden III,rec yds,62.0,68.4,—,-0.08,-3.1,52,2.1,50,-5,UNDER,draftkings -111,2026-11-25T18:14:35,10.0,win,1.0,62.5,-111.0,draftkings,1.0,5.0,58.9
+2026,11,Week 11 Sunday,Luther Burden III,receptions,4.5,5.0,—,-0.08,-0.2,52,1.9,50,-4,UNDER,draftkings -109,2026-11-25T18:14:35,2.0,win,1.0,4.5,-109.0,draftkings,0.0,5.0,4.3
+2026,11,Week 11 Sunday,Rome Odunze,rec yds,46.0,50.5,—,-0.08,-2.5,52,1.7,50,-6,UNDER,fanduel -113,2026-11-25T18:14:35,45.0,win,1.13,46.5,-114.0,draftkings,1.0,5.0,43.5
+2026,11,Week 11 Sunday,Noah Fant,rec yds,7.0,12.3,—,0.06,1.1,51,1.7,50,16,OVER,draftkings -109,2026-11-25T18:14:35,19.0,win,0.83,6.5,-113.0,fanduel,1.0,5.0,8.1
+2026,11,Week 11 Sunday,Sam Roush,rec yds,7.5,12.7,—,0.04,0.8,51,1.2,50,11,OVER,draftkings -111,2026-11-25T18:14:35,19.0,win,0.87,7.5,-111.0,draftkings,0.0,5.0,8.3
+2026,11,Week 11 Sunday,Kalif Raymond,rec yds,21.5,28.4,—,-0.01,-0.3,50,0.3,50,-1,UNDER,draftkings -112,2026-11-25T18:14:35,14.0,win,1.03,22.5,-113.0,fanduel,2.0,5.0,21.2
+2026,11,Week 11 Sunday,Kyle Monangai,rush yds,46.5,46.9,—,-0.14,-4.4,50,0.3,50,-9,UNDER,draftkings -109,2026-11-25T18:14:35,18.0,win,0.82,46.5,-109.0,draftkings,0.0,5.0,42.1
+2026,11,Week 11 Sunday,Caleb Williams,rush yds,17.5,18.5,—,-0.11,-2.4,50,0.3,50,-14,UNDER,draftkings -110,2026-11-25T18:14:35,11.0,win,1.05,17.5,-110.0,draftkings,0.0,5.0,15.1
+2026,11,Week 11 Sunday,Juwan Johnson,rec yds,21.5,29.1,—,0.01,0.3,50,0.0,50,1,OVER,fanduel -113,2026-11-25T18:14:35,0.0,loss,0.94,21.5,-113.0,fanduel,0.0,5.0,21.8
+2026,11,Week 11 Sunday,Rome Odunze,receptions,3.0,3.5,—,-0.02,-0.0,51,-0.1,51,-1,UNDER,draftkings +130,2026-11-25T18:14:35,4.0,loss,1.13,3.5,-180.0,fanduel,1.0,5.0,3.0
+2026,11,Week 11 Sunday,Tyler Shough,rush yds,18.0,23.7,—,-0.1,-2.1,50,-0.4,50,-12,UNDER,fanduel -113,2026-11-25T18:14:35,34.0,loss,0.96,18.5,-113.0,fanduel,1.0,5.0,15.9
+2026,11,Week 11 Sunday,Alvin Kamara,rush yds,10.5,14.4,—,0.06,1.3,50,-0.7,51,13,OVER,fanduel -113,2026-11-25T18:14:35,1.0,loss,0.69,10.5,-113.0,fanduel,0.0,5.0,11.8
+2026,11,Week 11 Sunday,Kalif Raymond,receptions,2.5,2.7,—,-0.1,-0.2,52,-1.6,54,-7,UNDER,draftkings -134,2026-11-25T18:14:35,1.0,win,1.03,2.5,-134.0,draftkings,0.0,5.0,2.3
+2026,11,Week 11 Sunday,Calvin Ridley,rec yds,5.5,17.6,solid,0.33,6.1,58,9.3,49,110,OVER,fanduel -106,2026-11-25T18:14:35,68.0,win,0.65,5.5,-106.0,fanduel,0.0,5.0,11.6
+2026,11,Week 11 Sunday,Carnell Tate,rec yds,65.5,59.0,solid,-0.39,-14.7,59,9.1,50,-22,UNDER,draftkings -111,2026-11-25T18:14:35,58.0,win,1.2,65.5,-111.0,draftkings,0.0,5.0,50.8
+2026,11,Week 11 Sunday,Carnell Tate,receptions,5.0,4.8,solid,-0.36,-0.9,59,9.0,50,-17,UNDER,draftkings +123,2026-11-25T18:14:35,2.0,win,1.2,5.5,-154.0,fanduel,1.0,5.0,4.1
+2026,11,Week 11 Sunday,Tony Pollard,receptions,3.5,3.0,solid,-0.46,-0.9,61,8.7,52,-27,UNDER,draftkings -119,2026-11-25T18:14:35,0.0,win,1.04,3.5,-119.0,draftkings,0.0,5.0,2.6
+2026,11,Week 11 Sunday,Tony Pollard,rec yds,20.0,18.2,solid,-0.35,-8.1,58,8.1,50,-40,UNDER,draftkings -113,2026-11-25T18:14:35,0.0,win,1.04,20.5,-113.0,draftkings,1.0,5.0,11.9
+2026,11,Week 11 Sunday,Elic Ayomanor,receptions,3.5,3.0,solid,-0.45,-0.9,60,7.9,52,-26,UNDER,fanduel -122,2026-11-25T18:14:35,3.0,win,1.14,3.5,-122.0,fanduel,0.0,5.0,2.6
+2026,11,Week 11 Sunday,George Pickens,receptions,5.5,5.0,solid,-0.46,-1.1,61,7.3,53,-21,UNDER,fanduel -130,2026-11-25T18:14:35,7.0,loss,1.06,5.5,-130.0,fanduel,0.0,5.0,4.4
+2026,11,Week 11 Sunday,CeeDee Lamb,receptions,7.5,7.2,solid,-0.42,-1.2,60,5.3,55,-17,UNDER,fanduel -136,2026-11-25T18:14:35,11.0,loss,1.06,7.5,-136.0,fanduel,0.0,5.0,6.3
+2026,11,Week 11 Sunday,Brevyn Spann-Ford,receptions,2.5,2.1,solid,-0.4,-0.7,59,5.1,54,-28,UNDER,fanduel -130,2026-11-25T18:14:35,2.0,win,1.15,2.5,-130.0,fanduel,0.0,5.0,1.8
+2026,11,Week 11 Sunday,Chimere Dike,receptions,2.5,2.2,solid,-0.39,-0.7,59,4.9,54,-28,UNDER,fanduel -136,2026-11-25T18:14:35,6.0,loss,1.18,2.5,-136.0,fanduel,0.0,5.0,1.8
+2026,11,Week 11 Sunday,Javonte Williams,receptions,2.5,2.3,solid,-0.32,-0.6,57,-2.8,60,-23,UNDER,draftkings -178,2026-11-25T18:14:35,3.0,loss,1.15,2.5,-178.0,draftkings,0.0,5.0,1.9
+2026,11,Week 11 Sunday,KaVontae Turpin,receptions,0.5,1.1,solid,0.35,0.5,58,-3.8,62,92,OVER,fanduel -188,2026-11-25T18:14:35,0.0,loss,0.86,0.5,-188.0,fanduel,0.0,5.0,1.0
+2026,11,Week 11 Sunday,CeeDee Lamb,rec yds,93.0,92.2,lean,-0.29,-13.6,57,7.0,50,-15,UNDER,draftkings -110,2026-11-25T18:14:35,132.0,loss,1.06,93.5,-113.0,fanduel,1.0,5.0,79.4
+2026,11,Week 11 Sunday,KaVontae Turpin,rec yds,6.5,17.3,lean,0.26,4.8,56,5.9,50,75,OVER,fanduel -113,2026-11-25T18:14:35,0.0,loss,0.86,6.5,-113.0,fanduel,0.0,5.0,11.3
+2026,11,Week 11 Sunday,Cam Ward,pass yds,242.0,228.3,lean,-0.22,-17.2,55,5.4,50,-7,UNDER,draftkings -111,2026-11-25T18:14:35,248.0,loss,1.13,242.5,-111.0,draftkings,1.0,5.0,224.8
+2026,11,Week 11 Sunday,Elic Ayomanor,rec yds,44.5,43.5,lean,-0.23,-7.0,55,5.2,50,-16,UNDER,fanduel -113,2026-11-25T18:14:35,27.0,win,1.14,44.5,-113.0,fanduel,0.0,5.0,37.5
+2026,11,Week 11 Sunday,Ryan Flournoy,receptions,3.5,3.7,lean,-0.18,-0.4,54,4.5,50,-10,UNDER,fanduel -110,2026-11-25T18:14:35,1.0,win,0.97,3.5,-110.0,fanduel,0.0,5.0,3.1
+2026,11,Week 11 Sunday,Gunnar Helm,rec yds,25.0,27.9,lean,-0.17,-4.1,54,4.2,50,-16,UNDER,draftkings -110,2026-11-25T18:14:35,14.0,win,1.09,25.5,-110.0,draftkings,1.0,5.0,20.9
+2026,11,Week 11 Sunday,Cam Ward,pass TD,1.5,1.2,lean,-0.27,-0.3,56,4.0,52,-21,UNDER,draftkings -123,2026-11-25T18:14:35,2.0,loss,1.13,1.5,-123.0,draftkings,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Dak Prescott,pass yds,286.5,284.6,lean,-0.16,-11.9,54,3.8,50,-4,UNDER,draftkings -112,2026-11-25T18:14:35,325.0,loss,0.98,287.5,-112.0,draftkings,2.0,5.0,274.6
+2026,11,Week 11 Sunday,Chimere Dike,rec yds,22.0,24.3,lean,-0.16,-3.8,54,3.4,50,-17,UNDER,fanduel -113,2026-11-25T18:14:35,69.0,loss,1.18,22.5,-116.0,draftkings,1.0,5.0,18.2
+2026,11,Week 11 Sunday,Xavier Restrepo,receptions,1.5,1.4,lean,-0.2,-0.3,55,-4.1,59,-21,UNDER,draftkings -154,2026-11-25T18:14:35,1.0,win,0.61,1.5,-154.0,draftkings,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Dak Prescott,pass TD,2.5,2.6,—,0.09,0.1,52,4.7,47,5,OVER,fanduel +100,2026-11-25T18:14:35,4.0,win,0.98,2.5,100.0,fanduel,0.0,5.0,2.6
+2026,11,Week 11 Sunday,Brevyn Spann-Ford,rec yds,20.5,23.6,—,-0.12,-2.8,53,2.9,50,-14,UNDER,draftkings -112,2026-11-25T18:14:35,5.0,win,1.15,20.5,-112.0,draftkings,0.0,5.0,17.7
+2026,11,Week 11 Sunday,George Pickens,rec yds,69.5,75.0,—,-0.13,-4.9,53,2.8,50,-7,UNDER,fanduel -113,2026-11-25T18:14:35,102.0,loss,1.06,69.5,-113.0,fanduel,0.0,5.0,64.6
+2026,11,Week 11 Sunday,Ryan Flournoy,rec yds,40.0,49.8,—,0.1,2.9,52,2.5,50,7,OVER,draftkings -111,2026-11-25T18:14:35,11.0,loss,0.97,39.5,-111.0,draftkings,1.0,5.0,42.9
+2026,11,Week 11 Sunday,Javonte Williams,rush yds,77.0,70.7,—,-0.35,-13.4,52,1.6,50,-17,UNDER,draftkings -113,2026-11-25T18:14:35,67.0,win,1.15,77.5,-113.0,fanduel,1.0,5.0,63.6
+2026,11,Week 11 Sunday,Javonte Williams,rec yds,10.5,13.8,—,-0.07,-1.5,52,0.9,51,-14,UNDER,fanduel -113,2026-11-25T18:14:35,24.0,loss,1.15,10.5,-113.0,fanduel,0.0,5.0,9.0
+2026,11,Week 11 Sunday,Daniel Bellinger,rec yds,10.0,16.6,—,0.04,0.9,51,0.7,50,9,OVER,fanduel -113,2026-11-25T18:14:35,5.0,loss,0.81,9.5,-113.0,fanduel,1.0,5.0,10.9
+2026,11,Week 11 Sunday,Xavier Restrepo,rec yds,11.0,17.5,—,0.02,0.4,51,0.5,50,4,OVER,draftkings -112,2026-11-25T18:14:35,5.0,loss,0.61,10.5,-112.0,draftkings,1.0,5.0,11.4
+2026,11,Week 11 Sunday,Tony Pollard,rush yds,72.0,71.1,—,-0.22,-8.1,50,-0.1,50,-11,UNDER,draftkings -113,2026-11-25T18:14:35,110.0,loss,1.04,72.5,-113.0,draftkings,1.0,5.0,63.9
+2026,11,Week 11 Sunday,Cam Ward,rush yds,15.0,20.2,—,0.07,1.5,50,-0.3,50,10,OVER,fanduel -113,2026-11-25T18:14:35,3.0,loss,1.13,14.5,-115.0,draftkings,1.0,5.0,16.5
+2026,11,Week 11 Sunday,Dak Prescott,rush yds,7.5,9.2,—,0.0,0.1,50,-0.5,51,1,OVER,fanduel -113,2026-11-25T18:14:35,9.0,win,0.98,7.5,-113.0,fanduel,0.0,5.0,7.6
+2026,11,Week 11 Sunday,Daniel Bellinger,receptions,1.5,1.7,—,-0.08,-0.1,52,-4.2,56,-8,UNDER,fanduel -140,2026-11-25T18:14:35,1.0,win,0.81,1.5,-140.0,fanduel,0.0,5.0,1.4
+2026,11,Week 11 Sunday,Gunnar Helm,receptions,2.5,3.0,—,0.03,0.1,51,-4.4,55,2,OVER,draftkings -136,2026-11-25T18:14:35,2.0,loss,1.09,2.5,-136.0,draftkings,0.0,5.0,2.6
+2026,11,Week 11 Sunday,Amon-Ra St. Brown,receptions,7.0,6.4,strong,-0.51,-1.5,62,13.5,48,-21,UNDER,fanduel +128,2026-11-25T18:14:35,5.0,win,1.11,7.5,-144.0,draftkings,1.0,5.0,5.5
+2026,11,Week 11 Sunday,Cade Otton,receptions,3.5,2.9,strong,-0.52,-1.0,62,5.2,57,-30,UNDER,draftkings -150,2026-11-25T18:14:35,1.0,win,1.11,3.5,-150.0,draftkings,0.0,5.0,2.5
+2026,11,Week 11 Sunday,Ted Hurst III,receptions,0.5,1.5,strong,0.56,0.7,63,4.6,58,148,OVER,draftkings -154,2026-11-25T18:14:35,5.0,win,0.8,0.5,-154.0,draftkings,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Bucky Irving,receptions,2.5,2.1,solid,-0.41,-0.7,60,13.0,47,-29,UNDER,fanduel +106,2026-11-25T18:14:35,3.0,loss,0.84,2.5,106.0,fanduel,0.0,5.0,1.8
+2026,11,Week 11 Sunday,Jahmyr Gibbs,rec yds,34.0,28.1,solid,-0.47,-12.9,61,10.9,50,-38,UNDER,draftkings -111,2026-11-25T18:14:35,20.0,win,0.86,34.5,-111.0,draftkings,1.0,5.0,21.1
+2026,11,Week 11 Sunday,Ted Hurst III,rec yds,8.0,22.9,solid,0.48,9.2,61,10.5,51,115,OVER,draftkings -109,2026-11-25T18:14:35,56.0,win,0.8,7.5,-122.0,fanduel,1.0,5.0,17.2
+2026,11,Week 11 Sunday,Jameson Williams,receptions,3.5,3.4,solid,-0.31,-0.6,57,10.5,47,-18,UNDER,draftkings +102,2026-11-25T18:14:35,4.0,loss,1.13,3.5,102.0,draftkings,0.0,5.0,2.9
+2026,11,Week 11 Sunday,Bucky Irving,rec yds,14.5,12.2,solid,-0.31,-6.5,57,7.8,49,-45,UNDER,draftkings -107,2026-11-25T18:14:35,32.0,loss,0.84,14.5,-107.0,draftkings,0.0,5.0,8.0
+2026,11,Week 11 Sunday,Baker Mayfield,pass TD,1.5,1.1,solid,-0.39,-0.4,59,4.2,55,-30,UNDER,draftkings -135,2026-11-25T18:14:35,2.0,loss,1.17,1.5,-135.0,draftkings,0.0,5.0,1.1
+2026,11,Week 11 Sunday,Emeka Egbuka,receptions,4.5,4.0,solid,-0.46,-1.0,61,1.3,59,-23,UNDER,draftkings -163,2026-11-25T18:14:35,2.0,win,1.14,4.5,-163.0,draftkings,0.0,5.0,3.5
+2026,11,Week 11 Sunday,Jared Goff,pass TD,1.5,1.9,solid,0.37,0.4,59,-2.6,61,29,OVER,draftkings -184,2026-11-25T18:14:35,2.0,win,0.98,1.5,-184.0,draftkings,0.0,5.0,1.9
+2026,11,Week 11 Sunday,Kenny Gainwell,receptions,1.5,2.4,solid,0.36,0.6,58,-3.5,62,37,OVER,draftkings -186,2026-11-25T18:14:35,4.0,win,0.85,1.5,-186.0,draftkings,0.0,5.0,2.1
+2026,11,Week 11 Sunday,Jahmyr Gibbs,receptions,3.5,3.6,lean,-0.19,-0.4,55,11.7,43,-11,UNDER,draftkings +122,2026-11-25T18:14:35,4.0,loss,0.86,3.5,122.0,draftkings,0.0,5.0,3.1
+2026,11,Week 11 Sunday,Cade Otton,rec yds,30.0,29.7,lean,-0.29,-7.7,57,6.6,50,-26,UNDER,fanduel -113,2026-11-25T18:14:35,8.0,win,1.11,30.5,-115.0,draftkings,1.0,5.0,22.3
+2026,11,Week 11 Sunday,Amon-Ra St. Brown,rec yds,81.5,83.0,lean,-0.23,-10.0,55,5.3,50,-12,UNDER,fanduel -113,2026-11-25T18:14:35,37.0,win,1.11,81.5,-113.0,fanduel,0.0,5.0,71.5
+2026,11,Week 11 Sunday,Sam LaPorta,receptions,3.5,3.5,lean,-0.24,-0.5,56,5.1,51,-14,UNDER,draftkings -116,2026-11-25T18:14:35,3.0,win,1.15,3.5,-116.0,draftkings,0.0,5.0,3.0
+2026,11,Week 11 Sunday,Jameson Williams,rec yds,51.0,51.9,lean,-0.19,-6.3,54,4.7,50,-12,UNDER,draftkings -110,2026-11-25T18:14:35,93.0,loss,1.13,51.5,-110.0,draftkings,1.0,5.0,44.7
+2026,11,Week 11 Sunday,Emeka Egbuka,rec yds,46.0,46.9,lean,-0.18,-5.6,54,4.2,50,-12,UNDER,draftkings -112,2026-11-25T18:14:35,18.0,win,1.14,46.5,-112.0,draftkings,1.0,5.0,40.4
+2026,11,Week 11 Sunday,Sam LaPorta,rec yds,35.5,41.2,lean,-0.17,-4.7,54,3.7,50,-13,UNDER,fanduel -113,2026-11-25T18:14:35,62.0,loss,1.15,35.5,-113.0,fanduel,0.0,5.0,30.8
+2026,11,Week 11 Sunday,Chris Godwin,receptions,3.5,3.6,lean,-0.21,-0.4,55,-0.3,55,-12,UNDER,draftkings -134,2026-11-25T18:14:35,3.0,win,1.08,3.5,-134.0,draftkings,0.0,5.0,3.1
+2026,11,Week 11 Sunday,Isaac TeSlaa,rec yds,15.5,24.3,—,0.12,2.7,53,3.2,50,17,OVER,draftkings -110,2026-11-25T18:14:35,0.0,loss,0.85,15.5,-110.0,draftkings,0.0,5.0,18.2
+2026,11,Week 11 Sunday,Chris Godwin,rec yds,33.0,40.0,—,-0.11,-3.1,53,2.9,50,-9,UNDER,draftkings -110,2026-11-25T18:14:35,13.0,win,1.08,33.5,-110.0,draftkings,1.0,5.0,29.9
+2026,11,Week 11 Sunday,Baker Mayfield,pass yds,212.0,198.9,—,0.1,7.7,52,2.3,50,4,OVER,draftkings -113,2026-11-25T18:14:35,187.0,loss,1.17,211.5,-113.0,fanduel,1.0,5.0,219.7
+2026,11,Week 11 Sunday,Baker Mayfield,rush yds,7.5,16.6,—,0.31,6.1,51,2.2,48,81,OVER,fanduel -102,2026-11-25T18:14:35,36.0,win,1.17,7.5,-102.0,fanduel,0.0,5.0,13.6
+2026,11,Week 11 Sunday,Kenny Gainwell,rec yds,12.0,20.1,—,0.06,1.2,51,1.8,50,10,OVER,draftkings -108,2026-11-25T18:14:35,43.0,win,0.85,11.5,-113.0,fanduel,1.0,5.0,13.2
+2026,11,Week 11 Sunday,Jared Goff,rush yds,0.5,2.3,—,0.08,1.4,50,1.6,48,273,OVER,fanduel -104,2026-11-25T18:14:35,12.0,win,0.98,0.5,-104.0,fanduel,0.0,5.0,1.9
+2026,11,Week 11 Sunday,Tez Johnson,receptions,1.5,1.7,—,-0.03,-0.1,51,1.4,49,-3,UNDER,draftkings -107,2026-11-25T18:14:35,2.0,loss,1.15,1.5,-107.0,draftkings,0.0,5.0,1.4
+2026,11,Week 11 Sunday,Jared Goff,pass yds,254.5,263.2,—,-0.01,-0.6,50,0.1,50,0,UNDER,draftkings -113,2026-11-25T18:14:35,279.0,loss,0.98,255.5,-113.0,draftkings,2.0,5.0,253.9
+2026,11,Week 11 Sunday,Tez Johnson,rec yds,21.0,27.7,—,-0.01,-0.3,50,0.1,50,-1,UNDER,fanduel -113,2026-11-25T18:14:35,17.0,win,1.15,21.5,-114.0,draftkings,1.0,5.0,20.7
+2026,11,Week 11 Sunday,Bucky Irving,rush yds,64.0,75.0,—,0.1,3.5,50,0.1,50,5,OVER,draftkings -111,2026-11-25T18:14:35,68.0,win,0.84,63.5,-113.0,fanduel,1.0,5.0,67.5
+2026,11,Week 11 Sunday,Jahmyr Gibbs,rush yds,84.5,96.9,—,0.07,2.7,50,-0.2,50,3,OVER,fanduel -113,2026-11-25T18:14:35,98.0,win,0.86,84.5,-113.0,fanduel,0.0,5.0,87.2
+2026,11,Week 11 Sunday,Kenny Gainwell,rush yds,18.0,25.9,—,-0.03,-0.7,50,-0.6,51,-4,UNDER,fanduel -113,2026-11-25T18:14:35,16.0,win,0.85,18.5,-113.0,fanduel,1.0,5.0,17.3
+2026,11,Week 11 Sunday,Sione Vaki,rush yds,14.0,12.6,—,-0.17,-3.7,50,-1.3,51,-27,UNDER,draftkings -117,2026-11-25T18:14:35,-1.0,win,0.92,14.5,-117.0,draftkings,1.0,5.0,10.3
+2026,11,Week 11 Sunday,Isaac TeSlaa,receptions,1.5,1.7,—,-0.05,-0.1,51,-8.2,59,-5,UNDER,draftkings -169,2026-11-25T18:14:35,0.0,win,0.85,1.5,-169.0,draftkings,0.0,5.0,1.4
+2026,11,Week 11 Sunday,Joe Milton,pass TD,0.5,1.1,strong,0.59,0.6,63,2.7,61,122,OVER,fanduel -176,2026-11-25T18:14:35,0.0,loss,1.19,0.5,-176.0,fanduel,0.0,5.0,1.1
+2026,11,Week 11 Sunday,Joe Milton,pass yds,185.5,221.1,solid,0.41,32.3,60,9.7,50,17,OVER,draftkings -111,2026-11-25T18:14:35,141.0,loss,1.19,184.5,-113.0,fanduel,2.0,5.0,217.8
+2026,11,Week 11 Sunday,Makai Lemon,rec yds,27.5,44.1,solid,0.41,10.5,60,9.5,50,38,OVER,draftkings -113,2026-11-25T18:14:35,3.0,loss,0.81,26.5,-113.0,fanduel,2.0,5.0,38.0
+2026,11,Week 11 Sunday,DK Metcalf,receptions,3.5,3.3,solid,-0.32,-0.6,58,8.6,49,-18,UNDER,fanduel -108,2026-11-25T18:14:35,1.0,win,1.11,3.5,-108.0,fanduel,0.0,5.0,2.9
+2026,11,Week 11 Sunday,Darnell Washington,receptions,1.5,2.5,solid,0.39,0.6,59,-2.1,61,41,OVER,draftkings -182,2026-11-25T18:14:35,3.0,win,0.88,1.5,-182.0,draftkings,0.0,5.0,2.1
+2026,11,Week 11 Sunday,Rico Dowdle,receptions,1.5,2.3,solid,0.3,0.5,57,-4.5,62,31,OVER,draftkings -191,2026-11-25T18:14:35,4.0,win,1.0,1.5,-191.0,draftkings,0.0,5.0,2.0
+2026,11,Week 11 Sunday,Aaron Rodgers,pass TD,1.5,1.3,solid,-0.34,-0.4,58,-4.6,63,-26,UNDER,draftkings -196,2026-11-25T18:14:35,1.0,win,1.01,1.5,-196.0,draftkings,0.0,5.0,1.1
+2026,11,Week 11 Sunday,Darius Cooper,rec yds,17.5,31.9,lean,0.29,6.4,57,7.1,50,36,OVER,draftkings -110,2026-11-25T18:14:35,59.0,win,0.82,17.5,-110.0,draftkings,0.0,5.0,23.9
+2026,11,Week 11 Sunday,Darius Cooper,receptions,1.5,2.2,lean,0.19,0.3,55,7.0,48,20,OVER,fanduel -102,2026-11-25T18:14:35,4.0,win,0.82,1.5,-102.0,fanduel,0.0,5.0,1.8
+2026,11,Week 11 Sunday,Dallas Goedert,rec yds,31.0,43.2,lean,0.23,6.2,56,5.4,50,20,OVER,draftkings -112,2026-11-25T18:14:35,38.0,win,0.84,30.5,-112.0,draftkings,1.0,5.0,37.2
+2026,11,Week 11 Sunday,DeVonta Smith,rec yds,53.5,70.4,lean,0.21,7.1,55,5.1,50,13,OVER,draftkings -111,2026-11-25T18:14:35,41.0,loss,0.99,53.5,-111.0,draftkings,0.0,5.0,60.6
+2026,11,Week 11 Sunday,Joe Milton,rush yds,35.0,34.0,lean,-0.45,-12.2,54,4.1,50,-35,UNDER,draftkings -112,2026-11-25T18:14:35,7.0,win,1.19,35.5,-112.0,draftkings,1.0,5.0,22.8
+2026,11,Week 11 Sunday,Germie Bernard,receptions,3.5,3.4,lean,-0.29,-0.6,57,3.8,53,-16,UNDER,draftkings -129,2026-11-25T18:14:35,6.0,loss,1.07,3.5,-129.0,draftkings,0.0,5.0,2.9
+2026,11,Week 11 Sunday,Dallas Goedert,receptions,3.5,4.4,lean,0.17,0.3,54,3.1,51,10,OVER,fanduel -114,2026-11-25T18:14:35,1.0,loss,0.84,3.5,-114.0,fanduel,0.0,5.0,3.8
+2026,11,Week 11 Sunday,Roman Wilson,receptions,1.5,1.7,—,-0.04,-0.1,51,7.5,43,-4,UNDER,draftkings +121,2026-11-25T18:14:35,3.0,loss,1.29,1.5,121.0,draftkings,0.0,5.0,1.4
+2026,11,Week 11 Sunday,Saquon Barkley,receptions,1.5,1.7,—,-0.08,-0.1,52,7.1,45,-8,UNDER,draftkings +112,2026-11-25T18:14:35,0.0,win,1.15,1.5,112.0,draftkings,0.0,5.0,1.4
+2026,11,Week 11 Sunday,Makai Lemon,receptions,3.5,4.1,—,0.04,0.1,51,6.7,44,2,OVER,fanduel +124,2026-11-25T18:14:35,1.0,loss,0.81,3.5,124.0,fanduel,0.0,5.0,3.6
+2026,11,Week 11 Sunday,Aaron Rodgers,rush yds,0.5,2.7,—,0.1,1.7,50,5.8,44,347,OVER,fanduel +118,2026-11-25T18:14:35,29.0,win,1.01,0.5,118.0,fanduel,0.0,5.0,2.2
+2026,11,Week 11 Sunday,Pat Freiermuth,receptions,2.5,2.7,—,-0.09,-0.2,52,4.7,48,-7,UNDER,draftkings -102,2026-11-25T18:14:35,5.0,loss,1.0,2.5,-102.0,draftkings,0.0,5.0,2.3
+2026,11,Week 11 Sunday,Germie Bernard,rec yds,31.0,37.0,—,-0.12,-3.3,53,2.8,50,-11,UNDER,draftkings -113,2026-11-25T18:14:35,40.0,loss,1.07,31.5,-113.0,fanduel,1.0,5.0,27.7
+2026,11,Week 11 Sunday,Roman Wilson,rec yds,21.5,25.3,—,-0.11,-2.6,53,2.4,50,-12,UNDER,fanduel -113,2026-11-25T18:14:35,43.0,loss,1.29,22.5,-113.0,fanduel,2.0,5.0,18.9
+2026,11,Week 11 Sunday,Rico Dowdle,rush yds,37.0,39.3,—,-0.39,-10.7,53,2.4,50,-29,UNDER,fanduel -113,2026-11-25T18:14:35,15.0,win,1.0,37.5,-114.0,draftkings,1.0,5.0,26.3
+2026,11,Week 11 Sunday,DK Metcalf,rec yds,43.5,47.5,—,-0.08,-2.6,52,2.1,50,-6,UNDER,draftkings -111,2026-11-25T18:14:35,2.0,win,1.11,43.5,-111.0,draftkings,0.0,5.0,40.9
+2026,11,Week 11 Sunday,Saquon Barkley,rec yds,9.5,11.9,—,-0.09,-1.7,52,2.0,50,-18,UNDER,draftkings -113,2026-11-25T18:14:35,0.0,win,1.15,9.5,-113.0,draftkings,0.0,5.0,7.8
+2026,11,Week 11 Sunday,Saquon Barkley,rush yds,55.0,48.1,—,-0.36,-11.7,52,1.8,50,-21,UNDER,fanduel -113,2026-11-25T18:14:35,75.0,loss,1.15,56.5,-114.0,draftkings,3.0,5.0,43.3
+2026,11,Week 11 Sunday,Darnell Washington,rec yds,18.5,26.8,—,0.07,1.6,52,1.6,50,8,OVER,draftkings -113,2026-11-25T18:14:35,22.0,win,0.88,18.5,-113.0,draftkings,0.0,5.0,20.1
+2026,11,Week 11 Sunday,Pat Freiermuth,rec yds,22.0,31.0,—,0.05,1.2,51,1.5,50,5,OVER,draftkings -109,2026-11-25T18:14:35,39.0,win,1.0,21.5,-113.0,fanduel,1.0,5.0,23.2
+2026,11,Week 11 Sunday,Jaylen Warren,receptions,2.5,3.1,—,0.1,0.2,52,1.5,51,7,OVER,fanduel -114,2026-11-25T18:14:35,2.0,loss,0.9,2.5,-114.0,fanduel,0.0,5.0,2.7
+2026,11,Week 11 Sunday,Aaron Rodgers,pass yds,210.0,217.2,—,0.05,3.9,51,1.1,50,2,OVER,draftkings -113,2026-11-25T18:14:35,227.0,win,1.01,209.5,-113.0,fanduel,1.0,5.0,213.9
+2026,11,Week 11 Sunday,Jaylen Warren,rec yds,19.0,24.8,—,-0.02,-0.4,50,0.6,50,-2,UNDER,draftkings -111,2026-11-25T18:14:35,1.0,win,0.9,19.5,-111.0,draftkings,1.0,5.0,18.6
+2026,11,Week 11 Sunday,Rico Dowdle,rec yds,9.5,15.9,—,0.05,0.9,51,0.4,51,9,OVER,fanduel -113,2026-11-25T18:14:35,19.0,win,1.0,9.5,-113.0,fanduel,0.0,5.0,10.4
+2026,11,Week 11 Sunday,Jaylen Warren,rush yds,67.5,74.6,—,-0.01,-0.3,50,0.0,50,-1,UNDER,draftkings -112,2026-11-25T18:14:35,28.0,win,0.9,68.5,-113.0,fanduel,2.0,5.0,67.2
+2026,11,Week 11 Sunday,DeVonta Smith,receptions,4.5,5.4,—,0.09,0.2,52,-5.1,57,4,OVER,draftkings -154,2026-11-25T18:14:35,5.0,win,0.99,4.5,-154.0,draftkings,0.0,5.0,4.7
+2026,11,Week 11 Sunday,Ladd McConkey,receptions,3.5,2.3,strong,-0.76,-1.5,67,11.5,55,-44,UNDER,fanduel -140,2026-11-25T18:14:35,5.0,loss,1.29,3.5,-140.0,fanduel,0.0,5.0,2.0
+2026,11,Week 11 Sunday,Ladd McConkey,rec yds,39.5,33.0,strong,-0.5,-14.8,62,11.4,50,-38,UNDER,fanduel -113,2026-11-25T18:14:35,37.0,win,1.29,40.5,-114.0,draftkings,2.0,5.0,24.7
+2026,11,Week 11 Sunday,Justin Herbert,pass TD,1.5,0.8,strong,-0.57,-0.7,63,5.7,57,-44,UNDER,draftkings -150,2026-11-25T18:14:35,2.0,loss,1.16,1.5,-150.0,draftkings,0.0,5.0,0.8
+2026,11,Week 11 Sunday,Garrett Wilson,receptions,5.5,5.5,solid,-0.3,-0.7,57,10.9,46,-14,UNDER,draftkings +109,2026-11-25T18:14:35,3.0,win,1.05,5.5,109.0,draftkings,0.0,5.0,4.8
+2026,11,Week 11 Sunday,Justin Herbert,pass yds,201.0,212.5,solid,0.43,33.8,60,10.1,50,17,OVER,draftkings -111,2026-11-25T18:14:35,131.0,loss,1.16,200.5,-113.0,fanduel,1.0,5.0,234.8
+2026,11,Week 11 Sunday,Adonai Mitchell,receptions,3.5,3.1,solid,-0.43,-0.9,60,4.4,56,-25,UNDER,draftkings -136,2026-11-25T18:14:35,2.0,win,1.13,3.5,-136.0,draftkings,0.0,5.0,2.6
+2026,11,Week 11 Sunday,Geno Smith,pass TD,1.5,1.0,solid,-0.41,-0.5,60,0.2,59,-32,UNDER,draftkings -169,2026-11-25T18:14:35,3.0,loss,1.12,1.5,-169.0,draftkings,0.0,5.0,1.0
+2026,11,Week 11 Sunday,Breece Hall,receptions,2.5,2.5,lean,-0.2,-0.3,55,9.4,45,-14,UNDER,draftkings +111,2026-11-25T18:14:35,3.0,loss,0.99,2.5,111.0,draftkings,0.0,5.0,2.2
+2026,11,Week 11 Sunday,Kenyon Sadiq,rec yds,24.5,25.4,lean,-0.23,-5.5,55,5.6,50,-23,UNDER,draftkings -110,2026-11-25T18:14:35,30.0,loss,0.93,25.5,-110.0,draftkings,2.0,5.0,19.0
+2026,11,Week 11 Sunday,Omarion Hampton,rush yds,63.0,51.2,lean,-0.49,-16.9,55,4.8,50,-27,UNDER,fanduel -113,2026-11-25T18:14:35,89.0,loss,1.14,63.5,-114.0,draftkings,1.0,5.0,46.1
+2026,11,Week 11 Sunday,Breece Hall,rec yds,21.5,23.4,lean,-0.17,-4.0,54,4.4,50,-19,UNDER,draftkings -109,2026-11-25T18:14:35,14.0,win,0.99,21.5,-109.0,draftkings,0.0,5.0,17.5
+2026,11,Week 11 Sunday,Garrett Wilson,rec yds,67.0,70.5,lean,-0.16,-6.3,54,4.1,50,-9,UNDER,draftkings -110,2026-11-25T18:14:35,39.0,win,1.05,67.5,-110.0,draftkings,1.0,5.0,60.7
+2026,11,Week 11 Sunday,Adonai Mitchell,rec yds,48.0,49.7,lean,-0.16,-5.2,54,4.0,50,-11,UNDER,draftkings -110,2026-11-25T18:14:35,30.0,win,1.13,48.5,-113.0,fanduel,1.0,5.0,42.8
+2026,11,Week 11 Sunday,Braelon Allen,rush yds,34.5,51.8,lean,0.45,12.1,54,3.6,50,35,OVER,fanduel -113,2026-11-25T18:14:35,75.0,win,0.79,33.5,-116.0,draftkings,2.0,5.0,46.6
+2026,11,Week 11 Sunday,Mason Taylor,receptions,2.5,3.3,lean,0.17,0.3,54,3.1,51,12,OVER,fanduel -118,2026-11-25T18:14:35,2.0,loss,0.83,2.5,-118.0,fanduel,0.0,5.0,2.8
+2026,11,Week 11 Sunday,Tre Harris,receptions,3.5,3.5,lean,-0.27,-0.5,56,-0.3,57,-15,UNDER,draftkings -151,2026-11-25T18:14:35,2.0,win,1.03,3.5,-151.0,draftkings,0.0,5.0,3.0
+2026,11,Week 11 Sunday,Kenyon Sadiq,receptions,2.5,2.4,lean,-0.23,-0.4,55,-0.9,56,-16,UNDER,draftkings -131,2026-11-25T18:14:35,3.0,loss,0.93,2.5,-131.0,draftkings,0.0,5.0,2.1
+2026,11,Week 11 Sunday,Tim Patrick,receptions,1.5,1.4,lean,-0.19,-0.3,55,-5.5,60,-20,UNDER,fanduel -180,2026-11-25T18:14:35,1.0,win,0.7,1.5,-180.0,fanduel,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Kimani Vidal,receptions,1.5,1.9,—,0.05,0.1,51,8.4,43,6,OVER,draftkings +120,2026-11-25T18:14:35,2.0,win,0.97,1.5,120.0,draftkings,0.0,5.0,1.6
+2026,11,Week 11 Sunday,Braelon Allen,receptions,1.5,1.9,—,0.05,0.1,51,7.2,44,5,OVER,fanduel +116,2026-11-25T18:14:35,1.0,loss,0.79,1.5,116.0,fanduel,0.0,5.0,1.6
+2026,11,Week 11 Sunday,Keaton Mitchell,receptions,1.5,2.0,—,0.11,0.2,53,5.1,48,11,OVER,fanduel -102,2026-11-25T18:14:35,1.0,loss,1.02,1.5,-102.0,fanduel,0.0,5.0,1.7
+2026,11,Week 11 Sunday,Quentin Johnston,receptions,2.0,2.1,—,-0.12,-0.2,53,2.6,50,-10,UNDER,draftkings +142,2026-11-25T18:14:35,1.0,win,1.06,2.5,-194.0,fanduel,1.0,5.0,1.8
+2026,11,Week 11 Sunday,Charlie Kolar,rec yds,14.5,21.8,—,0.09,1.8,52,2.4,50,12,OVER,draftkings -109,2026-11-25T18:14:35,8.0,loss,1.14,13.5,-113.0,fanduel,2.0,5.0,16.3
+2026,11,Week 11 Sunday,Keaton Mitchell,rec yds,6.5,12.7,—,0.1,1.8,52,2.3,50,28,OVER,draftkings -113,2026-11-25T18:14:35,6.0,loss,1.02,6.5,-113.0,draftkings,0.0,5.0,8.3
+2026,11,Week 11 Sunday,Braelon Allen,rec yds,7.0,13.8,—,0.11,2.1,53,2.0,51,30,OVER,fanduel -113,2026-11-25T18:14:35,9.0,win,0.79,6.5,-113.0,fanduel,1.0,5.0,9.1
+2026,11,Week 11 Sunday,Oronde Gadsden II,rec yds,10.0,16.8,—,0.05,1.0,51,1.9,49,10,OVER,draftkings -106,2026-11-25T18:14:35,0.0,loss,0.63,9.5,-113.0,fanduel,1.0,5.0,11.0
+2026,11,Week 11 Sunday,Mason Taylor,rec yds,21.0,30.1,—,0.06,1.5,52,1.5,50,7,OVER,draftkings -112,2026-11-25T18:14:35,25.0,win,0.83,20.5,-113.0,fanduel,1.0,5.0,22.5
+2026,11,Week 11 Sunday,Quentin Johnston,rec yds,23.5,33.5,—,0.06,1.5,52,1.4,50,7,OVER,draftkings -113,2026-11-25T18:14:35,9.0,loss,1.06,23.5,-113.0,draftkings,0.0,5.0,25.0
+2026,11,Week 11 Sunday,Tim Patrick,rec yds,10.5,17.7,—,0.06,1.1,51,1.3,50,10,OVER,fanduel -113,2026-11-25T18:14:35,5.0,loss,0.7,10.5,-113.0,fanduel,0.0,5.0,11.6
+2026,11,Week 11 Sunday,Tre Harris,rec yds,40.0,44.6,—,-0.06,-1.6,51,1.0,50,-4,UNDER,fanduel -113,2026-11-25T18:14:35,28.0,win,1.03,41.5,-115.0,draftkings,3.0,5.0,38.4
+2026,11,Week 11 Sunday,Geno Smith,pass yds,221.5,227.1,—,0.03,2.2,51,0.6,50,1,OVER,draftkings -113,2026-11-25T18:14:35,176.0,loss,1.12,217.5,-113.0,fanduel,8.0,5.0,223.7
+2026,11,Week 11 Sunday,David Njoku,rec yds,11.5,16.2,—,-0.04,-0.9,51,0.6,50,-8,UNDER,fanduel -113,2026-11-25T18:14:35,21.0,loss,0.66,11.5,-113.0,fanduel,0.0,5.0,10.6
+2026,11,Week 11 Sunday,Justin Herbert,rush yds,22.5,30.5,—,-0.09,-2.1,50,0.4,50,-9,UNDER,draftkings -108,2026-11-25T18:14:35,32.0,loss,1.16,22.5,-108.0,draftkings,0.0,5.0,20.4
+2026,11,Week 11 Sunday,Keaton Mitchell,rush yds,13.5,17.7,—,0.05,1.0,50,0.4,50,7,OVER,draftkings -108,2026-11-25T18:14:35,0.0,loss,1.02,13.5,-108.0,draftkings,0.0,5.0,14.5
+2026,11,Week 11 Sunday,Kimani Vidal,rec yds,7.5,11.7,—,0.01,0.1,50,0.3,50,2,OVER,draftkings -111,2026-11-25T18:14:35,18.0,win,0.97,7.5,-111.0,draftkings,0.0,5.0,7.6
+2026,11,Week 11 Sunday,Breece Hall,rush yds,49.5,54.0,—,-0.03,-0.9,50,0.2,50,-2,UNDER,draftkings -110,2026-11-25T18:14:35,86.0,loss,0.99,50.5,-113.0,fanduel,2.0,5.0,48.6
+2026,11,Week 11 Sunday,Omarion Hampton,rec yds,7.0,10.6,—,-0.0,-0.1,50,-0.0,50,-1,UNDER,draftkings -113,2026-11-25T18:14:35,4.0,win,1.14,7.5,-113.0,fanduel,1.0,5.0,6.9
+2026,11,Week 11 Sunday,Kimani Vidal,rush yds,13.5,20.8,—,0.17,3.6,50,0.0,50,26,OVER,draftkings -112,2026-11-25T18:14:35,36.0,win,0.97,13.5,-112.0,draftkings,0.0,5.0,17.1
+2026,11,Week 11 Sunday,Geno Smith,rush yds,4.5,4.1,—,-0.06,-1.1,50,-0.7,51,-25,UNDER,fanduel -113,2026-11-25T18:14:35,4.0,win,1.12,4.5,-113.0,fanduel,0.0,5.0,3.4
+2026,11,Week 11 Sunday,Charlie Kolar,receptions,1.5,2.0,—,0.12,0.2,53,-2.2,55,13,OVER,draftkings -139,2026-11-25T18:14:35,1.0,loss,1.14,1.5,-139.0,draftkings,0.0,5.0,1.7
+2026,11,Week 11 Sunday,David Njoku,receptions,1.5,1.8,—,-0.01,-0.0,50,-2.2,52,-1,UNDER,draftkings -117,2026-11-25T18:14:35,2.0,loss,0.66,1.5,-117.0,draftkings,0.0,5.0,1.5
+2026,11,Week 11 Sunday,Omarion Hampton,receptions,1.5,1.8,—,-0.02,-0.0,51,-7.6,58,-2,UNDER,fanduel -160,2026-11-25T18:14:35,1.0,win,1.14,1.5,-160.0,fanduel,0.0,5.0,1.5
+2026,11,Week 11 Sunday,Oronde Gadsden II,receptions,1.5,1.7,—,-0.06,-0.1,51,-8.3,60,-6,UNDER,draftkings -162,2026-11-25T18:14:35,0.0,win,0.63,1.5,-162.0,draftkings,0.0,5.0,1.4
+2026,11,Week 11 Sunday,Jonah Coleman,receptions,3.5,2.7,strong,-0.6,-1.2,64,11.2,52,-35,UNDER,draftkings -114,2026-11-25T18:14:35,4.0,loss,1.16,3.5,-114.0,draftkings,0.0,5.0,2.3
+2026,11,Week 11 Sunday,Tre Tucker,receptions,3.5,2.8,strong,-0.57,-1.1,63,5.7,57,-33,UNDER,fanduel -154,2026-11-25T18:14:35,2.0,win,0.86,3.5,-154.0,fanduel,0.0,5.0,2.4
+2026,11,Week 11 Sunday,Jack Bech,receptions,2.5,1.8,strong,-0.56,-1.0,63,2.6,60,-40,UNDER,draftkings -164,2026-11-25T18:14:35,8.0,loss,0.53,2.5,-164.0,draftkings,0.0,5.0,1.5
+2026,11,Week 11 Sunday,Tre Tucker,rec yds,38.5,38.4,solid,-0.34,-9.8,58,7.7,50,-25,UNDER,fanduel -113,2026-11-25T18:14:35,50.0,loss,0.86,39.5,-113.0,fanduel,2.0,5.0,28.7
+2026,11,Week 11 Sunday,Michael Mayer,rec yds,34.5,34.7,solid,-0.31,-8.5,57,7.0,50,-25,UNDER,fanduel -113,2026-11-25T18:14:35,4.0,win,0.81,36.5,-114.0,draftkings,4.0,5.0,26.0
+2026,11,Week 11 Sunday,Courtland Sutton,receptions,3.5,3.1,solid,-0.41,-0.8,60,1.7,58,-24,UNDER,draftkings -160,2026-11-25T18:14:35,0.0,win,1.14,3.5,-160.0,draftkings,0.0,5.0,2.7
+2026,11,Week 11 Sunday,Bo Nix,pass TD,1.5,1.4,lean,-0.26,-0.3,56,10.7,45,-20,UNDER,draftkings +111,2026-11-25T18:14:35,1.0,win,1.12,1.5,111.0,draftkings,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Jaylen Waddle,receptions,3.5,3.5,lean,-0.24,-0.5,56,10.5,45,-14,UNDER,draftkings +112,2026-11-25T18:14:35,3.0,win,1.15,3.5,112.0,draftkings,0.0,5.0,3.0
+2026,11,Week 11 Sunday,Michael Mayer,receptions,3.5,3.6,lean,-0.22,-0.4,55,7.4,48,-13,UNDER,draftkings -101,2026-11-25T18:14:35,1.0,win,0.81,3.5,-101.0,draftkings,0.0,5.0,3.1
+2026,11,Week 11 Sunday,Jonah Coleman,rush yds,72.0,57.5,lean,-0.55,-20.3,56,6.6,50,-28,UNDER,draftkings -110,2026-11-25T18:14:35,111.0,loss,1.16,72.5,-110.0,draftkings,1.0,5.0,51.7
+2026,11,Week 11 Sunday,Jonah Coleman,rec yds,23.0,23.0,lean,-0.24,-5.8,56,5.2,51,-25,UNDER,fanduel -113,2026-11-25T18:14:35,18.0,win,1.16,24.5,-117.0,draftkings,3.0,5.0,17.2
+2026,11,Week 11 Sunday,Pat Bryant,receptions,2.5,2.6,lean,-0.17,-0.3,54,1.8,52,-12,UNDER,draftkings -122,2026-11-25T18:14:35,3.0,loss,0.91,2.5,-122.0,draftkings,0.0,5.0,2.2
+2026,11,Week 11 Sunday,Evan Engram,receptions,2.5,2.3,lean,-0.28,-0.5,57,1.1,55,-20,UNDER,draftkings -135,2026-11-25T18:14:35,6.0,loss,1.03,2.5,-135.0,draftkings,0.0,5.0,2.0
+2026,11,Week 11 Sunday,Jalen Nailor,receptions,1.5,2.3,lean,0.28,0.4,57,-4.0,61,29,OVER,draftkings -177,2026-11-25T18:14:35,1.0,loss,0.93,1.5,-177.0,draftkings,0.0,5.0,1.9
+2026,11,Week 11 Sunday,Marvin Mims Jr.,receptions,1.5,1.4,lean,-0.19,-0.3,55,-6.8,61,-20,UNDER,draftkings -183,2026-11-25T18:14:35,1.0,win,0.75,1.5,-183.0,draftkings,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Ashton Jeanty,receptions,3.5,3.9,—,-0.05,-0.1,51,6.4,45,-3,UNDER,fanduel +112,2026-11-25T18:14:35,5.0,loss,0.93,3.5,112.0,fanduel,0.0,5.0,3.4
+2026,11,Week 11 Sunday,Courtland Sutton,rec yds,32.0,37.4,—,-0.15,-4.0,54,3.7,50,-13,UNDER,draftkings -111,2026-11-25T18:14:35,0.0,win,1.14,32.5,-111.0,draftkings,1.0,5.0,28.0
+2026,11,Week 11 Sunday,Jack Bech,rec yds,19.0,22.3,—,-0.1,-2.3,52,2.9,50,-12,UNDER,draftkings -108,2026-11-25T18:14:35,88.0,loss,0.53,19.5,-108.0,draftkings,1.0,5.0,16.7
+2026,11,Week 11 Sunday,Ashton Jeanty,rush yds,32.0,32.1,—,-0.4,-10.5,53,2.6,50,-33,UNDER,fanduel -113,2026-11-25T18:14:35,79.0,loss,0.93,32.5,-115.0,draftkings,1.0,5.0,21.5
+2026,11,Week 11 Sunday,Bo Nix,pass yds,216.5,201.6,—,0.08,6.3,52,2.0,50,3,OVER,draftkings -111,2026-11-25T18:14:35,225.0,win,1.12,214.5,-113.0,fanduel,4.0,5.0,222.8
+2026,11,Week 11 Sunday,Jaylen Waddle,rec yds,43.5,47.2,—,-0.09,-2.8,52,2.0,50,-7,UNDER,fanduel -113,2026-11-25T18:14:35,61.0,loss,1.15,44.5,-114.0,draftkings,2.0,5.0,40.7
+2026,11,Week 11 Sunday,Pat Bryant,rec yds,27.5,33.6,—,-0.09,-2.3,52,1.9,50,-8,UNDER,fanduel -113,2026-11-25T18:14:35,32.0,loss,0.91,27.5,-113.0,fanduel,0.0,5.0,25.2
+2026,11,Week 11 Sunday,Marvin Mims Jr.,rec yds,10.0,16.3,—,0.04,0.7,51,1.2,50,7,OVER,draftkings -109,2026-11-25T18:14:35,36.0,win,0.75,9.5,-113.0,fanduel,1.0,5.0,10.7
+2026,11,Week 11 Sunday,Ashton Jeanty,rec yds,28.5,36.7,—,-0.04,-1.0,51,0.9,50,-4,UNDER,draftkings -112,2026-11-25T18:14:35,90.0,loss,0.93,28.5,-112.0,draftkings,0.0,5.0,27.5
+2026,11,Week 11 Sunday,Jalen Nailor,rec yds,20.5,27.3,—,-0.0,-0.0,50,0.4,50,0,UNDER,draftkings -109,2026-11-25T18:14:35,16.0,win,0.93,21.5,-113.0,fanduel,2.0,5.0,20.5
+2026,11,Week 11 Sunday,Bo Nix,rush yds,10.5,15.9,—,0.12,2.6,50,0.3,50,24,OVER,draftkings -109,2026-11-25T18:14:35,5.0,loss,1.12,10.5,-109.0,draftkings,0.0,5.0,13.1
+2026,11,Week 11 Sunday,Evan Engram,rec yds,19.5,25.3,—,-0.02,-0.6,51,0.2,50,-3,UNDER,fanduel -113,2026-11-25T18:14:35,74.0,loss,1.03,20.5,-116.0,draftkings,2.0,5.0,18.9
+2026,11,Week 11 Sunday,J.K. Dobbins,rush yds,21.5,33.3,—,0.03,0.8,50,-0.2,50,4,OVER,fanduel -113,2026-11-25T18:14:35,0.0,loss,0.75,21.5,-113.0,fanduel,0.0,5.0,22.3
+2026,11,Week 11 Sunday,Mike Washington Jr.,rush yds,27.5,31.2,—,-0.26,-6.6,50,-0.5,51,-24,UNDER,fanduel -113,2026-11-25T18:14:35,42.0,loss,1.15,27.5,-113.0,fanduel,0.0,5.0,20.9
+2026,11,Week 11 Sunday,Travis Hunter,receptions,1.5,3.5,high,0.96,1.5,70,33.9,36,100,OVER,fanduel +168,2026-11-25T18:14:35,0.0,loss,0.22,1.5,168.0,fanduel,0.0,5.0,3.0
+2026,11,Week 11 Sunday,Travis Hunter,rec yds,8.0,44.0,high,1.58,29.9,77,27.2,49,374,OVER,draftkings -106,2026-11-25T18:14:35,0.0,loss,0.22,7.5,-113.0,fanduel,1.0,5.0,37.9
+2026,11,Week 11 Sunday,Trevor Lawrence,pass TD,1.5,2.5,high,0.89,1.0,69,14.3,55,69,OVER,fanduel -132,2026-11-25T18:14:35,1.0,loss,0.86,1.5,-132.0,fanduel,0.0,5.0,2.5
+2026,11,Week 11 Sunday,Parker Washington,receptions,4.5,3.7,strong,-0.57,-1.3,63,10.7,52,-29,UNDER,fanduel -122,2026-11-25T18:14:35,8.0,loss,1.13,4.5,-122.0,fanduel,0.0,5.0,3.2
+2026,11,Week 11 Sunday,J.J. McCarthy,pass TD,1.5,0.8,strong,-0.57,-0.7,63,-1.9,65,-44,UNDER,draftkings -202,2026-11-25T18:14:35,1.0,win,1.16,1.5,-202.0,draftkings,0.0,5.0,0.8
+2026,11,Week 11 Sunday,Parker Washington,rec yds,66.5,60.7,solid,-0.37,-14.3,59,8.9,50,-21,UNDER,draftkings -110,2026-11-25T18:14:35,103.0,loss,1.13,66.5,-110.0,draftkings,0.0,5.0,52.2
+2026,11,Week 11 Sunday,J.J. McCarthy,pass yds,213.5,241.8,solid,0.32,24.7,57,7.6,50,12,OVER,draftkings -111,2026-11-25T18:14:35,173.0,loss,1.16,212.5,-111.0,draftkings,2.0,5.0,238.2
+2026,11,Week 11 Sunday,Malik Nabers,rec yds,68.5,65.6,solid,-0.31,-12.0,57,7.1,50,-17,UNDER,draftkings -113,2026-11-25T18:14:35,55.0,win,1.15,69.5,-113.0,draftkings,2.0,5.0,56.5
+2026,11,Week 11 Sunday,Cam Skattebo,receptions,2.5,2.1,solid,-0.43,-0.8,60,4.0,56,-31,UNDER,draftkings -142,2026-11-25T18:14:35,3.0,loss,0.93,2.5,-142.0,draftkings,0.0,5.0,1.7
+2026,11,Week 11 Sunday,Theo Johnson,receptions,0.5,1.4,solid,0.49,0.6,61,0.9,60,130,OVER,draftkings -172,2026-11-25T18:14:35,1.0,win,0.55,0.5,-172.0,draftkings,0.0,5.0,1.1
+2026,11,Week 11 Sunday,Isaiah Likely,receptions,5.5,5.4,solid,-0.32,-0.8,58,-1.1,59,-14,UNDER,draftkings -154,2026-11-25T18:14:35,1.0,win,1.05,5.5,-154.0,draftkings,0.0,5.0,4.7
+2026,11,Week 11 Sunday,Malik Nabers,receptions,5.5,5.6,lean,-0.27,-0.7,56,8.5,48,-12,UNDER,draftkings -101,2026-11-25T18:14:35,7.0,loss,1.15,5.5,-101.0,draftkings,0.0,5.0,4.8
+2026,11,Week 11 Sunday,Trevor Lawrence,pass yds,240.5,273.0,lean,0.3,22.9,57,7.0,50,10,OVER,draftkings -112,2026-11-25T18:14:35,301.0,win,0.86,240.5,-112.0,draftkings,0.0,5.0,263.4
+2026,11,Week 11 Sunday,Cam Skattebo,rec yds,14.5,15.5,lean,-0.21,-4.4,55,5.3,50,-30,UNDER,draftkings -108,2026-11-25T18:14:35,14.0,win,0.93,14.5,-108.0,draftkings,0.0,5.0,10.1
+2026,11,Week 11 Sunday,Theo Johnson,rec yds,7.0,16.8,lean,0.22,4.0,55,5.3,50,58,OVER,draftkings -111,2026-11-25T18:14:35,15.0,win,0.55,6.5,-111.0,draftkings,1.0,5.0,11.0
+2026,11,Week 11 Sunday,Darnell Mooney,rec yds,15.5,25.8,lean,0.18,3.8,54,3.9,50,25,OVER,fanduel -113,2026-11-25T18:14:35,0.0,loss,1.04,15.5,-113.0,fanduel,0.0,5.0,19.3
+2026,11,Week 11 Sunday,Jakobi Meyers,receptions,3.5,3.4,lean,-0.3,-0.6,57,-1.2,58,-17,UNDER,fanduel -160,2026-11-25T18:14:35,4.0,loss,1.13,3.5,-160.0,fanduel,0.0,5.0,2.9
+2026,11,Week 11 Sunday,Nate Boerkircher,receptions,1.5,1.4,lean,-0.19,-0.3,55,-2.7,57,-20,UNDER,draftkings -153,2026-11-25T18:14:35,0.0,win,0.8,1.5,-153.0,draftkings,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Josh Cameron,receptions,1.5,1.4,lean,-0.2,-0.3,55,-7.8,63,-21,UNDER,draftkings -185,2026-11-25T18:14:35,3.0,loss,0.84,1.5,-185.0,draftkings,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Bhayshul Tuten,receptions,1.5,1.8,—,0.0,0.0,50,10.5,39,0,UNDER,fanduel +140,2026-11-25T18:14:35,3.0,loss,1.01,1.5,140.0,fanduel,0.0,5.0,1.5
+2026,11,Week 11 Sunday,Darnell Mooney,receptions,1.5,1.9,—,0.05,0.1,51,4.1,47,6,OVER,draftkings +104,2026-11-25T18:14:35,0.0,loss,1.04,1.5,104.0,draftkings,0.0,5.0,1.6
+2026,11,Week 11 Sunday,Isaiah Likely,rec yds,47.0,59.1,—,0.12,3.9,53,2.9,50,8,OVER,draftkings -112,2026-11-25T18:14:35,35.0,loss,1.05,46.5,-112.0,draftkings,1.0,5.0,50.9
+2026,11,Week 11 Sunday,Brenton Strange,rec yds,31.5,38.7,—,-0.1,-2.6,52,2.0,50,-8,UNDER,fanduel -113,2026-11-25T18:14:35,16.0,win,0.98,31.5,-113.0,fanduel,0.0,5.0,28.9
+2026,11,Week 11 Sunday,Bhayshul Tuten,rush yds,68.5,62.1,—,-0.35,-12.7,52,1.8,50,-18,UNDER,draftkings -111,2026-11-25T18:14:35,33.0,win,1.01,68.5,-111.0,draftkings,0.0,5.0,55.8
+2026,11,Week 11 Sunday,Josh Cameron,rec yds,11.0,18.5,—,0.06,1.1,51,1.5,50,10,OVER,draftkings -111,2026-11-25T18:14:35,44.0,win,0.84,10.5,-113.0,fanduel,1.0,5.0,12.1
+2026,11,Week 11 Sunday,Jakobi Meyers,rec yds,41.5,46.2,—,-0.06,-1.7,51,1.2,50,-4,UNDER,fanduel -113,2026-11-25T18:14:35,85.0,loss,1.13,42.5,-113.0,fanduel,2.0,5.0,39.8
+2026,11,Week 11 Sunday,Devin Singletary,rush yds,8.0,16.9,—,0.3,5.9,50,1.0,49,73,OVER,draftkings -106,2026-11-25T18:14:35,5.0,loss,0.6,7.5,-113.0,fanduel,1.0,5.0,13.9
+2026,11,Week 11 Sunday,Malachi Fields,rec yds,30.5,39.7,—,-0.03,-0.8,51,0.9,50,-3,UNDER,draftkings -110,2026-11-25T18:14:35,25.0,win,0.86,30.5,-110.0,draftkings,0.0,5.0,29.7
+2026,11,Week 11 Sunday,Brian Thomas Jr,rec yds,14.0,21.6,—,0.01,0.2,50,0.6,50,1,OVER,draftkings -108,2026-11-25T18:14:35,18.0,win,0.81,13.5,-108.0,draftkings,1.0,5.0,14.2
+2026,11,Week 11 Sunday,Nate Boerkircher,rec yds,11.5,17.1,—,-0.02,-0.3,50,0.6,50,-3,UNDER,draftkings -110,2026-11-25T18:14:35,0.0,win,0.8,11.5,-110.0,draftkings,0.0,5.0,11.2
+2026,11,Week 11 Sunday,Brenton Strange,receptions,3.0,3.5,—,0.0,0.0,50,0.5,50,0,OVER,draftkings +138,2026-11-25T18:14:35,3.0,push,0.98,2.5,-174.0,fanduel,1.0,5.0,3.0
+2026,11,Week 11 Sunday,Bhayshul Tuten,rec yds,13.5,19.2,—,-0.04,-0.9,51,0.4,51,-7,UNDER,fanduel -113,2026-11-25T18:14:35,20.0,loss,1.01,13.5,-113.0,fanduel,0.0,5.0,12.6
+2026,11,Week 11 Sunday,J.J. McCarthy,rush yds,17.0,19.2,—,-0.06,-1.3,50,0.2,50,-8,UNDER,draftkings -110,2026-11-25T18:14:35,33.0,loss,1.16,17.5,-110.0,draftkings,1.0,5.0,15.7
+2026,11,Week 11 Sunday,Cam Skattebo,rush yds,57.0,56.6,—,-0.18,-6.0,50,0.0,50,-11,UNDER,draftkings -112,2026-11-25T18:14:35,34.0,win,0.93,57.5,-113.0,fanduel,1.0,5.0,51.0
+2026,11,Week 11 Sunday,Chris Rodriguez Jr.,rush yds,19.0,23.4,—,-0.15,-3.3,50,0.0,50,-17,UNDER,draftkings -112,2026-11-25T18:14:35,28.0,loss,0.82,19.5,-112.0,draftkings,1.0,5.0,15.7
+2026,11,Week 11 Sunday,Trevor Lawrence,rush yds,12.5,12.6,—,-0.1,-2.2,50,-1.3,51,-17,UNDER,draftkings -118,2026-11-25T18:14:35,7.0,win,0.86,12.5,-118.0,draftkings,0.0,5.0,10.3
+2026,11,Week 11 Sunday,Malachi Fields,receptions,2.5,2.8,—,-0.04,-0.1,51,-4.1,55,-3,UNDER,draftkings -138,2026-11-25T18:14:35,2.0,win,0.86,2.5,-138.0,draftkings,0.0,5.0,2.4
+2026,11,Week 11 Sunday,Brian Thomas Jr,receptions,1.5,1.7,—,-0.03,-0.1,51,-9.4,60,-3,UNDER,fanduel -174,2026-11-25T18:14:35,1.0,win,0.81,1.5,-174.0,fanduel,0.0,5.0,1.4
+2026,11,Week 11 Sunday,Justin Jefferson,receptions,7.0,6.4,strong,-0.51,-1.4,62,13.6,48,-21,UNDER,fanduel +128,2026-11-25T18:14:35,7.0,push,1.16,7.5,-142.0,draftkings,1.0,5.0,5.6
+2026,11,Week 11 Sunday,Keenan Allen,receptions,2.5,4.0,strong,0.54,1.0,62,11.4,51,38,OVER,fanduel -114,2026-11-25T18:14:35,3.0,win,0.82,2.5,-114.0,fanduel,0.0,5.0,3.5
+2026,11,Week 11 Sunday,Mike Evans,receptions,3.5,3.1,solid,-0.41,-0.8,60,12.8,47,-24,UNDER,draftkings +103,2026-11-25T18:14:35,6.0,loss,1.16,3.5,103.0,draftkings,0.0,5.0,2.7
+2026,11,Week 11 Sunday,Christian McCaffrey,receptions,3.5,3.3,solid,-0.33,-0.7,58,12.2,46,-19,UNDER,draftkings +112,2026-11-25T18:14:35,2.0,win,0.82,3.5,112.0,draftkings,0.0,5.0,2.8
+2026,11,Week 11 Sunday,Keenan Allen,rec yds,26.0,42.1,solid,0.41,10.3,60,9.6,50,40,OVER,draftkings -112,2026-11-25T18:14:35,38.0,win,0.82,25.5,-112.0,draftkings,1.0,5.0,36.3
+2026,11,Week 11 Sunday,Justin Jefferson,rec yds,85.5,78.0,solid,-0.41,-18.3,60,9.3,50,-21,UNDER,fanduel -113,2026-11-25T18:14:35,86.0,loss,1.16,86.5,-114.0,draftkings,2.0,5.0,67.2
+2026,11,Week 11 Sunday,Brock Purdy,pass TD,1.5,2.0,solid,0.39,0.5,59,8.7,51,31,OVER,fanduel -115,2026-11-25T18:14:35,3.0,win,0.86,1.5,-115.0,fanduel,0.0,5.0,2.0
+2026,11,Week 11 Sunday,Jordan Watkins,receptions,0.5,1.4,solid,0.48,0.6,61,7.3,54,127,OVER,draftkings -132,2026-11-25T18:14:35,1.0,win,0.39,0.5,-132.0,draftkings,0.0,5.0,1.1
+2026,11,Week 11 Sunday,Jordan Mason,receptions,0.5,1.3,solid,0.46,0.6,61,-3.5,64,122,OVER,draftkings -205,2026-11-25T18:14:35,1.0,win,1.16,0.5,-205.0,draftkings,0.0,5.0,1.1
+2026,11,Week 11 Sunday,T.J. Hockenson,receptions,4.5,4.8,lean,-0.16,-0.4,54,8.6,45,-8,UNDER,draftkings +113,2026-11-25T18:14:35,6.0,loss,1.14,4.5,113.0,draftkings,0.0,5.0,4.1
+2026,11,Week 11 Sunday,Jordan Watkins,rec yds,8.5,20.1,lean,0.24,4.7,56,5.7,50,55,OVER,draftkings -113,2026-11-25T18:14:35,19.0,win,0.39,8.5,-113.0,draftkings,0.0,5.0,13.2
+2026,11,Week 11 Sunday,Mike Evans,rec yds,48.5,47.1,lean,-0.24,-7.9,56,5.6,50,-16,UNDER,fanduel -113,2026-11-25T18:14:35,109.0,loss,1.16,49.5,-114.0,draftkings,2.0,5.0,40.6
+2026,11,Week 11 Sunday,Myles Price,rec yds,8.0,18.4,lean,0.21,4.0,55,5.1,50,50,OVER,draftkings -112,2026-11-25T18:14:35,26.0,win,0.93,7.5,-112.0,draftkings,1.0,5.0,12.0
+2026,11,Week 11 Sunday,Christian McCaffrey,rec yds,33.0,44.1,lean,0.18,5.0,54,4.6,50,15,OVER,draftkings -110,2026-11-25T18:14:35,13.0,loss,0.82,32.5,-113.0,fanduel,1.0,5.0,38.0
+2026,11,Week 11 Sunday,T.J. Hockenson,rec yds,45.5,46.4,lean,-0.18,-5.6,54,4.0,50,-12,UNDER,fanduel -113,2026-11-25T18:14:35,55.0,loss,1.14,45.5,-113.0,fanduel,0.0,5.0,39.9
+2026,11,Week 11 Sunday,Brock Purdy,pass yds,240.0,261.5,lean,0.16,12.3,54,3.7,50,5,OVER,draftkings -113,2026-11-25T18:14:35,255.0,win,0.86,239.5,-113.0,fanduel,1.0,5.0,252.3
+2026,11,Week 11 Sunday,Jauan Jennings,receptions,2.5,2.3,lean,-0.29,-0.5,57,0.2,57,-20,UNDER,draftkings -143,2026-11-25T18:14:35,3.0,loss,1.18,2.5,-143.0,draftkings,0.0,5.0,2.0
+2026,11,Week 11 Sunday,Tai Felton,receptions,1.5,1.5,lean,-0.16,-0.2,54,-1.4,55,-17,UNDER,fanduel -136,2026-11-25T18:14:35,6.0,loss,1.0,1.5,-136.0,fanduel,0.0,5.0,1.2
+2026,11,Week 11 Sunday,Aaron Jones,receptions,1.5,2.1,lean,0.17,0.3,54,-5.8,60,17,OVER,fanduel -172,2026-11-25T18:14:35,1.0,loss,0.86,1.5,-172.0,fanduel,0.0,5.0,1.8
+2026,11,Week 11 Sunday,Jordan Mason,rec yds,4.0,8.2,—,0.08,1.4,52,2.1,50,34,OVER,draftkings -110,2026-11-25T18:14:35,-1.0,loss,1.16,3.5,-113.0,fanduel,1.0,5.0,5.4
+2026,11,Week 11 Sunday,George Kittle,rec yds,48.0,58.8,—,0.08,2.7,52,1.9,50,6,OVER,draftkings -113,2026-11-25T18:14:35,34.0,loss,0.94,47.5,-113.0,fanduel,1.0,5.0,50.7
+2026,11,Week 11 Sunday,Tai Felton,rec yds,14.0,19.2,—,-0.07,-1.4,52,1.7,50,-10,UNDER,draftkings -112,2026-11-25T18:14:35,42.0,loss,1.0,14.5,-113.0,fanduel,1.0,5.0,12.6
+2026,11,Week 11 Sunday,Kirk Cousins,pass yds,232.0,240.7,—,0.07,5.1,52,1.6,50,2,OVER,draftkings -112,2026-11-25T18:14:35,235.0,win,0.85,231.5,-113.0,fanduel,1.0,5.0,237.1
+2026,11,Week 11 Sunday,Aaron Jones,rec yds,10.0,14.2,—,-0.04,-0.7,51,1.2,50,-7,UNDER,draftkings -109,2026-11-25T18:14:35,13.0,loss,0.86,10.5,-109.0,draftkings,1.0,5.0,9.3
+2026,11,Week 11 Sunday,Aaron Jones,rush yds,31.5,44.4,—,0.32,8.4,51,1.1,50,27,OVER,draftkings -111,2026-11-25T18:14:35,30.0,loss,0.86,31.5,-111.0,draftkings,0.0,5.0,39.9
+2026,11,Week 11 Sunday,Deebo Samuel,receptions,2.5,3.0,—,0.03,0.0,51,1.0,50,2,OVER,fanduel -108,2026-11-25T18:14:35,3.0,win,1.1,2.5,-108.0,fanduel,0.0,5.0,2.5
+2026,11,Week 11 Sunday,Jauan Jennings,rec yds,21.5,27.4,—,-0.04,-1.0,51,0.9,50,-5,UNDER,draftkings -113,2026-11-25T18:14:35,20.0,win,1.18,21.5,-113.0,draftkings,0.0,5.0,20.5
+2026,11,Week 11 Sunday,Deebo Samuel,rec yds,26.0,33.9,—,-0.02,-0.6,51,0.7,50,-2,UNDER,draftkings -111,2026-11-25T18:14:35,20.0,win,1.1,26.5,-113.0,fanduel,1.0,5.0,25.4
+2026,11,Week 11 Sunday,Brock Purdy,rush yds,16.0,23.4,—,-0.02,-0.4,50,0.6,49,-2,UNDER,draftkings -106,2026-11-25T18:14:35,0.0,win,0.86,16.5,-113.0,fanduel,1.0,5.0,15.6
+2026,11,Week 11 Sunday,Christian McCaffrey,rush yds,51.5,51.3,—,-0.17,-5.3,50,0.3,50,-10,UNDER,draftkings -109,2026-11-25T18:14:35,49.0,win,0.82,51.5,-109.0,draftkings,0.0,5.0,46.2
+2026,11,Week 11 Sunday,Jordan Mason,rush yds,39.0,50.5,—,0.23,6.5,50,0.3,50,17,OVER,draftkings -109,2026-11-25T18:14:35,38.0,loss,1.16,38.5,-113.0,fanduel,1.0,5.0,45.5
+2026,11,Week 11 Sunday,Kirk Cousins,rush yds,1.0,3.1,—,0.09,1.6,50,-0.1,50,156,OVER,draftkings -113,2026-11-25T18:14:35,0.0,loss,0.85,0.5,-113.0,fanduel,1.0,5.0,2.6
+2026,11,Week 11 Sunday,Kaelon Black,rush yds,30.0,38.0,—,-0.18,-4.6,50,-0.3,50,-15,UNDER,fanduel -113,2026-11-25T18:14:35,8.0,win,0.83,30.5,-115.0,draftkings,1.0,5.0,25.4
+2026,11,Week 11 Sunday,Kirk Cousins,pass TD,1.5,1.6,—,-0.14,-0.2,53,-4.5,58,-11,UNDER,draftkings -152,2026-11-25T18:14:35,0.0,win,0.85,1.5,-152.0,draftkings,0.0,5.0,1.3
+2026,11,Week 11 Sunday,George Kittle,receptions,4.5,5.1,—,-0.04,-0.1,51,-4.9,56,-2,UNDER,fanduel -140,2026-11-25T18:14:35,3.0,win,0.94,4.5,-140.0,fanduel,0.0,5.0,4.4
+2026,11,Week 11 Sunday,Myles Price,receptions,1.5,1.6,—,-0.13,-0.2,53,-11.8,65,-13,UNDER,fanduel -220,2026-11-25T18:14:35,2.0,loss,0.93,1.5,-220.0,fanduel,0.0,5.0,1.3
+2026,11,Week 11 Monday,Van Jefferson,rec yds,6.5,22.0,strong,0.54,10.0,62,12.0,50,153,OVER,fanduel -113,2026-11-25T18:14:35,0.0,loss,0.55,6.5,-113.0,fanduel,0.0,5.0,16.5
+2026,11,Week 11 Monday,Joe Burrow,pass TD,2.5,3.5,strong,0.74,1.0,66,11.5,55,38,OVER,fanduel -130,2026-11-25T18:14:35,2.0,loss,0.83,2.5,-130.0,fanduel,0.0,5.0,3.5
+2026,11,Week 11 Monday,Ja'Marr Chase,receptions,8.5,7.6,strong,-0.6,-1.9,64,10.1,53,-22,UNDER,draftkings -129,2026-11-25T18:14:35,5.0,win,1.15,8.5,-129.0,draftkings,0.0,5.0,6.6
+2026,11,Week 11 Monday,Van Jefferson,receptions,0.5,1.7,strong,0.69,0.9,65,3.4,62,182,OVER,draftkings -189,2026-11-25T18:14:35,0.0,loss,0.55,0.5,-189.0,draftkings,0.0,5.0,1.4
+2026,11,Week 11 Monday,Ben Sinnott,rec yds,0.5,13.3,solid,0.5,8.2,61,17.4,44,1640,OVER,draftkings +115,2026-11-25T18:14:35,0.0,loss,0.48,0.5,115.0,draftkings,0.0,5.0,8.7
+2026,11,Week 11 Monday,Ben Sinnott,receptions,0.5,1.3,solid,0.44,0.6,60,12.4,48,117,OVER,draftkings -103,2026-11-25T18:14:35,0.0,loss,0.48,0.5,-103.0,draftkings,0.0,5.0,1.1
+2026,11,Week 11 Monday,Jayden Daniels,rush yds,42.0,34.8,solid,-0.65,-18.7,59,8.8,50,-45,UNDER,draftkings -110,2026-11-25T18:14:35,55.0,loss,1.1,42.5,-110.0,draftkings,1.0,5.0,23.3
+2026,11,Week 11 Monday,Tee Higgins,rec yds,77.0,71.8,solid,-0.36,-15.2,58,8.5,50,-20,UNDER,draftkings -112,2026-11-25T18:14:35,43.0,win,1.14,78.5,-112.0,draftkings,3.0,5.0,61.8
+2026,11,Week 11 Monday,Chase Brown,rec yds,28.5,25.8,solid,-0.36,-9.2,58,8.4,50,-32,UNDER,draftkings -112,2026-11-25T18:14:35,30.0,loss,1.09,28.5,-112.0,draftkings,0.0,5.0,19.3
+2026,11,Week 11 Monday,Chase Brown,receptions,4.5,4.1,solid,-0.42,-0.9,60,7.6,52,-21,UNDER,draftkings -120,2026-11-25T18:14:35,5.0,loss,1.09,4.5,-120.0,draftkings,0.0,5.0,3.6
+2026,11,Week 11 Monday,Tee Higgins,receptions,5.5,5.4,solid,-0.33,-0.8,58,5.6,52,-15,UNDER,draftkings -120,2026-11-25T18:14:35,2.0,win,1.14,5.5,-120.0,draftkings,0.0,5.0,4.7
+2026,11,Week 11 Monday,Antonio Williams,receptions,3.5,3.3,solid,-0.32,-0.7,58,3.5,54,-19,UNDER,draftkings -132,2026-11-25T18:14:35,9.0,loss,1.03,3.5,-132.0,draftkings,0.0,5.0,2.8
+2026,11,Week 11 Monday,Chig Okonkwo,receptions,4.5,4.3,solid,-0.34,-0.8,58,1.3,57,-17,UNDER,draftkings -145,2026-11-25T18:14:35,4.0,win,0.92,4.5,-145.0,draftkings,0.0,5.0,3.7
+2026,11,Week 11 Monday,Dohnte Meyers,receptions,2.5,2.1,solid,-0.4,-0.7,59,-0.4,60,-28,UNDER,draftkings -168,2026-11-25T18:14:35,1.0,win,0.93,2.5,-168.0,draftkings,0.0,5.0,1.8
+2026,11,Week 11 Monday,Stefon Diggs,receptions,4.5,4.5,lean,-0.28,-0.6,57,9.8,47,-14,UNDER,draftkings +110,2026-11-25T18:14:35,4.0,win,1.1,4.5,110.0,draftkings,0.0,5.0,3.9
+2026,11,Week 11 Monday,Ja'Marr Chase,rec yds,101.5,100.5,lean,-0.3,-15.0,57,7.1,50,-15,UNDER,draftkings -112,2026-11-25T18:14:35,31.0,win,1.15,102.5,-112.0,draftkings,2.0,5.0,86.5
+2026,11,Week 11 Monday,Mike Gesicki,rec yds,25.5,24.5,lean,-0.29,-7.1,57,6.8,50,-28,UNDER,draftkings -112,2026-11-25T18:14:35,77.0,loss,1.09,26.5,-112.0,draftkings,2.0,5.0,18.4
+2026,11,Week 11 Monday,Jacory Croskey-Merritt,rush yds,36.5,33.6,lean,-0.51,-14.0,55,5.6,50,-38,UNDER,draftkings -111,2026-11-25T18:14:35,54.0,loss,0.88,36.5,-111.0,draftkings,0.0,5.0,22.5
+2026,11,Week 11 Monday,Jayden Daniels,pass TD,1.5,1.5,lean,-0.24,-0.3,56,5.5,50,-19,UNDER,draftkings -108,2026-11-25T18:14:35,0.0,win,1.1,1.5,-108.0,draftkings,0.0,5.0,1.2
+2026,11,Week 11 Monday,Jacory Croskey-Merritt,rec yds,0.5,5.3,lean,0.18,3.0,54,4.6,50,601,OVER,draftkings -111,2026-11-25T18:14:35,23.0,win,0.88,0.5,-111.0,draftkings,0.0,5.0,3.5
+2026,11,Week 11 Monday,Joe Burrow,pass yds,307.0,303.5,lean,-0.19,-14.2,55,4.5,50,-5,UNDER,draftkings -112,2026-11-25T18:14:35,300.0,win,0.83,309.5,-112.0,draftkings,5.0,5.0,292.8
+2026,11,Week 11 Monday,Drew Sample,rec yds,6.5,14.4,lean,0.16,3.0,54,4.1,50,45,OVER,draftkings -109,2026-11-25T18:14:35,9.0,win,0.67,6.5,-109.0,draftkings,0.0,5.0,9.5
+2026,11,Week 11 Monday,Mike Gesicki,receptions,2.5,2.4,lean,-0.26,-0.5,56,3.2,53,-18,UNDER,draftkings -119,2026-11-25T18:14:35,5.0,loss,1.09,2.5,-119.0,draftkings,0.0,5.0,2.0
+2026,11,Week 11 Monday,Treylon Burks,receptions,2.5,2.6,lean,-0.16,-0.3,54,-5.7,59,-11,UNDER,draftkings -158,2026-11-25T18:14:35,2.0,win,1.01,2.5,-158.0,draftkings,0.0,5.0,2.2
+2026,11,Week 11 Monday,Rachaad White,receptions,1.5,1.5,—,-0.14,-0.2,53,7.3,46,-14,UNDER,draftkings +104,2026-11-25T18:14:35,0.0,win,1.06,1.5,104.0,draftkings,0.0,5.0,1.3
+2026,11,Week 11 Monday,Stefon Diggs,rec yds,51.0,55.2,—,-0.1,-3.5,52,2.7,50,-7,UNDER,draftkings -110,2026-11-25T18:14:35,45.0,win,1.1,51.5,-110.0,draftkings,1.0,5.0,47.5
+2026,11,Week 11 Monday,Rachaad White,rec yds,9.5,11.1,—,-0.12,-2.2,53,2.7,50,-24,UNDER,draftkings -113,2026-11-25T18:14:35,0.0,win,1.06,9.5,-113.0,draftkings,0.0,5.0,7.3
+2026,11,Week 11 Monday,Treylon Burks,rec yds,31.0,37.8,—,-0.1,-2.7,52,2.4,50,-9,UNDER,draftkings -112,2026-11-25T18:14:35,30.0,win,1.01,31.5,-112.0,draftkings,1.0,5.0,28.3
+2026,11,Week 11 Monday,Chig Okonkwo,rec yds,40.5,44.4,—,-0.08,-2.3,52,2.0,50,-6,UNDER,draftkings -110,2026-11-25T18:14:35,66.0,loss,0.92,40.5,-110.0,draftkings,0.0,5.0,38.2
+2026,11,Week 11 Monday,Samaje Perine,rec yds,6.5,11.8,—,0.07,1.2,52,2.0,50,18,OVER,draftkings -108,2026-11-25T18:14:35,71.0,win,0.93,6.5,-108.0,draftkings,0.0,5.0,7.7
+2026,11,Week 11 Monday,Joe Burrow,rush yds,8.0,8.9,—,-0.03,-0.7,50,1.6,48,-9,UNDER,fanduel +100,2026-11-25T18:14:35,-1.0,win,0.83,8.5,-111.0,draftkings,1.0,5.0,7.3
+2026,11,Week 11 Monday,Austin Ekeler,rec yds,7.5,13.2,—,0.06,1.1,51,1.2,50,15,OVER,fanduel -113,2026-11-25T18:14:35,3.0,loss,0.81,7.5,-113.0,fanduel,0.0,5.0,8.6
+2026,11,Week 11 Monday,Antonio Williams,rec yds,35.0,42.3,—,0.05,1.4,51,0.9,50,4,OVER,fanduel -113,2026-11-25T18:14:35,122.0,win,1.03,34.5,-113.0,fanduel,1.0,5.0,36.4
+2026,11,Week 11 Monday,Dohnte Meyers,rec yds,20.0,26.6,—,-0.01,-0.1,50,0.5,50,-1,UNDER,draftkings -108,2026-11-25T18:14:35,2.0,win,0.93,20.5,-108.0,draftkings,1.0,5.0,19.9
+2026,11,Week 11 Monday,Rachaad White,rush yds,19.0,24.6,—,-0.11,-2.6,50,0.4,50,-14,UNDER,draftkings -108,2026-11-25T18:14:35,0.0,win,1.06,19.5,-108.0,draftkings,1.0,5.0,16.4
+2026,11,Week 11 Monday,Jayden Daniels,pass yds,223.5,228.2,—,0.02,1.2,50,0.3,50,1,OVER,draftkings -113,2026-11-25T18:14:35,289.0,win,1.1,221.5,-113.0,fanduel,4.0,5.0,224.7
+2026,11,Week 11 Monday,Austin Ekeler,rush yds,11.5,21.3,—,0.28,5.9,50,0.0,50,51,OVER,draftkings -113,2026-11-25T18:14:35,41.0,win,0.81,11.5,-113.0,draftkings,0.0,5.0,17.4
+2026,11,Week 11 Monday,Chase Brown,rush yds,44.0,53.4,—,0.14,4.0,50,-0.2,50,9,OVER,fanduel -113,2026-11-25T18:14:35,6.0,loss,1.09,43.5,-114.0,draftkings,1.0,5.0,48.0
+2026,11,Week 11 Monday,Samaje Perine,rush yds,20.5,24.7,—,-0.17,-4.0,50,-0.4,50,-19,UNDER,fanduel -113,2026-11-25T18:14:35,26.0,loss,0.93,20.5,-113.0,fanduel,0.0,5.0,16.5
+2026,11,Week 11 Monday,Jacory Croskey-Merritt,receptions,0.5,0.8,—,0.1,0.1,52,-2.7,55,27,OVER,draftkings -140,2026-11-25T18:14:35,2.0,win,0.88,0.5,-140.0,draftkings,0.0,5.0,0.6
+2026,11,Week 11 Monday,Austin Ekeler,receptions,1.5,1.7,—,-0.05,-0.1,51,-8.5,60,-6,UNDER,fanduel -172,2026-11-25T18:14:35,2.0,loss,0.81,1.5,-172.0,fanduel,0.0,5.0,1.4
+2026,11,Week 11 Monday,Drew Sample,receptions,1.5,1.6,—,-0.11,-0.2,53,-10.9,63,-11,UNDER,draftkings -197,2026-11-25T18:14:35,1.0,win,0.67,1.5,-197.0,draftkings,0.0,5.0,1.3
+2026,11,Week 11 Monday,Samaje Perine,receptions,1.5,1.6,—,-0.13,-0.2,53,-10.9,64,-14,UNDER,draftkings -215,2026-11-25T18:14:35,4.0,loss,0.93,1.5,-215.0,draftkings,0.0,5.0,1.3

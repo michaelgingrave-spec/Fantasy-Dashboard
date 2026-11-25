@@ -1,78 +1,79 @@
 # Production-pipeline exam: model versions on the 2026 graded lines
 
-4979 graded lines, weeks 1-10, run through `dfs.props.edges_from_raw` under each version: v1 (original); v2 (WR/TE recalibration); v3 (fitted team volume, full injury boost); v4 (injury redistribution scaled); v5 (current: median correction). Every constant of v1-v3 was fixed from 2023-25 box scores; nothing there was fitted on 2026. v4's injury scales (`INJ_REDIST`) were fitted on 2022-26 box scores, of which 2026 is a small share (`injury_absorption_report.md` lists the fit with each season left out, 2026 included), so v4's lift on these lines is not a clean out-of-sample test. v5's median factors (`median_cal.py`) are learned for each week from the graded lines of the weeks before it, so they never see the week they are applied to, but the rule was chosen after looking at weeks 1-8: week 9 onward is the clean test. ROI is at a flat -110 (prices are not stored per line).
+5446 graded lines, weeks 1-11, run through `dfs.props.edges_from_raw` under each version: v1 (original); v2 (WR/TE recalibration); v3 (fitted team volume, full injury boost); v4 (injury redistribution scaled); v5 (current: median correction). Every constant of v1-v3 was fixed from 2023-25 box scores; nothing there was fitted on 2026. v4's injury scales (`INJ_REDIST`) were fitted on 2022-26 box scores, of which 2026 is a small share (`injury_absorption_report.md` lists the fit with each season left out, 2026 included), so v4's lift on these lines is not a clean out-of-sample test. v5's median factors (`median_cal.py`) are learned for each week from the graded lines of the weeks before it, so they never see the week they are applied to, but the rule was chosen after looking at weeks 1-8: week 9 onward is the clean test. ROI is at a flat -110 (prices are not stored per line).
 
-**Harness check** -- v1 (original) reproduces what the screen stored when the lines were pulled: our proj within 0.15 on 53% of rows, same lean 87%, same tier 67%, role_ratio within .02 65% (the rest is injury / data drift since the pull).
+**Harness check** -- v1 (original) reproduces what the screen stored when the lines were pulled: our proj within 0.15 on 50% of rows, same lean 84%, same tier 64%, role_ratio within .02 63% (the rest is injury / data drift since the pull).
 
 ## Win rate of the leans
 
 | lines | bets | win | ROI at -110 | OVER share | OVER win | UNDER win |
 |---|--:|--:|--:|--:|--:|--:|
-| all markets, v1 (original) | 4933 | 49.3% | -6.0% | 75% | 47.5% | 54.3% |
-| all markets, v2 (WR/TE recalibration) | 4933 | 51.2% | -2.3% | 63% | 48.6% | 55.5% |
-| all markets, v3 (fitted team volume, full injury boost) | 4933 | 51.6% | -1.5% | 63% | 48.9% | 56.1% |
-| all markets, v4 (injury redistribution scaled) | 4933 | 52.0% | -0.8% | 64% | 49.3% | 56.8% |
-| all markets, v5 (current: median correction) | 4933 | 54.3% | +3.8% | 39% | 51.8% | 56.0% |
-| receiving (rec yds + receptions), v1 (original) | 3527 | 49.2% | -6.1% | 79% | 47.6% | 55.2% |
-| receiving (rec yds + receptions), v2 (WR/TE recalibration) | 3527 | 51.8% | -1.1% | 62% | 49.0% | 56.4% |
-| receiving (rec yds + receptions), v3 (fitted team volume, full injury boost) | 3527 | 51.8% | -1.1% | 63% | 49.0% | 56.5% |
-| receiving (rec yds + receptions), v4 (injury redistribution scaled) | 3527 | 52.3% | -0.1% | 64% | 49.5% | 57.5% |
-| receiving (rec yds + receptions), v5 (current: median correction) | 3527 | 54.6% | +4.2% | 37% | 52.1% | 56.0% |
-| rec yds, v1 (original) | 1784 | 49.6% | -5.3% | 81% | 48.1% | 56.2% |
-| rec yds, v2 (WR/TE recalibration) | 1784 | 50.7% | -3.2% | 70% | 48.6% | 55.8% |
-| rec yds, v3 (fitted team volume, full injury boost) | 1784 | 50.1% | -4.3% | 74% | 48.2% | 55.5% |
-| rec yds, v4 (injury redistribution scaled) | 1784 | 50.7% | -3.2% | 76% | 48.7% | 57.1% |
-| rec yds, v5 (current: median correction) | 1784 | 53.6% | +2.3% | 44% | 51.0% | 55.7% |
-| receptions, v1 (original) | 1743 | 48.7% | -7.0% | 77% | 47.0% | 54.3% |
-| receptions, v2 (WR/TE recalibration) | 1743 | 53.0% | +1.1% | 54% | 49.7% | 56.8% |
-| receptions, v3 (fitted team volume, full injury boost) | 1743 | 53.6% | +2.3% | 51% | 50.3% | 57.0% |
-| receptions, v4 (injury redistribution scaled) | 1743 | 54.0% | +3.1% | 53% | 50.7% | 57.7% |
-| receptions, v5 (current: median correction) | 1743 | 55.6% | +6.1% | 29% | 53.9% | 56.3% |
-| rush yds, v1 (original) | 829 | 45.1% | -13.9% | 68% | 42.6% | 50.6% |
-| rush yds, v2 (WR/TE recalibration) | 829 | 45.1% | -13.9% | 68% | 42.6% | 50.6% |
-| rush yds, v3 (fitted team volume, full injury boost) | 829 | 47.4% | -9.5% | 67% | 44.1% | 54.0% |
-| rush yds, v4 (injury redistribution scaled) | 829 | 47.5% | -9.3% | 67% | 44.3% | 54.2% |
-| rush yds, v5 (current: median correction) | 829 | 52.4% | -0.1% | 41% | 46.5% | 56.5% |
-| pass yds, v1 (original) | 286 | 49.7% | -5.2% | 62% | 53.1% | 44.0% |
-| pass yds, v2 (WR/TE recalibration) | 286 | 49.7% | -5.2% | 62% | 53.1% | 44.0% |
-| pass yds, v3 (fitted team volume, full injury boost) | 286 | 49.7% | -5.2% | 62% | 53.1% | 44.0% |
-| pass yds, v4 (injury redistribution scaled) | 286 | 49.7% | -5.2% | 62% | 53.1% | 44.0% |
-| pass yds, v5 (current: median correction) | 286 | 52.1% | -0.5% | 59% | 55.3% | 47.4% |
-| pass TD, v1 (original) | 287 | 62.0% | +18.4% | 55% | 58.9% | 65.9% |
-| pass TD, v2 (WR/TE recalibration) | 287 | 62.0% | +18.4% | 55% | 58.9% | 65.9% |
-| pass TD, v3 (fitted team volume, full injury boost) | 287 | 62.4% | +19.1% | 53% | 59.6% | 65.4% |
-| pass TD, v4 (injury redistribution scaled) | 287 | 62.4% | +19.1% | 53% | 59.6% | 65.4% |
-| pass TD, v5 (current: median correction) | 287 | 59.2% | +13.1% | 43% | 58.1% | 60.1% |
+| all markets, v1 (original) | 5398 | 49.5% | -5.5% | 75% | 47.7% | 54.8% |
+| all markets, v2 (WR/TE recalibration) | 5398 | 51.4% | -1.9% | 63% | 48.8% | 55.9% |
+| all markets, v3 (fitted team volume, full injury boost) | 5398 | 51.5% | -1.7% | 63% | 48.9% | 56.0% |
+| all markets, v4 (injury redistribution scaled) | 5398 | 51.8% | -1.1% | 65% | 49.1% | 56.7% |
+| all markets, v5 (current: median correction) | 5398 | 54.3% | +3.7% | 39% | 51.8% | 55.9% |
+| receiving (rec yds + receptions), v1 (original) | 3870 | 49.2% | -6.0% | 79% | 47.6% | 55.7% |
+| receiving (rec yds + receptions), v2 (WR/TE recalibration) | 3870 | 51.9% | -0.9% | 63% | 49.0% | 56.7% |
+| receiving (rec yds + receptions), v3 (fitted team volume, full injury boost) | 3870 | 51.6% | -1.4% | 63% | 48.8% | 56.4% |
+| receiving (rec yds + receptions), v4 (injury redistribution scaled) | 3870 | 52.0% | -0.7% | 65% | 49.2% | 57.3% |
+| receiving (rec yds + receptions), v5 (current: median correction) | 3870 | 54.4% | +3.8% | 37% | 51.8% | 55.9% |
+| rec yds, v1 (original) | 1957 | 49.7% | -5.1% | 82% | 48.1% | 56.9% |
+| rec yds, v2 (WR/TE recalibration) | 1957 | 50.7% | -3.1% | 71% | 48.6% | 56.0% |
+| rec yds, v3 (fitted team volume, full injury boost) | 1957 | 50.0% | -4.6% | 75% | 48.1% | 55.5% |
+| rec yds, v4 (injury redistribution scaled) | 1957 | 50.3% | -3.9% | 77% | 48.4% | 56.6% |
+| rec yds, v5 (current: median correction) | 1957 | 53.4% | +1.9% | 44% | 50.7% | 55.5% |
+| receptions, v1 (original) | 1913 | 48.7% | -7.0% | 77% | 46.9% | 54.7% |
+| receptions, v2 (WR/TE recalibration) | 1913 | 53.1% | +1.3% | 55% | 49.7% | 57.1% |
+| receptions, v3 (fitted team volume, full injury boost) | 1913 | 53.3% | +1.8% | 51% | 49.9% | 56.9% |
+| receptions, v4 (injury redistribution scaled) | 1913 | 53.7% | +2.6% | 53% | 50.3% | 57.6% |
+| receptions, v5 (current: median correction) | 1913 | 55.4% | +5.8% | 29% | 53.4% | 56.2% |
+| rush yds, v1 (original) | 903 | 46.2% | -11.8% | 68% | 43.6% | 51.7% |
+| rush yds, v2 (WR/TE recalibration) | 903 | 46.2% | -11.8% | 68% | 43.6% | 51.7% |
+| rush yds, v3 (fitted team volume, full injury boost) | 903 | 48.0% | -8.5% | 67% | 44.8% | 54.4% |
+| rush yds, v4 (injury redistribution scaled) | 903 | 48.1% | -8.2% | 68% | 44.9% | 54.6% |
+| rush yds, v5 (current: median correction) | 903 | 52.8% | +0.8% | 41% | 47.4% | 56.6% |
+| pass yds, v1 (original) | 310 | 50.0% | -4.5% | 62% | 53.4% | 44.4% |
+| pass yds, v2 (WR/TE recalibration) | 310 | 50.0% | -4.5% | 62% | 53.4% | 44.4% |
+| pass yds, v3 (fitted team volume, full injury boost) | 310 | 49.7% | -5.2% | 63% | 53.1% | 44.0% |
+| pass yds, v4 (injury redistribution scaled) | 310 | 49.7% | -5.2% | 63% | 53.1% | 44.0% |
+| pass yds, v5 (current: median correction) | 310 | 51.9% | -0.9% | 60% | 55.1% | 47.2% |
+| pass TD, v1 (original) | 311 | 61.7% | +17.9% | 55% | 58.7% | 65.5% |
+| pass TD, v2 (WR/TE recalibration) | 311 | 61.7% | +17.9% | 55% | 58.7% | 65.5% |
+| pass TD, v3 (fitted team volume, full injury boost) | 311 | 61.7% | +17.9% | 53% | 59.1% | 64.6% |
+| pass TD, v4 (injury redistribution scaled) | 311 | 61.7% | +17.9% | 53% | 59.1% | 64.6% |
+| pass TD, v5 (current: median correction) | 311 | 59.5% | +13.6% | 43% | 58.5% | 60.2% |
 
 ## Paired difference (v5 (current: median correction) minus each earlier version), same lines, player-clustered 95% CI
 
-- vs v1 (original), all markets: **+5.09 pts** (CI +3.21 to +6.97, n=4933)
-- vs v1 (original), receiving markets: **+5.42 pts** (CI +3.10 to +8.03, n=3527)
-- vs v1 (original), rush yds: **+7.24 pts** (CI +3.18 to +11.08, n=829)
-- vs v2 (WR/TE recalibration), all markets: **+3.18 pts** (CI +1.66 to +4.81, n=4933)
-- vs v2 (WR/TE recalibration), receiving markets: **+2.75 pts** (CI +0.86 to +4.76, n=3527)
-- vs v2 (WR/TE recalibration), rush yds: **+7.24 pts** (CI +3.46 to +11.16, n=829)
-- vs v3 (fitted team volume, full injury boost), all markets: **+2.76 pts** (CI +1.38 to +4.25, n=4933)
-- vs v3 (fitted team volume, full injury boost), receiving markets: **+2.75 pts** (CI +0.85 to +4.65, n=3527)
-- vs v3 (fitted team volume, full injury boost), rush yds: **+4.95 pts** (CI +1.92 to +8.06, n=829)
-- vs v4 (injury redistribution scaled), all markets: **+2.37 pts** (CI +0.97 to +3.85, n=4933)
-- vs v4 (injury redistribution scaled), receiving markets: **+2.24 pts** (CI +0.36 to +4.15, n=3527)
-- vs v4 (injury redistribution scaled), rush yds: **+4.83 pts** (CI +1.68 to +7.83, n=829)
+- vs v1 (original), all markets: **+4.82 pts** (CI +3.03 to +6.64, n=5398)
+- vs v1 (original), receiving markets: **+5.17 pts** (CI +2.89 to +7.51, n=3870)
+- vs v1 (original), rush yds: **+6.64 pts** (CI +2.91 to +10.44, n=903)
+- vs v2 (WR/TE recalibration), all markets: **+2.91 pts** (CI +1.44 to +4.45, n=5398)
+- vs v2 (WR/TE recalibration), receiving markets: **+2.51 pts** (CI +0.51 to +4.42, n=3870)
+- vs v2 (WR/TE recalibration), rush yds: **+6.64 pts** (CI +3.12 to +10.34, n=903)
+- vs v3 (fitted team volume, full injury boost), all markets: **+2.80 pts** (CI +1.39 to +4.19, n=5398)
+- vs v3 (fitted team volume, full injury boost), receiving markets: **+2.76 pts** (CI +0.93 to +4.61, n=3870)
+- vs v3 (fitted team volume, full injury boost), rush yds: **+4.87 pts** (CI +1.80 to +8.09, n=903)
+- vs v4 (injury redistribution scaled), all markets: **+2.50 pts** (CI +1.12 to +3.98, n=5398)
+- vs v4 (injury redistribution scaled), receiving markets: **+2.38 pts** (CI +0.58 to +4.09, n=3870)
+- vs v4 (injury redistribution scaled), rush yds: **+4.76 pts** (CI +1.67 to +7.79, n=903)
 
 Win % on receiving markets by week:
 
 | week | v1 (original) | v2 (WR/TE recalibration) | v3 (fitted team volume, full injury boost) | v4 (injury redistribution scaled) | v5 (current: median correction) | lines |
 |--:|--:|--:|--:|--:|--:|--:|
 | 1 | 52.6% | 55.4% | 51.2% | 53.0% | 53.0% | 285 |
-| 2 | 47.2% | 46.9% | 49.9% | 50.4% | 50.4% | 346 |
+| 2 | 47.2% | 46.9% | 49.9% | 50.1% | 50.1% | 346 |
 | 3 | 48.2% | 53.2% | 52.6% | 55.2% | 53.8% | 360 |
 | 4 | 55.8% | 56.5% | 56.0% | 56.5% | 54.5% | 397 |
 | 5 | 47.6% | 50.4% | 50.4% | 50.1% | 53.0% | 359 |
-| 6 | 51.0% | 53.2% | 52.4% | 52.7% | 53.0% | 363 |
+| 6 | 51.0% | 53.2% | 52.4% | 52.7% | 52.7% | 363 |
 | 7 | 44.7% | 49.3% | 52.4% | 53.9% | 59.7% | 351 |
 | 8 | 48.7% | 51.0% | 51.0% | 49.9% | 57.7% | 359 |
 | 9 | 54.1% | 56.3% | 55.2% | 55.7% | 55.7% | 379 |
 | 10 | 41.6% | 45.9% | 46.5% | 45.7% | 54.6% | 368 |
+| 11 | 49.9% | 52.5% | 49.6% | 49.0% | 53.1% | 345 |
 
 ## Where v5 (current: median correction) differs from v4 (injury redistribution scaled)
 
@@ -80,12 +81,12 @@ Lines picked by what the model did, not by how they turned out. `moved` is the c
 
 | lines | n | v4 (injury redistribution scaled) win | v5 (current: median correction) win | paired difference (player-clustered 95% CI) | OVER share v4 (injury redistribution scaled) -> v5 (current: median correction) |
 |---|--:|--:|--:|---|---|
-| all lines | 4979 | 52.0% | 54.3% | +2.37 pts [+0.95, +3.81] (n=4933) | 64% -> 39% |
+| all lines | 5446 | 51.8% | 54.3% | +2.50 pts [+1.08, +3.89] (n=5398) | 65% -> 39% |
 | projection moved >= 1% | 0 | | | | |
 | projection moved >= 5% | 0 | | | | |
 | projection moved >= 10% | 0 | | | | |
-| lean flipped by v5 (current: median correction) | 1272 | 45.4% | 54.6% | +9.29 pts [+3.58, +15.00] (n=1259) | 99% -> 1% |
-| projection moved < 1% | 4979 | 52.0% | 54.3% | +2.37 pts [+0.98, +3.72] (n=4933) | 64% -> 39% |
+| lean flipped by v5 (current: median correction) | 1434 | 45.2% | 54.8% | +9.50 pts [+4.13, +14.76] (n=1421) | 99% -> 1% |
+| projection moved < 1% | 5446 | 51.8% | 54.3% | +2.50 pts [+1.12, +3.89] (n=5398) | 65% -> 39% |
 
 ## Tier tables (all graded lines, win % and ROI at -110)
 
@@ -97,20 +98,20 @@ All bets:
 
 | conf | n | win% | ROI@-110% |
 |---|---|---|---|
-| — | 2114 | 49.5 | -5.5 |
-| lean | 1214 | 53.5 | 2.1 |
-| solid | 962 | 52.8 | 0.9 |
-| strong | 538 | 54.4 | 3.8 |
-| high | 151 | 51.7 | -1.4 |
+| — | 2341 | 50.0 | -4.5 |
+| lean | 1335 | 53.5 | 2.1 |
+| solid | 1053 | 53.1 | 1.4 |
+| strong | 563 | 54.2 | 3.5 |
+| high | 154 | 50.6 | -3.3 |
 
 Recommended only:
 
 | conf | n | of all | win% | ROI@-110% |
 |---|---|---|---|---|
-| lean | 794 | 1214 | 53.3 | 1.7 |
-| solid | 434 | 962 | 55.2 | 5.4 |
-| strong | 84 | 538 | 50.0 | -4.5 |
-| high | 1 | 151 | 100.0 | 90.9 |
+| lean | 880 | 1335 | 53.0 | 1.3 |
+| solid | 495 | 1053 | 54.9 | 4.8 |
+| strong | 96 | 563 | 51.6 | -1.5 |
+| high | 1 | 154 | 100.0 | 90.9 |
 
 **v2 (WR/TE recalibration), restated**
 
@@ -118,20 +119,20 @@ All bets:
 
 | conf | n | win% | ROI@-110% |
 |---|---|---|---|
-| — | 2240 | 50.2 | -4.1 |
-| lean | 1343 | 50.5 | -3.5 |
-| solid | 923 | 53.7 | 2.4 |
-| strong | 381 | 52.5 | 0.2 |
-| high | 92 | 52.2 | -0.3 |
+| — | 2433 | 50.5 | -3.6 |
+| lean | 1474 | 50.8 | -3.0 |
+| solid | 1015 | 53.9 | 2.9 |
+| strong | 426 | 52.3 | -0.1 |
+| high | 98 | 51.0 | -2.6 |
 
 Recommended only:
 
 | conf | n | of all | win% | ROI@-110% |
 |---|---|---|---|---|
-| lean | 958 | 1343 | 50.2 | -4.1 |
-| solid | 460 | 923 | 54.2 | 3.6 |
-| strong | 79 | 381 | 43.0 | -17.8 |
-| high | 2 | 92 | 50.0 | -4.5 |
+| lean | 1053 | 1474 | 50.3 | -4.0 |
+| solid | 503 | 1015 | 54.6 | 4.2 |
+| strong | 87 | 426 | 43.7 | -16.6 |
+| high | 2 | 98 | 50.0 | -4.5 |
 
 **v3 (fitted team volume, full injury boost), restated**
 
@@ -139,20 +140,20 @@ All bets:
 
 | conf | n | win% | ROI@-110% |
 |---|---|---|---|
-| — | 2336 | 49.9 | -4.8 |
-| lean | 1306 | 52.6 | 0.3 |
-| solid | 929 | 52.1 | -0.5 |
-| strong | 332 | 58.2 | 11.1 |
-| high | 76 | 52.6 | 0.5 |
+| — | 2556 | 49.9 | -4.8 |
+| lean | 1429 | 52.5 | 0.3 |
+| solid | 1009 | 51.5 | -1.6 |
+| strong | 370 | 59.0 | 12.6 |
+| high | 82 | 50.0 | -4.5 |
 
 Recommended only:
 
 | conf | n | of all | win% | ROI@-110% |
 |---|---|---|---|---|
-| lean | 953 | 1306 | 53.7 | 2.5 |
-| solid | 450 | 929 | 51.6 | -1.6 |
-| strong | 50 | 332 | 58.0 | 10.7 |
-| high | 2 | 76 | 100.0 | 90.9 |
+| lean | 1047 | 1429 | 53.2 | 1.6 |
+| solid | 483 | 1009 | 51.1 | -2.4 |
+| strong | 55 | 370 | 56.4 | 7.6 |
+| high | 2 | 82 | 100.0 | 90.9 |
 
 **v4 (injury redistribution scaled), restated**
 
@@ -160,20 +161,20 @@ All bets:
 
 | conf | n | win% | ROI@-110% |
 |---|---|---|---|
-| — | 2358 | 50.2 | -4.2 |
-| lean | 1298 | 52.9 | 1.0 |
-| solid | 909 | 53.4 | 1.9 |
-| strong | 346 | 57.4 | 9.6 |
-| high | 68 | 50.0 | -4.5 |
+| — | 2582 | 50.2 | -4.2 |
+| lean | 1416 | 52.9 | 0.9 |
+| solid | 988 | 52.2 | -0.3 |
+| strong | 386 | 58.4 | 11.6 |
+| high | 74 | 47.3 | -9.7 |
 
 Recommended only:
 
 | conf | n | of all | win% | ROI@-110% |
 |---|---|---|---|---|
-| lean | 934 | 1298 | 53.1 | 1.5 |
-| solid | 419 | 909 | 52.7 | 0.7 |
-| strong | 53 | 346 | 54.7 | 4.5 |
-| high | 1 | 68 | 100.0 | 90.9 |
+| lean | 1021 | 1416 | 52.8 | 0.9 |
+| solid | 453 | 988 | 51.7 | -1.4 |
+| strong | 58 | 386 | 55.2 | 5.3 |
+| high | 1 | 74 | 100.0 | 90.9 |
 
 **v5 (current: median correction), restated**
 
@@ -181,31 +182,31 @@ All bets:
 
 | conf | n | win% | ROI@-110% |
 |---|---|---|---|
-| — | 2199 | 53.0 | 1.2 |
-| lean | 1356 | 55.1 | 5.3 |
-| solid | 993 | 56.3 | 7.4 |
-| strong | 363 | 54.3 | 3.7 |
-| high | 68 | 54.4 | 3.9 |
+| — | 2426 | 53.1 | 1.4 |
+| lean | 1477 | 55.0 | 5.0 |
+| solid | 1083 | 56.2 | 7.3 |
+| strong | 389 | 54.1 | 3.4 |
+| high | 71 | 52.1 | -0.5 |
 
 Recommended only:
 
 | conf | n | of all | win% | ROI@-110% |
 |---|---|---|---|---|
-| lean | 907 | 1356 | 54.8 | 4.7 |
-| solid | 688 | 993 | 57.4 | 9.5 |
-| strong | 217 | 363 | 54.6 | 4.3 |
-| high | 15 | 68 | 73.3 | 40.0 |
+| lean | 993 | 1477 | 54.5 | 4.1 |
+| solid | 748 | 1083 | 56.9 | 8.6 |
+| strong | 230 | 389 | 55.3 | 5.5 |
+| high | 15 | 71 | 73.3 | 40.0 |
 
 ## Filters and role agreement
 
-- v1 (original): 4979 rows -> 2635 pass the always-on guard -> 1354 Recommended; role_ratio median 0.95, 67% inside the 0.85-1.20 band
-- v2 (WR/TE recalibration): 4979 rows -> 2374 pass the always-on guard -> 1499 Recommended; role_ratio median 1.03, 76% inside the 0.85-1.20 band
-- v3 (fitted team volume, full injury boost): 4979 rows -> 2289 pass the always-on guard -> 1455 Recommended; role_ratio median 1.03, 77% inside the 0.85-1.20 band
-- v4 (injury redistribution scaled): 4979 rows -> 2263 pass the always-on guard -> 1407 Recommended; role_ratio median 1.02, 76% inside the 0.85-1.20 band
-- v5 (current: median correction): 4979 rows -> 2477 pass the always-on guard -> 1827 Recommended; role_ratio median 1.02, 76% inside the 0.85-1.20 band
+- v1 (original): 5446 rows -> 2892 pass the always-on guard -> 1485 Recommended; role_ratio median 0.95, 67% inside the 0.85-1.20 band
+- v2 (WR/TE recalibration): 5446 rows -> 2607 pass the always-on guard -> 1645 Recommended; role_ratio median 1.03, 76% inside the 0.85-1.20 band
+- v3 (fitted team volume, full injury boost): 5446 rows -> 2495 pass the always-on guard -> 1587 Recommended; role_ratio median 1.02, 77% inside the 0.85-1.20 band
+- v4 (injury redistribution scaled): 5446 rows -> 2466 pass the always-on guard -> 1533 Recommended; role_ratio median 1.02, 76% inside the 0.85-1.20 band
+- v5 (current: median correction): 5446 rows -> 2685 pass the always-on guard -> 1986 Recommended; role_ratio median 1.02, 76% inside the 0.85-1.20 band
 
-- OVER share by market, v1 (original): pass TD 55%, pass yds 62%, rec yds 81%, receptions 77%, rush yds 68%
-- OVER share by market, v2 (WR/TE recalibration): pass TD 55%, pass yds 62%, rec yds 70%, receptions 54%, rush yds 68%
-- OVER share by market, v3 (fitted team volume, full injury boost): pass TD 52%, pass yds 62%, rec yds 74%, receptions 51%, rush yds 67%
-- OVER share by market, v4 (injury redistribution scaled): pass TD 52%, pass yds 62%, rec yds 76%, receptions 53%, rush yds 67%
-- OVER share by market, v5 (current: median correction): pass TD 43%, pass yds 59%, rec yds 44%, receptions 29%, rush yds 41%
+- OVER share by market, v1 (original): pass TD 55%, pass yds 62%, rec yds 82%, receptions 77%, rush yds 68%
+- OVER share by market, v2 (WR/TE recalibration): pass TD 55%, pass yds 62%, rec yds 71%, receptions 55%, rush yds 68%
+- OVER share by market, v3 (fitted team volume, full injury boost): pass TD 52%, pass yds 62%, rec yds 75%, receptions 51%, rush yds 67%
+- OVER share by market, v4 (injury redistribution scaled): pass TD 52%, pass yds 62%, rec yds 77%, receptions 53%, rush yds 68%
+- OVER share by market, v5 (current: median correction): pass TD 43%, pass yds 60%, rec yds 44%, receptions 29%, rush yds 41%
